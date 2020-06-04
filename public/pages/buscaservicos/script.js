@@ -96,12 +96,21 @@ $(document).ready(async() => {
         dataVue.modalVisivelController = true;
         dataVue.selecionadoController = propriedades;
 
+        /* Algumas atualizacoes do modal*/
+        setTimeout(() => {  
+            if(($(".bodyDetalhes").first().height()) > 500 ) {
+                $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
+            }
+            var bodyChatScroll = document.getElementById("bodyChatChat");
+            bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight; 
+        }, 1);
+        
 
     });
     app.$set(dataVue, "callback", () => {
         dataVue.modalVisivelController = false;
     });
 
-
+    
 
 });

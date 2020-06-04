@@ -195,6 +195,8 @@
     background-color: #fff;
 }
 
+
+
 .BDescricao {
     margin: 10px 3.7%;
 }
@@ -205,6 +207,7 @@
 .bodyChat {
     flex: 3;
     min-height: 500px;
+    max-height: 500px;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
     margin: 0 1% 0 0.5%;
     background-color: #fff;
@@ -266,18 +269,48 @@
     margin-right: 2%;
 }
 
-.bodyChatChat {
+#bodyChatChat {
     flex: 1;
     margin: 10px 2% 5px;
+    overflow-y: scroll;
+    overflow-anchor: none;
 }
 
+#ancora {
+    overflow-anchor: auto;
+    height: 1px;
+}
+
+/* ---- -- -- - - -- SCROLL DO CHAT - -- - - ----- - ----*/
+    #bodyChatChat::-webkit-scrollbar {
+        width: 10px;
+    }
+  
+  /* Track */
+    #bodyChatChat::-webkit-scrollbar-track {
+        background: rgb(240, 240, 240, 0.8);
+    }
+  
+  /* Handle */
+    #bodyChatChat::-webkit-scrollbar-thumb {
+        background: rgb(130, 130, 130, 0.4);
+    }
+  
+  /* Handle on hover */
+    #bodyChatChat::-webkit-scrollbar-thumb:hover {
+        background: rgb(130, 130, 130, 0.6);
+    }
+
+
+/* ---- -- -- - - -- FIM DO SCROLL DO CHAT - -- - - ----- - ----*/
 .textoTC {
     background-color: #EFEFEF;
     border-radius: 0 15px 15px 15px;
     padding: 5px 3%;
     margin-right: 4%;
-    margin-top: 6px;
+    margin-top: 10px;
     color: #252525;
+    font-size: 15px;
 }
 
 .textoCliente {
@@ -309,8 +342,9 @@
     border-radius: 15px 0px 15px 15px;
     padding: 5px 3%;
     margin-left: 4%;
-    margin-top: 6px;
+    margin-top: 10px;
     color: #fff;
+    font-size: 15px;
 }
 
 .imagemGeralBC svg {
@@ -318,7 +352,41 @@
     margin: 0 !important;
 }
 
+.tempoTF {
+    color: #eee;
+    position: relative;
+    width: min-content;
+    float: right;
+    margin-top: 6px; 
+    margin-left: 6%;
+    font-size: 14px;
+}
+.tempoTC {
+    color: #333;
+    position: relative;
+    width: min-content;
+    float: right;
+    margin-top: 6px;
+    margin-left: 6%;
+    font-size: 14px;
+}
 
+
+
+.dataChatDiv {
+    width: 90%;
+    text-align: center; 
+    border-bottom: 2px solid #777; 
+    line-height: 0.1em;
+    margin: 20px 5%;
+}
+
+.dataChatDivTexto {
+    background:#fff; 
+    padding:0 10px; 
+    font-weight: 700;
+    color: #484848;
+}
 /* --------------------------- FIM BODY CHAT ------------------------- */
 
 

@@ -100,7 +100,23 @@
                         </div>
                     </div>
                     <div class="bodyChat">
-                        <div class="bodyChatChat">
+                        <div id="bodyChatChat">
+
+                            
+
+                            <div class="textoFuncionario">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class="imagemGeralBC"
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTF">
+                                    Boa tarde, antes de continuarmos com o projeto, precisamos discutir o pagamento.
+                                    <div class="tempoTF">14:22</div>
+                                </div>
+                            </div>
+
                             <div class="textoCliente">
                                 <wm-user-img 
                                     :img="dataVue.selecionadoController.imagem" 
@@ -109,7 +125,75 @@
                                     class_imagem="BCImageIcon"
                                 ></wm-user-img>
                                 <div class="textoTC">
-                                    ALGUMA COISA KSEPKASKASOEKASOK
+                                    Boa tarde, a minha verba é a demarcada no projeto, mas pagarei de acordo com o trabalho a ser feito.
+                                    <div class="tempoTC">14:54</div>
+                                </div>
+                            </div>
+
+                            <div class="textoFuncionario">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class="imagemGeralBC"
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTF">
+                                    Como você pode ver, a nossa empresa, Soft Systems é especializada no ramo de sistema RP's, que você pretende desenvolver, além disso, demandamos grandes esforcos para a eficiência e rapidez, por isso, gostariamos de 100% da verba destinada ao projeto.
+                                    <div class="tempoTF">15:08</div>
+                                </div>
+                            </div>
+
+                            <div class="textoCliente">
+                                <wm-user-img 
+                                    :img="dataVue.selecionadoController.imagem" 
+                                    class="imagemGeralBC" 
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTC">
+                                    Entendo, mas por nunca ter feito nada com vocês, não tenho certeza da confiabilidade, então pretendo destinar 90% da verba.
+                                    <div class="tempoTC">15:09</div>
+                                </div>
+                            </div>
+
+                            <div class="textoFuncionario">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class="imagemGeralBC"
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTF">
+                                    Está bem, 90% é um bom número.
+                                    <div class="tempoTF">15:36</div>
+                                </div>
+                            </div>
+
+                            <div class="dataChatDiv"><span class="dataChatDivTexto">HOJE</span></div>
+
+                            <div class="textoFuncionario">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class="imagemGeralBC"
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTF">
+                                    Olá, você tem algum prazo mínimo?
+                                    <div class="tempoTF">13:46</div>
+                                </div>
+                            </div>
+
+                            <div class="textoCliente">
+                                <wm-user-img 
+                                    :img="dataVue.selecionadoController.imagem" 
+                                    class="imagemGeralBC" 
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTC">
+                                    Boa tarde, eu preciso do trabalho pronto em 2 meses. Você acha que é tempo o bastante?
+                                    <div class="tempoTC">14:01</div>
                                 </div>
                             </div>
                             
@@ -120,7 +204,15 @@
                                     class_icone="BCNullIcon"
                                     class_imagem="BCImageIcon"
                                 ></wm-user-img>
-                                <div class="textoTF">ALGUMA COISA KAOSEPKASEOPKAS EKASE OPKASEOP KASOEKPOSK asd asd asdd asd asd asd wef weferf erf</div>
+                                <div class="textoTF">
+                                    Com certeza, focarei toda a minha equipe nesse projeto para entregarmos o mais cedo possível :)
+                                    <div class="tempoTF">14:59</div>
+                                </div>
+                            </div>
+
+
+                            <div id="ancora">
+
                             </div>
                         </div>
                         <div class="bodyChatEnviar">
