@@ -58,6 +58,7 @@ $(document).ready(async() => {
                     let indice = dataVue.FiltroProjeto.C.indexOf(id);
                     dataVue.FiltroProjeto.C.splice(indice, 1);
                 }
+                dataVue.FiltroProjeto.P = 1;
             }
         }
     }

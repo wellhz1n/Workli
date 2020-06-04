@@ -90,6 +90,11 @@ class ProjetoDAO
         {$sqlcategoria}
         {$likep}
         ");
+        if(count($paginas->resultados) > 0){
+            if(json_decode($paginas->resultados[0]['paginas']) == 1)
+                $pg = 1;
+        }
+        
         $pg = (json_decode($pg) - 1) * 6;
         $retorno = Sql("
         select ceil(count(p.id)/6) as paginas,
@@ -107,7 +112,7 @@ class ProjetoDAO
                     s.nivel_projeto,
                     s.nivel_profissional,
                     s.valor, 
-                    time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as postado,
+                    cast(time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as int) as postado,
                     u.nome as usuario,
                     iu.imagem as img 
                     from servico s 
@@ -116,12 +121,13 @@ class ProjetoDAO
                     left join imagem_usuario iu on iu.id_usuario =u.id 
                     where s.Ativo  = 1
                     {$sqlcategoria}
-                    order by postado asc
+                    order by postado,id asc
                     limit  6
                     offset {$pg}
                     ) as p
                     {$like}
                     GROUP BY 2 
+                    order by p.postado asc
 
         ");
         foreach ($retorno->resultados as $key => $value) {

@@ -27,10 +27,7 @@
                 <wm-paginacao :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" v-on:changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" />
             </div>
             <div class="col-12 mx-2 justify-content-center">
-                <div v-if="dataVue.Carregando" class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 20%">
-                    <div class="spinner-border text-success"></div>
-                    <p>Carregando...</p>
-                </div>
+                    <wm-loading v-if="dataVue.Carregando" ></wm-loading>
                 <div v-else>
                     <div v-if="dataVue.Projetos.lista.length < 1 ">
                         <wm-error mensagem="Nenhum projeto encontrado" />

@@ -118,7 +118,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-projeto-item':WmProjetoItem,
                             'wm-modal':WmModal,
                             'wm-paginacao':Wm_Paginacao,
-                            'wm-error':WM_Error
+                            'wm-error':WM_Error,
+                            'wm-loading':LoadingComponent
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
