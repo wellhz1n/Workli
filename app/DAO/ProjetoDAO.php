@@ -107,7 +107,7 @@ class ProjetoDAO
                     s.nivel_projeto,
                     s.nivel_profissional,
                     s.valor, 
-                    time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as postado,
+                    cast(time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as int) as postado,
                     u.nome as usuario,
                     iu.imagem as img 
                     from servico s 
@@ -116,7 +116,7 @@ class ProjetoDAO
                     left join imagem_usuario iu on iu.id_usuario =u.id 
                     where s.Ativo  = 1
                     {$sqlcategoria}
-                    order by postado asc
+                    order by postado,id asc
                     limit  6
                     offset {$pg}
                     ) as p
