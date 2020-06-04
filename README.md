@@ -1,6 +1,10 @@
 # Documentação Dos Componentes do VUE
    * [Como Declarar](#Como-Declarar)
+## _Componentes_
+   * [Componentes de Formulário](#Instanciando-os-Campos-do-container)
+   * [wm-image](#Componente-wm-image)
    * [wm-loading](#Componente-de-Loading)
+   * [wm-error](#Componente-wm-error)
 
 
 
@@ -186,6 +190,16 @@ let GetCamposUsuario = ()=>{
 
 > imagem
 ![](img/wm-loading.png);
+
+# Componente wm-error
+```
+ <wm-error mensagem="Nenhum projeto encontrado" />
+```
+este componente exibe um emoji aleatorio toda vez que é chamado
+### Valor Padrão das Propriedades
+- _mensagem_ : Estamos com Problemas,Por favor tente novamente
+>
+![](img/wm-error.png);
 
 ### Gerar APk ANDROID
 ```
