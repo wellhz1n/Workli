@@ -1935,4 +1935,47 @@ WM_Error = Vue.component('wm-error', {
          <i style="font-size: 200px;opacity: 0.4;" :class="ClasseProcessada"></i>
 </div>
     `
+});
+
+LoadingComponent = Vue.component('wm-loading', {
+    props: {
+        cor: {
+            type: String,
+            default: '#28a745 '
+        },
+        msg: {
+            type: String,
+            default: 'Carregando...'
+        }
+    },
+    data: () => {
+        return {
+            datamsg: 'Carregando...',
+            datacor: '#28a745'
+        }
+    },
+    template: `
+    <div class="col-12 mx-2 justify-content-center">
+    <div class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 20%">
+        <div class="spinner-border" :style="{'color': this.datacor + ' !important'}"></div>
+        <p>{{this.datamsg}}</p>
+    </div>  
+    </div>  
+    `,
+    watch: {
+        cor: {
+            immediate: true,
+            deep: true,
+            handler(v) {
+                this.datacor = v;
+            }
+        },
+        msg: {
+            immediate: true,
+            deep: true,
+            handler(v) {
+                this.datamsg = v;
+            }
+        }
+    }
 })

@@ -169,6 +169,18 @@ let GetCamposUsuario = ()=>{
 # Gif Demonstrando Resultado Final
 ![](img/resultado.gif)
 
+# Componente de Loading
+```
+    <wm-loading msg="Carregando..." cor="green"></wm-loading>
+
+```
+### Valor Padrão das Propriedades
+- _msg_ : Carregando...
+- _cor_ : #28a745 (um verde bonito)
+
+> imagem
+![](img/wm-loading.png);
+
 ### Gerar APk ANDROID
 ```
 

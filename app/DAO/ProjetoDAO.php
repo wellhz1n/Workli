@@ -90,6 +90,11 @@ class ProjetoDAO
         {$sqlcategoria}
         {$likep}
         ");
+        if(count($paginas->resultados) > 0){
+            if(json_decode($paginas->resultados[0]['paginas']) == 1)
+                $pg = 1;
+        }
+        
         $pg = (json_decode($pg) - 1) * 6;
         $retorno = Sql("
         select ceil(count(p.id)/6) as paginas,
