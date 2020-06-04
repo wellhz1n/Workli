@@ -1,0 +1,29 @@
+.itemVantagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    width: 30%;
+}
+.imgItemVantagem{
+    max-width: 100%;
+    margin-right: 5%;
+}
+
+.tituloVantagem {
+    font-family: Poppins-Bold,Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 150%;
+}
+.explicacaoVantagem{
+    font-size: 125%;
+    text-align: left;
+}
+
+.wrapperTituloVantagem{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 6%;
+}

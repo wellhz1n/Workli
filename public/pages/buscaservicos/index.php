@@ -1,0 +1,151 @@
+<div class="col-12 p-0 m-0">
+    <div class="row p-0 m-0">
+        <div style="height: 100vh" class="col-2 m-0 p-0 ">
+            <div class="categories_box h-25 d-flex flex-column justify-content-center align-items-center ">
+                <h5 class="m-0" style="font-family: Poppins-Bold;">Crie Seu Projeto</h5>
+                <p class="p-3 m-0" style="font-size: 14px; font-family: Poppins-Regular">Deseja contratar alguem para resolver seu Problema?</p>
+                <div class="m-0">
+                    <button style="font-size: 14px" onclick='window.location.href = location.origin + location.pathname + "?page=criarservico"' class=" btn btn-success text-white" href="">Criar Projeto</button>
+                </div>
+            </div>
+            <div class="categories_box d-flex flex-column  justify-content-start  align-items-center ">
+                <h5 class="m-0 py-2" style="font-family: Poppins-Bold;">Categorias</h5>
+                <template>
+                    <a @click="dataVue.Categorias.Click(item.id)" :style="[{cursor:'pointer'},item.checado?{'font-weight':'bold'}:'',{color:item.checado?'#000':'#6c757d'},item.checado?{'text-shadow': '0px 0px 10px rgba(74,74,74,0.91)'}:null]" v-for="item in dataVue.Categorias.categoria">{{item.nome}}</a>
+                </template>
+            </div>
+        </div>
+        <div style="height: 800vh" class="col-10  ">
+            <div class="row justify-content-center ">
+                <div class="p-3 col-9">
+                    <input placeholder="Pequise um Projeto" type="text" class="form-control" @input="
+                                                                                dataVue.FiltroProjeto.Q = $event.target.value;
+                                                                            " />
+                </div>
+            </div>
+            <div class="col-6 my-0">
+                <wm-paginacao :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" v-on:changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" />
+            </div>
+            <div class="col-12 mx-2 justify-content-center">
+                <div v-if="dataVue.Carregando" class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 20%">
+                    <div class="spinner-border text-success"></div>
+                    <p>Carregando...</p>
+                </div>
+                <div v-else>
+                    <div v-if="dataVue.Projetos.lista.length < 1 ">
+                        <wm-error mensagem="Nenhum projeto encontrado" />
+                    </div>
+                    <wm-projeto-item v-else 
+                    :titulo="item.titulo" 
+                    :publicado="item.postado" 
+                    :propostas="0" 
+                    :categoria="item.categoria" 
+                    :identidade="item.id" 
+                    :id="'item'+item.id" 
+                    :tamanhodoprojeto="item.nivel_projeto" 
+                    :nivelprofissional="item.nivel_profissional" 
+                    :descricao="item.descricao" 
+                    :nome="item.usuario" 
+                    :img="item.img" 
+                    :valor="item.valor" 
+                    v-for="item in dataVue.Projetos.lista" 
+                    v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<wm-modal :visivel="dataVue.modalVisivelController" :callback="dataVue.callback">
+
+    <template v-slot:header>
+        <div class="headerInterno">
+            <div class="imgHeaderModal">
+            <img class="imgHeaderModal" :src=" dataVue.selecionadoController.FotoPrincipal != undefined ? 'data:image/png;base64,'+ dataVue.selecionadoController.FotoPrincipal :'src/img/background/background.png'"/>
+            </div>
+            <div class="degradeHeaderModal"></div>
+            <div class="blocoNome">
+                <div :style="{'font-size': dataVue.selecionadoController.nome.length > 30 ? '30px' :'40px' }" class="textoHeaderModal">{{dataVue.selecionadoController.nome}}</div>
+                <wm-user-img 
+                    :img="dataVue.selecionadoController.imagem" 
+                    class="imagemUsuario" 
+                    class_icone="iconeImagemNull"
+                    class_imagem="imagemTamanhoUser"
+                ></wm-user-img>
+                <div :style="{'font-size': dataVue.selecionadoController.titulo.length > 80 ? '20px' : '40px' }" class="textoHeaderModal tituloHM">{{dataVue.selecionadoController.titulo}}</div>
+            </div>
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="bodyInterno">
+            <div class="bodyBody">
+                <div class="d-flex">
+                    <div class="bodyDetalhes">
+                        <div class="bodyHeader">
+                            <div class="BHDetalhes">
+                                Detalhes do Projeto
+                            </div>
+                            <div class="wrapperBH2">
+                                <div class="BHPreco">{{dataVue.selecionadoController.valor}}</div>   
+                                <div class="BHPublicado"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>   
+                            </div>
+                        </div>
+                        <div class="BDescricao" v-html="dataVue.selecionadoController.descricao">
+                        </div>
+                    </div>
+                    <div class="bodyChat">
+                        <div class="bodyChatChat">
+                            <div class="textoCliente">
+                                <wm-user-img 
+                                    :img="dataVue.selecionadoController.imagem" 
+                                    class="imagemGeralBC" 
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTC">
+                                    ALGUMA COISA KSEPKASKASOEKASOK
+                                </div>
+                            </div>
+                            
+                            <div class="textoFuncionario">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class="imagemGeralBC"
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                                <div class="textoTF">ALGUMA COISA KAOSEPKASEOPKAS EKASE OPKASEOP KASOEKPOSK asd asd asdd asd asd asd wef weferf erf</div>
+                            </div>
+                        </div>
+                        <div class="bodyChatEnviar">
+                            <div class="wrapperImagemBC">
+                                <wm-user-img 
+                                    :img="dataVue.UsuarioContexto.Foto" 
+                                    class_icone="BCNullIcon"
+                                    class_imagem="BCImageIcon"
+                                ></wm-user-img>
+                            </div>
+                            <div class="wrapperInputBC">
+                                <input type="text" class="inputBC" placeholder="Faça uma pergunta..."></input>
+                                <i class="fas fa-caret-right iconeSetaEnviar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bodyProposta">
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- Ainda vou melhorar o estilo desse modal -->
+</wm-modal>
+
+<link rel="stylesheet" type="text/css" href="pages/buscaservicos/estilo.css" />
+<script src="pages/buscaservicos/script.js"></script>

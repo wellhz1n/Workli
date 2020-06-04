@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "database": "TccTemplate",
+            "dialect": "MySQL",
+            "isActive": false,
+            "isConnected": false,
+            "name": "Banco",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
+}

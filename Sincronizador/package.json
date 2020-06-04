@@ -1,0 +1,14 @@
+{
+  "name": "SyncApp",
+  "version": "0.0.0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev:Start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "mysql2": "^2.0.0",
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7"
+  }
+}

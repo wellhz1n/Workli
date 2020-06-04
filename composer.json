@@ -1,0 +1,21 @@
+{
+    "name": "welli/ph-papp",
+    "description": "Teste",
+    "type": "meupacote",
+    "license": "MIT",
+    "authors": [{
+        "name": "Wellingtom Ramos",
+        "email": "wellingtom.h@hotmail.com"
+    }],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+     
+        "files": [
+            "app/functions/rotas.php",
+            "app/functions/Conexao.php",
+            "app/functions/Auth.php",
+            "app/functions/Session.php"
+        ]
+    }
+}

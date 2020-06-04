@@ -1,0 +1,7 @@
+{
+    "database": "WorkliDB",
+    "databasehost": "127.0.0.1",
+    "serverPort": "8050",
+    "username": "root",
+    "password": ""
+}

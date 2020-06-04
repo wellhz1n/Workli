@@ -1,0 +1,136 @@
+<?php
+@require_once("../Classes/Projeto.php");
+@require_once("../DAO/ProjetoDAO.php");
+@require_once("../functions/ImageUtils.php");
+@require_once("../Enums/SecoesEnum.php");
+@require_once("../functions/Session.php");
+@require_once("../functions/Conexao.php");
+try {
+
+    if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
+        $metodo = $_POST['metodo'];
+        $ProjetoBO = new ProjetoBO();
+        if ($metodo == "SalvarProjeto") {
+            if (isset($_POST['Projeto'])) {
+                $projeto = $_POST['Projeto'];
+                $projeto = $ProjetoBO->CriaProjetoCampo($projeto);
+                $ProjetoBO->SalvarProjeto($projeto);
+            } else {
+                throw new Exception("Parametro Projeto Ausente");
+            }
+        }
+        if ($metodo == "BuscarProjetos") {
+            $C = empty($_POST["C"]) ? [] : $_POST["C"];
+            $Q = empty($_POST["Q"]) ? "" : $_POST["Q"];
+            $P = empty($_POST["P"]) ? 1 : $_POST["P"];
+            $ProjetoBO->BuscarProjeto($C, $Q, $P);
+        }
+        if($metodo == "BuscaDependeciasModal"){
+            if (isset($_POST['id'])) {
+                    $ProjetoBO->BuscaDependenciasProjetoModal($_POST['id']);
+            }
+            else
+            throw new Exception("Parametro Projeto Ausente");
+        }
+    }
+} catch (Throwable $ex) {
+    $msg = new stdClass();
+    $msg->error = $ex->getMessage();
+    echo json_encode($msg);
+}
+
+class ProjetoBO
+{
+    private $ProjetoDAO;
+    private $Projeto;
+    function __construct()
+    {
+        $this->Projeto = new Projeto();
+        $this->ProjetoDAO = new ProjetoDAO();
+    }
+    #region CRUD
+    public function SalvarProjeto(Projeto $proj)
+    {
+        $Novo = false;
+        $this->ValidaProjeto($proj);
+        $proj->idusuario = $proj->idusuario == null ? BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO) : $proj->idusuario;
+        if ($proj->id == 0) {
+            $proj->id = GetNextID("servico");
+            $Novo = true;
+        }
+        if (count($proj->imagens) > 0) {
+            foreach ($proj->imagens as $key => $value) {
+                $proj->imagens[$key]["img"] = ConvertBase64ToBlob($value["img"]);
+            }
+        }
+
+        if ($this->ProjetoDAO->SalvarOuAtulizarProjeto($proj, $Novo)) {
+            echo "OK|" . $proj->id;
+        } else {
+            throw new Exception("Algo Deu Errado.");
+        }
+    }
+    private function ValidaProjeto(Projeto $p)
+    {
+
+        if ($p->Nome == null || $p->Nome == "")
+            throw new Exception("Titulo Do Projeto é Nescessario.");
+        if ($p->Descricao == null || $p->Descricao == "")
+            throw new Exception("Descriçao Do Projeto é Nescessario.");
+        if ($p->Categoria == null || $p->Categoria == "")
+            throw new Exception("Categoria Do Projeto é Nescessario.");
+        if ($p->NivelDoProfissional == null || $p->NivelDoProfissional == "")
+            throw new Exception("Nivel Do Profissional Do Projeto é Nescessario.");
+        if ($p->NivelDoProjeto == null || $p->NivelDoProjeto == "")
+            throw new Exception("Nivel Do Projeto Do Projeto é Nescessario.");
+        if ($p->Valor == null || $p->Valor == "")
+            throw new Exception("Valor Do Projeto é Nescessario.");
+        if (strlen(utf8_decode($p->Descricao)) < 50)
+            throw new Exception("Numero minimo de caracteres para a Descrição Do Projeto é 50.");
+    }
+    #endregion
+    #region UTILS    
+    private function AssociaProjetoCampo($proj)
+    {
+        foreach ($proj as $key => $value) {
+            $this->Projeto->$key = $value;
+        }
+    }
+    public function CriaProjetoCampo($proj)
+    {
+        $p = new Projeto();
+        foreach ($proj as $key => $value) {
+            $p->$key = $value;
+        }
+        return $p;
+    }
+    #endregion
+    #region BuscaProjetos
+    public function BuscarProjeto($C = [], $Q = "", $P = 1)
+    {
+        $dados = $this->ProjetoDAO->BuscaProjeto($C, $Q, $P);
+        $dt = $dados[0];
+        foreach ($dt as $key => $value) {
+            $dt[$key]["img"] = ConvertBlobToBase64($value["img"]);
+            if ($dt[$key]["postado"] > 24)
+                $dt[$key]["postado"] = "Há " . floor($dt[$key]["postado"] / 24) . " dias";
+            else if ($dt[$key]["postado"] > 1)
+                $dt[$key]["postado"] = "Há " . $dt[$key]["postado"] . " horas";
+            else
+                $dt[$key]["postado"] = "Há  menos de uma hora";
+        }
+        $obj = new stdClass();
+        $obj->lista = $dt;
+        $obj->pagina = $dados[1];
+        $obj->paginaAtual = $P;
+        echo json_encode($obj);
+    }
+    public function BuscaDependenciasProjetoModal($id){
+        $imagens = $this->ProjetoDAO->BuscaDependenciasModal($id);
+        foreach ($imagens as $key => $value) {
+            $imagens[$key]["imagem"] =ConvertBlobToBase64($imagens[$key]["imagem"]);  
+        }
+        echo json_encode($imagens);
+    }
+    #endregion
+}
