@@ -122,6 +122,7 @@ class ProjetoDAO
                     ) as p
                     {$like}
                     GROUP BY 2 
+                    order by p.postado asc
 
         ");
         foreach ($retorno->resultados as $key => $value) {
