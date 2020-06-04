@@ -1,6 +1,6 @@
 # Documentação Dos Componentes do VUE
-   * [Como Declarar](#ComoDeclarar)
-   * [wm-loading](#Componente de Loading)
+   * [Como Declarar](#Como-Declarar)
+   * [wm-loading](#Componente-de-Loading)
 
 
 
