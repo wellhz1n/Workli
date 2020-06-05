@@ -2003,21 +2003,68 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     },
     data: () => {
         return {
+            dataimgs: [],
+            imgSelecionada: null,
+            modalAberto: false,
+        }
+    },
+    methods: {
+        callbackModal() {
+            this.modalAberto = false;
+        },
+        AbreModal(item) {
+            this.imgSelecionada = item;
+            this.modalAberto = true;
+        },
+        VoltarDePagina(indice) {
+            if (indice - 1 >= 0) {
+                indice--;
+                this.imgSelecionada = this.dataimgs[indice];
+            } else {
+                indice = this.dataimgs.length - 1;
+                this.imgSelecionada = this.dataimgs[indice];
+            }
+        },
+        ProximaDePagina(indice) {
+            if (indice + 1 <= this.dataimgs.length - 1) {
+                indice++;
+                this.imgSelecionada = this.dataimgs[indice];
+            } else {
+                indice = 0;
+                this.imgSelecionada = this.dataimgs[indice];
+            }
+        },
+        MudarDePagina(indice) {
+            if (indice != this.imgSelecionada.id)
+                this.imgSelecionada = this.dataimgs[indice];
+        }
+    },
+    watch: {
+        imgs: {
+            immediate: true,
+            deep: true,
+            handler(newv, old) {
+                if (newv != null) {
 
+                    this.dataimgs = newv.map((valor, index) => {
+                        return { id: index, img: 'data:image/png;base64,' + valor };
+                    });
+                }
+            }
         }
     },
     template: `
-    <div class="row mx-2">
-    <div @click="dataVue.imgClick(item)" v-for="item in dataVue.img" class="mr-2 imgViewerContainer">
-        <div class="imageViewerOverflow d-flex justify-content-center align-items-center flex-column ">
-            <i style="font-size: 18px;" class="fas fa-eye mt-1"></i>
-            <p class="font_Poopins" style="font-size: 17px;">Visualizar</p>
-        </div>
-        <img class="imgViewerImg" :src="item" />
+    <div>
+        <div class="row mx-2">
+            <div @click="AbreModal(item)" v-for="item in this.dataimgs" class="mr-2 imgViewerContainer">
+                <div class="imageViewerOverflow d-flex justify-content-center align-items-center flex-column ">
+                    <i style="font-size: 18px;" class="fas fa-eye mt-1"></i>
+                    <p class="font_Poopins" style="font-size: 17px;">Visualizar</p>
+                </div>
+                <img class="imgViewerImg" :src="item.img" />
+            </div>
     </div>
-
-</div>
-<wm-modal height="650px" id="modalpai" :visivel="dataVue.modalVisivelController" :callback="()=>{dataVue.modalVisivelController = false}">
+<wm-modal height="650px" id="modalImagem" :visivel="modalAberto" :callback="callbackModal">
     <template v-slot:header>
         <div style="height: 50px;" class="d-flex justify-content-center align-items-center">
             <p class="mx-5 my-2">Visualizar Imagem</p>
@@ -2025,18 +2072,19 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     </template>
     <template v-slot:body>
         <div class="imgViewerModalBody p-2">
-            <div class="mx-1">
-                <i style="color: #218838;" class="fas fa-arrow-circle-left"></i>
+            <div @click="VoltarDePagina(imgSelecionada.id)" style="cursor:pointer; user-select: none; " class="mx-1">
+                <i style="color: #218838; font-size:30px" class="fas fa-arrow-circle-left"></i>
             </div>
             <div>
-                <img class="imgViewerModalImage" :src="dataVue.imgselecionada" />
+                <img class="imgViewerModalImage" :src="imgSelecionada.img" />
                 <div class="ImageBalls">
-                    <div v-for="item in dataVue.img" :class="['imgball',item == dataVue.imgselecionada?'selected':'']"></div>
-
+                    <div v-for="i in dataimgs" >
+                        <div style="cursor:pointer;user-select: none;" @click="MudarDePagina(i.id)" :class="['imgball',i.id == imgSelecionada.id ? 'selected':'']"></div>
+                    </div>
                 </div>
             </div>
-            <div class="m-1">
-                <i style="color: #218838;" class="fas fa-arrow-circle-right"></i>
+            <div @click="ProximaDePagina(imgSelecionada.id)" style="cursor:pointer;  user-select: none; " class="m-1">
+                <i style="color: #218838; font-size:30px" class="fas fa-arrow-circle-right"></i>
             </div>
 
         </div>
@@ -2047,6 +2095,6 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
         </div>
     </template>
 </wm-modal>
-
+</div>
     `
 });

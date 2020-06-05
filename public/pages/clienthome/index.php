@@ -1,7 +1,7 @@
 <script type="application/javascript" src="pages/clienthome/script.js"></script>
 <link rel="stylesheet" type="text/css" href="pages/clienthome/estilo.css" />
 <div class="col-12">
-    <h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME) ?>
+    <!-- <h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME) ?>
         <div class="row mx-2">
             <div @click="dataVue.imgClick(item)" v-for="item in dataVue.img" class="mr-2 imgViewerContainer">
                 <div class="imageViewerOverflow d-flex justify-content-center align-items-center flex-column ">
@@ -41,9 +41,9 @@
 
                 </div>
             </template>
-        </wm-modal>
+        </wm-modal> -->
 
-<wm-image-viewer></wm-image-viewer>
+<wm-image-viewer :imgs="dataVue.img"></wm-image-viewer>
 
 
 </div>
