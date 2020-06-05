@@ -12,15 +12,29 @@
             </div>
 
         </div>
-        <wm-modal id="modalpai" :visivel="dataVue.modalVisivelController" :callback="()=>{dataVue.modalVisivelController = false}">
+        <wm-modal height="650px" id="modalpai" :visivel="dataVue.modalVisivelController" :callback="()=>{dataVue.modalVisivelController = false}">
             <template v-slot:header>
                 <div style="height: 50px;" class="d-flex justify-content-center align-items-center">
                     <p class="mx-5 my-2">Visualizar Imagem</p>
                 </div>
             </template>
             <template v-slot:body>
-                <div class="imgViewerModalBody">
-                    <img :src="dataVue.imgselecionada"/>
+                <div class="imgViewerModalBody p-2">
+                    <div class="mx-1">
+                        <i style="color: #218838;" class="fas fa-arrow-circle-left"></i>
+                    </div>
+                    <div>
+                        <img class="imgViewerModalImage" :src="dataVue.imgselecionada" />
+                        <div class="ImageBalls">
+                            <div v-for="item in dataVue.img" class="imgball selected"></div>
+                            <div v-for="item in dataVue.img" class="imgball "></div>
+
+                        </div>
+                    </div>
+                    <div class="m-1">
+                        <i style="color: #218838;" class="fas fa-arrow-circle-right"></i>
+                    </div>
+
                 </div>
             </template>
             <template v-slot:footer>
