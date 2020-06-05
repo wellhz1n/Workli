@@ -1,0 +1,37 @@
+.imgViewerImg {
+    height: 150px;
+    object-fit: cover;
+    width: 150px;
+    object-position: top;
+    border-radius: 10px;
+    border: 2px solid #218838;
+    transition: all .3s ease-in-out;
+}
+
+.imgViewerContainer {
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.imageViewerOverflow {
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    background: transparent;
+    border-radius: 10px;
+    color: #fff;
+    opacity: 0;
+    display: none;
+    transition: all .2s ease-in-out;
+}
+
+.imgViewerContainer:hover .imgViewerImg {
+    object-position: right;
+    border: 2px solid #216b88;
+}
+
+.imgViewerContainer:hover .imageViewerOverflow {
+    opacity: 1;
+    display: block;
+    background: linear-gradient(rgba(0, 0, 0, 0.459), rgba(0, 0, 0, 0.459));
+}

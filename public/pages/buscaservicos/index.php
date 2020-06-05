@@ -99,8 +99,7 @@
                     <div class="bodyChat">
                         <div id="bodyChatChat">
 
-                            
-
+                        <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
                             <div class="textoFuncionario">
                                 <wm-user-img 
                                     :img="dataVue.UsuarioContexto.Foto" 

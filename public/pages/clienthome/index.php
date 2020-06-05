@@ -1,5 +1,55 @@
-<h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME)?>
+<script type="application/javascript" src="pages/clienthome/script.js"></script>
+<link rel="stylesheet" type="text/css" href="pages/clienthome/estilo.css" />
+<div class="col-12">
+    <h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME) ?>
+        <div class="row mx-2">
+            <div v-for="item in dataVue.img" class="mr-2 imgViewerContainer">
+                <div class="imageViewerOverflow d-flex justify-content-center flex-column align-items-center">
+                    <i class="fas fa-eye"></i>
+                    <p class="font_Poopins" style="font-size: 18px;">Visualizar</p>
+                </div>
+                <img class="imgViewerImg" :src="item" />
+            </div>
+
+        </div>
+        <wm-modal id="modalpai" :visivel="dataVue.modalVisivelController" :callback="dataVue.callback">
+            <template v-slot:header>
+                <div>
+
+                </div>
+            </template>
+            <template v-slot:body>
+                <div>
+                    <wm-modal height="50%" width="78%" id="modalfilho" :visivel="dataVue.modalVisivelController1" :callback="dataVue.callback">
+                        <template v-slot:header>
+                            <div>
+
+                            </div>
+                        </template>
+                        <template v-slot:body>
+                            <div>
+
+                            </div>
+                        </template>
+                        <template v-slot:footer>
+                            <div>
+
+                            </div>
+                        </template>
+                    </wm-modal>
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div>
+
+                </div>
+            </template>
+        </wm-modal>
+
+
+
+
+</div>
 <script type="application/javascript">
-    
     $("#Titulo").text("Home-Cliete")
 </script>

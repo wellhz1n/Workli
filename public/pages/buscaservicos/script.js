@@ -84,6 +84,7 @@ $(document).ready(async() => {
     // }, 10000);
     // Fim da guambiarra
     app.$set(dataVue, "modalVisivelController", false);
+    app.$set(dataVue, "modalVisivelController1", false);
     app.$set(dataVue, "selecionadoController", {});
     app.$set(dataVue, "abremodal", async(propriedades) => {
         BloquearTela();
@@ -98,20 +99,20 @@ $(document).ready(async() => {
         dataVue.selecionadoController = propriedades;
 
         /* Algumas atualizacoes do modal*/
-        setTimeout(() => {  
-            if(($(".bodyDetalhes").first().height()) > 500 ) {
+        setTimeout(() => {
+            if (($(".bodyDetalhes").first().height()) > 500) {
                 $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
             }
             var bodyChatScroll = document.getElementById("bodyChatChat");
-            bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight; 
+            bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
         }, 1);
-        
+
 
     });
     app.$set(dataVue, "callback", () => {
         dataVue.modalVisivelController = false;
     });
 
-    
+
 
 });

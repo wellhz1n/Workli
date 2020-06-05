@@ -1715,6 +1715,18 @@ WmModal = Vue.component('wm-modal', {
     props: {
         visivel: { Boolean, default: false },
         callback: { Function, default: () => {} },
+        id: {
+            type: String,
+            required: true
+        },
+        height: {
+            type: String,
+            default: "95%"
+        },
+        width: {
+            type: String,
+            default: "80%"
+        }
     },
     data: () => {
         return {
@@ -1741,7 +1753,7 @@ WmModal = Vue.component('wm-modal', {
     },
     methods: {
         fecharModal(key) {
-            if (key.target.classList["value"].split(" ").filter(x => x == "btn-close" || x == "modalBackdrop").length > 0) {
+            if ((key.target.id == this.id + 'close' || key.target.id == this.id) && key.target.classList["value"].split(" ").filter(x => x == "btn-close" || x == "modalBackdrop").length > 0) {
                 this.dataVisible = false;
                 this.dataCallback();
             }
@@ -1749,13 +1761,14 @@ WmModal = Vue.component('wm-modal', {
     },
     template: `
     <transition name="modal-fade">
-        <div class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal" >
-            <div :class="['modalVue',this.dataVisible?'modal-slide':'']" >
+        <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal" >
+            <div :style="[{'height':height+' !important'},{'width':width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']" >
                 <div class="modalHeader">
                     <slot name="header">
                         Título Header
                     </slot>
                     <button
+                    :id="id + 'close'"
                         type="button"
                         class="btn-close btnCloseModal"
                         @click="fecharModal"
@@ -1769,7 +1782,9 @@ WmModal = Vue.component('wm-modal', {
                     </slot>
                 </div>
                 <div class="modalFooter">
+                <slot name="footer">
                     Footer default
+                    </slot>
                 </div>
             </div>
         </div>
