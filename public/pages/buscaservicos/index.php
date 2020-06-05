@@ -59,7 +59,7 @@
     </div>
 </div>
 
-<wm-modal :visivel="dataVue.modalVisivelController" :callback="dataVue.callback">
+<wm-modal id="ModalProjetos" :visivel="dataVue.modalVisivelController" :callback="dataVue.callback">
 
     <template v-slot:header>
         <div class="headerInterno">
@@ -95,6 +95,8 @@
                         </div>
                         <div class="BDescricao" v-html="dataVue.selecionadoController.descricao">
                         </div>
+                        <wm-image-viewer :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
+
                     </div>
                     <div class="bodyChat">
                         <div id="bodyChatChat">

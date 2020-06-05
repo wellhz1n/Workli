@@ -2064,7 +2064,7 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
                 <img class="imgViewerImg" :src="item.img" />
             </div>
     </div>
-<wm-modal height="650px" id="modalImagem" :visivel="modalAberto" :callback="callbackModal">
+<wm-modal height="600px" width="78%" id="modalImagem" :visivel="modalAberto" :callback="callbackModal">
     <template v-slot:header>
         <div style="height: 50px;" class="d-flex justify-content-center align-items-center">
             <p class="mx-5 my-2">Visualizar Imagem</p>

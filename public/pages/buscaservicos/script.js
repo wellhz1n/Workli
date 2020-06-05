@@ -92,7 +92,10 @@ $(document).ready(async() => {
         if (Dependencias.length > 0) {
             propriedades.FotoPrincipal = Dependencias.filter(item => item.principal = 1);
             propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
-            propriedades.Fotos = Dependencias.filter(item => item.principal != 1);
+            let lista = Dependencias.filter(item => item.principal != 1);
+            debugger
+            propriedades.Fotos = lista.map(x => { return x.imagem });
+            propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
         }
         DesbloquearTela();
         dataVue.modalVisivelController = true;
