@@ -1,7 +1,7 @@
 .imgViewerImg {
-    height: 150px;
+    height: 100px;
     object-fit: cover;
-    width: 150px;
+    width: 100px;
     object-position: top;
     border-radius: 10px;
     border: 2px solid #218838;
@@ -15,8 +15,8 @@
 
 .imageViewerOverflow {
     position: absolute;
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     background: transparent;
     border-radius: 10px;
     color: #fff;

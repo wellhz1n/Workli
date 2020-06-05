@@ -119,7 +119,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-modal':WmModal,
                             'wm-paginacao':Wm_Paginacao,
                             'wm-error':WM_Error,
-                            'wm-loading':LoadingComponent
+                            'wm-loading':LoadingComponent,
+                            'wm-image-viewer':WM_IMAGEVIEWER
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
