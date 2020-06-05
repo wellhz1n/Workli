@@ -3,7 +3,7 @@
 <div class="col-12">
     <h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME) ?>
         <div class="row mx-2">
-            <div v-for="item in dataVue.img" class="mr-2 imgViewerContainer">
+            <div @click="dataVue.imgClick(item)" v-for="item in dataVue.img" class="mr-2 imgViewerContainer">
                 <div class="imageViewerOverflow d-flex justify-content-center flex-column align-items-center">
                     <i class="fas fa-eye"></i>
                     <p class="font_Poopins" style="font-size: 18px;">Visualizar</p>
@@ -12,31 +12,15 @@
             </div>
 
         </div>
-        <wm-modal id="modalpai" :visivel="dataVue.modalVisivelController" :callback="dataVue.callback">
+        <wm-modal id="modalpai" :visivel="dataVue.modalVisivelController" :callback="()=>{dataVue.modalVisivelController = false}">
             <template v-slot:header>
-                <div>
-
+                <div style="height: 50px;" class="d-flex justify-content-center align-items-center">
+                    <p class="mx-5 my-2">Visualizar Imagem</p>
                 </div>
             </template>
             <template v-slot:body>
-                <div>
-                    <wm-modal height="50%" width="78%" id="modalfilho" :visivel="dataVue.modalVisivelController1" :callback="dataVue.callback">
-                        <template v-slot:header>
-                            <div>
-
-                            </div>
-                        </template>
-                        <template v-slot:body>
-                            <div>
-
-                            </div>
-                        </template>
-                        <template v-slot:footer>
-                            <div>
-
-                            </div>
-                        </template>
-                    </wm-modal>
+                <div class="imgViewerModalBody">
+                    <img :src="dataVue.imgselecionada"/>
                 </div>
             </template>
             <template v-slot:footer>

@@ -35,3 +35,16 @@
     display: block;
     background: linear-gradient(rgba(0, 0, 0, 0.459), rgba(0, 0, 0, 0.459));
 }
+
+.imgViewerModalBody {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.imgViewerModalBody>img {
+    height: 550px !important;
+    object-fit: scale-down;
+    padding: 0px;
+    border: 3px solid #218838;
+}
