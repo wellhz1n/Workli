@@ -5,7 +5,7 @@
    * [wm-image](#Componente-wm-image)
    * [wm-loading](#Componente-de-Loading)
    * [wm-error](#Componente-wm-error)
-
+   * [wm-image-viewer](#Componente-wm-image-viewer)
 
 
 
@@ -201,13 +201,16 @@ este componente exibe um emoji aleatorio toda vez que é chamado
 >
 ![](img/wm-error.png);
 
-### Gerar APk ANDROID
+# Componente wm-image-viewer
+Este componente é um viewer de Imagem
+### como declarar:
 ```
-
-First:
-
-react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-finally build:
-
-./gradlew assembleRelease -x bundleReleaseJsAndAssets
+<wm-image-viewer  :imgs="dataVue.selecionadoController.Fotos"><wm-image-viewer>
 ```
+Este componente recebe um *Array* de imagens base64 (apenas o codeigo após o "data:image:jpg;base64,")
+_Imagens de Demonstração_
+>
+![](img/wm-image-viewer1.png);
+![](img/wm-image-viewer2.png);
+![](img/wm-image-viewer3.png);
+![](img/wm-image-viewer4.png);
