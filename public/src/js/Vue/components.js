@@ -2054,36 +2054,42 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
         }
     },
     template: `
-    <div>
-        <div class="row mx-2">
-            <div @click="AbreModal(item)" v-for="item in this.dataimgs" class="mr-2 imgViewerContainer">
-                <div class="imageViewerOverflow d-flex justify-content-center align-items-center flex-column ">
-                    <i style="font-size: 18px;" class="fas fa-eye mt-1"></i>
-                    <p class="font_Poopins" style="font-size: 17px;">Visualizar</p>
-                </div>
-                <img class="imgViewerImg" :src="item.img" />
-            </div>
+    <div v-if="this.dataimgs.length > 0" class="p-1 m-2">
+    <p class="tituloImagemViewer">Imagens</p>
+    <hr class="separadorTituloViewer"/>
+    <div class="row mx-2">
+        <div @click="AbreModal(item)" v-for="item in this.dataimgs" class="mr-2 imgViewerContainer">
+        <div class="imageViewerOverflow d-flex justify-content-center align-items-center flex-column ">
+        <i style="font-size: 18px;" class="fas fa-eye mt-1"></i>
+        <p class="font_Poopins" style="font-size: 17px;">Visualizar</p>
+        </div>
+        <img class="imgViewerImg" :src="item.img" />
+        </div>
     </div>
 <wm-modal height="600px" width="78%" id="modalImagem" :visivel="modalAberto" :callback="callbackModal">
     <template v-slot:header>
-        <div style="height: 50px;" class="d-flex justify-content-center align-items-center">
-            <p class="mx-5 my-2">Visualizar Imagem</p>
+        <div style="height: 60px;" class="d-flex justify-content-center align-items-center">
+            <p style="font-size:30px;color: #218838;" class="mx-5 font_Poopins_SB my-2">Visualizar Imagem</p>
         </div>
     </template>
     <template v-slot:body>
         <div class="imgViewerModalBody p-2">
-            <div @click="VoltarDePagina(imgSelecionada.id)" style="cursor:pointer; user-select: none; " class="mx-1">
+            <div  @click="VoltarDePagina(imgSelecionada.id)" style="cursor:pointer; user-select: none;position: absolute;
+            left: 1%; " class="mx-1">
                 <i style="color: #218838; font-size:30px" class="fas fa-arrow-circle-left"></i>
             </div>
-            <div>
-                <img class="imgViewerModalImage" :src="imgSelecionada.img" />
+            <div class="imgModalContainer">
+                 <transition name="fade">
+                        <img class="imgViewerModalImage" :src="imgSelecionada.img" />
+                 </transition>
                 <div class="ImageBalls">
                     <div v-for="i in dataimgs" >
                         <div style="cursor:pointer;user-select: none;" @click="MudarDePagina(i.id)" :class="['imgball',i.id == imgSelecionada.id ? 'selected':'']"></div>
                     </div>
                 </div>
             </div>
-            <div @click="ProximaDePagina(imgSelecionada.id)" style="cursor:pointer;  user-select: none; " class="m-1">
+            <div @click="ProximaDePagina(imgSelecionada.id)" style="cursor:pointer;  user-select: none;position: absolute;
+            right: 1%; " class="m-1">
                 <i style="color: #218838; font-size:30px" class="fas fa-arrow-circle-right"></i>
             </div>
 

@@ -90,10 +90,9 @@ $(document).ready(async() => {
         BloquearTela();
         let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
         if (Dependencias.length > 0) {
-            propriedades.FotoPrincipal = Dependencias.filter(item => item.principal = 1);
+            propriedades.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
             propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
             let lista = Dependencias.filter(item => item.principal != 1);
-            debugger
             propriedades.Fotos = lista.map(x => { return x.imagem });
             propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
         }

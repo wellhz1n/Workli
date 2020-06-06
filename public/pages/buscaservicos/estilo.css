@@ -195,8 +195,6 @@
     background-color: #fff;
 }
 
-
-
 .BDescricao {
     margin: 10px 3.7%;
 }
@@ -281,28 +279,37 @@
     height: 1px;
 }
 
+
 /* ---- -- -- - - -- SCROLL DO CHAT - -- - - ----- - ----*/
-    #bodyChatChat::-webkit-scrollbar {
-        width: 10px;
-    }
-  
-  /* Track */
-    #bodyChatChat::-webkit-scrollbar-track {
-        background: rgb(240, 240, 240, 0.8);
-    }
-  
-  /* Handle */
-    #bodyChatChat::-webkit-scrollbar-thumb {
-        background: rgb(130, 130, 130, 0.4);
-    }
-  
-  /* Handle on hover */
-    #bodyChatChat::-webkit-scrollbar-thumb:hover {
-        background: rgb(130, 130, 130, 0.6);
-    }
+
+#bodyChatChat::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+#bodyChatChat::-webkit-scrollbar-track {
+    background: rgb(240, 240, 240, 0.8);
+}
+
+
+/* Handle */
+
+#bodyChatChat::-webkit-scrollbar-thumb {
+    background: rgb(130, 130, 130, 0.4);
+}
+
+
+/* Handle on hover */
+
+#bodyChatChat::-webkit-scrollbar-thumb:hover {
+    background: rgb(130, 130, 130, 0.6);
+}
 
 
 /* ---- -- -- - - -- FIM DO SCROLL DO CHAT - -- - - ----- - ----*/
+
 .textoTC {
     background-color: #EFEFEF;
     border-radius: 0 15px 15px 15px;
@@ -354,16 +361,7 @@
 
 .tempoTF {
     color: #eee;
-    position: relative;
-    width: min-content;
-    float: right;
-    margin-top: 6px; 
-    margin-left: 6%;
-    font-size: 14px;
-}
-.tempoTC {
-    color: #333;
-    position: relative;
+    /* position: relative;  Isso BUGA COM A IMAGEM DO MODAL */
     width: min-content;
     float: right;
     margin-top: 6px;
@@ -371,22 +369,32 @@
     font-size: 14px;
 }
 
-
+.tempoTC {
+    color: #333;
+    /* position: relative; Isso BUGA COM A IMAGEM DO MODAL */
+    width: min-content;
+    float: right;
+    margin-top: 6px;
+    margin-left: 6%;
+    font-size: 14px;
+}
 
 .dataChatDiv {
     width: 90%;
-    text-align: center; 
-    border-bottom: 2px solid #777; 
+    text-align: center;
+    border-bottom: 2px solid #777;
     line-height: 0.1em;
     margin: 20px 5%;
 }
 
 .dataChatDivTexto {
-    background:#fff; 
-    padding:0 10px; 
+    background: #fff;
+    padding: 0 10px;
     font-weight: 700;
     color: #484848;
 }
+
+
 /* --------------------------- FIM BODY CHAT ------------------------- */
 
 
