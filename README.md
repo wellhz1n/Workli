@@ -208,6 +208,7 @@ Este componente é um viewer de Imagem
 <wm-image-viewer  :imgs="dataVue.selecionadoController.Fotos"><wm-image-viewer>
 ```
 Este componente recebe um *Array* de imagens base64 (apenas o codeigo após o "data:image:jpg;base64,")
+
 _Imagens de Demonstração_
 >
 ![](img/wm-image-viewer1.png);
