@@ -166,7 +166,12 @@
                     </div>
                 </div>
 
-                <div class="bodyProposta">
+                <div class="d-flex">
+                    <div class="bodyProposta">
+                        <div class="wrapperSlider">
+                            <input type="range" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

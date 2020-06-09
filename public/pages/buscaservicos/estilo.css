@@ -197,6 +197,7 @@
 
 .BDescricao {
     margin: 10px 3.7%;
+    word-break: break-word;
 }
 
 
@@ -397,5 +398,20 @@
 
 /* --------------------------- FIM BODY CHAT ------------------------- */
 
+
+
+
+
+/* ---------------------- PROPOSTA BODY -------------------------- */
+
+
+.bodyProposta {
+    min-height: 500px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+    margin: 10px 1% 0 1%;
+    background-color: #fff;
+    flex: 1;
+}
+/* ---------------------- FIM PROPOSTA BODY ----------------------*/
 
 /*------------------ FIM BODY MODAL -----------------------------*/
