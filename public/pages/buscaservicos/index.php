@@ -169,7 +169,7 @@
                 <div class="d-flex">
                     <div class="bodyProposta">
                         <div class="wrapperSlider">
-                            <input type="range" />
+                            <input type="range" class="rangeSlider"/>
                         </div>
                     </div>
                 </div>

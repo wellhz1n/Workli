@@ -1,4 +1,12 @@
-var dataVue = {};
+var dataVue = {
+    UsuarioContexto: {
+        Email: null,
+        Foto: null,
+        NIVEL_USUARIO: 0,
+        Nome: null,
+        id: null
+    }
+};
 var computedVue = {};
 
 var testeComp = Vue.component('teste-vue-a', {
@@ -2102,5 +2110,95 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     </template>
 </wm-modal>
 </div>
+    `
+});
+WMCHAT = Vue.component('wm-chat', {
+    prop: {
+        mensagens: {
+            type: Array,
+            default: () => { return [] }
+        },
+        userImage: {
+            type: String,
+            default: null
+        },
+        userPropostaImage: {
+            type: String,
+            default: null
+        },
+
+    },
+    data() {
+        return {
+            dataMensagens: [],
+            imagemUsuario: null,
+            imagemUsuarioProposta: null,
+            MensagemDigitada: null
+        }
+    },
+    methods: {
+        inputMensagem(msg) {
+            this.MensagemDigitada = msg
+        }
+    },
+    watch: {
+        mensagem: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.dataMensagens = nv;
+            }
+        },
+        userImage: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.imagemUsuario = nv;
+            }
+        },
+        userPropostaImage: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.imagemUsuarioProposta = nv;
+            }
+        }
+    },
+    template: `
+    <div>
+    <div id="bodyChatChat">
+    <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
+    <div class="textoFuncionario">
+        <wm-user-img :img="this.imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+        <div class="textoTF">
+            Boa tarde, antes de continuarmos com o projeto, precisamos discutir o pagamento.
+            <div class="tempoTF">14:22</div>
+        </div>
+    </div>
+
+    <div class="textoCliente">
+        <wm-user-img :img="this.imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+        <div class="textoTC">
+            Boa tarde, a minha verba é a demarcada no projeto, mas pagarei de acordo com o trabalho a ser feito.
+            <div class="tempoTC">14:54</div>
+        </div>
+    </div>
+    <div id="ancora">
+
+    </div>
+</div>
+    <div class="bodyChatEnviar">
+        <div class="wrapperImagemBC">
+            <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+        </div>
+        <div class="wrapperInputBC">
+            <input type="text" @input="inputMensagem($event.target.value)" class="inputBC" placeholder="Faça uma pergunta..."></input>
+            <i class="fas fa-caret-right iconeSetaEnviar"></i>
+        </div>
+    </div>
+
+</div>
+</div>
+
     `
 });

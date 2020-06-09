@@ -1,417 +1,430 @@
-.projetoItemContainer {
-    display: flex;
-    flex-direction: column;
-    min-height: 200px;
-    width: 96%;
-    margin-top: 20px;
-    max-height: 100%;
-    border-radius: 12px;
-    background: #ffff;
-    box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
-}
-
-.projetoHeader {
-    display: flex;
-    padding: 6px 6px 0px 6px;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.projetoValor {
-    font-size: 24px;
-    color: green;
-    font-family: Poppins-Bold;
-    font-weight: bolder;
-}
-
-.fotoperfilprojeto {
-    height: 40px;
-    width: 40px;
-    border-radius: 100%;
-}
-
-.mostrarmais {
-    background: none;
-    font-style: inherit;
-    text-decoration: underline;
-    cursor: pointer;
-    color: gray;
-}
-
-.projetoHeader2 {
-    display: flex;
-    padding: 0px 8px 0px 8px;
-    flex-direction: row;
-    font-size: 12px;
-    justify-content: space-between;
-}
-
-.projetoFoter {
-    display: flex;
-    padding: 6px;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.ItemContainerDesc {
-    padding-left: 20px;
-    font-size: 12px;
-}
-
-.categories_box {
-    margin-top: 10px;
-    margin-left: 10px;
-    height: 80%;
-    width: 100%;
-    border-radius: 14px;
-    box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
-    background: #fff;
-}
-
-
-/*------------------------- HEADER MODAL -----------------------------*/
-
-.imgHeaderModal {
-    height: 440px;
-    max-width: 100%;
-    width: 100%;
-    object-fit: fill;
-    position: absolute;
-}
-
-.headerInterno {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    height: 440px;
-}
-
-.degradeHeaderModal {
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
-    background-color: #000000;
-}
-
-.blocoNome {
-    position: absolute;
-    width: 100%;
-    max-width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    flex-direction: column;
-    color: #191919;
-    font-size: 250%;
-    text-align: center;
-}
-
-.textoHeaderModal {
-    font-family: Arial;
-    color: white;
-    letter-spacing: 1px;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px #393939;
-}
-
-.iconeImagemNull {
-    font-size: 3.5em !important;
-    margin: 10px 0;
-}
-
-.tituloHM {
-    margin-top: 18px;
-    font-family: Poppins-Regular;
-}
-
-.imagemTamanhoUser {
-    width: 160px !important;
-    height: 160px !important;
-    background-color: #fff;
-}
-
-
-/*------------------ FIM HEADER MODAL -----------------------------*/
-
-
-/*------------------ BODY MODAL -----------------------------*/
-
-.reloginhoBH {
-    margin-right: 1%;
-}
-
-.bodyHeader {
-    display: flex;
-    text-align: left;
-    justify-content: space-between;
-    padding: 10px 5%;
-    align-items: center;
-    font-family: "Helvetica Neue";
-    border-bottom: 2px solid #ddd;
-}
-
-.wrapperBH2 {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    text-align: right;
-}
-
-.BHDetalhes {
-    flex: 1;
-    color: #090f18;
-    font-weight: 700;
-    font-size: 22px;
-}
-
-.BHPreco {
-    color: #0e1724;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.5;
-    font-family: Poppins-Bold !important;
-    color: green;
-}
-
-.BHPublicado {
-    color: #4d525b;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.45;
-}
-
-.bodyBody {
-    background-color: #eee;
-    padding: 10px 0;
-}
-
-.bodyDetalhes {
-    flex: 6;
-    min-height: 500px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
-    margin: 0 0.5% 0 1%;
-    background-color: #fff;
-}
-
-.BDescricao {
-    margin: 10px 3.7%;
-    word-break: break-word;
-}
-
-
-/*  -------------------------- BODY CHAT --------------------------------- */
-
-.bodyChat {
-    flex: 3;
-    min-height: 500px;
-    max-height: 500px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
-    margin: 0 1% 0 0.5%;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-}
-
-.bodyChatEnviar {
-    display: flex;
-    align-items: center;
-    margin: 10px 3%;
-}
-
-.BCNullIcon {
-    font-size: 3em !important;
-}
-
-.BCImageIcon {
-    width: 38.75px !important;
-    height: 38.75px !important;
-}
-
-.wrapperInputBC {
-    flex: 1;
-    border: 1px solid #d9d9d9;
-    border-bottom-left-radius: 30px 100%;
-    border-top-left-radius: 30px 100%;
-    border-bottom-right-radius: 30px 100%;
-    border-top-right-radius: 30px 100%;
-    padding: 5px 2% 5px 5%;
-    display: flex;
-    align-items: center;
-}
-
-.inputBC {
-    width: 90%;
-    border: 0;
-    margin: 4px 0;
-    font-size: 16px;
-    color: #222;
-    margin: 4px 0;
-}
-
-.inputBC:focus {
-    outline: none;
-}
-
-.inputBC:focus .wrapperInputBC {
-    border: 1px solid rgb(30, 142, 62);
-}
-
-.wrapperImagemBC {
-    margin-right: 2%;
-}
-
-.iconeSetaEnviar {
-    font-size: 28px;
-    margin-left: 4%;
-    margin-right: 2%;
-}
-
-#bodyChatChat {
-    flex: 1;
-    margin: 10px 2% 5px;
-    overflow-y: scroll;
-    overflow-anchor: none;
-}
-
-#ancora {
-    overflow-anchor: auto;
-    height: 1px;
-}
-
-
-/* ---- -- -- - - -- SCROLL DO CHAT - -- - - ----- - ----*/
-
-#bodyChatChat::-webkit-scrollbar {
-    width: 10px;
-}
-
-
-/* Track */
-
-#bodyChatChat::-webkit-scrollbar-track {
-    background: rgb(240, 240, 240, 0.8);
-}
-
-
-/* Handle */
-
-#bodyChatChat::-webkit-scrollbar-thumb {
-    background: rgb(130, 130, 130, 0.4);
-}
-
-
-/* Handle on hover */
-
-#bodyChatChat::-webkit-scrollbar-thumb:hover {
-    background: rgb(130, 130, 130, 0.6);
-}
-
-
-/* ---- -- -- - - -- FIM DO SCROLL DO CHAT - -- - - ----- - ----*/
-
-.textoTC {
-    background-color: #EFEFEF;
-    border-radius: 0 15px 15px 15px;
-    padding: 5px 3%;
-    margin-right: 4%;
-    margin-top: 10px;
-    color: #252525;
-    font-size: 15px;
-}
-
-.textoCliente {
-    display: flex;
-    align-items: flex-start;
-    margin: 5px 0;
-}
-
-.imagemGeralBC img {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 0 !important;
-}
-
-.imagemGeralBC {
-    margin: 5px 2% !important;
-}
-
-.textoFuncionario {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row-reverse;
-    margin: 5px 0;
-}
-
-.textoTF {
-    background-color: #3979F3;
-    border-radius: 15px 0px 15px 15px;
-    padding: 5px 3%;
-    margin-left: 4%;
-    margin-top: 10px;
-    color: #fff;
-    font-size: 15px;
-}
-
-.imagemGeralBC svg {
-    border: 0 !important;
-    margin: 0 !important;
-}
-
-.tempoTF {
-    color: #eee;
-    /* position: relative;  Isso BUGA COM A IMAGEM DO MODAL */
-    width: min-content;
-    float: right;
-    margin-top: 6px;
-    margin-left: 6%;
-    font-size: 14px;
-}
-
-.tempoTC {
-    color: #333;
-    /* position: relative; Isso BUGA COM A IMAGEM DO MODAL */
-    width: min-content;
-    float: right;
-    margin-top: 6px;
-    margin-left: 6%;
-    font-size: 14px;
-}
-
-.dataChatDiv {
-    width: 90%;
-    text-align: center;
-    border-bottom: 2px solid #777;
-    line-height: 0.1em;
-    margin: 20px 5%;
-}
-
-.dataChatDivTexto {
-    background: #fff;
-    padding: 0 10px;
-    font-weight: 700;
-    color: #484848;
-}
-
-
-/* --------------------------- FIM BODY CHAT ------------------------- */
-
-
-
-
-
-/* ---------------------- PROPOSTA BODY -------------------------- */
-
-
-.bodyProposta {
-    min-height: 500px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
-    margin: 10px 1% 0 1%;
-    background-color: #fff;
-    flex: 1;
-}
-/* ---------------------- FIM PROPOSTA BODY ----------------------*/
-
-/*------------------ FIM BODY MODAL -----------------------------*/
+    .projetoItemContainer {
+        display: flex;
+        flex-direction: column;
+        min-height: 200px;
+        width: 96%;
+        margin-top: 20px;
+        max-height: 100%;
+        border-radius: 12px;
+        background: #ffff;
+        box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
+    }
+    
+    .projetoHeader {
+        display: flex;
+        padding: 6px 6px 0px 6px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .projetoValor {
+        font-size: 24px;
+        color: green;
+        font-family: Poppins-Bold;
+        font-weight: bolder;
+    }
+    
+    .fotoperfilprojeto {
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+    }
+    
+    .mostrarmais {
+        background: none;
+        font-style: inherit;
+        text-decoration: underline;
+        cursor: pointer;
+        color: gray;
+    }
+    
+    .projetoHeader2 {
+        display: flex;
+        padding: 0px 8px 0px 8px;
+        flex-direction: row;
+        font-size: 12px;
+        justify-content: space-between;
+    }
+    
+    .projetoFoter {
+        display: flex;
+        padding: 6px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .ItemContainerDesc {
+        padding-left: 20px;
+        font-size: 12px;
+    }
+    
+    .categories_box {
+        margin-top: 10px;
+        margin-left: 10px;
+        height: 80%;
+        width: 100%;
+        border-radius: 14px;
+        box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
+        background: #fff;
+    }
+    /*------------------------- HEADER MODAL -----------------------------*/
+    
+    .imgHeaderModal {
+        height: 440px;
+        max-width: 100%;
+        width: 100%;
+        object-fit: fill;
+        position: absolute;
+    }
+    
+    .headerInterno {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        height: 440px;
+    }
+    
+    .degradeHeaderModal {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        background-color: #000000;
+    }
+    
+    .blocoNome {
+        position: absolute;
+        width: 100%;
+        max-width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        flex-direction: column;
+        color: #191919;
+        font-size: 250%;
+        text-align: center;
+    }
+    
+    .textoHeaderModal {
+        font-family: Arial;
+        color: white;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-shadow: 1px 1px 3px #393939;
+    }
+    
+    .iconeImagemNull {
+        font-size: 3.5em !important;
+        margin: 10px 0;
+    }
+    
+    .tituloHM {
+        margin-top: 18px;
+        font-family: Poppins-Regular;
+    }
+    
+    .imagemTamanhoUser {
+        width: 160px !important;
+        height: 160px !important;
+        background-color: #fff;
+    }
+    /*------------------ FIM HEADER MODAL -----------------------------*/
+    /*------------------ BODY MODAL -----------------------------*/
+    
+    .reloginhoBH {
+        margin-right: 1%;
+    }
+    
+    .bodyHeader {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        padding: 10px 5%;
+        align-items: center;
+        font-family: "Helvetica Neue";
+        border-bottom: 2px solid #ddd;
+    }
+    
+    .wrapperBH2 {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-align: right;
+    }
+    
+    .BHDetalhes {
+        flex: 1;
+        color: #090f18;
+        font-weight: 700;
+        font-size: 22px;
+    }
+    
+    .BHPreco {
+        color: #0e1724;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 1.5;
+        font-family: Poppins-Bold !important;
+        color: green;
+    }
+    
+    .BHPublicado {
+        color: #4d525b;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+    
+    .bodyBody {
+        background-color: #eee;
+        padding: 10px 0;
+    }
+    
+    .bodyDetalhes {
+        flex: 6;
+        min-height: 500px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+        margin: 0 0.5% 0 1%;
+        background-color: #fff;
+    }
+    
+    .BDescricao {
+        margin: 10px 3.7%;
+        word-break: break-word;
+    }
+    /*  -------------------------- BODY CHAT --------------------------------- */
+    
+    .bodyChat {
+        flex: 3;
+        min-height: 500px;
+        max-height: 500px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+        margin: 0 1% 0 0.5%;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .bodyChatEnviar {
+        display: flex;
+        align-items: center;
+        margin: 10px 3%;
+    }
+    
+    .BCNullIcon {
+        font-size: 3em !important;
+    }
+    
+    .BCImageIcon {
+        width: 38.75px !important;
+        height: 38.75px !important;
+    }
+    
+    .wrapperInputBC {
+        flex: 1;
+        border: 1px solid #d9d9d9;
+        border-bottom-left-radius: 30px 100%;
+        border-top-left-radius: 30px 100%;
+        border-bottom-right-radius: 30px 100%;
+        border-top-right-radius: 30px 100%;
+        padding: 5px 2% 5px 5%;
+        display: flex;
+        align-items: center;
+    }
+    
+    .inputBC {
+        width: 90%;
+        border: 0;
+        margin: 4px 0;
+        font-size: 16px;
+        color: #222;
+        margin: 4px 0;
+    }
+    
+    .inputBC:focus {
+        outline: none;
+    }
+    
+    .inputBC:focus .wrapperInputBC {
+        border: 1px solid rgb(30, 142, 62);
+    }
+    
+    .wrapperImagemBC {
+        margin-right: 2%;
+    }
+    
+    .iconeSetaEnviar {
+        font-size: 28px;
+        margin-left: 4%;
+        margin-right: 2%;
+    }
+    
+    #bodyChatChat {
+        flex: 1;
+        margin: 10px 2% 5px;
+        overflow-y: scroll;
+        overflow-anchor: none;
+    }
+    
+    #ancora {
+        overflow-anchor: auto;
+        height: 1px;
+    }
+    /* ---- -- -- - - -- SCROLL DO CHAT - -- - - ----- - ----*/
+    
+    #bodyChatChat::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+    
+    #bodyChatChat::-webkit-scrollbar-track {
+        background: rgb(240, 240, 240, 0.8);
+    }
+    /* Handle */
+    
+    #bodyChatChat::-webkit-scrollbar-thumb {
+        background: rgb(130, 130, 130, 0.4);
+    }
+    /* Handle on hover */
+    
+    #bodyChatChat::-webkit-scrollbar-thumb:hover {
+        background: rgb(130, 130, 130, 0.6);
+    }
+    /* ---- -- -- - - -- FIM DO SCROLL DO CHAT - -- - - ----- - ----*/
+    
+    .textoTC {
+        background-color: #EFEFEF;
+        border-radius: 0 15px 15px 15px;
+        padding: 5px 3%;
+        margin-right: 4%;
+        margin-top: 10px;
+        color: #252525;
+        font-size: 15px;
+    }
+    
+    .textoCliente {
+        display: flex;
+        align-items: flex-start;
+        margin: 5px 0;
+    }
+    
+    .imagemGeralBC img {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 0 !important;
+    }
+    
+    .imagemGeralBC {
+        margin: 5px 2% !important;
+    }
+    
+    .textoFuncionario {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row-reverse;
+        margin: 5px 0;
+    }
+    
+    .textoTF {
+        background-color: #3979F3;
+        border-radius: 15px 0px 15px 15px;
+        padding: 5px 3%;
+        margin-left: 4%;
+        margin-top: 10px;
+        color: #fff;
+        font-size: 15px;
+    }
+    
+    .imagemGeralBC svg {
+        border: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .tempoTF {
+        color: #eee;
+        /* position: relative;  Isso BUGA COM A IMAGEM DO MODAL */
+        width: min-content;
+        float: right;
+        margin-top: 6px;
+        margin-left: 6%;
+        font-size: 14px;
+    }
+    
+    .tempoTC {
+        color: #333;
+        /* position: relative; Isso BUGA COM A IMAGEM DO MODAL */
+        width: min-content;
+        float: right;
+        margin-top: 6px;
+        margin-left: 6%;
+        font-size: 14px;
+    }
+    
+    .dataChatDiv {
+        width: 90%;
+        text-align: center;
+        border-bottom: 2px solid #777;
+        line-height: 0.1em;
+        margin: 20px 5%;
+    }
+    
+    .dataChatDivTexto {
+        background: #fff;
+        padding: 0 10px;
+        font-weight: 700;
+        color: #484848;
+    }
+    /* --------------------------- FIM BODY CHAT ------------------------- */
+    /* ---------------------- PROPOSTA BODY -------------------------- */
+    
+    .bodyProposta {
+        min-height: 500px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+        margin: 10px 1% 0 1%;
+        background-color: #fff;
+        flex: 1;
+    }
+    
+    .wrapperSlider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    .rangeSlider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 20px;
+        border-radius: 5px;
+        background: #d3d3d3;
+        outline: none;
+    }
+    
+    .rangeSlider:hover {
+        opacity: 1;
+    }
+    
+    .rangeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 30px;
+        height: 30px;
+        border: 0;
+        background: url('../../src/img/icons/propostas/moeda-ouro.svg');
+        cursor: pointer;
+        background-size: cover;
+    }
+    
+    .rangeSlider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border: 0;
+        background: url('../../src/img/icons/propostas/moeda-ouro.svg');
+        cursor: pointer;
+        background-size: cover;
+    }
+    /* ---------------------- FIM PROPOSTA BODY ----------------------*/
+    /*------------------ FIM BODY MODAL -----------------------------*/

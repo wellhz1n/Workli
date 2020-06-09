@@ -43,8 +43,8 @@
             </template>
         </wm-modal> -->
 
-<wm-image-viewer :imgs="dataVue.img"></wm-image-viewer>
-
+        <wm-chat></wm-chat>
+<!-- <wm-image-viewer :imgs="dataVue.img"></wm-image-viewer> -->
 
 </div>
 <script type="application/javascript">

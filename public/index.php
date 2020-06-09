@@ -120,7 +120,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-paginacao':Wm_Paginacao,
                             'wm-error':WM_Error,
                             'wm-loading':LoadingComponent,
-                            'wm-image-viewer':WM_IMAGEVIEWER
+                            'wm-image-viewer':WM_IMAGEVIEWER,
+                            'wm-chat':WMCHAT
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
@@ -136,7 +137,7 @@ header('Content-Type: text/html; charset=utf-8');
 
                         }
                     });
-                    console.clear();
+                    // console.clear();
                 </script>
 
 

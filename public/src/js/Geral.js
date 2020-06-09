@@ -6,13 +6,11 @@ function ClassesStatics() {
     var CacheSeletor = [];
 }
 async function AtualizaUsuarioContexto() {
-    app.$set(dataVue, "UsuarioContexto", {
-        id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO),
-        Nome: await GetSessaoPHP(SESSOESPHP.NOME),
-        Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
-        Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
-        NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO)
-    })
+    dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
+    dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
+    dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
+    dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
+    dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
 }
 $(document).ready(async() => {
     // Padrao();
