@@ -97,3 +97,26 @@ const Valores = {
     6: "R$2000 - R$5000"
 
 }
+const MensagemEntidade = (id = -1, msg = '', id_usuario_destinatario = -1, id_usuario_remetente = -1, date = new Date().toISOString().split('T')[0], time = new Date().toLocaleTimeString()) => {
+    return {
+        id: id,
+        msg: msg,
+        tipo: TipoMensagem.MSG,
+        id_usuario_remetente: id_usuario_remetente,
+        id_usuario_destinatario: id_usuario_destinatario,
+        date: date,
+        time: time
+    }
+}
+const SeparadorMensagemEntidade = (id = -1, msg = 'Hoje', date = new Date().toISOString().split('T')[0]) => {
+    return {
+        id: id,
+        msg: msg,
+        tipo: TipoMensagem.Separador,
+        date: date
+    }
+}
+const TipoMensagem = {
+    MSG: 'msg',
+    Separador: 'separador'
+}

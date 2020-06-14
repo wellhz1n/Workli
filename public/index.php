@@ -114,22 +114,31 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-percent': WMPercent,
                             'wm-textarea': WM_TextArea,
                             'wm-projeto': WM_NovoProjeto,
-                            'wm-home-item':HomeItem,
-                            'wm-projeto-item':WmProjetoItem,
-                            'wm-modal':WmModal,
-                            'wm-paginacao':Wm_Paginacao,
-                            'wm-error':WM_Error,
-                            'wm-loading':LoadingComponent,
-                            'wm-image-viewer':WM_IMAGEVIEWER,
-                            'wm-chat':WMCHAT
+                            'wm-home-item': HomeItem,
+                            'wm-projeto-item': WmProjetoItem,
+                            'wm-modal': WmModal,
+                            'wm-paginacao': Wm_Paginacao,
+                            'wm-error': WM_Error,
+                            'wm-loading': LoadingComponent,
+                            'wm-image-viewer': WM_IMAGEVIEWER,
+                            'wm-chat': WMCHAT
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
                             Redirect(page) {
                                 Rediredionar(page);
                             },
-                            RedirectComParan(page,paran=[]) {
-                                RediredionarComParametros(page,paran);
+                            RedirectComParan(page, paran = []) {
+                                RediredionarComParametros(page, paran);
+                            },
+                            async GetUsuarioDeContexto() {
+                                return {
+                                    Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
+                                    Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
+                                    NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO),
+                                    Nome: await GetSessaoPHP(SESSOESPHP.NOME),
+                                    id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO)
+                                }
                             }
                         },
                         watch: {

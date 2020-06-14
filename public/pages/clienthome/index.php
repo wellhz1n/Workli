@@ -42,8 +42,7 @@
                 </div>
             </template>
         </wm-modal> -->
-
-        <wm-chat></wm-chat>
+        <wm-chat heigth="300px" :mensagens="dataVue.msg" :idusuariodestinatario="2"></wm-chat>
 <!-- <wm-image-viewer :imgs="dataVue.img"></wm-image-viewer> -->
 
 </div>

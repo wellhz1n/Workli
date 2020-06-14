@@ -688,3 +688,42 @@ function DesbloquearTelaSemLoader() {
     $('body').removeClass('BloqueiaClick');
 
 }
+
+function ChatSeparatorGenerator(msgs = []) {
+    //"13/06/2020 13:40:45"
+    // let lista = [
+    //     ["2020-06-10", "10:30:10"],
+    //     ["2020-06-10", "12:30:10"],
+    //     ["2020-06-11", "09:20:10"],
+    //     ["2020-06-12", "15:10:10"],
+    //     ["2020-06-13", "13:50:10"]
+    // ]
+    // msgs = lista.map((item, index) => {
+    //     return MensagemEntidade(index, 'teste' + index, 0, 1, item[0], item[1])
+    // });
+    let msgModificada = [];
+    for (let index = 0; index < msgs.length; index++) {
+        if (msgs.filter(x => x.date == msgs[index].date && x.tipo == TipoMensagem.Separador).length == 0 &&
+            msgModificada.filter(v => v.date == msgs[index].date && v.tipo == TipoMensagem.Separador).length == 0) {
+            let separadorText = '';
+            let ontem = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+            if (msgs[index].date == new Date().toISOString().split('T')[0])
+                separadorText = "Hoje"
+            else if (new Date(msgs[index].date + " " + msgs[index].time).getDate() == new Date(ontem).getDate() &&
+                new Date(msgs[index].date + " " + msgs[index].time).getMonth() == new Date(ontem).getMonth() &&
+                new Date(msgs[index].date + " " + msgs[index].time).getFullYear() == new Date(ontem).getFullYear())
+                separadorText = "Ontem"
+            else {
+
+                let mes = new Date(msgs[index].date + " " + msgs[index].time).getMonth() + 1;
+                separadorText = `${new Date(msgs[index].date + " " + msgs[index].time).getDate()}/${mes < 10 ? '0' + mes : mes}`
+            }
+
+            msgModificada.push(SeparadorMensagemEntidade(index, separadorText, msgs[index].date));
+
+        }
+
+        msgModificada.push(msgs[index]);
+    }
+    return msgModificada;
+}

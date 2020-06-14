@@ -615,12 +615,12 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     },
     data: function() {
         return {
-            imgData: 'data:image/jpeg;base64,' + this.img
+            imgData: null
         }
     },
     template: `
     <div>
-        <div v-if="img == null || img =='' " >
+        <div v-show="this.imgData == null || this.imgData == '' " >
             <div>
                 <i 
                     style="
@@ -639,7 +639,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 ></i>
             </div>
         </div> 
-        <div v-else-if="img != null">
+        <div v-show="this.imgData != null">
             <div>
                 <img style="
                         height:224px;
@@ -657,11 +657,14 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         // console.log(this.img)
     },
     watch: {
-        img(v) {
-            if (v != null)
-                this.imgData = 'data:image/jpeg;base64,' + v;
-            else
-                this.imgData = v;
+        img: {
+            immediate: true,
+            handler(v) {
+                if (v != null)
+                    this.imgData = 'data:image/jpeg;base64,' + v;
+                else
+                    this.imgData = null;
+            }
         }
     }
 });
@@ -2113,76 +2116,123 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     `
 });
 WMCHAT = Vue.component('wm-chat', {
-    prop: {
+    props: {
         mensagens: {
             type: Array,
             default: () => { return [] }
         },
-        userImage: {
+        userpropostaimage: {
             type: String,
             default: null
         },
-        userPropostaImage: {
-            type: String,
-            default: null
+        idusuariodestinatario: {
+            type: Number,
+            default: -1
         },
-
+        heigth: {
+            type: String,
+            default: ''
+        }
     },
     data() {
         return {
             dataMensagens: [],
             imagemUsuario: null,
             imagemUsuarioProposta: null,
-            MensagemDigitada: null
+            MensagemDigitada: null,
+            idUsusarioContexto: null,
+            carregando: true,
+            idusuariodestinatariodata: -1,
+            dataHeigth: ''
         }
     },
     methods: {
         inputMensagem(msg) {
             this.MensagemDigitada = msg
+        },
+        async NovaMensagem() {
+            if (this.MensagemDigitada != null) {
+                this.dataMensagens = ChatSeparatorGenerator([...Array.from(this.dataMensagens), MensagemEntidade(-1, this.MensagemDigitada, this.idusuariodestinatariodata, this.idUsusarioContexto)]);
+                this.MensagemDigitada = null;
+                setTimeout(() => {
+                    let scro = document.getElementById('bodyChatChat')
+                    scro.scrollTop = scro.scrollHeight - scro.clientHeight;
+
+                }, 1)
+            }
         }
     },
+    async beforeMount() {
+        this.idUsusarioContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
+        this.imagemUsuario = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
+        this.carregando = false;
+        setTimeout(() => {
+            let scro = document.getElementById('bodyChatChat')
+            scro.scrollHeight + 78;
+            scro.scrollTop = scro.scrollHeight;
+
+        }, .1);
+    },
+    mounted() {
+
+
+    },
     watch: {
-        mensagem: {
+        mensagens: {
             immediate: true,
             deep: true,
             handler(nv, ov) {
-                this.dataMensagens = nv;
+                if (nv != undefined || nv != null)
+                    this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
+                else
+                    this.dataMensagens = [];
+
             }
         },
-        userImage: {
+        userpropostaimage: {
             immediate: true,
             deep: true,
             handler(nv, ov) {
-                this.imagemUsuario = nv;
-            }
-        },
-        userPropostaImage: {
-            immediate: true,
-            deep: true,
-            handler(nv, ov) {
+
                 this.imagemUsuarioProposta = nv;
+            }
+        },
+        idusuariodestinatario: {
+            immediate: true,
+            handler(nv) {
+                if (nv != undefined || nv != null)
+                    idusuariodestinatariodata = nv
+            }
+        },
+        heigth: {
+            immediate: true,
+            handler(nv) {
+                this.dataHeigth = nv;
             }
         }
     },
     template: `
-    <div>
-    <div id="bodyChatChat">
-    <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
-    <div class="textoFuncionario">
-        <wm-user-img :img="this.imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+    <div v-if="!carregando">
+    <div id="bodyChatChat" :style="{height:dataHeigth}">
+    <div v-for="item in this.dataMensagens">
+    <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>
+    <div v-if="item.tipo == 'msg' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
+        <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTF">
-            Boa tarde, antes de continuarmos com o projeto, precisamos discutir o pagamento.
-            <div class="tempoTF">14:22</div>
+            {{item.msg}}
+            <div class="tempoTF">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
 
-    <div class="textoCliente">
-        <wm-user-img :img="this.imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+    <div class="textoCliente" v-else-if="item.tipo == 'msg'">
+        <wm-user-img :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
-            Boa tarde, a minha verba é a demarcada no projeto, mas pagarei de acordo com o trabalho a ser feito.
-            <div class="tempoTC">14:54</div>
+        {{item.msg}}
+            <div class="tempoTC">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
+    </div>
+
     <div id="ancora">
 
     </div>
@@ -2192,13 +2242,17 @@ WMCHAT = Vue.component('wm-chat', {
             <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         </div>
         <div class="wrapperInputBC">
-            <input type="text" @input="inputMensagem($event.target.value)" class="inputBC" placeholder="Faça uma pergunta..."></input>
-            <i class="fas fa-caret-right iconeSetaEnviar"></i>
-        </div>
+            <input @keyup.enter="NovaMensagem" type="text" @input="inputMensagem($event.target.value)" :value="MensagemDigitada" class="inputBC" placeholder="Faça uma pergunta..."></input>
+           <div @click="NovaMensagem" s>
+            <i class="fas fa-caret-right iconeSetaEnviar" style="cursor:pointer"></i>
+            </div>
+            </div>
     </div>
 
 </div>
 </div>
-
+<div v-else>
+    <wm-loading></wm-loading>
+</div>
     `
 });
