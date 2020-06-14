@@ -2243,8 +2243,8 @@ WMCHAT = Vue.component('wm-chat', {
         </div>
         <div class="wrapperInputBC">
             <input @keyup.enter="NovaMensagem" type="text" @input="inputMensagem($event.target.value)" :value="MensagemDigitada" class="inputBC" placeholder="Faça uma pergunta..."></input>
-           <div @click="NovaMensagem" s>
-            <i class="fas fa-caret-right iconeSetaEnviar" style="cursor:pointer"></i>
+           <div @click="NovaMensagem" >
+            <i class="far fa-paper-plane iconeSetaEnviar" style="cursor:pointer"></i>
             </div>
             </div>
     </div>

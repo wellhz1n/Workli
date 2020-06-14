@@ -97,6 +97,27 @@ alter table servico modify COLUMN if  EXISTS valor int(2);
 alter table servico add COLUMN if not EXISTS nivel_profissional int(1);
 alter table servico add COLUMN if not EXISTS data_cadastro   timestamp DEFAULT CURRENT_TIMESTAMP;
 alter table servico modify COLUMN if EXISTS Ativo int(1) DEFAULT 1;
+
+-- Wellington 14/06/2020 Tarefa #1 
+
+ create table IF NOT EXISTS chat(
+	id_chat bigint auto_increment primary key,
+	id_servico int,
+	constraint CHAT_ID_SERVICO foreign key(id_servico) references servico(id) 
+);
+create table IF NOT EXISTS chat_mensagens(
+	id_chat_mensagens bigint auto_increment primary key,
+	id_chat bigint,
+	id_usuario_remetente int,
+	id_usuario_destinatario int,
+	msg text,
+	data_hora timestamp default current_timestamp,
+	visualizado int(1) default 0,
+	constraint FK_ID_CHAT_MENSAGENS_CHAT foreign key (id_chat) references chat(id_chat),
+	constraint FK_ID_USUARIO_REMETENTE foreign key(id_usuario_remetente) references usuarios(id),
+	constraint FK_ID_USUARIO_DESTINATARIO foreign key(id_usuario_destinatario) references usuarios(id)
+);
+
 -- TRIGGER RODAR MANUALMENTE
 -- delimiter $$
 -- create trigger set_Ativo_servico after update  
