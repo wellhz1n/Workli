@@ -1,8 +1,10 @@
 let UltimoFiltro = { C: Array(), Q: "", P: 1 };
 let PaginaAntesDigitar = 1;
 $(document).ready(async() => {
+    var usrContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
     BloquearTela();
     await app.$set(dataVue, "FiltroProjeto", { C: Array(), Q: "", P: 1 });
+
     app.$set(dataVue, "Carregando", true);
 
     let CategoriaParan = GetParam();
@@ -96,6 +98,12 @@ $(document).ready(async() => {
             propriedades.Fotos = lista.map(x => { return x.imagem });
             propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
         }
+        propriedades.id_chat = JSON.parse(await WMExecutaAjax("ChatBO", "GetChatPorServico", { ID_SERVICO: propriedades.id }));
+        let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
+        propriedades.msg = msg.map(x => {
+            x.tipo = TipoMensagem.MSG
+            return x;
+        });
         DesbloquearTela();
         dataVue.modalVisivelController = true;
         dataVue.selecionadoController = propriedades;
@@ -108,13 +116,56 @@ $(document).ready(async() => {
             var bodyChatScroll = document.getElementById("bodyChatChat");
             bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
         }, 1);
-
+        setInterval(async() => {
+            if (dataVue.modalVisivelController == true) {
+                let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
+                dataVue.selecionadoController.msg = msg.map(x => {
+                    x.tipo = TipoMensagem.MSG
+                    return x;
+                });
+                console.log("Foi");
+            }
+            return;
+        }, 1000);
 
     });
     app.$set(dataVue, "callback", () => {
         dataVue.modalVisivelController = false;
+        dataVue.selecionadoController = null;
     });
 
+    //#region CHAT
+    app.$set(dataVue, "NovaMensagem", async(mensagem = MensagemEntidade()) => {
+        try {
 
+            mensagem.id_chat = dataVue.selecionadoController.id_chat;
+            let saida = await WMExecutaAjax("ChatBO", "NovaMensagem", { MENSAGEM: mensagem, ID_SERVICO: dataVue.selecionadoController.id });
+
+            if (saida.error == undefined) {
+                if (saida.split('|')[0] == "OK")
+                    dataVue.selecionadoController.id_chat = JSON.parse(saida.split('|')[1]);
+                else if (saida == false)
+                    throw Error("Mensagem não enviada");
+            } else
+                throw Error("Mensagem não enviada");
+        } catch (err) {
+            console.warn("Error+++++= " + err.message);
+            toastr.error("Mensagem não enviada", "Chat");
+        }
+    });
+
+    // function GetMensagens() {
+
+    //     let msg = [MensagemEntidade(1, -1, 'oi', 1, 2, '2020-06-10', '12:00:04'),
+    //         MensagemEntidade(2, -1, 'oi tudo bem?', 2, usrContexto, '2020-06-10', '12:05:09'),
+    //         MensagemEntidade(3, -1, 'Vou bem e você?', 1, 2, '2020-06-10', '12:15:04'),
+    //         MensagemEntidade(4, -1, 'Desculpe a demora para responder, estou bem também', 2, usrContexto, '2020-06-11', '07:00:04'),
+    //         MensagemEntidade(5, -1, 'Mas sobre o Projeto?', 2, usrContexto, '2020-06-11', '07:01:00'),
+    //         MensagemEntidade(6, -1, 'Não existe mais a nescessidade deste projeto', 1, 2, '2020-06-12', '12:00:04')
+    //     ];
+    //     return msg;
+    // }
+    // app.$set(dataVue, "msg", GetMensagens());
+    //#endregion
 
 });

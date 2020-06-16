@@ -22,7 +22,7 @@ class Banco
         $banco = $config["database"];
         $username = $config["username"];
         $senha = $config["password"];
-        $url = "mysql:host=" . $config["databasehost"] . ";dbname=" . $banco . ";charset=utf8";
+        $url = "mysql:host=" . $config["databasehost"] . ";dbname=" . $banco . ";charset=utf8mb4";
         $conn = new PDO($url, $username, $senha);
         return $conn;
     }

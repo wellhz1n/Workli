@@ -42,7 +42,7 @@
                 </div>
             </template>
         </wm-modal> -->
-        <wm-chat heigth="300px" :userpropostaimage="dataVue.ftboot" :mensagens="dataVue.msg" :idusuariodestinatario="2"></wm-chat>
+        <wm-chat heigth="300px" :userpropostaimage="dataVue.ftbot" :mensagens="dataVue.msg" :idusuariodestinatario="1"  v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
 <!-- <wm-image-viewer :imgs="dataVue.img"></wm-image-viewer> -->
 
 </div>

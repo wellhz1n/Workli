@@ -32,7 +32,7 @@
                     <div v-if="dataVue.Projetos.lista.length < 1 ">
                         <wm-error mensagem="Nenhum projeto encontrado" />
                     </div>
-                    <wm-projeto-item v-else :titulo="item.titulo" :publicado="item.postado" :propostas="0" :categoria="item.categoria" :identidade="item.id" :id="'item'+item.id" :tamanhodoprojeto="item.nivel_projeto" :nivelprofissional="item.nivel_profissional" :descricao="item.descricao" :nome="item.usuario" :img="item.img" :valor="item.valor" v-for="item in dataVue.Projetos.lista" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
+                    <wm-projeto-item v-else   :titulo="item.titulo" :publicado="item.postado" :propostas="0" :categoria="item.categoria" :identidade="item.id" :id="'item'+item.id" :tamanhodoprojeto="item.nivel_projeto" :nivelprofissional="item.nivel_profissional" :descricao="item.descricao" :nome="item.usuario" :img="item.img" :valor="item.valor":id_usuario="item.id_usuario"  v-for="item in dataVue.Projetos.lista" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
                 </div>
             </div>
 
@@ -79,97 +79,17 @@
                         <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
 
                     </div>
-                    <div class="bodyChat">
-                        <div id="bodyChatChat">
-
-                            <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
-                            <div class="textoFuncionario">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTF">
-                                    Boa tarde, antes de continuarmos com o projeto, precisamos discutir o pagamento.
-                                    <div class="tempoTF">14:22</div>
-                                </div>
-                            </div>
-
-                            <div class="textoCliente">
-                                <wm-user-img :img="dataVue.selecionadoController.imagem" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTC">
-                                    Boa tarde, a minha verba é a demarcada no projeto, mas pagarei de acordo com o trabalho a ser feito.
-                                    <div class="tempoTC">14:54</div>
-                                </div>
-                            </div>
-
-                            <div class="textoFuncionario">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTF">
-                                    Como você pode ver, a nossa empresa, Soft Systems é especializada no ramo de sistema RP's, que você pretende desenvolver, além disso, demandamos grandes esforcos para a eficiência e rapidez, por isso, gostariamos de 100% da verba destinada ao projeto.
-                                    <div class="tempoTF">15:08</div>
-                                </div>
-                            </div>
-
-                            <div class="textoCliente">
-                                <wm-user-img :img="dataVue.selecionadoController.imagem" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTC">
-                                    Entendo, mas por nunca ter feito nada com vocês, não tenho certeza da confiabilidade, então pretendo destinar 90% da verba.
-                                    <div class="tempoTC">15:09</div>
-                                </div>
-                            </div>
-
-                            <div class="textoFuncionario">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTF">
-                                    Está bem, 90% é um bom número.
-                                    <div class="tempoTF">15:36</div>
-                                </div>
-                            </div>
-
-                            <div class="dataChatDiv"><span class="dataChatDivTexto">HOJE</span></div>
-
-                            <div class="textoFuncionario">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTF">
-                                    Olá, você tem algum prazo mínimo?
-                                    <div class="tempoTF">13:46</div>
-                                </div>
-                            </div>
-
-                            <div class="textoCliente">
-                                <wm-user-img :img="dataVue.selecionadoController.imagem" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTC">
-                                    Boa tarde, eu preciso do trabalho pronto em 2 meses. Você acha que é tempo o bastante?
-                                    <div class="tempoTC">14:01</div>
-                                </div>
-                            </div>
-
-                            <div class="textoFuncionario">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                                <div class="textoTF">
-                                    Com certeza, focarei toda a minha equipe nesse projeto para entregarmos o mais cedo possível :)
-                                    <div class="tempoTF">14:59</div>
-                                </div>
-                            </div>
-
-
-                            <div id="ancora">
-
-                            </div>
-                        </div>
-                        <div class="bodyChatEnviar">
-                            <div class="wrapperImagemBC">
-                                <wm-user-img :img="dataVue.UsuarioContexto.Foto" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-                            </div>
-                            <div class="wrapperInputBC">
-                                <input type="text" class="inputBC" placeholder="Faça uma pergunta..."></input>
-                                <i class="fas fa-caret-right iconeSetaEnviar"></i>
-                            </div>
-                        </div>
+                    <div class="bodyChat align-items-center">
+                        <p class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
+                        <wm-chat heigth="360px" :userpropostaimage="dataVue.selecionadoController.imagem"
+                         :mensagens="dataVue.selecionadoController.msg" 
+                         :idusuariodestinatario="dataVue.selecionadoController.id_usuario" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
                     </div>
                 </div>
-
                 <div class="d-flex">
                     <div class="bodyProposta">
                         <div class="wrapperSlider">
-                            <input type="range" class="rangeSlider"/>
+                            <input type="range" class="rangeSlider" />
                         </div>
                     </div>
                 </div>

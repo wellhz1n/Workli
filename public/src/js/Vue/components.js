@@ -1538,6 +1538,9 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         },
         valor: {
             type: String
+        },
+        id_usuario: {
+            type: String
         }
 
     },
@@ -1555,6 +1558,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             dataimgsemformato: '',
             datanome: '',
             dataValor: '',
+            dataid_ususario: -1,
             mostrarmais: false
 
         }
@@ -1616,6 +1620,13 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 this.dataValor = Valores[newval];
             }
         },
+        id_usuario: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataid_ususario = newval;
+            }
+        },
         nivelprofissional: {
             immediate: true,
             deep: true,
@@ -1662,7 +1673,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 descricao: this.datadescricao,
                 categoria: this.datacategoria,
                 tamanho: this.datatamanhodoprojeto,
-                valor: this.dataValor
+                valor: this.dataValor,
+                id_usuario: this.dataid_ususario
             });
 
         }
@@ -2152,13 +2164,15 @@ WMCHAT = Vue.component('wm-chat', {
         },
         async NovaMensagem() {
             if (this.MensagemDigitada != null) {
-                this.dataMensagens = ChatSeparatorGenerator([...Array.from(this.dataMensagens), MensagemEntidade(-1, this.MensagemDigitada, this.idusuariodestinatariodata, this.idUsusarioContexto)]);
+                let mensagem = MensagemEntidade(-1, -1, this.MensagemDigitada, this.idusuariodestinatariodata, this.idUsusarioContexto, GetDataAtual());
+                this.dataMensagens = ChatSeparatorGenerator([...Array.from(this.dataMensagens), mensagem]);
                 this.MensagemDigitada = null;
                 setTimeout(() => {
                     let scro = document.getElementById('bodyChatChat')
                     scro.scrollTop = scro.scrollHeight - scro.clientHeight;
 
-                }, 1)
+                }, 1);
+                this.$emit('novamensagem', mensagem);
             }
         }
     },
@@ -2182,9 +2196,20 @@ WMCHAT = Vue.component('wm-chat', {
             immediate: true,
             deep: true,
             handler(nv, ov) {
-                if (nv != undefined || nv != null)
+                if (nv != undefined || nv != null) {
+
                     this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
-                else
+                    setTimeout(() => {
+                        if (nv.length != ov.length) {
+
+                            let scro = document.getElementById('bodyChatChat')
+                            scro.scrollHeight + 78;
+                            scro.scrollTop = scro.scrollHeight;
+                        }
+                        return
+
+                    }, .1);
+                } else
                     this.dataMensagens = [];
 
             }
@@ -2201,7 +2226,7 @@ WMCHAT = Vue.component('wm-chat', {
             immediate: true,
             handler(nv) {
                 if (nv != undefined || nv != null)
-                    idusuariodestinatariodata = nv
+                    this.idusuariodestinatariodata = nv
             }
         },
         heigth: {

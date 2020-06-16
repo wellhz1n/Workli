@@ -49,6 +49,9 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "Logout") {
         $userBO->Logout();
     }
+    if($metodo == "GetUsuarioById"){
+        $userBO->GetUsuarioById($_POST["ID"]);
+    }
 }
 class UsuarioBO
 {
@@ -56,6 +59,12 @@ class UsuarioBO
     function __construct()
     {
         $this->usuarioDAO =  new UsuarioDAO;
+    }
+    public function GetUsuarioById($id)
+    {
+        $saida =  $this->usuarioDAO->GetUsuarioCompletobyId($id)->resultados;
+        $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
+        echo json_encode($saida[0]);
     }
     public function VerificaSeEmailExiste($email)
     {

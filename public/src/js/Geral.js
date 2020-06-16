@@ -707,7 +707,7 @@ function ChatSeparatorGenerator(msgs = []) {
             msgModificada.filter(v => v.date == msgs[index].date && v.tipo == TipoMensagem.Separador).length == 0) {
             let separadorText = '';
             let ontem = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
-            if (msgs[index].date == new Date().toISOString().split('T')[0])
+            if (msgs[index].date == GetDataAtual())
                 separadorText = "Hoje"
             else if (new Date(msgs[index].date + " " + msgs[index].time).getDate() == new Date(ontem).getDate() &&
                 new Date(msgs[index].date + " " + msgs[index].time).getMonth() == new Date(ontem).getMonth() &&
@@ -726,4 +726,9 @@ function ChatSeparatorGenerator(msgs = []) {
         msgModificada.push(msgs[index]);
     }
     return msgModificada;
+}
+
+
+function GetDataAtual() {
+    return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth()+1 <10?'0'+(new Date(new Date().toString('YYY-MM-DD')).getMonth()+1):new Date(new Date().toString('YYY-MM-DD')).getMonth()+1}-${new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
 }

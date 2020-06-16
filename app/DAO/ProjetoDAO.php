@@ -103,6 +103,7 @@ class ProjetoDAO
                p.nivel_profissional,
                p.valor,p.postado,
                p.usuario,
+               p.id_usuario,
                p.img 
                from
                     (select s.id ,
@@ -114,6 +115,7 @@ class ProjetoDAO
                     s.valor, 
                     cast(time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as int) as postado,
                     u.nome as usuario,
+                    u.id as id_usuario,
                     iu.imagem as img 
                     from servico s 
                     inner join tipo_servico  ts on ts.id = s.id_tipo_servico and ts.ATIVO = 1

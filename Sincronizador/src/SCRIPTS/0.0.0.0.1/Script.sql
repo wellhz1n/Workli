@@ -117,7 +117,8 @@ create table IF NOT EXISTS chat_mensagens(
 	constraint FK_ID_USUARIO_REMETENTE foreign key(id_usuario_remetente) references usuarios(id),
 	constraint FK_ID_USUARIO_DESTINATARIO foreign key(id_usuario_destinatario) references usuarios(id)
 );
-
+	ALTER TABLE chat_mensagens CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+  	ALTER DATABASE worklidb CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 -- TRIGGER RODAR MANUALMENTE
 -- delimiter $$
 -- create trigger set_Ativo_servico after update  
