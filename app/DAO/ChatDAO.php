@@ -45,7 +45,9 @@ class ChatDAO
                     cm.id_usuario_destinatario,
                     cm.id_usuario_remetente,
                     DATE(cm.data_hora) as date,
-                    time_format(cm.data_hora,'%H:%i:%s') as time  from chat_mensagens as cm where id_chat = ? and id_usuario_remetente = ?
+                    time_format(cm.data_hora,'%H:%i:%s') as time  from chat_mensagens as cm where id_chat = ? 
+                    and id_usuario_remetente = ?
+                    AND id_usuario_destinatario = ?
                     )
                     union all
                     (select cm.id_chat_mensagens as id_chat_mensagen,
@@ -54,11 +56,13 @@ class ChatDAO
                     cm.id_usuario_destinatario,
                     cm.id_usuario_remetente ,
                     DATE(cm.data_hora) as date,
-                    time_format(cm.data_hora,'%H:%i:%s') as time from chat_mensagens as cm where id_chat = ? and id_usuario_remetente = ?
+                    time_format(cm.data_hora,'%H:%i:%s') as time from chat_mensagens as cm where id_chat = ? 
+                    and id_usuario_remetente = ?
+                    AND id_usuario_destinatario = ?
                     )
                     ) as chatM
                     order by date,time;
-        ", [$id_chat, $id_usuario1, $id_chat, $id_usuario2]);
+        ", [$id_chat, $id_usuario1,$id_usuario2, $id_chat, $id_usuario2,$id_usuario1]);
         return count($saida->resultados) > 0 ? $saida->resultados : [];
     }
     #endregion

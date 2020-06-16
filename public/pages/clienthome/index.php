@@ -42,9 +42,14 @@
                 </div>
             </template>
         </wm-modal> -->
-        <wm-chat heigth="300px" :userpropostaimage="dataVue.ftbot" :mensagens="dataVue.msg" :idusuariodestinatario="1"  v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
-<!-- <wm-image-viewer :imgs="dataVue.img"></wm-image-viewer> -->
+    <!-- <wm-chat heigth="300px" :userpropostaimage="dataVue.ftbot" :mensagens="dataVue.msg" :idusuariodestinatario="1"  v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat> -->
+    <!-- <wm-image-viewer :imgs="dataVue.img"></wm-image-viewer> -->
+    <div class="col-2">
 
+        <a  onclick="Rediredionar('chat')" class="btn btn-success" style="cursor:pointer;color: #ffff;">
+          <i class="fas fa-comments "></i>  Chat
+        </a>
+    </div>
 </div>
 <script type="application/javascript">
     $("#Titulo").text("Home-Cliete")

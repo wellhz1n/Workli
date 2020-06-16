@@ -639,7 +639,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 ></i>
             </div>
         </div> 
-        <div v-show="this.imgData != null">
+        <div v-show="this.imgData != null && this.imgData != '' ">
             <div>
                 <img style="
                         height:224px;
@@ -660,7 +660,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         img: {
             immediate: true,
             handler(v) {
-                if (v != null)
+                if (v != null && v != "")
                     this.imgData = 'data:image/jpeg;base64,' + v;
                 else
                     this.imgData = null;

@@ -706,12 +706,10 @@ function ChatSeparatorGenerator(msgs = []) {
         if (msgs.filter(x => x.date == msgs[index].date && x.tipo == TipoMensagem.Separador).length == 0 &&
             msgModificada.filter(v => v.date == msgs[index].date && v.tipo == TipoMensagem.Separador).length == 0) {
             let separadorText = '';
-            let ontem = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().split('T')[0];
+            let ontem = new Date(new Date().setDate((new Date().getDate() - 1))).toISOString().split('T')[0];
             if (msgs[index].date == GetDataAtual())
                 separadorText = "Hoje"
-            else if (new Date(msgs[index].date + " " + msgs[index].time).getDate() == new Date(ontem).getDate() &&
-                new Date(msgs[index].date + " " + msgs[index].time).getMonth() == new Date(ontem).getMonth() &&
-                new Date(msgs[index].date + " " + msgs[index].time).getFullYear() == new Date(ontem).getFullYear())
+            else if (msgs[index].date == ontem)
                 separadorText = "Ontem"
             else {
 

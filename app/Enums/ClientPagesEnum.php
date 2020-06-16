@@ -8,7 +8,7 @@ abstract class ClientPagesEnum
     const TipoDeServicoLista = "tiposervicolist";
     const CriarServico = "criarservico";
     const BUSCASERVICO = "buscaservicos";
-
+    const CHAT = "chat";
 
 
 }

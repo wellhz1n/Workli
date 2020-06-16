@@ -154,7 +154,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 </body>
 <?php
-if (load()[1] != "Login") {
+if (load()[1] != "Login" && load()[1] != "Chat") {
     require 'templates/footer.php';
 }
 ?>

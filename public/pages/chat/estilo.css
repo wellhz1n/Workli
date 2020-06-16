@@ -1,0 +1,50 @@
+.categories_box {
+    height: 80%;
+    width: 100%;
+    box-shadow: 1px 0px 6px grey, 2px 3px 5px grey;
+    background: #fff;
+}
+
+#barlateral {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 2;
+    transition: all .3s ease-in-out;
+}
+
+#barlateral.close {
+    transform: translateX(-100%);
+}
+
+#barlateral.close .IconeMenuBar {
+    left: 100%;
+}
+
+.IconeMenuBar {
+    background-color: #fff;
+    height: 50px;
+    box-shadow: 3px 1px 3px 0px grey, 2px 3px 5px grey;
+    display: flex;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    position: absolute;
+    left: 92%;
+    font-size: 20px;
+    transition: all .3s ease-in-out;
+    right: 0%;
+    cursor: pointer;
+}
+
+@keyframes slidAnimation {
+    0% {
+        transform: translate(0px, 0px);
+        display: block;
+    }
+    100% {
+        transform: translate(-400px, 0px);
+        display: none;
+    }
+}
