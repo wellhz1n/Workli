@@ -10,7 +10,8 @@
     height: 100vh;
     width: 100%;
     z-index: 2;
-    transition: all .3s ease-in-out;
+    transition: all .3s linear;
+    will-change: transform, transition;
 }
 
 #barlateral.close {
@@ -36,15 +37,111 @@
     transition: all .3s ease-in-out;
     right: 0%;
     cursor: pointer;
+    z-index: 4;
 }
 
-@keyframes slidAnimation {
-    0% {
-        transform: translate(0px, 0px);
-        display: block;
-    }
-    100% {
-        transform: translate(-400px, 0px);
-        display: none;
-    }
+.scroolChatProjeto {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 10px;
+    margin: 0px;
+    will-change: scroll-position;
+}
+
+.ItemProjetoChat {
+    height: 150px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: red;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.ImageContainerChatItem {
+    position: relative;
+    height: 150px;
+    margin-top: 5px;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0px;
+}
+
+.ImagemItemProjeto {
+    height: 150px;
+    width: 100%;
+    border-radius: 10px;
+    transition: all .3s ease-in-out;
+    transform: scale(1, 1);
+    will-change: transform, filter;
+}
+
+.ItemProjetoChat:hover .ImagemItemProjeto {
+    transform: scale(1.2, 1.2);
+    filter: grayscale(0.5);
+}
+
+.iconeImagemNull {
+    font-size: 3.5em !important;
+    margin: 10px 0;
+}
+
+.Dados {
+    display: flex;
+    position: absolute;
+    z-index: 3;
+    top: 15%;
+    width: 100%;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    padding: 10PX;
+}
+
+.textos {
+    height: 150px;
+    width: 80%;
+    margin-top: 5%;
+}
+
+.UsuarioProjeto {
+    height: 150px;
+    width: 40%;
+    margin-left: 10%;
+}
+
+.selecionado {
+    opacity: 0.7;
+    filter: hue-rotate(282deg);
+    box-shadow: 0px 0px 10px 3px var( --verde-padrao);
+}
+
+.scroolChatProjeto::-webkit-scrollbar {
+    width: 12px;
+    cursor: pointer;
+}
+
+
+/* Track */
+
+.scroolChatProjeto::-webkit-scrollbar-track {
+    background: #21883844;
+    width: 50px;
+}
+
+
+/* Handle */
+
+.scroolChatProjeto::-webkit-scrollbar-thumb {
+    background: #218838;
+    height: 8px;
+}
+
+
+/* Handle on hover */
+
+.scroolChatProjeto::-webkit-scrollbar-thumb:hover {
+    background: #1a692b;
 }

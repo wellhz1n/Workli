@@ -1,3 +1,7 @@
+:root {
+    --verde-padrao: #218838;
+}
+
 @font-face {
     font-family: Poppins-Regular;
     src: url('../fonts/poppins/Poppins-Regular.ttf');
