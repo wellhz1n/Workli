@@ -1,7 +1,10 @@
 $(document).ready(async() => {
 
-    $(".IconeMenuBar,#CHAT").click(() => {
+    $(".IconeMenuBar").click(() => {
         $("#barlateral").toggleClass('close');
+    });
+    $('#CHAT').click(() => {
+        $("#barlateral").addClass('close');
     });
 
 });

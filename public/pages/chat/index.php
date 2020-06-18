@@ -27,8 +27,21 @@
         </div>
         <div style="height: 89vh" class="col m-0 p-0 " id="CHAT">
             <div class="categories_box h-100 d-flex flex-column justify-content-center align-items-center ">
-                <h5 class="m-0" style="font-family: Poppins-Bold;">Aqui Vai Ser o Chat</h5>
-
+                <div style="height: 9vh !important" class="col m-0 p-0 " id="HeaderCHAT">
+                    <div style="height: 9vh !important" class="categories_box  d-flex flex-column justify-content-center align-items-center ">
+                      <div class="headerChat">
+                          <span><i class="fas fa-arrow-left"></i></span>
+                          <p class="font_Poopins_SB">Selecione Uma Conversa</p>
+                          <a class="btn btn-success text-white">Abrir Projeto</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="ListaDeChats">
+                    <div class="itemConversas" v-for="i in 60">
+                        <wm-user-img :img="null" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+                        <p class="font_Poopins_SB">Mateus</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
