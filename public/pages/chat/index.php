@@ -1,27 +1,38 @@
 <div class="col-12 p-0 m-0">
     <div class="row p-0 m-0">
-        <div style="height: 89vh" id="barlateral" class="col-3 m-0 p-0 ">
+        <div style="height: 89vh" id="barlateral" :class="['col-3','m-0','p-0',dataVue.menuLateral?null:'close']">
             <div class="categories_box h-100 d-flex flex-column justify-content-center align-items-center ">
                 <div class="IconeMenuBar">
                     <i class="fas fa-chevron-right"></i>
                 </div>
                 <div class="scroolChatProjeto">
-                    <div :class="['ItemProjetoChat',i == 2?'selecionado':null]" v-for="i in 10">
-                        <div class="ImageContainerChatItem">
-                            <div class="Dados">
-                                <div class="UsuarioProjeto">
-                                    <wm-user-img :img="null" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
-                                    <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;">Robertão</p>
+                    <div v-if="dataVue.ListaDeProjetos == undefined">
+                        <wm-loading ></wm-loading>
+                    </div>
+                    <div v-else-if="dataVue.ListaDeProjetos.length > 0 ">
+
+                        <div :class="['ItemProjetoChat',i == 2?'selecionado':null]" v-for="i in dataVue.ListaDeProjetos">
+                            <div class="ImageContainerChatItem">
+                                <div class="Dados">
+                                    <div class="UsuarioProjeto">
+                                        <wm-user-img :img="null" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+                                        <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;">Robertão</p>
+                                    </div>
+                                    <div class="textos">
+                                        <h3 style="font-size: 20px;" class="font_Poopins_B text-white">Criar Tcc Para o Robertão</h3>
+                                        <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;"><i class="far fa-clock text-white"></i> 10 Dias Atrás</p>
+                                        <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;"><i class="far fa-comments"></i> 1</p>
+                                    </div>
                                 </div>
-                                <div class="textos">
-                                    <h3 style="font-size: 20px;" class="font_Poopins_B text-white">Criar Tcc Para o Robertão</h3>
-                                    <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;"><i class="far fa-clock text-white"></i> 10 Dias Atrás</p>
-                                    <p class="font_Poopins text-white" style="font-size: 14px;margin: 0px;"><i class="far fa-comments"></i> 1</p>
-                                </div>
+                                <img src="src/img/background/background.png" alt="" class="ImagemItemProjeto">
                             </div>
-                            <img src="src/img/background/background.png" alt="" class="ImagemItemProjeto">
                         </div>
                     </div>
+
+                    <div v-else>
+                        <wm-error mensagem="Nada Encontrado"></wm-error>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -29,11 +40,11 @@
             <div class="categories_box h-100 d-flex flex-column justify-content-center align-items-center ">
                 <div style="height: 9vh !important" class="col m-0 p-0 " id="HeaderCHAT">
                     <div style="height: 9vh !important" class="categories_box  d-flex flex-column justify-content-center align-items-center ">
-                      <div class="headerChat">
-                          <span><i class="fas fa-arrow-left"></i></span>
-                          <p class="font_Poopins_SB">Selecione Uma Conversa</p>
-                          <a class="btn btn-success text-white">Abrir Projeto</a>
-                      </div>
+                        <div class="headerChat">
+                            <span><i class="fas fa-arrow-left"></i></span>
+                            <p class="font_Poopins_SB">Selecione Uma Conversa</p>
+                            <a style="cursor: pointer;" class="btn btn-success text-white">Abrir Projeto</a>
+                        </div>
                     </div>
                 </div>
                 <div class="ListaDeChats">

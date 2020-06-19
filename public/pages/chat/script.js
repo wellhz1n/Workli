@@ -1,10 +1,14 @@
 $(document).ready(async() => {
+    app.$set(dataVue, "menuLateral", true);
+    app.$set(dataVue, "ListaDeProjetos", []);
+
 
     $(".IconeMenuBar").click(() => {
-        $("#barlateral").toggleClass('close');
+        dataVue.menuLateral = !dataVue.menuLateral;
     });
     $('#CHAT').click(() => {
-        $("#barlateral").addClass('close');
+        dataVue.menuLateral = false;
+
     });
 
 });

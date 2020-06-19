@@ -48,13 +48,13 @@
     padding: 10px;
     margin: 0px;
     will-change: scroll-position;
+    user-select: none;
 }
 
 .ItemProjetoChat {
     height: 150px;
     width: 100%;
     border-radius: 10px;
-    background-color: red;
     cursor: pointer;
     margin-top: 10px;
 }
@@ -215,6 +215,7 @@
     width: 100%;
     padding: 10px;
     align-items: center;
+    user-select: none;
 }
 
 .headerChat p {
