@@ -49,8 +49,8 @@ class ResultadoSql
     public $erros = null;
     function __construct($campos, $resultados, $erros)
     {
-        $this->campos = $campos;
-        $this->resultados = $resultados;
+        $this->campos = count($campos) > 0?$campos:$this->$campos;
+        $this->resultados = count($resultados) > 0 ?$resultados:$this->$resultados;
         $this->erros = $erros;
     }
 }
@@ -70,7 +70,7 @@ function Sql($sql, $parans = [])
             throw new Exception("Sql Error: " . $sqlPrepare->queryString);
         $resultado = $sqlPrepare->fetchAll(PDO::FETCH_ASSOC);
         $colunas = [];
-        if (count($resultado) > 0){
+        if (count($resultado) > 0) {
 
             array_push($colunas, array_keys($resultado[0]));
             $colunas = $colunas[0];

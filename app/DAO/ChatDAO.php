@@ -66,4 +66,44 @@ class ChatDAO
         return count($saida->resultados) > 0 ? $saida->resultados : [];
     }
     #endregion
+    #region TelaChat
+    public function GetServicosComChatFuncionario($id_usuario)
+    {
+            $sql = Sql("
+            select distinct
+            SV.id as id_servico,
+            cm.id_chat,
+            SV.nome as titulo,
+            FSV.imagem as imagem_servico,
+            U.nome,
+            IU.imagem as imagem_usuario
+            from chat_mensagens  CM 
+            
+            inner join CHAT  CH on CH.id_chat = CM.id_chat
+            inner join servico SV on SV.id = CH.id_servico
+            inner join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
+            inner join usuarios U on U.id =  SV.id_usuario
+            inner join imagem_usuario IU on iu.id_usuario = u.id
+            where id_usuario_remetente = ?
+            ",[$id_usuario]);
+        return $sql->resultados;
+    }
+    public function GetServicosComChatCliente($id_usuario)
+    {
+            $sql = Sql("
+            select distinct
+            SV.id as id_servico,
+            SV.nome as titulo,
+            FSV.imagem as imagem_servico,
+            U.nome,
+            IU.imagem as imagem_usuario
+            from servico SV 
+            inner join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
+            inner join usuarios U on U.id =  SV.id_usuario
+            inner join imagem_usuario IU on iu.id_usuario = u.id
+            where SV.id_usuario = ?
+            ",[$id_usuario]);
+        return $sql->resultados;
+    }
+    #endregion
 }
