@@ -139,7 +139,17 @@ header('Content-Type: text/html; charset=utf-8');
                                     Nome: await GetSessaoPHP(SESSOESPHP.NOME),
                                     id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO)
                                 }
+                            },
+                            async AtualizaUsuarioContexto() {
+                                this.dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
+                                this.dataVue.UsuarioContexto.id =  await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
+                                this.dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
+                                this.dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
+                                this.dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
                             }
+                        },
+                        async beforeMount() {
+                            await this.AtualizaUsuarioContexto();
                         },
                         watch: {
                             'dataVue': function(val) {}

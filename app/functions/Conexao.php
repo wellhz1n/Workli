@@ -49,8 +49,8 @@ class ResultadoSql
     public $erros = null;
     function __construct($campos, $resultados, $erros)
     {
-        $this->campos = count($campos) > 0?$campos:$this->$campos;
-        $this->resultados = count($resultados) > 0 ?$resultados:$this->$resultados;
+        $this->campos = count($campos) > 0?$campos:[];
+        $this->resultados = count($resultados) > 0 ?$resultados:[];
         $this->erros = $erros;
     }
 }

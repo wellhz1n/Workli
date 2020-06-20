@@ -89,44 +89,52 @@ $(document).ready(async() => {
     app.$set(dataVue, "modalVisivelController1", false);
     app.$set(dataVue, "selecionadoController", {});
     app.$set(dataVue, "abremodal", async(propriedades) => {
-        BloquearTela();
-        let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
-        if (Dependencias.length > 0) {
-            propriedades.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
-            propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
-            let lista = Dependencias.filter(item => item.principal != 1);
-            propriedades.Fotos = lista.map(x => { return x.imagem });
-            propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
-        }
-        propriedades.id_chat = JSON.parse(await WMExecutaAjax("ChatBO", "GetChatPorServico", { ID_SERVICO: propriedades.id }));
-        let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
-        propriedades.msg = msg.map(x => {
-            x.tipo = TipoMensagem.MSG
-            return x;
-        });
-        DesbloquearTela();
-        dataVue.modalVisivelController = true;
-        dataVue.selecionadoController = propriedades;
+        try {
 
-        /* Algumas atualizacoes do modal*/
-        setTimeout(() => {
-            if (($(".bodyDetalhes").first().height()) > 500) {
-                $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
+            BloquearTela();
+            let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
+            if (Dependencias.length > 0) {
+                propriedades.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
+                propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
+                let lista = Dependencias.filter(item => item.principal != 1);
+                propriedades.Fotos = lista.map(x => { return x.imagem });
+                propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
             }
-            var bodyChatScroll = document.getElementById("bodyChatChat");
-            bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
-        }, 1);
-        setInterval(async() => {
-            if (dataVue.modalVisivelController == true) {
-                let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
-                dataVue.selecionadoController.msg = msg.map(x => {
-                    x.tipo = TipoMensagem.MSG
-                    return x;
-                });
-                console.log("Foi");
-            }
-            return;
-        }, 1000);
+            propriedades.id_chat = JSON.parse(await WMExecutaAjax("ChatBO", "GetChatPorServico", { ID_SERVICO: propriedades.id }));
+            let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
+            propriedades.msg = msg.map(x => {
+                x.tipo = TipoMensagem.MSG
+                return x;
+            });
+            DesbloquearTela();
+            dataVue.modalVisivelController = true;
+            dataVue.selecionadoController = propriedades;
+
+            /* Algumas atualizacoes do modal*/
+            setTimeout(() => {
+                if (($(".bodyDetalhes").first().height()) > 500) {
+                    $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
+                }
+                var bodyChatScroll = document.getElementById("bodyChatChat");
+                bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
+            }, 1);
+            setInterval(async() => {
+                if (dataVue.modalVisivelController == true) {
+                    let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
+                    dataVue.selecionadoController.msg = msg.map(x => {
+                        x.tipo = TipoMensagem.MSG
+                        return x;
+                    });
+                    console.log("Foi");
+                }
+                return;
+            }, 1000);
+        } catch (error) {
+            console.warn("ERROR++++++=====+++++ " + error.message);
+            toastr.error("Algo Deu Errado!<br>tente novamente mais tarde.", "Ops");
+        } finally {
+            DesbloquearTela();
+        }
 
     });
     app.$set(dataVue, "callback", () => {
@@ -139,7 +147,7 @@ $(document).ready(async() => {
         try {
 
             mensagem.id_chat = dataVue.selecionadoController.id_chat;
-            let saida = await WMExecutaAjax("ChatBO", "NovaMensagem", { MENSAGEM: mensagem, ID_SERVICO: dataVue.selecionadoController.id });
+            let saida = await WMExecutaAjax("ChatBO", "NovaMensagem", { MENSAGEM: mensagem, ID_SERVICO: dataVue.selecionadoController.id }, false);
 
             if (saida.error == undefined) {
                 if (saida.split('|')[0] == "OK")

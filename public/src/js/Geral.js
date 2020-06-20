@@ -5,14 +5,14 @@ var GoogleLogin = false;
 function ClassesStatics() {
     var CacheSeletor = [];
 }
-async function AtualizaUsuarioContexto() {
-    dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
-    dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
-    dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-    dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
-    dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
-}
 $(document).ready(async() => {
+    async function AtualizaUsuarioContexto() {
+        dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
+        dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
+        dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
+        dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
+        dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
+    }
     // Padrao();
     await AtualizaUsuarioContexto();
     $('#MenuSair').on('click', () => {
@@ -417,7 +417,7 @@ function ReturnNamesRequiredInputs(formId) {
     return $(`#${formId} input`).filter((x, y) => y.required).map((x, y) => y.name)
 }
 
-function WMExecutaAjax(BO, metodo, dados = {}) {
+function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
 
     let temp_data = { metodo: metodo };
     let dataProp = Object.getOwnPropertyNames(dados);
@@ -433,11 +433,11 @@ function WMExecutaAjax(BO, metodo, dados = {}) {
         }).then(Resultados => {
             if (Resultados != "" || Resultados != null)
                 try {
-
-                    Resultados = JSON.parse(Resultados);
+                    Resultados = ConvertJSON ? JSON.parse(Resultados) : Resultados;
                 }
             catch (err) {
-
+                console.warn("ERRO PHP:\n" + Resultados);
+                throw err;
             }
             if (Resultados.error != undefined)
                 console.error(`ERROR++++++++++++++++++++++++++:\n ${Resultados.error}`);
@@ -530,8 +530,8 @@ function GetPageName() {
 }
 
 
-async function GetSessaoPHP(sessao) {
-    let valor = await WMExecutaAjax('SecoesBO', "GetSecoes", { 'sessao': sessao }).then(saida => {
+async function GetSessaoPHP(sessao, ConvertJSON = false) {
+    let valor = await WMExecutaAjax('SecoesBO', "GetSecoes", { 'sessao': sessao }, ConvertJSON).then(saida => {
         return saida;
     });
     return valor;

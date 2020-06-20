@@ -83,7 +83,7 @@
                         <p class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
                         <wm-chat heigth="360px" :userpropostaimage="dataVue.selecionadoController.imagem"
                          :mensagens="dataVue.selecionadoController.msg" 
-                         :idusuariodestinatario="dataVue.selecionadoController.id_usuario" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                         :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
                     </div>
                 </div>
                 <div class="d-flex">

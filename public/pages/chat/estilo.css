@@ -121,9 +121,15 @@
 }
 
 .UsuarioProjeto {
-    height: 150px;
+    height: 100px;
+    justify-content: center;
     width: 40%;
-    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 15%;
+    margin-top: 0px;
 }
 
 .selecionado {

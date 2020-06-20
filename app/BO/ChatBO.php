@@ -90,7 +90,8 @@ class ChatBO
     public function GetChatPorIdServico($id_servico)
     {
         $lista = $this->ChatDAO->GetChatPorServico($id_servico);
-        return count($lista) > 0 ? $lista[0]["id_chat"] : -1;
+        $lista = $lista != null && count($lista) > 0 ? $lista[0]["id_chat"] : -1;
+        return $lista;
     }
     public function NovoChat($id_chat, $id_servico)
     {
@@ -113,6 +114,12 @@ class ChatBO
                 if (($chave == "imagem_servico" || $chave == "imagem_usuario") && $valor != null)
                     $listaDeServicos[$key][$chave] = ConvertBlobToBase64($valor);
             }
+            if ($listaDeServicos[$key]["postado"] > 24)
+                $listaDeServicos[$key]["postado"] = "Há " . floor($listaDeServicos[$key]["postado"] / 24) . " dias";
+            else if ($listaDeServicos[$key]["postado"] > 1)
+                $listaDeServicos[$key]["postado"] = "Há " . $listaDeServicos[$key]["postado"] . " horas";
+            else
+                $listaDeServicos[$key]["postado"] = "Há  menos de uma hora";
         }
         return  $listaDeServicos;
     }

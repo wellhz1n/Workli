@@ -2180,7 +2180,7 @@ WMCHAT = Vue.component('wm-chat', {
         this.idUsusarioContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
         this.imagemUsuario = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
         this.carregando = false;
-        setTimeout(() => {
+        await setTimeout(() => {
             let scro = document.getElementById('bodyChatChat')
             scro.scrollHeight + 78;
             scro.scrollTop = scro.scrollHeight;
@@ -2197,18 +2197,20 @@ WMCHAT = Vue.component('wm-chat', {
             deep: true,
             handler(nv, ov) {
                 if (nv != undefined || nv != null) {
+                    if (ov == undefined || nv.length != ov.length) {
 
-                    this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
-                    setTimeout(() => {
-                        if (nv.length != ov.length) {
+                        this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
+                        setTimeout(() => {
+                            if (nv.length != ov.length) {
 
-                            let scro = document.getElementById('bodyChatChat')
-                            scro.scrollHeight + 78;
-                            scro.scrollTop = scro.scrollHeight;
-                        }
-                        return
+                                let scro = document.getElementById('bodyChatChat')
+                                scro.scrollHeight + 78;
+                                scro.scrollTop = scro.scrollHeight;
+                            }
+                            return
 
-                    }, .1);
+                        }, .1);
+                    }
                 } else
                     this.dataMensagens = [];
 
@@ -2243,16 +2245,20 @@ WMCHAT = Vue.component('wm-chat', {
     <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>
     <div v-if="item.tipo == 'msg' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
         <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-        <div class="textoTF">
-            {{item.msg}}
-            <div class="tempoTF">{{item.time.slice(0,5)}}</div>
+        <div class="textoTF" >
+        <div v-html="item.msg">
+        </div>
+            
+        <div class="tempoTF">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
 
     <div class="textoCliente" v-else-if="item.tipo == 'msg'">
         <wm-user-img :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
-        {{item.msg}}
+        <div v-html="item.msg">
+        </div>
+            
             <div class="tempoTC">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
