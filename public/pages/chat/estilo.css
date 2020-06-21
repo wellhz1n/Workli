@@ -8,10 +8,24 @@
 #barlateral {
     position: absolute;
     height: 100vh;
-    width: 100%;
+    width: 26%;
     z-index: 2;
     transition: all .3s linear;
     will-change: transform, transition;
+}
+@media (max-width:800px){
+    #barlateral{
+        width: 100% !important;
+    }
+ .IconeMenuBar{
+     left: 90% !important;
+ }
+ #barlateral.close .IconeMenuBar {
+    left: 96% !important;
+}
+.headerChat span {
+    font-size: 16px !important;
+}
 }
 
 #barlateral.close {
@@ -101,7 +115,12 @@
     width: 60px !important;
     margin: 0px 0px 10px 0px !important;
 }
-
+.imagemU1 {
+    background-color: #fff;
+    height: 50px !important;
+    width: 50px !important;
+    margin: 20px 0px 15px 0px !important;
+}
 .Dados {
     display: flex;
     position: absolute;
@@ -240,11 +259,22 @@
 
 .headerChat p {
     justify-self: center;
+    justify-content: center;
     margin: 0px;
+    display: flex;
+    font-size: 14px;
+    padding: 10px;
 }
-
+.headerChat a {
+    justify-self: end;
+    padding: 4px;
+    margin: 0px;
+    font-size: 14px;
+}
 .headerChat span {
-    font-size: 30px;
+    font-size: 24px;
     color: #218838;
     cursor: pointer;
+    justify-content: start;
+
 }

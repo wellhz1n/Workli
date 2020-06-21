@@ -49,7 +49,7 @@ $(document).ready(async () => {
        },800);
     })
     $('#SalvarImg').click(async () => {
-       let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagem",{'IMAGEM':app.dataVue.Usuario.imgTemp});
+       let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagem",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
         if(retorno == "OK"){
             await $('#EditImgModal').modal('hide');
             dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;

@@ -72,21 +72,22 @@ class ChatDAO
             $sql = Sql("
             select distinct
             SV.id as id_servico,
-            cm.id_chat,
+            CM.id_chat,
             SV.nome as titulo,
             FSV.imagem as imagem_servico,
+            U.id as id_usuario,
             U.nome,
             IU.imagem as imagem_usuario,
             (select count(MCH.id_chat_mensagens) from chat_mensagens MCH where MCH.id_chat = CH.id_chat and 
             (MCH.id_usuario_remetente = ? or MCH.id_usuario_destinatario = ?) ) as MSG,
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from chat_mensagens  CM 
-            inner join CHAT  CH on CH.id_chat = CM.id_chat
+            inner join chat  CH on CH.id_chat = CM.id_chat
             inner join servico SV on SV.id = CH.id_servico and SV.Ativo
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
-            left join imagem_usuario IU on iu.id_usuario = u.id  
-            where cm.id_usuario_remetente = ?
+            left join imagem_usuario IU on IU.id_usuario = U.id  
+            where CM.id_usuario_remetente = ?
             order by postado,MSG
             ",[$id_usuario,$id_usuario,$id_usuario]);
         return $sql->resultados;
@@ -99,19 +100,39 @@ class ChatDAO
             SV.nome as titulo,
             FSV.imagem as imagem_servico,
             U.nome,
+            CH.id_chat,
             IU.imagem as imagem_usuario,
-            (select distinct count(MCH.id_usuario_remetente) from chat_mensagens MCH where MCH.id_chat = CH.id_chat and 
-            MCH.id_usuario_destinatario = ?  ) as MSG,
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from servico SV 
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
-            left join imagem_usuario IU on iu.id_usuario = u.id
+            left join imagem_usuario IU on IU.id_usuario = U.id
             left join chat CH on CH.id_servico = SV.id
             where SV.id_usuario = ?
-            order by MSG DESC,postado
-            ",[$id_usuario,$id_usuario]);
+            order by postado
+            ",[$id_usuario]);
+        foreach ($sql->resultados as $key => $value) {
+                $ms = $this->GetContagemDeContatos($value["id_chat"],$id_usuario);
+                $sql->resultados[$key]["MSG"] = $ms;
+        }
         return $sql->resultados;
+    }
+    private function GetContagemDeContatos($id_chat,$id_usuario){
+        $sql = Sql("
+        SELECT  COUNT(*) AS MSG from (SELECT DISTINCT id_usuario_remetente from chat_mensagens where 
+				id_chat = ? AND 
+				id_usuario_destinatario  = ?) as M 
+        ",[$id_chat,$id_usuario]);
+        return count($sql->resultados)> 0 ?$sql->resultados[0]["MSG"]:0;
+    }
+    public function GetListaDeContatosConversa($id_chat,$id_usuario){
+        $sql = Sql("
+        select distinct  u.id,u.nome,im.imagem from chat_mensagens cm 
+        inner join usuarios u on u.id  = cm.id_usuario_remetente 
+        left join imagem_usuario im  on im.id_usuario  = u.id 
+        where cm.id_chat  = ? and cm.id_usuario_destinatario = ?",
+        [$id_chat,$id_usuario]);
+    return $sql->resultados;
     }
     #endregion
 }

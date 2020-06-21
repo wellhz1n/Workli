@@ -4,7 +4,7 @@
 abstract class FuncPagesEnum
 {
 
-    const Home = "Funchome";
+    const Home = "funchome";
     const BUSCASERVICO = "buscaservicos";
     const CHAT = "chat";
 

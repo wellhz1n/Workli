@@ -44,6 +44,13 @@ try {
             } else
                 throw new Exception("Função GetMensagensProjeto Necessita dos Seguintes Parametrôs [ID_CHAT,ID_USUARIO1,ID_USUARIO2]");
         }
+        if ($metodo == "GetListaContatos") {
+            if ((isset($_POST['ID_CHAT']) && !empty($_POST['ID_CHAT']))
+            ) {
+                echo json_encode($CHATBO->GetListContato($_POST['ID_CHAT']),JSON_UNESCAPED_UNICODE);
+            } else
+                throw new Exception("Função GetListContato Necessita dos Seguintes Parametrôs [ID_CHAT]");
+        }
         #endregion
         #region TelaChat
         if ($metodo == "BuscaServicosChat")
@@ -122,6 +129,18 @@ class ChatBO
                 $listaDeServicos[$key]["postado"] = "Há  menos de uma hora";
         }
         return  $listaDeServicos;
+    }
+    public function GetListContato($id_chat)
+    {
+        $idUsuarioContexto = json_decode(BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO));
+        $lista = $this->ChatDAO->GetListaDeContatosConversa($id_chat,$idUsuarioContexto);
+        foreach ($lista as $key => $value) {
+            foreach ($value as $chave => $valor) {
+                if (($chave == "imagem") && $valor != null)
+                    $lista[$key][$chave] = ConvertBlobToBase64($valor);
+            }
+        }
+        return $lista;
     }
     #endregion
 }

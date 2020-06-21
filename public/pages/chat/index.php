@@ -1,9 +1,9 @@
 <script src="pages/chat/script.js" type="application/javascript"></script>
 
-<div class="col-12 p-0 m-0">
+<div class="col-12 p-0 m-0" style="overflow-y: hidden;">
     <div class="row p-0 m-0">
 
-        <div style="height: 89vh" id="barlateral" :class="['col-3','m-0','p-0',dataVue.menuLateral?null:'close']">
+        <div style="height: 89vh" id="barlateral" :class="['m-0','p-0',dataVue.menuLateral?null:'close']">
             <div class="categories_box h-100 d-flex flex-column justify-content-center align-items-center ">
                 <div @click="dataVue.menuLateral = !dataVue.menuLateral" class="IconeMenuBar">
                     <i class="fas fa-chevron-right"></i>
@@ -51,22 +51,36 @@
         </div>
 
             <div v-else-if="!dataVue.Carregando" style="height: 89vh" class="col-12 m-0 p-0 " @click="dataVue.menuLateral = false" id="CHAT">
-                <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
-                    <div style="height: 9vh !important" class="col-12 p-0 m-0 " id="HeaderCHAT">
-                        <div style="height: 9vh !important" class="categories_box  d-flex flex-column justify-content-center align-items-center ">
+            <div>
+            <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
+                    <div  class="col-12 p-0 m-0 " id="HeaderCHAT">
+                        <div style="height: 9vh !important" class="col-12 categories_box  d-flex flex-column justify-content-center align-items-center ">
                             <div class="headerChat">
-                                <span><i class="fas fa-arrow-left"></i></span>
-                                <p class="font_Poopins_SB">Selecione Uma Conversa</p>
-                                <a style="cursor: pointer;" class="btn btn-success text-white">Abrir Projeto</a>
+                                <span @click="dataVue.BackButton()" class="col-3" ><div v-if="dataVue.ConversaSelecionada != null" ><i class="fas fa-arrow-left"></i></div></span>
+                                <p class="col-6 font_Poopins_SB">{{dataVue.HeaderTitulo}}</p>
+                                <a style="cursor: pointer;" class="col-3 btn btn-success text-white">Abrir Projeto</a>
                             </div>
                         </div>
                     </div>
-                    <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0" class="ListaDeChats">
-                        <div class="itemConversas" v-for="i in 60">
-                            <wm-user-img :img="null" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
-                            <p class="font_Poopins_SB">Mateus</p>
+            </div>   
+                    <div class="col-12 m-0 p-0">
+                    <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && !dataVue.MostraChat" class="ListaDeChats">
+                        <div class="itemConversas" @click="dataVue.ConversaClick(i)" v-for="i in dataVue.ListaDeConversas">
+                            <wm-user-img :img="i.imagem" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemU1"></wm-user-img>
+                            <p class="font_Poopins_SB">{{i.nome}}</p>
                         </div>
                     </div>
+                    <div  v-else class="col-12 m-0 p-0">
+                        <div style="height: 80vh !important" class="categories_box  d-flex flex-column justify-content-center align-items-center ">
+                            <div v-if="dataVue.MostraChat" class="col-12 mt-1 p-0" >
+                            <wm-chat heigth="60vh" :userpropostaimage=" dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.imagem:dataVue.ChatSelecionado.imagem_usuario"
+                            :mensagens="dataVue.Mensagens" 
+                            :idusuariodestinatario="JSON.parse(dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.id:dataVue.ChatSelecionado.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                            </div>
+                            </div>
+                    </div>
+                    </div>
+
                 </div>
             </div>
     </div>

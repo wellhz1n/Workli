@@ -1279,7 +1279,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
         async SalvaProjeto(contexto) {
             contexto.carregando = true;
             BloquearTelaSemLoader();
-            let result = await WMExecutaAjax("ProjetoBO", "SalvarProjeto", { Projeto: contexto.projeto });
+            let result = await WMExecutaAjax("ProjetoBO", "SalvarProjeto", { Projeto: contexto.projeto },false);
             if (result.error == undefined) {
                 if (result.split('|')[0] == "OK") {
                     dataVue[contexto.$attrs.entidade]["id"] = result.split('|')[1];
