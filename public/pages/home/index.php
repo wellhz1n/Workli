@@ -18,15 +18,15 @@ require "pages/home/itemPreferido/index.php";
                 <li data-target="#carrossel" class="paginacao"data-slide-to="1"></li>
                 <li data-target="#carrossel" class="paginacao" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src="src/img/login/imagemCarrossel1.jpg">
+            <div class="carousel-inner" style="height: 100%;">
+                <div class="carousel-item active" style="height: 100%;">
+                    <img class="d-block w-100 ImagemCarrosel" src="src/img/login/imagemCarrossel1.jpg">
                 </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="src/img/login/imagemCarrossel2.jpg">
+                <div class="carousel-item" style="height: 100%;">
+                    <img class="d-block w-100 ImagemCarrosel" src="src/img/login/imagemCarrossel2.jpg">
                 </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="src/img/login/imagemCarrossel3.jpg" style="transform: rotate3d(0, 1, 0, 180deg);">
+                <div class="carousel-item" style="height: 100%;">
+                    <img class="d-block w-100 ImagemCarrosel" src="src/img/login/imagemCarrossel3.jpg" style="transform: rotate3d(0, 1, 0, 180deg);">
                 </div>
             </div>
         </div>

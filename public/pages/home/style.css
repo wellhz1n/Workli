@@ -1,10 +1,9 @@
-
 .tiraMargin {
     margin: 0;
 }
 
-/*  ---------------------------------------  SECAO IMAGEM TROCAS  ---------------------------------------  */
 
+/*  ---------------------------------------  SECAO IMAGEM TROCAS  ---------------------------------------  */
 
 #secaoImagensTrocas {
     padding: 0;
@@ -19,42 +18,37 @@
 }
 
 #imagemOndaWrapper {
-    width: 100%;  
+    width: 100%;
     height: 100%;
-    position: absolute;  
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
 
-
-
 .carrossel {
     height: 100%;
     width: 100%;
     position: absolute;
-
 }
+
 #backgroundDegrade {
     width: 100%;
     height: 100%;
     position: absolute;
-    
     background: #37d968;
     opacity: 0.8;
 }
-
 
 #textoEBotoesWrapper {
     position: absolute;
     width: 100%;
     height: 100%;
-    
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 5%;
 }
 
 #textoEBotoes {
@@ -64,7 +58,6 @@
     color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
 
 #textoParalax {
     display: flex;
@@ -116,63 +109,62 @@
     color: inherit;
 }
 
-    /* ---------------------
+
+/* ---------------------
         CARROSSEL
        --------------------- */
 
-    #paginacaoPosition {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        padding: 200px 18%;
-        margin: 0 !important;
-    }
+#paginacaoPosition {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 200px 18%;
+    top: 25%;
+    margin: 0 !important;
+}
+
+#paginacao {
+    z-index: 1;
+}
+
+.paginacao {
+    background-color: white !important;
+    transition: 0.1s;
+    width: 1.5vw !important;
+    height: 1.5vw !important;
+    border-radius: 100%;
+    margin-left: 2% !important;
+}
+
+.paginacao:hover {
+    opacity: 1;
+}
+
+#paginacaoTelaInicial {
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+}
 
 
-    #paginacao {
-        z-index: 1;
-    }
+/* ---------- FIM CARROSSEL ------------ */
 
-    .paginacao {
-        background-color: white !important;
-        transition: 0.1s;
-        width: 1.5vw !important;
-        height: 1.5vw !important;
-        border-radius: 100%;
-        margin-left: 2% !important;
-    }
 
-    .paginacao:hover {
-        opacity: 1;
-    }
-
-    #paginacaoTelaInicial {
-        display: flex;
-        justify-content: center;
-        z-index: 2;
-    }
-
-    /* ---------- FIM CARROSSEL ------------ */
 /*  ---------------------------------------  FIM SECAO IMAGEM TROCAS  ---------------------------------------  */
 
 
-
-
-
-
-
 /*  ---------------------------------------  SECAO FUNCIONAMENTO  ---------------------------------------  */
-#secaoFuncionamento{
+
+#secaoFuncionamento {
     width: 100%;
     height: 75vh;
     height: max-content;
     background-color: white;
     text-align: center;
     padding-top: 3%;
-
 }
 
 #textoFuncionamento {
@@ -184,6 +176,7 @@
 
 #wrapperFuncionamento {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     margin: 2.4% 15% 0%;
@@ -191,9 +184,6 @@
 
 
 /*  ---------------------------------------  FIM SECAO FUNCIONAMENTO  ---------------------------------------  */
-
-
-
 
 
 /*  ---------------------------------------  SECAO VANTAGENS  ---------------------------------------  */
@@ -204,7 +194,6 @@
     background-color: white;
     text-align: center;
     padding: 7% 0 4%;
-
 }
 
 #textoVantagem {
@@ -216,10 +205,12 @@
 
 .wrapperVantagem {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     margin: 2.4% 15% 0%;
 }
+
 .wrapperVantagemCima {
     margin: 3.3% 15% 0%;
 }
@@ -233,6 +224,7 @@
 
 
 /*  ---------------------------------------  SECAO PREFERIDOS  ---------------------------------------  */
+
 #secaoPreferidos {
     background-color: #f7f7f7;
     padding: 0 0 200px;
@@ -243,7 +235,6 @@
     font-family: Arial;
     font-weight: bold;
     margin-bottom: 25px;
-
 }
 
 #textoPreferidosBaixo {
@@ -253,7 +244,7 @@
 }
 
 #imagemOndaWrapperBaixo {
-    width: 100%;  
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -268,13 +259,11 @@
     transform: rotateX(180deg);
 }
 
-
 #wrapperPreferidos {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 50px 12% 0;
-
 }
 
 #titulosPreferidos {
@@ -284,18 +273,51 @@
     align-items: center;
     margin: 50px 0 10px 0;
 }
-@media (max-width:800px){
-    #textoEBotoes{
-        font-size: 13px !important;
-    margin-bottom: 0px !important;
 
+.ImagemCarrosel {
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+@media (max-width:800px) {
+    #textoEBotoes {
+        font-size: 13px !important;
+        margin-bottom: 0px !important;
     }
-    .botaoTelaInicial{
-    padding: 15px 3% !important;
-        
+    .botaoTelaInicial {
+        padding: 15px 3% !important;
     }
-    #botaoContratar{
+    #botaoContratar {
         margin-left: 8%;
     }
+    .itemFuncionamento {
+        width: 100% !important;
+    }
+    .itemVantagem {
+        width: 100% !important;
+    }
+    #paginacaoPosition {
+        top: 10% !important;
+        z-index: 16;
+    }
+    .paginacao {
+        height: 2.5vw !important;
+        width: 2.5vw !important;
+    }
+    #titulosPreferidos {
+        padding: 10px !important;
+        text-align: center !important;
+    }
+    .itemPreferido {
+        margin-top: 10px !important;
+    }
+    .tituloVantagem {
+        font-size: 18px !important;
+    }
+    #wrapperPreferidos {
+        flex-wrap: wrap;
+    }
 }
+
+
 /*  ---------------------------------------  FIM SECAO PREFERIDOS  ---------------------------------------  */

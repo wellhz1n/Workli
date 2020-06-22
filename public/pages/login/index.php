@@ -20,7 +20,7 @@
                         </span>
 
                         
-                        <div class="g-signin2 my-2 botaoGoogle" data-theme="light" data-longtitle="true" data-onsuccess="onSignIn"></div>
+                        <div class="g-signin2 my-2 botaoGoogle" data-theme="light"  data-onsuccess="onSignIn"></div>
                         <div class="envolveOu">
                             <div class="barrinhaOu"></div>
                             <span class="textoOu">OU</span>
@@ -68,7 +68,7 @@
                             Registrar — Cliente
                         </span>
                         
-                        <div class="g-signin2 botaoGoogle" data-theme="light" data-longtitle="true" data-onsuccess="onSignIn"></div>
+                        <div class="g-signin2 botaoGoogle" data-theme="light" data-onsuccess="onSignIn"></div>
                         <div class="envolveOu">
                             <div class="barrinhaOu"></div>
                             <span class="textoOu">OU</span>
@@ -144,13 +144,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <img id="imagem" class="mb-2 border border-success" style="height: 100px;width: 100px;border-radius: 100%;margin-left: 43%;" />
+            <div class="modal-body w-100 d-flex flex-column justify-content-center align-items-center">
+                <img id="imagem" class="mb-2 border border-success" style="height: 100px;width: 100px;border-radius: 100%;" />
                 <span style="font-size: 19px !important" id="nome" class="login100-form-title text-center">
                 </span>
                 <span style="font-size: 15px !important;font-weight: normal !important;display: block;width: 100%" id="email" class="  text-center ">
                 </span>
-                <div class="p-2">
+                <div class="p-2 w-100">
                     <div class="dropdown-divider"></div>
                     <p>Digite seu cpf</p>
                     <div class="wrap-input100 validate-input" data-validate="Cpf é necessário">

@@ -5,18 +5,20 @@
     align-items: center;
     width: 30%;
 }
-.imgItemFuncionamento{
+
+.imgItemFuncionamento {
     width: 80%;
     max-width: 80%;
     margin-bottom: 7%;
 }
 
 .tituloFuncionamento {
-    font-family: Poppins-Bold,Arial, Helvetica, sans-serif;
+    font-family: Poppins-Bold, Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 150%;
     margin-bottom: 6%;
 }
-.explicacaoFuncionamento{
+
+.explicacaoFuncionamento {
     font-size: 125%;
 }

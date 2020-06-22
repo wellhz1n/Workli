@@ -437,7 +437,7 @@ function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
                 }
             catch (err) {
                 console.warn("ERRO PHP:\n" + Resultados);
-                throw err;
+
             }
             if (Resultados.error != undefined)
                 console.error(`ERROR++++++++++++++++++++++++++:\n ${Resultados.error}`);
