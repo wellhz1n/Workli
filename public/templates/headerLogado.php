@@ -4,7 +4,9 @@
 <nav class="navbar navbar-expand-lg NavbarGreen">
   <a class="navbar-brand" href="">Workli</a>
   <button class="navbar-toggler text-black " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon text-black"></span>
+  <span class="navbar-toggler-icon">   
+    <i class="fas fa-bars" style="color:#218838; font-size:28px;"></i>
+</span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto" id="menuHeader">

@@ -54,10 +54,10 @@
             <div>
             <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
                     <div  class="col-12 p-0 m-0 " id="HeaderCHAT">
-                        <div style="height: 9vh !important" class="col-12 categories_box  d-flex flex-column justify-content-center align-items-center ">
+                        <div class="col-12 categories_box  HeaderTamanho d-flex flex-column justify-content-center align-items-center ">
                             <div class="headerChat">
                                 <span @click="dataVue.BackButton()" class="col-3" ><div v-if="dataVue.ConversaSelecionada != null" ><i class="fas fa-arrow-left"></i></div></span>
-                                <p class="col-6 font_Poopins_SB">{{dataVue.HeaderTitulo}}</p>
+                                <p class="col-6 font_Poopins_SB" v-html="dataVue.HeaderTitulo"></p>
                                 <a style="cursor: pointer;" class="col-3 btn btn-success text-white">Abrir Projeto</a>
                             </div>
                         </div>

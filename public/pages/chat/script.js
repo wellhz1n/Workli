@@ -35,7 +35,7 @@ $(document).ready(async() => {
         await BuscaMensagem(dataVue.ConversaSelecionada.id);
         dataVue.MostraChat = true;
         dataVue.menuLateral = false;
-        dataVue.HeaderTitulo = `Conversa com: ${dataVue.ConversaSelecionada.nome}`;
+        dataVue.HeaderTitulo = "Conversa com: <p class='m-0 p-0 ml-1' style='font-size:17px'><b style='color:red'>"+dataVue.ConversaSelecionada.nome+"</b></p>";
         ChatTimeInterval = setInterval(async()=>{
         await BuscaMensagem(dataVue.ConversaSelecionada.id);
         },1500);         
@@ -52,11 +52,11 @@ $(document).ready(async() => {
         }
         dataVue.ChatSelecionado = item;
         if(dataVue.UsuarioContexto.NIVEL_USUARIO == 1){
+            dataVue.HeaderTitulo = "Conversa com: <p class='m-0 p-0 ml-1' style='font-size:17px'><b style='color:red'>"+dataVue.ChatSelecionado.nome+"</b></p>";
                 dataVue.Mensagens = [];
                 await BuscaMensagem(dataVue.ChatSelecionado.id_usuario);
                 dataVue.MostraChat = true;
                 dataVue.menuLateral = false;
-            dataVue.HeaderTitulo = `Conversa com: ${dataVue.ChatSelecionado.nome}`;
                 ChatTimeInterval = setInterval(async()=>{
                 await BuscaMensagem(dataVue.ChatSelecionado.id_usuario);
                 },1500);              
