@@ -65,6 +65,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+
 #textoParalax {
     display: flex;
     flex-direction: column;
@@ -283,5 +284,18 @@
     align-items: center;
     margin: 50px 0 10px 0;
 }
+@media (max-width:800px){
+    #textoEBotoes{
+        font-size: 13px !important;
+    margin-bottom: 0px !important;
 
+    }
+    .botaoTelaInicial{
+    padding: 15px 3% !important;
+        
+    }
+    #botaoContratar{
+        margin-left: 8%;
+    }
+}
 /*  ---------------------------------------  FIM SECAO PREFERIDOS  ---------------------------------------  */

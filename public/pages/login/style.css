@@ -1,5 +1,12 @@
 
-
+@media (max-width:800px){
+  .imagemPrincipalLogin{
+    display: none !important;
+  }
+  .wrap-login100{
+    width: 100% !important;
+  }
+}
   
   
   
@@ -492,10 +499,11 @@
   /*//////////////////////////////////////////////////////////////////
   [ Responsive ]*/
   
-  @media (max-width: 576px) {
+  @media (max-width: 800px) {
     .wrap-login100 {
       padding-left: 15px;
       padding-right: 15px;
+        width: 100% !important;
     }
   }
 
