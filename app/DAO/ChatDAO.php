@@ -88,7 +88,7 @@ class ChatDAO
             inner join usuarios U on U.id =  SV.id_usuario
             left join imagem_usuario IU on IU.id_usuario = U.id  
             where CM.id_usuario_remetente = ?
-            order by postado,MSG
+            order by MSG DESC,postado
             ",[$id_usuario,$id_usuario,$id_usuario]);
         return $sql->resultados;
     }
