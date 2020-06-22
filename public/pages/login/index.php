@@ -63,7 +63,7 @@
 
                 <!-- Registro para Usuário -->
                 <div class="wrap-login100 usuarioForm">
-                    <form class="login100-form validate-form" id="formRegistrar" method="POST">
+                    <form  class="login100-form validate-form" id="formRegistrar" method="POST">
                         <span class="login100-form-title p-b-title tituloRegistrar">
                             Registrar — Cliente
                         </span>

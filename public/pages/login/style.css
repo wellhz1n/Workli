@@ -835,6 +835,7 @@ iframe {
     width: 0;
     height: 0;
     padding: 0;
+    display: none;
 }
 
 .container-troca .usuarioDiv {
@@ -842,6 +843,7 @@ iframe {
     width: 60%;
     padding: 30px 50px 20px 50px;
     height: auto;
+    display: block;
 }
 
 .container-troca .funcionarioDiv {
