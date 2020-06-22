@@ -2246,9 +2246,7 @@ WMCHAT = Vue.component('wm-chat', {
     <div v-if="item.tipo == 'msg' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
         <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTF" >
-        <div v-html="item.msg">
-        </div>
-            
+        {{item.msg}}            
         <div class="tempoTF">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
@@ -2256,9 +2254,7 @@ WMCHAT = Vue.component('wm-chat', {
     <div class="textoCliente" v-else-if="item.tipo == 'msg'">
         <wm-user-img :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
-        <div v-html="item.msg">
-        </div>
-            
+                {{item.msg}}            
             <div class="tempoTC">{{item.time.slice(0,5)}}</div>
         </div>
     </div>
