@@ -178,7 +178,7 @@ $(document).ready(async() => {
                 tipo: 'input',
                 id: 'inputNome',
                 titulo: 'Nome',
-                tamanho: 'col-4',
+                tamanho: 'col-md-4',
                 disabled: () => {
                     if (acao == "VIZUALIZAR")
                         return true;
@@ -197,7 +197,7 @@ $(document).ready(async() => {
                         return true;
                     return false
                 },
-                tamanho: 'col-1',
+                tamanho: 'col-md-1',
                 entidade: grid.entidade,
                 campo: 'ativo'
             },
@@ -208,7 +208,7 @@ $(document).ready(async() => {
                 maxlength: 500,
                 estilo: { height: '34vh' },
                 obrigatorio: true,
-                tamanho: 'col-8',
+                tamanho: 'col-md-8',
                 disabled: () => {
                     if (acao == "VIZUALIZAR")
                         return true;
@@ -227,7 +227,7 @@ $(document).ready(async() => {
                     return false
                 },
                 obrigatorio: true,
-                tamanho: 'col-sm-4 col-4',
+                tamanho: 'col-sm-4 col-md-4',
                 limite: 1,
                 entidade: grid.entidade,
                 campo: 'imagem'
