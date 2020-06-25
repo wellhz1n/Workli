@@ -171,11 +171,35 @@
     justify-content: center;
 }
 
+.DropMenuCelular {
+    margin-left: 0px!important;
+}
+
+.UserTXTCell {
+    display: none;
+}
+
 
 /* ---------------------------------------- FIM FOOTER --------------------------------------------- */
 
 @media (max-width:800px) {
     .textoFooterWrapper {
         font-size: 12px !important;
+    }
+    .DropMenuCelular {
+        margin-left: -4% !important;
+    }
+    .UserTXTCell {
+        display: block;
+    }
+    .UserContainer {
+        border-top: 1px solid #2b4034;
+        width: 100%;
+        justify-content: start;
+        margin-top: 5px;
+        padding: 2px;
+    }
+    li a[aria-expanded="true"] .UserContainer {
+        width: 94% !important;
     }
 }

@@ -34,7 +34,7 @@
             <a class="nav-link" id="home" href="?page=funchome">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Serviços</a>
+            <a class="nav-link"id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">Linha do Tempo</a>
@@ -81,13 +81,16 @@
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropmenulogado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <?php if (BuscaSecaoValor(SecoesEnum::FOTO_USUARIO) != "") { ?>
+        <div class="d-flex UserContainer flex-row align-items-center "> 
+        <?php if (BuscaSecaoValor(SecoesEnum::FOTO_USUARIO) != "") { ?>
             <img style="height: 40px;width: 40px;border-radius: 100%" class="mx-2 border border-success" src="data:image/png;base64,<?php echo $_SESSION[SecoesEnum::FOTO_USUARIO]; ?>" />
           <?php } else { ?>
             <i style="color: #343a40; background: #fff; border-radius:100%; border: solid #fff 4px; font-size: 40px !important;" class="mx-2 fas fa-user-circle" aria-hidden></i>
           <?php } ?>
+          <p class="m-0 p-0 UserTXTCell"><?php echo BuscaSecaoValor(SecoesEnum::NOME)?></p>
+        </div>
         </a>
-        <div style="width: 28vw;min-width:350px" class="dropdown-menu dropdown-menu-right dropdown-info" id="navbarDropdown">
+        <div style="width: 28vw;min-width:350px" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdown">
           <div class="container linkCor">
             <div class="col-12">
               <h6><?php echo $_SESSION[SecoesEnum::NOME] ?></h6>
