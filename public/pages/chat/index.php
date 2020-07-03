@@ -6,7 +6,7 @@
         <div style="height: 89vh" id="barlateral" :class="['m-0','p-0',dataVue.menuLateral?null:'close']">
             <div class="categories_box h-100 d-flex flex-column justify-content-center align-items-center ">
                 <div @click="dataVue.menuLateral = !dataVue.menuLateral" class="IconeMenuBar">
-                    <i class="fas fa-chevron-right"></i>
+                    <span><i class="fas fa-chevron-right"></i></span>
                 </div>
                 <div class="scroolChatProjeto">
                     <div v-if="dataVue.ListaDeProjetos == undefined">

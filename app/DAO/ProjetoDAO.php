@@ -128,7 +128,6 @@ class ProjetoDAO
                     limit  6
                     offset {$pg}
                     ) as p
-           
                     GROUP BY 2 
                     order by p.postado asc
 
