@@ -89,8 +89,9 @@
                 <div class="d-flex">
                     <div class="bodyProposta">
                         <div class="wrapperSlider">
-                            <input type="range" class="rangeSlider" />
+                            <input type="range" id="rangeSlider" min="0" max="1000" />
                         </div>
+                        <div id="funfaPorra"></div>
                     </div>
                 </div>
             </div>

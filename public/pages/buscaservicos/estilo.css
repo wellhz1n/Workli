@@ -210,7 +210,7 @@
         margin-top: 10px;
     }
     
-    .rangeSlider {
+    /* #rangeSlider {
         -webkit-appearance: none;
         width: 100%;
         height: 20px;
@@ -219,11 +219,11 @@
         outline: none;
     }
     
-    .rangeSlider:hover {
+    #rangeSlider:hover {
         opacity: 1;
     }
     
-    .rangeSlider::-webkit-slider-thumb {
+    #rangeSlider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
         width: 30px;
@@ -234,13 +234,124 @@
         background-size: cover;
     }
     
-    .rangeSlider::-moz-range-thumb {
+    #rangeSlider::-moz-range-thumb {
         width: 24px;
         height: 24px;
         border: 0;
         background: url('../../src/img/icons/propostas/moeda-ouro.svg');
         cursor: pointer;
         background-size: cover;
+    } */
+
+
+
+
+    #rangeSlider {
+        -webkit-appearance: none;
+        position: relative;
+        width: 100%;
     }
+
+    #rangeSlider::-webkit-slider-runnable-track {
+        height: 16px;
+        border: none;
+        border-radius: 3px;
+    }
+
+
+    #rangeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 9px;
+        height: 9px;
+        border: 0;
+        background: url('../../src/img/icons/propostas/moeda-ouro.svg');
+        cursor: pointer;
+        background-size: cover;
+        border-radius: 50%;
+        position: relative;
+        margin-top: 3px;
+        
+        -webkit-transform: scale(3.3333);
+    }
+
+    .focused::-webkit-slider-thumb {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.15)
+    }
+
+    .disabled::-webkit-slider-thumb {
+        -webkit-transform: scale(0.9);
+        box-shadow: 0 0 0 3px #141414;
+        background: #515151 !important;
+        border-color: #515151 !important
+    }
+    .hovered::-webkit-slider-thumb {
+        -webkit-transform: scale(3.6) !important;
+    }
+
+    .clicked::-webkit-slider-thumb {
+        -webkit-transform: scale(4.3) !important;
+    }
+    #rangeSlider:focus {
+        outline: none
+    }
+
+    .rangeM #rangeSlider::-webkit-slider-thumb {
+        border-color: #3f51b5;
+    }
+
+    .range:hover #rangeSlider:before {
+        color: white;
+        content: '500';
+        position: absolute;
+        font-family: Roboto Slab;
+        top: -49px;
+        background: #036704;
+        padding: 8px 0 3px;
+        font-size: 14px;
+        width: 30px;
+        text-align: center;
+        border-radius: 100% 100% 0 0
+    }
+
+    .range:hover #rangeSlider:after {
+        content: '';
+        position: absolute;
+        top: -19px;
+        left: 50px;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 8px solid #3f51b5;
+        font-family: Roboto Slab
+    }
+
+    .range {
+        width: 50%;
+    }
+
+    /* #rangeSlider {
+        background: red !important;
+        border: 0;
+        width: 100%;
+    }
+      
+    #rangeSlider * {
+        outline: none;
+    }
+      
+    #rangeSlider .ui-slider-range,
+    #rangeSlider .ui-slider-handle {
+        background: red !important;
+        border: 0;
+    }
+      
+    #rangeSlider .ui-slider-handle {
+        border-radius: 100%;
+        width: 11px;
+        height: 11px;
+        margin-left: 1px;
+    } */
+
+      
     /* ---------------------- FIM PROPOSTA BODY ----------------------*/
     /*------------------ FIM BODY MODAL -----------------------------*/

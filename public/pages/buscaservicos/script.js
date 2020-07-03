@@ -117,6 +117,7 @@ $(document).ready(async() => {
                 }
                 var bodyChatScroll = document.getElementById("bodyChatChat");
                 bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
+
             }, 1);
             setInterval(async() => {
                 if (dataVue.modalVisivelController == true) {
@@ -125,10 +126,68 @@ $(document).ready(async() => {
                         x.tipo = TipoMensagem.MSG
                         return x;
                     });
-                    console.log("Foi");
+
+
                 }
                 return;
             }, 1000);
+
+
+            setTimeout(() => {
+                /*JS DO SLIDER*/
+               
+                $('#rangeSlider').wrap("<div class='range'></div>");
+                var i = 1;
+
+                $('.range').each(function() {
+                    var n = this.getElementsByTagName('input')[0].value / 1;
+                    var x = (n / 100) * (this.getElementsByTagName('input')[0].offsetWidth - 8) - 12;
+                    this.id = 'range' + i;
+                    if (this.getElementsByTagName('input')[0].value == 0) {
+                        this.className = "range"
+                    } else {
+                        this.className = "range rangeM"
+                        
+                    }
+                    this.innerHTML = "<input type='range' id='rangeSlider' min='0' max='1000'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n/2 + "%, #62de57 " + n + "%, #515151 " + n + "%);} #" + this.id + ":hover #rangeSlider:before{content:'" + n + "'!important;left: " + x + "px;} #" + this.id + ":hover #rangeSlider:after{left: " + x + "px}</style>";
+                    i++
+                });
+
+                $('#rangeSlider').on("input", function() {
+                    var a = this.value / 10;
+                    var p = (a / 100) * (this.offsetWidth - 8) - 12;
+                    if (a == 0) {
+                        this.parentNode.className = "range"
+                    } else {
+                        this.parentNode.className = "range rangeM"
+                    }
+                    this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + a/2 + "%, #62de57 " + a + "%, #515151 " + a + "%);} #" + this.parentNode.id + ":hover #rangeSlider:before{content:'" + a + "'!important;left: " + p + "px;} #" + this.parentNode.id + ":hover #rangeSlider:after{left: " + p + "px}";
+                })
+                
+                $("#rangeSlider").on("mouseover", function () {
+                    $('#rangeSlider').addClass("hovered");
+                });
+
+                $("#rangeSlider").on({
+                    mouseenter: () => {
+                        $('#rangeSlider').addClass("hovered");
+                    },
+                    mouseleave: () => {
+                        $('#rangeSlider').removeClass("hovered");
+                    },
+                    mousedown: () => {   
+                        $('#rangeSlider').addClass("clicked");
+                    },
+                    mouseup: () => {    
+                        $('#rangeSlider').removeClass("clicked");
+                    }
+                });
+
+
+                /* FIM JS DO SLIDER*/
+            }, 1);
+
+
         } catch (error) {
             console.warn("ERROR++++++=====+++++ " + error.message);
             toastr.error("Algo Deu Errado!<br>tente novamente mais tarde.", "Ops");
@@ -176,4 +235,5 @@ $(document).ready(async() => {
     // app.$set(dataVue, "msg", GetMensagens());
     //#endregion
 
+    
 });

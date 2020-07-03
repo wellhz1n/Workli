@@ -24,6 +24,7 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="stylesheet" type="text/css" href="src/js/animsition/css/animsition.min.css">
     <link rel="stylesheet" type="text/css" href="src/js/select2/select2.min.css">
     <link rel="stylesheet" type="text/css" href="src/js/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="src/js/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="src/css/starRating/star-rating.min.css" />
 
     <!-- Importações internas -->
@@ -55,6 +56,8 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/daterangepicker/moment.min.js"></script>
     <script src="src/js/daterangepicker/daterangepicker.js"></script>
     <script src="src/js/countdowntime/countdowntime.js"></script>
+
+    <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
