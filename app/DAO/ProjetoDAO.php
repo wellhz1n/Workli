@@ -81,7 +81,7 @@ class ProjetoDAO
     {
 
         $sqlcategoria = count($categoria) > 0 ? " and s.id_tipo_servico in(" . join(",", $categoria) . ")" : null;
-        $like = $q != "" ? " where p.titulo like'%$q%'" : null;
+        $like = $q != "" ? " and s.nome like'%$q%'" : null;
         $likep = $q != "" ? " and s.nome like'%$q%'" : null;
         $paginas = Sql("
         select  ceil(count(s.id)/6) as paginas from servico s
@@ -122,12 +122,12 @@ class ProjetoDAO
                     inner join  usuarios  u on u.id = s.id_usuario 
                     left join imagem_usuario iu on iu.id_usuario =u.id 
                     where s.Ativo  = 1
+                    {$like}
                     {$sqlcategoria}
                     order by postado,id asc
                     limit  6
                     offset {$pg}
                     ) as p
-                    {$like}
                     GROUP BY 2 
                     order by p.postado asc
 
