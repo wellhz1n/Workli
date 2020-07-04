@@ -91,7 +91,6 @@
                         <div class="wrapperSlider">
                             <input type="range" id="rangeSlider" min="0" max="1000" />
                         </div>
-                        <div id="funfaPorra"></div>
                     </div>
                 </div>
             </div>
