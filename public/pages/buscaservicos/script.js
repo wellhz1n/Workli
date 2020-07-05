@@ -1,6 +1,6 @@
 let UltimoFiltro = { C: Array(), Q: "", P: 1 };
 let PaginaAntesDigitar = 1;
-$(document).ready(async() => {
+$(document).ready(async () => {
     var usrContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
     BloquearTela();
     await app.$set(dataVue, "FiltroProjeto", { C: Array(), Q: "", P: 1 });
@@ -10,7 +10,7 @@ $(document).ready(async() => {
     let CategoriaParan = GetParam();
 
     app.$set(dataVue, "Categorias", await GetCategorias());
-    app.$watch("dataVue.FiltroProjeto", async function(a, o) {
+    app.$watch("dataVue.FiltroProjeto", async function (a, o) {
         //Guambiarra que da Orgulho pro pai
         var aObj = { C, P, Q } = JSON.parse(JSON.stringify(a));
         if (o != undefined && (aObj.C.join() != UltimoFiltro.C.join() || aObj.P != UltimoFiltro.P || aObj.Q != UltimoFiltro.Q)) {
@@ -88,7 +88,7 @@ $(document).ready(async() => {
     app.$set(dataVue, "modalVisivelController", false);
     app.$set(dataVue, "modalVisivelController1", false);
     app.$set(dataVue, "selecionadoController", {});
-    app.$set(dataVue, "abremodal", async(propriedades) => {
+    app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
 
             BloquearTela();
@@ -119,7 +119,7 @@ $(document).ready(async() => {
                 bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
 
             }, 1);
-            setInterval(async() => {
+            setInterval(async () => {
                 if (dataVue.modalVisivelController == true) {
                     let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
                     dataVue.selecionadoController.msg = msg.map(x => {
@@ -135,11 +135,11 @@ $(document).ready(async() => {
 
             setTimeout(() => {
                 /*JS DO SLIDER*/
-               
+
                 $('#rangeSlider').wrap("<div class='range'></div>");
                 var i = 1;
 
-                $('.range').each(function() {
+                $('.range').each(function () {
                     var n = this.getElementsByTagName('input')[0].value / 1;
                     var x = (n / 100) * (this.getElementsByTagName('input')[0].offsetWidth - 8) - 12;
                     this.id = 'range' + i;
@@ -147,13 +147,13 @@ $(document).ready(async() => {
                         this.className = "range"
                     } else {
                         this.className = "range rangeM"
-                        
+
                     }
-                    this.innerHTML = "<input type='range' id='rangeSlider' min='0' max='1000'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n/2 + "%, #62de57 " + n + "%, #515151 " + n + "%);} #" + this.id + ":hover #rangeSlider:before{content:'" + n + "'!important;left: " + x + "px;} #" + this.id + ":hover #rangeSlider:after{left: " + x + "px}</style>";
+                    this.innerHTML = "<input type='range' id='rangeSlider' min='0' max='1000'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);} #" + this.id + ":hover #rangeSlider:before{content:'" + n + "'!important;left: " + x + "px;} #" + this.id + ":hover #rangeSlider:after{left: " + x + "px}</style>";
                     i++
                 });
 
-                $('#rangeSlider').on("input", function() {
+                $('#rangeSlider').on("input", function () {
                     var a = this.value / 10;
                     var p = (a / 100) * (this.offsetWidth - 8) - 12;
                     if (a == 0) {
@@ -161,9 +161,9 @@ $(document).ready(async() => {
                     } else {
                         this.parentNode.className = "range rangeM"
                     }
-                    this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + a/2 + "%, #62de57 " + a + "%, #515151 " + a + "%);} #" + this.parentNode.id + ":hover #rangeSlider:before{content:'" + a + "'!important;left: " + p + "px;} #" + this.parentNode.id + ":hover #rangeSlider:after{left: " + p + "px}";
+                    this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + a / 2 + "%, #62de57 " + a + "%, #515151 " + a + "%);} #" + this.parentNode.id + ":hover #rangeSlider:before{content:'" + a + "'!important;left: " + p + "px;} #" + this.parentNode.id + ":hover #rangeSlider:after{left: " + p + "px}";
                 })
-                
+
                 $("#rangeSlider").on("mouseover", function () {
                     $('#rangeSlider').addClass("hovered");
                 });
@@ -175,14 +175,28 @@ $(document).ready(async() => {
                     mouseleave: () => {
                         $('#rangeSlider').removeClass("hovered");
                     },
-                    mousedown: () => {   
+                    mousedown: () => {
                         $('#rangeSlider').addClass("clicked");
+                        $(".clicked").on("input", () => {
+                            event.target.style.setProperty('--r', event.target.value*1.8 + 'deg')
+                        });
                     },
-                    mouseup: () => {    
+                    mouseup: () => {
                         $('#rangeSlider').removeClass("clicked");
+                    },
+                    input: () => {
+                        event.target.style.setProperty('--r', event.target.value + 'deg');
+                        if (event.target.value > 666) {          
+                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-ouro.svg')")
+                        }
+                        else if (event.target.value > 333) {
+                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-prata.svg')")
+                        }
+                        else {
+                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-bronze.svg')")
+                        }
                     }
                 });
-
 
                 /* FIM JS DO SLIDER*/
             }, 1);
@@ -202,7 +216,7 @@ $(document).ready(async() => {
     });
 
     //#region CHAT
-    app.$set(dataVue, "NovaMensagem", async(mensagem = MensagemEntidade()) => {
+    app.$set(dataVue, "NovaMensagem", async (mensagem = MensagemEntidade()) => {
         try {
 
             mensagem.id_chat = dataVue.selecionadoController.id_chat;
@@ -235,5 +249,5 @@ $(document).ready(async() => {
     // app.$set(dataVue, "msg", GetMensagens());
     //#endregion
 
-    
+
 });

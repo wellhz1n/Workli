@@ -265,15 +265,15 @@
         width: 9px;
         height: 9px;
         border: 0;
-        background: url('../../src/img/icons/propostas/moeda-ouro.svg');
         cursor: pointer;
+        background-image: var(--moeda, url('../../src/img/icons/propostas/moeda-prata.svg')) !important;
         background-size: cover;
         border-radius: 50%;
         position: relative;
         margin-top: 3px;
-        
-        -webkit-transform: scale(3.3333);
+        -webkit-transform: scale(3.3333) rotate(var(--r, 180deg));
     }
+
 
     .focused::-webkit-slider-thumb {
         box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.15)
@@ -286,11 +286,21 @@
         border-color: #515151 !important
     }
     .hovered::-webkit-slider-thumb {
-        -webkit-transform: scale(3.6) !important;
+        -webkit-transform: scale(3.6) rotate(var(--r, 180deg))!important;
     }
 
+    .clicked {
+        /* -webkit-animation: giraMoeda linear 3s infinite; */
+    }
     .clicked::-webkit-slider-thumb {
-        -webkit-transform: scale(4.3) !important;
+        -webkit-transform: scale(4.2) rotate(var(--r, 180deg)) !important;
+        /* transform: scale(4.3) !important; */
+    }
+
+    @keyframes rotateCoin {
+        0%   {transform: rotate(0deg);}
+        50%  {transform: rotate(180deg);}
+        100% {transform: rotate(-0deg);}
     }
     #rangeSlider:focus {
         outline: none
