@@ -56,7 +56,7 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/daterangepicker/moment.min.js"></script>
     <script src="src/js/daterangepicker/daterangepicker.js"></script>
     <script src="src/js/countdowntime/countdowntime.js"></script>
-
+    <script scr="https://cdnjs.com/libraries/Chart.js"></script>
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
     <!-- Importações de fonte -->
@@ -124,7 +124,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-error': WM_Error,
                             'wm-loading': LoadingComponent,
                             'wm-image-viewer': WM_IMAGEVIEWER,
-                            'wm-chat': WMCHAT
+                            'wm-chat': WMCHAT,
+                            "wm-chart":WMChart
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
@@ -145,7 +146,7 @@ header('Content-Type: text/html; charset=utf-8');
                             },
                             async AtualizaUsuarioContexto() {
                                 this.dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
-                                this.dataVue.UsuarioContexto.id =  await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
+                                this.dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
                                 this.dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
                                 this.dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
                                 this.dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
