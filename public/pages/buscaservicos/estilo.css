@@ -54,7 +54,8 @@
     }
     
     .ItemContainerDesc {
-        padding-left: 20px;
+        padding-left: 24px;
+        padding-right: 24px;
         font-size: 12px;
     }
     
@@ -217,6 +218,7 @@
         align-items: center;
         margin-top: 10px;
     }
+    
     #rangeSlider {
         -webkit-appearance: none;
         position: relative;
@@ -286,7 +288,7 @@
     .rangeM #rangeSlider::-webkit-slider-thumb {
         border-color: #3f51b5;
     }
-
+    
     .range {
         width: 50%;
         display: flex;
@@ -294,11 +296,13 @@
         align-items: center;
         justify-content: center;
     }
+    
     .wrapperValorDoSlider {
         display: inline;
         flex-direction: column;
         align-items: center;
     }
+    
     .precoSlider {
         color: #008000;
         font-size: 120%;
@@ -314,15 +318,14 @@
         font-family: Poppins-Bold;
         color: #090f18;
     }
-
-    .valorDoSlider { 
+    
+    .valorDoSlider {
         text-align: center;
         color: var(--corASerModificada, rgb(132, 83, 18)) !important;
         font-size: 25px;
     }
-
+    
     #valorAtualSlider {
-        
         font-family: Poppins-Bold;
     }
     /* ---------------------- FIM PROPOSTA BODY ----------------------*/

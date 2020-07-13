@@ -1713,12 +1713,13 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
     </div>
     <div class="ItemContainerDesc">
-        <div  >
-            <p v-html="datadescricao" class="font_Poopins">
-                {{this.mostrarmais ? datadescricao : datadescricao.substr(0,400) }}
-                <span v-show="datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{ !this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
+        <div >
+            <p  v-html="this.mostrarmais ? datadescricao : datadescricao.substr(0,400)" class="font_Poopins m-0">
             </p>
-        </div>
+            <p class="m-0">
+            <span v-show="datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{ !this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
+            </p>
+            </div>
         <div >
             <p class="m-0 font_Poopins_B"><strong>Categoria</strong>: {{this.datacategoria}}</p>
             <p class="m-0 font_Poopins_B"><strong>Tamanho do Projeto</strong>: {{this.datatamanhodoprojeto}}</p>
