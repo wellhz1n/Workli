@@ -108,7 +108,7 @@ let GetCamposUsuario = ()=>{
 <li><strong>obrigatorio</strong>: Boolean  obriga ou nao o preenchimento do componente</li>
 </ul>
 
-### wb-seletor Propriedades
+### wm-select Propriedades
 <ul>
 <li><strong>icone</strong>: bool permite icones nos itens(font awesome)</li>
 <li><strong>limpavel</strong>: bool permite limpar o componente </li>
