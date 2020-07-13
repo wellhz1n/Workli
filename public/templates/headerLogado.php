@@ -4,9 +4,9 @@
 <nav class="navbar navbar-expand-lg NavbarGreen">
   <a class="navbar-brand" href="">Workli</a>
   <button class="navbar-toggler text-black " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon">   
-    <i class="fas fa-bars" style="color:#218838; font-size:28px;"></i>
-</span>
+    <span class="navbar-toggler-icon">
+      <i class="fas fa-bars" style="color:#218838; font-size:28px;"></i>
+    </span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto" id="menuHeader">
@@ -14,6 +14,7 @@
       <?php
       switch (Logado()[1]) {
           // USER Cliente
+          #region Cliente
         case "0":
       ?>
           <li class="nav-item ">
@@ -28,20 +29,23 @@
         <?php
           break;
           // user FUNCIONARIO
+          #region Funcionario
         case "1":
         ?>
           <li class="nav-item ">
             <a class="nav-link" id="home" href="?page=funchome">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
+            <a class="nav-link" id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">Linha do Tempo</a>
           </li>
         <?php
           break;
+          #endregion
           //  USER ADM 
+          #region ADM
         case "2":
         ?>
           <li class="nav-item ">
@@ -59,7 +63,9 @@
           </li>
         <?php
           break;
+          #endregion
           //  USER DESENVOLVEDOR
+          #region DeV
         case "3":
         ?>
           <li class="nav-item ">
@@ -73,6 +79,7 @@
           </li>
       <?php
           break;
+          #endregion
       }
       ?>
 
@@ -81,14 +88,14 @@
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropmenulogado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <div class="d-flex UserContainer flex-row align-items-center "> 
-        <?php if (BuscaSecaoValor(SecoesEnum::FOTO_USUARIO) != "") { ?>
-            <img style="height: 40px;width: 40px;border-radius: 100%" class="mx-2 border border-success" src="data:image/png;base64,<?php echo $_SESSION[SecoesEnum::FOTO_USUARIO]; ?>" />
-          <?php } else { ?>
-            <i style="color: #343a40; background: #fff; border-radius:100%; border: solid #fff 4px; font-size: 40px !important;" class="mx-2 fas fa-user-circle" aria-hidden></i>
-          <?php } ?>
-          <p class="m-0 p-0 UserTXTCell"><?php echo BuscaSecaoValor(SecoesEnum::NOME)?></p>
-        </div>
+          <div class="d-flex UserContainer flex-row align-items-center ">
+            <?php if (BuscaSecaoValor(SecoesEnum::FOTO_USUARIO) != "") { ?>
+              <img style="height: 40px;width: 40px;border-radius: 100%" class="mx-2 border border-success" src="data:image/png;base64,<?php echo $_SESSION[SecoesEnum::FOTO_USUARIO]; ?>" />
+            <?php } else { ?>
+              <i style="color: #343a40; background: #fff; border-radius:100%; border: solid #fff 4px; font-size: 40px !important;" class="mx-2 fas fa-user-circle" aria-hidden></i>
+            <?php } ?>
+            <p class="m-0 p-0 UserTXTCell"><?php echo BuscaSecaoValor(SecoesEnum::NOME) ?></p>
+          </div>
         </a>
         <div style="width: 28vw;min-width:350px" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdown">
           <div class="container linkCor">
@@ -106,7 +113,7 @@
                 ?>
                   <a style="font-size: 14px" class="dropdown-item" href="">Minhas copetências</a>
                 <?php } ?>
-                <a style="font-size: 14px" class="dropdown-item"  href="">Configurações</a>
+                <a style="font-size: 14px" class="dropdown-item" href="">Configurações</a>
               </div>
             </div>
             <?php
@@ -117,10 +124,16 @@
                 <h6 class=" ">Contratar</h6>
                 <div class="row">
                   <div class="col-5 m-0  mr-3 p-0">
-                    <a style="font-size: 14px" class="dropdown-item "  href="">Procurar Profissional</a>
+                    <a style="font-size: 14px" class="dropdown-item " href="">Procurar Profissional</a>
+                  </div>
+                  <div class="col-5 m-0  mr-3 p-0" style=" margin-left: 20px !important;">
+                    <a style="font-size: 14px" class="dropdown-item " href="?page=chat"><i class="far fa-comments"></i>Chat</a>
+                  </div>
+                  <div class="col-5 m-0  mr-3 p-0">
+                    <a style="font-size: 14px" class="dropdown-item " href="?page=meusprojetos">Meus Projetos</a>
                   </div>
                   <div class="col-5 mx-3">
-                    <button style="font-size: 14px"  onclick='window.location.href = location.origin + location.pathname + "?page=criarservico"' class=" btn btn-success text-white" href="">Criar Projeto</button>
+                    <button style="font-size: 14px" onclick='window.location.href = location.origin + location.pathname + "?page=criarservico"' class=" btn btn-success text-white" href="">Criar Projeto</button>
                   </div>
                 </div>
               </div>
@@ -133,10 +146,10 @@
               <div class="row">
                 <div class="col-5 m-0 mr-3 p-0">
                   <a style="font-size: 14px" class="dropdown-item " href="">Contato</a>
-                  <a style="font-size: 14px" class="dropdown-item "  href="">Como funciona</a>
+                  <a style="font-size: 14px" class="dropdown-item " href="">Como funciona</a>
                 </div>
                 <div class="col-5 mx-3">
-                  <a style="font-size: 14px" class="dropdown-item "  href="">Guia</a>
+                  <a style="font-size: 14px" class="dropdown-item " href="">Guia</a>
 
                 </div>
               </div>
@@ -144,8 +157,8 @@
             <div class="dropdown-divider"></div>
             <div class="col-12 ">
               <div class="row  ">
-              <div class="col-10">
-              </div>
+                <div class="col-10">
+                </div>
                 <div class="col-2  m-0 p-0 ">
                   <a style="font-size: 14px" class="dropdown-item" id="MenuSair">Sair</a>
                 </div>

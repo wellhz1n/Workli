@@ -217,20 +217,18 @@
         align-items: center;
         margin-top: 10px;
     }
-
     #rangeSlider {
         -webkit-appearance: none;
         position: relative;
         width: 100%;
     }
-
+    
     #rangeSlider::-webkit-slider-runnable-track {
         height: 16px;
         border: none;
         border-radius: 3px;
     }
-
-
+    
     #rangeSlider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
@@ -245,69 +243,49 @@
         margin-top: 3px;
         -webkit-transform: scale(3.3333) rotate(var(--r, 180deg));
     }
-
-
+    
     .focused::-webkit-slider-thumb {
         box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.15)
     }
-
+    
     .disabled::-webkit-slider-thumb {
         -webkit-transform: scale(0.9);
         box-shadow: 0 0 0 3px #141414;
         background: #515151 !important;
         border-color: #515151 !important
     }
+    
     .hovered::-webkit-slider-thumb {
         -webkit-transform: scale(3.6) rotate(var(--r, 180deg))!important;
     }
-
+    
     .clicked {
         /* -webkit-animation: giraMoeda linear 3s infinite; */
     }
+    
     .clicked::-webkit-slider-thumb {
         -webkit-transform: scale(4.2) rotate(var(--r, 180deg)) !important;
     }
-
+    
     @keyframes rotateCoin {
-        0%   {transform: rotate(0deg);}
-        50%  {transform: rotate(180deg);}
-        100% {transform: rotate(-0deg);}
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        100% {
+            transform: rotate(-0deg);
+        }
     }
+    
     #rangeSlider:focus {
         outline: none
     }
-
+    
     .rangeM #rangeSlider::-webkit-slider-thumb {
         border-color: #3f51b5;
     }
-/* 
-    .range:hover #rangeSlider:before {
-        color: white;
-        content: '500';
-        position: absolute;
-        font-family: Poppins-Bold;
-        top: 25px;
-        padding: 5px 0 3px;
-        font-size: 18px;
-        text-align: center;
-        color: var(--corASerModificada, rgb(132, 83, 18)) !important;
-        background: red;
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .range:hover #rangeSlider:after {
-        content: '';
-        position: absolute;
-        top: -19px;
-        left: 50px;
-        border-bottom: 8px solid #3f51b5;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        font-family: Roboto Slab
-    } */
 
     .range {
         width: 50%;
@@ -316,30 +294,6 @@
         align-items: center;
         justify-content: center;
     }
-
-    /* #rangeSlider {
-        background: red !important;
-        border: 0;
-        width: 100%;
-    }
-      
-    #rangeSlider * {
-        outline: none;
-    }
-      
-    #rangeSlider .ui-slider-range,
-    #rangeSlider .ui-slider-handle {
-        background: red !important;
-        border: 0;
-    }
-      
-    #rangeSlider .ui-slider-handle {
-        border-radius: 100%;
-        width: 11px;
-        height: 11px;
-        margin-left: 1px;
-    } */
-
     .wrapperValorDoSlider {
         display: inline;
         flex-direction: column;
