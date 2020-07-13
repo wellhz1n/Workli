@@ -88,8 +88,18 @@
                 </div>
                 <div class="d-flex">
                     <div class="bodyProposta">
-                        <div class="wrapperSlider">
-                            <input type="range" id="rangeSlider" min="0" max="1000" />
+                        <div class="wrapperOfWrapperSlider">
+                            <div class="wrapperSlider">
+                                <div id="precoMin" class="precoSlider">$200</div>
+                                <input type="range" id="rangeSlider"     />
+                                <div id="precoMax" class="precoSlider">$1000</div>
+                            </div>
+                            <div class="wrapperValorDoSlider">
+                                <div class="textoVS">Sua Proposta</div>
+                                <div class="valorDoSlider">
+                                    <span id="valorAtualSlider"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

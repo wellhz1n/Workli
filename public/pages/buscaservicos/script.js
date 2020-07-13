@@ -135,13 +135,22 @@ $(document).ready(async () => {
 
             setTimeout(() => {
                 /*JS DO SLIDER*/
+                var i = 1;
+                porcentagemAtual = 50;
+
+
+                /* PUXA O VALOR DINAMICO */
+                $('#precoMin')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[0];
+                $('#precoMax')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[1];
+
+
 
                 $('#rangeSlider').wrap("<div class='range'></div>");
-                var i = 1;
+                
+
 
                 $('.range').each(function () {
                     var n = this.getElementsByTagName('input')[0].value / 1;
-                    var x = (n / 100) * (this.getElementsByTagName('input')[0].offsetWidth - 8) - 12;
                     this.id = 'range' + i;
                     if (this.getElementsByTagName('input')[0].value == 0) {
                         this.className = "range"
@@ -149,24 +158,57 @@ $(document).ready(async () => {
                         this.className = "range rangeM"
 
                     }
-                    this.innerHTML = "<input type='range' id='rangeSlider' min='0' max='1000'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);} #" + this.id + ":hover #rangeSlider:before{content:'" + n + "'!important;left: " + x + "px;} #" + this.id + ":hover #rangeSlider:after{left: " + x + "px}</style>";
+                    this.innerHTML = "<input type='range' id='rangeSlider' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
+
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
+
                 });
 
                 $('#rangeSlider').on("input", function () {
-                    var a = this.value / 10;
-                    var p = (a / 100) * (this.offsetWidth - 8) - 12;
+                    valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
+                    valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
+                    valorTotal = valorMax - valorMin;
+                    valorAtual = event.target.value;
+                    // $valorAlternante = (((event.target.value - dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "")) / ($valorTotal / 100)) / 100) * dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");    
+                    porcentagemAtual = ((valorAtual - valorMin) * 100) / (valorMax - valorMin);
+                    var a = this.value / 1;
                     if (a == 0) {
                         this.parentNode.className = "range"
                     } else {
                         this.parentNode.className = "range rangeM"
                     }
-                    this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + a / 2 + "%, #62de57 " + a + "%, #515151 " + a + "%);} #" + this.parentNode.id + ":hover #rangeSlider:before{content:'" + a + "'!important;left: " + p + "px;} #" + this.parentNode.id + ":hover #rangeSlider:after{left: " + p + "px}";
+                    this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + porcentagemAtual / 2 + "%, #62de57 " + porcentagemAtual + "%, #515151 " + porcentagemAtual + "%);}";
+
+
+                    event.target.style.setProperty('--r', event.target.value + 'deg');
+                    if (porcentagemAtual > 66.6) {
+                        event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-ouro.svg')")
+                    }
+                    else if (porcentagemAtual > 33.3) {
+                        event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-prata.svg')")
+                    }
+                    else {
+                        event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-bronze.svg')")
+                    }
+
+
+
+
+
+                    /* Valores das cores de inicio e final: rgb(3, 7, 30) e  rgb(250, 163, 6)*/
+                    let corASerModificada = "rgb(" + ((porcentagemAtual * 2.47) + 3) + ", " + ((porcentagemAtual * 1.56) + 7) + ", " + ((porcentagemAtual * -0.06) + 30) + ")";
+                    $(".valorDoSlider")[0].style.setProperty('--corASerModificada', corASerModificada);
+
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + event.target.value;
+
                 })
 
                 $("#rangeSlider").on("mouseover", function () {
                     $('#rangeSlider').addClass("hovered");
                 });
+
+                $(".valorDoSlider")[0].innerHTML += "<style></style>";
 
                 $("#rangeSlider").on({
                     mouseenter: () => {
@@ -178,28 +220,20 @@ $(document).ready(async () => {
                     mousedown: () => {
                         $('#rangeSlider').addClass("clicked");
                         $(".clicked").on("input", () => {
-                            event.target.style.setProperty('--r', event.target.value*1.8 + 'deg')
+                            event.target.style.setProperty('--r', porcentagemAtual * 9 + 'deg')
                         });
                     },
                     mouseup: () => {
                         $('#rangeSlider').removeClass("clicked");
-                    },
-                    input: () => {
-                        event.target.style.setProperty('--r', event.target.value + 'deg');
-                        if (event.target.value > 666) {          
-                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-ouro.svg')")
-                        }
-                        else if (event.target.value > 333) {
-                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-prata.svg')")
-                        }
-                        else {
-                            event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-bronze.svg')")
-                        }
                     }
                 });
 
                 /* FIM JS DO SLIDER*/
             }, 1);
+            setTimeout(() => {
+                $("#rangeSlider").attr("min", dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", ""));
+                $("#rangeSlider").attr("max", dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", ""));
+            }, 10);
 
 
         } catch (error) {
