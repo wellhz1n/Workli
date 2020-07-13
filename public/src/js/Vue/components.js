@@ -543,10 +543,10 @@ var WM_Select = Vue.component('wm-select', {
                   Nada Encontrado.
               </template>
               <template v-if="icone" slot="option" slot-scope="option">
-              <div class="d-center optionColor">
-              <i :class=" 'fas '+ option.icone"></i>
-                {{ option.nome }}
-                </div>
+                <div class="d-center optionColor">
+                <i :class=" 'fas '+ option.icone"></i>
+                    {{ option.nome }}
+                    </div>
               </template>
               <template v-if="icone" slot="selected-option" slot-scope="option">
               <div class=" d-center optionColor">
@@ -554,6 +554,8 @@ var WM_Select = Vue.component('wm-select', {
                 {{ option.nome }}
               </div>
             </template>
+          
+        </template>
                 </v-select>
     </div>
     `,

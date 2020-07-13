@@ -1280,3 +1280,53 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 
 /* --------------------------- FIM BODY CHAT ------------------------- */
+
+
+/*----------------------------- V-SELECT ---------------------------------*/
+
+.vs--searchable .vs__dropdown-toggle {
+    background-color: white !important;
+}
+
+.vs--searchable .vs__dropdown-toggle {
+    border: 1px solid #0f8b8d73 !important;
+}
+
+.vs__selected {
+    color: var(--verde-padrao) !important;
+}
+
+.vs__search::placeholder,
+.vs__dropdown-toggle,
+.vs__dropdown-menu {
+    background: #e9ffec;
+    border: none;
+    color: var(--verde-padrao) !important;
+    text-transform: lowercase;
+    font-variant: small-caps;
+}
+
+.vs__dropdown-option--highlight {
+    background-color: #29a73a6e;
+    color: white !important;
+}
+
+.vs__dropdown-option:hover {
+    color: white !important;
+}
+
+.vs__dropdown-option {
+    transition: all .05s ease-in-out;
+    color: var(--verde-padrao) !important;
+}
+
+.vs__open-indicator {
+    fill: #29a73a;
+}
+
+.vs__clear {
+    fill: #A8201a;
+}
+
+
+/*----------------------------- Fim V-SELECT ---------------------------------*/
