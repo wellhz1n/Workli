@@ -1555,7 +1555,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             datatitulo: '',
             datapublicado: '',
             datapropostas: 0,
-            datadescricao: '',
+            datadescricao: "",
             datacategoria: '',
             datatamanhodoprojeto: '',
             datanivelprofissional: '',
@@ -1713,10 +1713,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
     </div>
     <div class="ItemContainerDesc">
-        <div v-if="this.datadescricao !=  '' " >
-            <p v-html="this.datadescricao" class="font_Poopins">
-                {{this.mostrarmais?this.datadescricao:this.datadescricao.substr(0,400)}}
-                <span v-show="this.datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{!this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
+        <div  >
+            <p v-html="datadescricao" class="font_Poopins">
+                {{this.mostrarmais ? datadescricao : datadescricao.substr(0,400) }}
+                <span v-show="datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{ !this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
             </p>
         </div>
         <div >
