@@ -523,13 +523,14 @@ var WM_Select = Vue.component('wm-select', {
     },
     template: ` 
     <div v-if="dataVisivel">
-    <label v-if="obrigatorio" style="font-size:20px"  :for="id">{{titulo}} *</label>
-    <label v-else style="font-size:20px"  :for="id">{{titulo}}</label>
+    <label v-if="obrigatorio" class="selectLabel" style="font-size:20px"  :for="id">{{titulo}} *</label>
+    <label v-else style="font-size:20px" class="selectLabel"  :for="id">{{titulo}}</label>
   <v-select 
                 :options="options" 
                 :id="id"
                 :reducer="x=> x.id"
                 :class="classe"
+                class="seletor"
                 label="nome"
                 :ref="id"
                 :clearable="limpavel"
@@ -542,13 +543,13 @@ var WM_Select = Vue.component('wm-select', {
                   Nada Encontrado.
               </template>
               <template v-if="icone" slot="option" slot-scope="option">
-              <div class="d-center">
+              <div class="d-center optionColor">
               <i :class=" 'fas '+ option.icone"></i>
                 {{ option.nome }}
                 </div>
               </template>
               <template v-if="icone" slot="selected-option" slot-scope="option">
-              <div class=" d-center">
+              <div class=" d-center optionColor">
               <i :class=" 'fas '+ option.icone"></i>
                 {{ option.nome }}
               </div>
@@ -1541,6 +1542,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         },
         id_usuario: {
             type: String
+        },
+        mostra_botao: {
+            type: Boolean,
+            default: true
         }
 
     },
@@ -1594,8 +1599,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         },
         descricao: {
             immediate: true,
-            deep: true,
             handler(newval) {
+
                 this.datadescricao = newval;
             }
         },
@@ -1685,7 +1690,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         <div class=" p-2">
             <h3 class="font_Poopins_B">{{this.datatitulo}}</h3>
         </div>
-        <div class="p-2  justify-content-center align-items-center">
+        <div  v-if="mostra_botao"  class="p-2justify-content-center align-items-center">
             <button 
                 class="btn btn-secondary m-0 font_Poopins_SB"
                 @click="abrirModal"
@@ -1708,7 +1713,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
     </div>
     <div class="ItemContainerDesc">
-        <div>
+        <div v-if="this.datadescricao !=  '' " >
             <p v-html="this.datadescricao" class="font_Poopins">
                 {{this.mostrarmais?this.datadescricao:this.datadescricao.substr(0,400)}}
                 <span v-show="this.datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{!this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
