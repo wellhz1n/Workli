@@ -30,7 +30,7 @@ class TipoServicoDAO{
         return $resultado;
     }
     private function GetServicosNumeroPorTipo_Servico($id){
-        $sql = Sql("select count(id) as servicos from servico where id_tipo_servico = ? and Ativo = 1",[$id]);
+        $sql = Sql("select count(id) as servicos from servico where id_tipo_servico = ? and situacao = 0",[$id]);
         return $sql->resultados[0]["servicos"];
     }
     public function GetImagemTipoServico($id)

@@ -1,4 +1,4 @@
-2020-6-20 
-                        22:12:17 #Error: Duplicate column name 'cpf'	2020-6-20 
-                        22:12:17 #Error: Duplicate column name 'imagem'	2020-6-20 
-                        22:12:17 #Error: Can't create/write to file './worklidb/db.opt' (Errcode: 2 "No such file or directory")	
+2020-7-15 
+                        10:03:06 #Error: Unknown column 'Situacao' in 'servico'	2020-7-15 
+                        10:03:06 #Error: Duplicate column name 'cpf'	2020-7-15 
+                        10:03:06 #Error: Duplicate column name 'imagem'	

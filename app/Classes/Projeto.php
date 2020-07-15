@@ -1,12 +1,14 @@
 <?php
 @require('../Enums/ProjetoEnum.php');
+@require('../Enums/SituacaoEnum.php');
+
 class Projeto
 {
     public $id;
     public $idusuario;
     public $Nome;
     public $Descricao;
-    public $Ativo;
+    public $situacao;
     public $imagens;
     public $Categoria;
     public $NivelDoProjeto;
@@ -18,7 +20,7 @@ class Projeto
         $idusuario = null,
         $Nome = "",
         $Descricao = "",
-        $Ativo = 1,
+        $situacao = SituacaoEnum::Novo,
         $imagens = [],
         $Categoria = null,
         $NivelDoProjeto = null,
@@ -29,7 +31,7 @@ class Projeto
         $this->idusuario = $idusuario;
         $this->Nome = $Nome;
         $this->Descricao = $Descricao;
-        $this->Ativo = $Ativo;
+        $this->situacao = $situacao;
         $this->imagens  = $imagens;
         $this->Categoria = $Categoria;
         $this->NivelDoProjeto = $NivelDoProfissional;
