@@ -80,12 +80,13 @@ class ProjetoDAO
     public function BuscaProjeto($categoria = [], $q = "", $pg = 1)
     {
 
-        $sqlcategoria = count($categoria) > 0 ? " WHERE s.id_tipo_servico in(" . join(",", $categoria) . ")" : null;
+        $sqlcategoria = count($categoria) > 0 ? " and s.id_tipo_servico in(" . join(",", $categoria) . ")" : null;
         $like = $q != "" ? "  and s.nome like'%$q%'" : null;
         $likep = $q != "" ? " and s.nome like'%$q%'" : null;
         $paginas = Sql("
         select  ceil(count(s.id)/6) as paginas from servico s
         inner join tipo_servico  ts on ts.id = s.id_tipo_servico  and ts.ATIVO = 1
+        where s.situacao = 0
         {$sqlcategoria}
         {$likep}
         ");
@@ -120,6 +121,7 @@ class ProjetoDAO
                     inner join tipo_servico  ts on ts.id = s.id_tipo_servico and ts.ATIVO = 1
                     inner join  usuarios  u on u.id = s.id_usuario 
                     left join imagem_usuario iu on iu.id_usuario =u.id 
+                    where s.situacao = 0
                     {$sqlcategoria}
                     {$like}
                     order by postado,id asc
