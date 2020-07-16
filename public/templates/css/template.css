@@ -203,3 +203,91 @@
         width: 94% !important;
     }
 }
+
+
+/* NOTIFICACOES */
+
+.notificacoesScrool {
+    height: 240px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.notificacoesScrool::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+}
+
+.notificacoesScrool::-webkit-scrollbar-track {
+    background: #21883844 !important;
+    width: 50px;
+}
+
+
+/* Handle */
+
+.notificacoesScrool::-webkit-scrollbar-thumb {
+    background: #218838 !important;
+    height: 10px;
+}
+
+
+/* Handle on hover */
+
+.notificacoesScrool::-webkit-scrollbar-thumb:hover {
+    background: #1a692b !important;
+}
+
+.itemnotificacao {
+    height: 100px;
+    width: 100%;
+    background: #56b7c9;
+    border-radius: 12px;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.ItemNotificacaoIcone {
+    width: 100px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 25px;
+    color: white;
+}
+
+.Dados {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.TituloNotificacao {}
+
+.descricaoNotificacao {
+    font-size: 12px;
+}
+
+.Blue1 {
+    background: #0f8b8d !important;
+}
+
+.Yellow1 {
+    background: #EC9A29 !important;
+}
+
+.Red1 {
+    background: #a8201A !important;
+}
+
+.Green1 {
+    background: #5eeb5b !important;
+}
+
+.Green {
+    background: #28A745 !important;
+}
