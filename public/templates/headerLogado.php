@@ -147,9 +147,52 @@
                 </div>
                 <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
                 <div class="itemnotificacao Yellow1">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </div>
+                  <div class="Dados">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 <div class="itemnotificacao Red1">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-times"></i>
+                  </div>
+                  <div class="Dados">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="itemnotificacao Green">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="Dados">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
