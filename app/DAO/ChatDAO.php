@@ -49,8 +49,7 @@ class ChatDAO
                     cm.visualizado 
                     from chat_mensagens as cm where id_chat = ? 
                     and id_usuario_remetente = ?
-                    AND id_usuario_destinatario = ?
-                    )
+                    AND id_usuario_destinatario = ?)
                     union all
                     (select cm.id_chat_mensagens as id_chat_mensagen,
                     cm.id_chat,
@@ -62,10 +61,9 @@ class ChatDAO
                     cm.visualizado  
                     from chat_mensagens as cm where id_chat = ? 
                     and id_usuario_remetente = ?
-                    AND id_usuario_destinatario = ?
-                    )
+                    AND id_usuario_destinatario = ?)
                     ) as chatM
-                    order by date,time;
+                    order by chatM.date,chatM.time;
         ", [$id_chat, $id_usuario1,$id_usuario2, $id_chat, $id_usuario2,$id_usuario1]);
         return count($saida->resultados) > 0 ? $saida->resultados : [];
     }
