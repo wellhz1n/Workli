@@ -45,7 +45,9 @@ class ChatDAO
                     cm.id_usuario_destinatario,
                     cm.id_usuario_remetente,
                     DATE(cm.data_hora) as date,
-                    time_format(cm.data_hora,'%H:%i:%s') as time  from chat_mensagens as cm where id_chat = ? 
+                    time_format(cm.data_hora,'%H:%i:%s') as time,  
+                    cm.visualizado 
+                    from chat_mensagens as cm where id_chat = ? 
                     and id_usuario_remetente = ?
                     AND id_usuario_destinatario = ?
                     )
@@ -56,7 +58,9 @@ class ChatDAO
                     cm.id_usuario_destinatario,
                     cm.id_usuario_remetente ,
                     DATE(cm.data_hora) as date,
-                    time_format(cm.data_hora,'%H:%i:%s') as time from chat_mensagens as cm where id_chat = ? 
+                    time_format(cm.data_hora,'%H:%i:%s') as time,
+                    cm.visualizado  
+                    from chat_mensagens as cm where id_chat = ? 
                     and id_usuario_remetente = ?
                     AND id_usuario_destinatario = ?
                     )
@@ -64,6 +68,12 @@ class ChatDAO
                     order by date,time;
         ", [$id_chat, $id_usuario1,$id_usuario2, $id_chat, $id_usuario2,$id_usuario1]);
         return count($saida->resultados) > 0 ? $saida->resultados : [];
+    }
+    public function SetVizualizado($ids = []){
+        $sql = "update chat_mensagens set visualizado = 1 where id_chat_mensagens in (?)";
+        $ids = join(',',$ids);
+        $saida = Update($sql,[$ids]);
+        return $saida;
     }
     #endregion
     #region TelaChat
@@ -83,7 +93,7 @@ class ChatDAO
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from chat_mensagens  CM 
             inner join chat  CH on CH.id_chat = CM.id_chat
-            inner join servico SV on SV.id = CH.id_servico and SV.Ativo
+            inner join servico SV on SV.id = CH.id_servico 
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
             left join imagem_usuario IU on IU.id_usuario = U.id  

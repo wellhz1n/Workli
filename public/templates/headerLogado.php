@@ -104,7 +104,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-info"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
@@ -119,7 +119,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-comment-dollar"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
@@ -134,7 +134,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-comments"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
@@ -150,7 +150,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-exclamation-triangle"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
@@ -165,7 +165,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-times"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
@@ -181,7 +181,7 @@
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-check"></i>
                   </div>
-                  <div class="Dados">
+                  <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
