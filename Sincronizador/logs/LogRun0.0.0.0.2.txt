@@ -1,7 +1,7 @@
-2020-7-15
-            10:36:42 #INICIANDO A SYNC
-2020-7-15
-            10:36:42 #0.0.0.0.2
-2020-7-15
-            10:36:42 #[WRN]--- Wellington.Ramos em 15/07/2020 Tarefa #6
+2020-7-16
+            10:58:10 #INICIANDO A SYNC
+2020-7-16
+            10:58:10 #0.0.0.0.2
+2020-7-16
+            10:58:10 #[WRN]--- Wellington.Ramos em 15/07/2020 Tarefa #6
 alter table servico change Ativo situacao int(1) not null default 0

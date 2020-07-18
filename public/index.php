@@ -35,6 +35,7 @@ header('Content-Type: text/html; charset=utf-8');
     <!-- Scripts externos  -->
     <script type="" src="src/js/Google/platform.js"></script>
     <script type="" src="src/js/bootstrap/jquery-3.3.1.js"></script>
+    <script src="src/js/bootstrap/js/popper.js"></script>
     <script type="" src="src/js/bootstrap/bootstrap.js"></script>
     <script src="src/fontawesome-free-5.12.1-web/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -51,7 +52,6 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/Geral.js"></script>
 
     <script src="src/js/animsition/js/animsition.min.js"></script>
-    <script src="src/js/bootstrap/js/popper.js"></script>
     <script src="src/js/daterangepicker/moment.min.js"></script>
     <script src="src/js/daterangepicker/daterangepicker.js"></script>
     <script src="src/js/countdowntime/countdowntime.js"></script>

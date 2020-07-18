@@ -150,6 +150,11 @@ $(document).ready(async () => {
 
 
                 $('.range').each(function () {
+                    valorCliente = (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
+                    taxaPorcentagem = 15;
+                    taxaValor = (valorCliente/100) * 15;
+                    valorFuncionario = valorCliente - taxaValor;
+
                     var n = this.getElementsByTagName('input')[0].value / 1;
                     this.id = 'range' + i;
                     if (this.getElementsByTagName('input')[0].value == 0) {
@@ -161,17 +166,37 @@ $(document).ready(async () => {
                     this.innerHTML = "<input type='range' id='rangeSlider' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
 
-                    $("#valorAtualSlider")[0].innerHTML = "R$ " + (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2 + ",00&nbsp;";
+                    
+                    /* Atualiza o popover dentro da bolinha de interrogação*/
+                    $("#linkPopover").attr("data-content", (
+                                                                "Você receberá: R$ " + 
+                                                                (Math.round(valorCliente * 100) / 100).toFixed(2) + 
+                                                                " - R$ " + 
+                                                                (Math.round(taxaValor * 100) / 100).toFixed(2) + 
+                                                                " = R$ " + 
+                                                                ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) + 
+                                                                ""
+                                                             ).split(".").join(",")
+                    
+                                            );
 
+
+                    $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
                 });
 
                 $('#rangeSlider').on("input", function () {
                     valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
                     valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
                     valorTotal = valorMax - valorMin;
-                    valorAtual = event.target.value;
-                    // $valorAlternante = (((event.target.value - dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "")) / ($valorTotal / 100)) / 100) * dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");    
-                    porcentagemAtual = ((valorAtual - valorMin) * 100) / (valorMax - valorMin);
+
+                    valorCliente = event.target.value;
+                    taxaPorcentagem = 15;
+                    taxaValor = (valorCliente/100) * 15;
+                    valorFuncionario = valorCliente - taxaValor;
+
+                    // $valorAlternante = (((valorCliente - dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "")) / ($valorTotal / 100)) / 100) * dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");    
+                    porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
                     var a = this.value / 1;
                     if (a == 0) {
                         this.parentNode.className = "range"
@@ -181,7 +206,7 @@ $(document).ready(async () => {
                     this.parentNode.getElementsByTagName('style')[0].innerHTML = "#" + this.parentNode.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + porcentagemAtual / 2 + "%, #62de57 " + porcentagemAtual + "%, #515151 " + porcentagemAtual + "%);}";
 
 
-                    event.target.style.setProperty('--r', event.target.value + 'deg');
+                    event.target.style.setProperty('--r', valorCliente + 'deg');
                     if (porcentagemAtual > 66.6) {
                         event.target.style.setProperty('--moeda', "url('../../src/img/icons/propostas/moeda-ouro.svg')")
                     }
@@ -200,8 +225,24 @@ $(document).ready(async () => {
                     let corASerModificada = "rgb(" + ((porcentagemAtual * 2.47) + 3) + ", " + ((porcentagemAtual * 1.56) + 7) + ", " + ((porcentagemAtual * -0.06) + 30) + ")";
                     $(".valorDoSlider")[0].style.setProperty('--corASerModificada', corASerModificada);
 
-                    $("#valorAtualSlider")[0].innerHTML = "R$ " + event.target.value;
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
 
+
+                    /* Atualiza a bolinha */
+                    $("#valorDetalheInterrogacao").addClass("animacaoInterrogacao");
+
+                    
+                    
+                    $("#linkPopover").attr("data-content", (
+                                                                "Você receberá: R$ " + 
+                                                                (Math.round(valorCliente * 100) / 100).toFixed(2) + 
+                                                                " - R$ " + 
+                                                                (Math.round(taxaValor * 100) / 100).toFixed(2) + 
+                                                                " = R$ " + 
+                                                                ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) + 
+                                                                ""
+                                                            ).split(".").join(",")
+                                        );
                 })
 
                 $("#rangeSlider").on("mouseover", function () {
@@ -220,7 +261,7 @@ $(document).ready(async () => {
                     mousedown: () => {
                         $('#rangeSlider').addClass("clicked");
                         $(".clicked").on("input", () => {
-                            event.target.style.setProperty('--r', porcentagemAtual * 9 + 'deg')
+                            event.target.style.setProperty('--r', porcentagemAtual * 18 + 'deg')
                         });
                     },
                     mouseup: () => {
@@ -229,6 +270,24 @@ $(document).ready(async () => {
                 });
 
                 /* FIM JS DO SLIDER*/
+
+                /* ATIVADOR DO POPOVER */
+                $(function () {
+                    $('[data-toggle="popover"]').popover()
+                })                    
+
+                $("#linkPopover").on("click", () => {
+                    $("#valorDetalheInterrogacao").removeClass("animacaoInterrogacao");
+                });
+                /* -------------------*/
+
+
+                /* ATIVADOR DO BOTÃO */
+                $(".botaoProposta").on("click", () => {
+                    $(".aguardeBotao").addClass("aguardeBotaoClick");
+                    $(".textoMandarProposta").addClass("textoMandarPropostaClick");
+                });
+                /* -------------------*/
             }, 1);
             setTimeout(() => {
                 $("#rangeSlider").attr("min", dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", ""));

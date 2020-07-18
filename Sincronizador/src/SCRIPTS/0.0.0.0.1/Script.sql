@@ -45,7 +45,10 @@ CREATE TABLE IF NOT EXISTS tipo_servico(
   ativo int(1),
   PRIMARY KEY (id)
 );
+
 alter table tipo_servico MODIFY COLUMN descricao LONGTEXT;
+
+
 CREATE TABLE IF NOT EXISTS servico(
   id INT auto_increment NOT NULL,
   id_usuario INT not Null,
