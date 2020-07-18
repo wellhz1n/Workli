@@ -1,6 +1,6 @@
 <title>Contrate Funcionários & Encontre trabalhos online | Workli</title>
 
-<link rel="stylesheet" href="pages/home/style.css">
+<link rel="stylesheet" href="pages/home/style.css" >
 
 
 <!-- Importações de componentes PHP -->
@@ -119,7 +119,7 @@ require "pages/home/itemPreferido/index.php";
 
 </div>
 
-<script type="application/javascript" src="pages/home/script.js"></script>
-<script>
+<script type="application/javascript" src="pages/home/script.js" ></script>
+<script >
     $("#Titulo").text("Contrate Funcionários e Encontre trabalhos online | Workli");
 </script>

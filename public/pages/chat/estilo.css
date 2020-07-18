@@ -10,7 +10,7 @@
     height: 100vh;
     width: 26%;
     z-index: 2;
-    transition: all .3s linear;
+    transition: all .2s linear;
     will-change: transform, transition;
 }
 
@@ -60,14 +60,14 @@
     position: absolute;
     left: 92%;
     font-size: 20px;
-    transition: all .3s ease-in-out;
+    transition: all .2s ease-in-out;
     right: 0%;
     cursor: pointer;
     z-index: 4;
 }
 
 .IconeMenuBar span {
-    transition: all .3s ease-in-out;
+    transition: all .2s ease-in-out;
     transform: rotate(180deg);
 }
 

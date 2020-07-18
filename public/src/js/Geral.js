@@ -378,6 +378,9 @@ function GetParam() {
             });
         });
     }
+    parans = parans.filter(item => {
+        return Object.entries(item)[0][0] != 'page';
+    })
     return parans
 }
 

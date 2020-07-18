@@ -38,24 +38,24 @@ header('Content-Type: text/html; charset=utf-8');
     <script type="" src="src/js/bootstrap/bootstrap.js"></script>
     <script src="src/fontawesome-free-5.12.1-web/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="src/js/Chartjs/Chart.js"></script>
-    <script src="src/js/select2/select2.min.js"></script>
-    <script src="src/js/Toastr/toastr.min.js"></script>
-    <script src="src/js/DataTable/datatables.min.js"></script>
+    <script src="src/js/Chartjs/Chart.js" ></script>
+    <script src="src/js/select2/select2.min.js" ></script>
+    <script src="src/js/Toastr/toastr.min.js" ></script>
+    <script src="src/js/DataTable/datatables.min.js" ></script>
     <script src="src/js/jquery-validation/dist/jquery.validate.js"></script>
     <script src="src/js/Vue/vue.js"></script>
-    <script src="src/js/Vue/vue-select.js"></script>
-    <script src="src/js/Vue/axios.min.js"></script>
-    <script src="src/js/jquery-mask/jquery.mask.js"></script>
-    <script src="src/js/Classes/Classes.js"></script>
-    <script src="src/js/Geral.js"></script>
+    <script src="src/js/Vue/vue-select.js" ></script>
+    <script src="src/js/Vue/axios.min.js" ></script>
+    <script src="src/js/jquery-mask/jquery.mask.js" ></script>
+    <script src="src/js/Classes/Classes.js" ></script>
+    <script src="src/js/Geral.js" ></script>
 
-    <script src="src/js/animsition/js/animsition.min.js"></script>
-    <script src="src/js/bootstrap/js/popper.js"></script>
-    <script src="src/js/daterangepicker/moment.min.js"></script>
-    <script src="src/js/daterangepicker/daterangepicker.js"></script>
-    <script src="src/js/countdowntime/countdowntime.js"></script>
-    <script scr="https://cdnjs.com/libraries/Chart.js"></script>
+    <script src="src/js/animsition/js/animsition.min.js" ></script>
+    <script src="src/js/bootstrap/js/popper.js" ></script>
+    <script src="src/js/daterangepicker/moment.min.js" ></script>
+    <script src="src/js/daterangepicker/daterangepicker.js" ></script>
+    <script src="src/js/countdowntime/countdowntime.js" ></script>
+    <script scr="https://cdnjs.com/libraries/Chart.js" ></script>
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
     <!-- Importações de fonte -->
@@ -136,9 +136,9 @@ header('Content-Type: text/html; charset=utf-8');
                             },
                             async GetUsuarioDeContexto() {
                                 return {
+                                    NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO),
                                     Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
                                     Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
-                                    NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO),
                                     Nome: await GetSessaoPHP(SESSOESPHP.NOME),
                                     id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO)
                                 }

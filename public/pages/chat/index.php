@@ -12,9 +12,9 @@
                     <div v-if="dataVue.ListaDeProjetos == undefined">
                         <wm-loading></wm-loading>
                     </div>
-                    <div v-else-if="dataVue.ListaDeProjetos.length > 0 ">
+                    <div  v-else-if="dataVue.ListaDeProjetos.length > 0 ">
 
-                        <div :class="['ItemProjetoChat',item == dataVue.ChatSelecionado?'selecionado': null]" @click="dataVue.ChatClick(item)" v-for="item in dataVue.ListaDeProjetos">
+                        <div :class="['ItemProjetoChat',item == dataVue.ChatSelecionado?'selecionado': null]" @click="dataVue.ChatClick(item,$event)" v-for="item in dataVue.ListaDeProjetos">
                             <div class="ImageContainerChatItem">
                                 <div class="Dados">
                                     <div class="UsuarioProjeto">
