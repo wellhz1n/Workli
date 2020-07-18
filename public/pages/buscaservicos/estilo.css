@@ -53,6 +53,16 @@
         justify-content: space-between;
     }
     
+    .aicon {
+        cursor: pointer;
+        color: #000000;
+        transition: all .1s ease-in-out;
+    }
+    
+    .aicon:hover {
+        color: rgb(26, 105, 43) !important;
+    }
+    
     .ItemContainerDesc {
         padding-left: 24px;
         padding-right: 24px;
@@ -302,7 +312,6 @@
         display: inline;
         flex-direction: column;
         align-items: center;
-        
         margin: 10px 0;
     }
     
@@ -332,24 +341,24 @@
     #valorAtualSlider {
         font-family: Poppins-Bold;
     }
-
-
+    
     .propostaPrimeiraParte {
         display: flex;
         flex: 2;
         flex-direction: column;
     }
-
+    
     .propostaSegundaParte {
         display: flex;
         flex: 1;
         margin-bottom: 10px
     }
-
+    
     .botaoMandarProposta {
         margin: 10px 0;
     }
     /* DESCRIÇÃO DA PROPOSTA */
+    
     #descricaoDaPropostaInput {
         width: 90%;
         height: 230px;
@@ -360,16 +369,20 @@
         border-radius: 10px;
         text-indent: 5%;
     }
+    
     #descricaoDaPropostaInput::-webkit-input-placeholder {
         text-align: center;
     }
+    
     #descricaoDaPropostaInput:focus {
         outline: none;
         box-shadow: 0 0 0pt 2px #ccc;
     }
+    
     .textoDP {
         margin-top: 10px;
     }
+    
     .descricaoDaProposta {
         display: flex;
         align-items: center;
@@ -377,16 +390,16 @@
         border-top: 1px solid #ddd;
         padding-top: 5px;
     }
-
+    
     .cardProposta {
         border: #008000 solid 1px;
         border-radius: 10px;
         background-color: #bce9bc;
         padding: 5px 5%;
-        color: rgb(48, 48, 48);    
+        color: rgb(48, 48, 48);
         margin: 5px 5%;
     }
-
+    
     .innerWrapperSegundaParte {
         margin: 15px 0;
         border-left: 2px solid #ddd;
@@ -395,31 +408,32 @@
         flex-direction: column;
         align-items: center;
         height: fit-content;
-
     }
-
+    
     #valorDetalhe {
         display: flex;
         border-radius: 100%;
         cursor: pointer;
     }
+    
     #valorDetalheInterrogacao {
         color: #393939;
-        border-radius: 100%;    
+        border-radius: 100%;
         font-size: 15px;
         -webkit-transform: scale(1);
     }
+    
     .animacaoInterrogacao {
         animation: linear 2s brilhando infinite;
     }
-
+    
     @keyframes brilhando {
-        0%   {
+        0% {
             color: #ff640b;
             background-color: #fff;
             -webkit-transform: scale(1);
         }
-        50%  {
+        50% {
             color: #ff0b0b;
             -webkit-transform: scale(1.2);
         }
@@ -429,67 +443,67 @@
             -webkit-transform: scale(1);
         }
     }
-
+    
     #linkPopover {
         height: fit-content;
         margin-top: 4px;
         outline: none;
     }
+    
     .popover {
         max-width: 100%;
     }
-
     /*  PROPOSTA CARDS  */
+    
     .upgradeCard {
-        color: rgb(48, 48, 48);    
+        color: rgb(48, 48, 48);
         margin: 0px 0;
         padding: 10px 5%;
         width: 100%;
     }
-
+    
     .upgradeCard:hover {
         background-color: #f2f2f2;
     }
-
+    
     #upgradeCardBaixo {
         border-top: 2px solid #ddd;
     }
+    
     .upgradeCardHeader {
-        display: flex;    
+        display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 5%;
     }
-
+    
     .tituloUpgradeHeader {
         color: white;
         padding: 3px 5%;
         border-bottom-left-radius: 30px 100%;
-        border-bottom-right-radius: 30px 100%; 
+        border-bottom-right-radius: 30px 100%;
         border-top-left-radius: 30px 100%;
-        border-top-right-radius: 30px 100%; 
+        border-top-right-radius: 30px 100%;
         text-align: center;
     }
-
-
+    
     .valorUpgradeHeader {
         font-family: Poppins-Bold;
         text-align: right;
     }
-
+    
     .textoUpgradeCard {
         font-size: 93%;
         margin-top: 10px;
         text-indent: 10%;
     }
-
     
     .inputUpgrade {
         position: absolute;
         opacity: 0;
         z-index: -1;
     }
-
+    
     .labelInputUpgrade {
         position: relative;
         display: inline-block;
@@ -499,6 +513,7 @@
         cursor: pointer;
         margin-bottom: 0;
     }
+    
     .labelInputUpgrade::before,
     .labelInputUpgrade::after {
         position: absolute;
@@ -508,70 +523,73 @@
         width: 1.5em;
         height: 1.5em;
     }
+    
     .labelInputUpgrade::before {
         content: " ";
         border: 2px solid #bdc3c7;
         border-radius: 20%;
     }
     /* Checkbox */
-    .inputUpgrade + .labelInputUpgrade::after {
+    
+    .inputUpgrade+.labelInputUpgrade::after {
         content: "\2714";
         color: white;
         line-height: 1.5;
         text-align: center;
     }
     /* :checked */
-    .inputUpgrade:checked + .labelInputUpgrade::before {
+    
+    .inputUpgrade:checked+.labelInputUpgrade::before {
         background: #008000;
         border-color: #008000;
     }
-    .inputUpgrade + .labelInputUpgrade::after {
+    
+    .inputUpgrade+.labelInputUpgrade::after {
         -webkit-transform: scale(0);
         -ms-transform: scale(0);
         -o-transform: scale(0);
         transform: scale(0);
     }
-    .inputUpgrade:checked + .labelInputUpgrade::after {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
+    
+    .inputUpgrade:checked+.labelInputUpgrade::after {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
     }
     /* Transition */
+    
     .labelInputUpgrade::before,
     .labelInputUpgrade::after {
-    -webkit-transition: .25s all ease;
-    -o-transition: .25s all ease;
-    transition: .25s all ease;
+        -webkit-transition: .25s all ease;
+        -o-transition: .25s all ease;
+        transition: .25s all ease;
     }
-
+    
     #patrocinado {
         background-color: #EC9A29;
     }
-
+    
     #destacado {
         background-color: #108cff;
     }
-
+    
     .terceiraParteProposta {
         display: flex;
         justify-content: center;
     }
     /* --------------- FIM PROPOSTA CARDS ---------------*/
-
-
-
-
-
+    
     .terceiraParteProposta {
         border-top: 2px solid #ddd;
     }
-
     /* #region BOTÃO PROPOSTA*/
-      .aguardeBotao {
+    
+    .aguardeBotao {
         text-decoration: none;
-      }
-      .botaoProposta {
+    }
+    
+    .botaoProposta {
         background: #dfe6e9;
         border-radius: 40px;
         display: flex;
@@ -583,11 +601,13 @@
         position: relative;
         cursor: pointer;
         transition: .3s linear;
-      }
-      .botaoProposta:hover {
+    }
+    
+    .botaoProposta:hover {
         transform: scale(1.1);
-      }
-      .botaoProposta .textoMandarProposta{
+    }
+    
+    .botaoProposta .textoMandarProposta {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -601,9 +621,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-       
-      }
-      .botaoProposta .aguardeBotao {
+    }
+    
+    .botaoProposta .aguardeBotao {
         flex: 1;
         font-size: 26px;
         color: #2d3436;
@@ -611,26 +631,24 @@
         transform: translateX(-100%);
         opacity: 0;
         transition: .3s linear;
-      }
-      /* .botaoProposta .aguardeBotao:nth-of-type(1){
+    }
+    /* .botaoProposta .aguardeBotao:nth-of-type(1){
         transition-delay: .2s;
       } */
-      
-
-      .botaoPropostaClick {
+    
+    .botaoPropostaClick {
         transform: scale(1.1);
-
-      }
-      .aguardeBotaoClick {
+    }
+    
+    .aguardeBotaoClick {
         opacity: 1;
         transform: translateX(0) !important;
-      }
-
-      .textoMandarPropostaClick {
+    }
+    
+    .textoMandarPropostaClick {
         transform: translateX(-100%) !important;
         transition-delay: .1s;
-      }
-    
+    }
     /* #endregion  */
     /* ---------------------- FIM PROPOSTA BODY ----------------------*/
     /*------------------ FIM BODY MODAL -----------------------------*/

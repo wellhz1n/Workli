@@ -32,7 +32,7 @@
                     <div v-if="dataVue.Projetos.lista.length < 1 ">
                         <wm-error mensagem="Nenhum projeto encontrado" />
                     </div>
-                    <wm-projeto-item v-else   :titulo="item.titulo" :publicado="item.postado" :propostas="0" :categoria="item.categoria" :identidade="item.id" :id="'item'+item.id" :tamanhodoprojeto="item.nivel_projeto" :nivelprofissional="item.nivel_profissional" :descricao="item.descricao" :nome="item.usuario" :img="item.img" :valor="item.valor":id_usuario="item.id_usuario"  v-for="item in dataVue.Projetos.lista" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
+                    <wm-projeto-item v-else :titulo="item.titulo" :publicado="item.postado" :propostas="0" :categoria="item.categoria" :identidade="item.id" :id="'item'+item.id" :tamanhodoprojeto="item.nivel_projeto" :nivelprofissional="item.nivel_profissional" :descricao="item.descricao" :nome="item.usuario" :img="item.img" :valor="item.valor" :id_usuario="item.id_usuario" v-for="item in dataVue.Projetos.lista" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
                 </div>
             </div>
 
@@ -80,10 +80,18 @@
 
                     </div>
                     <div class="bodyChat align-items-center">
-                        <p class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
-                        <wm-chat heigth="360px" :userpropostaimage="dataVue.selecionadoController.imagem"
-                         :mensagens="dataVue.selecionadoController.msg" 
-                         :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                        <div style="display: flex;
+                                    align-items: baseline;
+                                    height: 30px;
+                                    justify-content: center;
+                                    padding-right: 7px;
+                                    width: 100%;
+                                    flex-direction: row;">
+                            <p :style="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1?'margin-left: auto;':''" class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
+                            <a onclick="window.open('?page=chat&id_chat=' + dataVue.selecionadoController.id_chat ,'_blank')" class="aicon" v-if="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1" style="margin-left: auto;
+                            cursor: pointer;"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <wm-chat heigth="360px" :userpropostaimage="dataVue.selecionadoController.imagem" :mensagens="dataVue.selecionadoController.msg" :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
                     </div>
                 </div>
                 <div class="d-flex">
@@ -101,7 +109,7 @@
                                     </div>
                                     <div class="wrapperSlider">
                                         <div id="precoMin" class="precoSlider">$200</div>
-                                        <input type="range" id="rangeSlider"     />
+                                        <input type="range" id="rangeSlider" />
                                         <div id="precoMax" class="precoSlider">$1000</div>
                                     </div>
                                     <div class="wrapperValorDoSlider">
@@ -118,18 +126,11 @@
 
                                 <div class="descricaoDaProposta">
                                     <div class="textoVS textoDP">Descreva sua proposta</div>
-                                    <textarea 
-                                        id="descricaoDaPropostaInput" 
-                                        name="descricaoDaPropostaInput"
-                                        rows="5" 
-                                        cols="33"
-                                        maxlength="5000"
-                                        placeholder="Escreva aqui os detalhes da sua proposta..."
-                                    >
+                                    <textarea id="descricaoDaPropostaInput" name="descricaoDaPropostaInput" rows="5" cols="33" maxlength="5000" placeholder="Escreva aqui os detalhes da sua proposta...">
                                     </textarea>
                                 </div>
                             </div>
-                            <div class="propostaSegundaParte"> 
+                            <div class="propostaSegundaParte">
                                 <div class="innerWrapperSegundaParte">
                                     <div class="cardProposta" id="taxaCardProposta">Você terá que pagar uma taxa de 5%</div>
                                     <div class="cardProposta">Valor médio das propostas: <b>R$ 200,00</b></div>
@@ -162,7 +163,7 @@
                                     </label>
 
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="terceiraParteProposta">
