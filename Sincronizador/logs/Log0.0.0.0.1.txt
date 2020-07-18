@@ -1,4 +1,2 @@
-2020-7-15 
-                        10:03:06 #Error: Unknown column 'Situacao' in 'servico'	2020-7-15 
-                        10:03:06 #Error: Duplicate column name 'cpf'	2020-7-15 
-                        10:03:06 #Error: Duplicate column name 'imagem'	
+2020-7-16 
+                        10:37:32 #Error: Table 'worklidb.servico' doesn't exist	

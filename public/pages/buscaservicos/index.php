@@ -88,17 +88,89 @@
                 </div>
                 <div class="d-flex">
                     <div class="bodyProposta">
-                        <div class="wrapperOfWrapperSlider">
-                            <div class="wrapperSlider">
-                                <div id="precoMin" class="precoSlider">$200</div>
-                                <input type="range" id="rangeSlider"     />
-                                <div id="precoMax" class="precoSlider">$1000</div>
+                        <div class="bodyHeader">
+                            <div class="BHDetalhes">
+                                Detalhes da Proposta
                             </div>
-                            <div class="wrapperValorDoSlider">
-                                <div class="textoVS">Sua Proposta</div>
-                                <div class="valorDoSlider">
-                                    <span id="valorAtualSlider"></span>
+                        </div>
+                        <div class="d-flex" style="margin-bottom: 10px;">
+                            <div class="propostaPrimeiraParte">
+                                <div class="wrapperOfWrapperSlider">
+                                    <div class="wrapperValorDoSlider">
+                                        <div class="textoVS">Sua Oferta &nbsp;</div>
+                                    </div>
+                                    <div class="wrapperSlider">
+                                        <div id="precoMin" class="precoSlider">$200</div>
+                                        <input type="range" id="rangeSlider"     />
+                                        <div id="precoMax" class="precoSlider">$1000</div>
+                                    </div>
+                                    <div class="wrapperValorDoSlider">
+                                        <div class="valorDoSlider">
+                                            <span id="valorAtualSlider"></span>
+                                            <a id="linkPopover" tabindex="0" role="button" data-trigger="focus" data-toggle="popover" data-content="Você receberá: R$ 500,00 - R$ 50,00 = R$ 450,00">
+                                                <span id="valorDetalhe">
+                                                    <i class="fa fa-question-circle" id="valorDetalheInterrogacao" class="animacaoInterrogacao" aria-hidden="true"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="descricaoDaProposta">
+                                    <div class="textoVS textoDP">Descreva sua proposta</div>
+                                    <textarea 
+                                        id="descricaoDaPropostaInput" 
+                                        name="descricaoDaPropostaInput"
+                                        rows="5" 
+                                        cols="33"
+                                        maxlength="5000"
+                                        placeholder="Escreva aqui os detalhes da sua proposta..."
+                                    >
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="propostaSegundaParte"> 
+                                <div class="innerWrapperSegundaParte">
+                                    <div class="cardProposta" id="taxaCardProposta">Você terá que pagar uma taxa de 5%</div>
+                                    <div class="cardProposta">Valor médio das propostas: <b>R$ 200,00</b></div>
+                                    <div class="dataChatDiv"><span class="dataChatDivTexto">Upgrades</span></div>
+                                    <label class="upgradeCard" for="upgradeCardInput1">
+                                        <div class="upgradeCardHeader row">
+                                            <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
+                                                <input class="inputUpgrade" type="checkbox" value="" id="upgradeCardInput1">
+                                                <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
+                                            </div>
+                                            <span class="tituloUpgradeHeader col-sm-6" id="patrocinado">PATROCINADO</span>
+                                            <span class="valorUpgradeHeader col-sm-4">R$ 5,00</span>
+                                        </div>
+                                        <div class="textoUpgradeCard">
+                                            Destaque-se dos outros funcionários sendo fixado no topo da tela de propostas do cliente.
+                                        </div>
+                                    </label>
+                                    <label class="upgradeCard" for="upgradeCardInput2" id="upgradeCardBaixo">
+                                        <div class="upgradeCardHeader row">
+                                            <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
+                                                <input class="inputUpgrade" type="checkbox" value="" id="upgradeCardInput2">
+                                                <label class="labelInputUpgrade" for="upgradeCardInput2"></label>
+                                            </div>
+                                            <span class="tituloUpgradeHeader col-sm-6" id="destacado">DESTACADO</span>
+                                            <span class="valorUpgradeHeader col-sm-4">R$ 1,00</span>
+                                        </div>
+                                        <div class="textoUpgradeCard">
+                                            Faça a sua proposta ser destacada em amarelo para o cliente, aumentando as chances de ser escolhida.
+                                        </div>
+                                    </label>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="terceiraParteProposta">
+                            <div class="botaoProposta">
+                                <div class="textoMandarProposta">Mandar Proposta</div>
+                                <a href="#" class="aguardeBotao">
+                                    Aguarde...
+                                </a>
                             </div>
                         </div>
                     </div>
