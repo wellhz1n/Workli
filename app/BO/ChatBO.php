@@ -45,9 +45,8 @@ try {
                 throw new Exception("Função GetMensagensProjeto Necessita dos Seguintes Parametrôs [ID_CHAT,ID_USUARIO1,ID_USUARIO2]");
         }
         if ($metodo == "GetListaContatos") {
-            if ((isset($_POST['ID_CHAT']) && !empty($_POST['ID_CHAT']))
-            ) {
-                echo json_encode($CHATBO->GetListContato($_POST['ID_CHAT']),JSON_UNESCAPED_UNICODE);
+            if ((isset($_POST['ID_CHAT']) && !empty($_POST['ID_CHAT']))) {
+                echo json_encode($CHATBO->GetListContato($_POST['ID_CHAT']), JSON_UNESCAPED_UNICODE);
             } else
                 throw new Exception("Função GetListContato Necessita dos Seguintes Parametrôs [ID_CHAT]");
         }
@@ -87,9 +86,14 @@ class ChatBO
     public function GetMensagensProjeto($id_chat, $id_usuario1, $id_usuario2)
     {
         $lista = $this->ChatDAO->GetMensagensProjeto($id_chat, $id_usuario1, $id_usuario2);
+        $idsNaoVisualizados = [];
         for ($i = 0; $i < count($lista); $i++) {
             $lista[$i]["msg"] = stripslashes($lista[$i]["msg"]);
+            if ($lista[$i]["visualizado"] == 0 && $lista[$i]["id_usuario_destinatario"] == $id_usuario1)
+                array_push($idsNaoVisualizados, $lista[$i]["id_chat_mensagen"]);
         }
+        if (count($idsNaoVisualizados) > 0)
+            $this->ChatDAO->SetVizualizado($idsNaoVisualizados);
         return $lista;
     }
     #endregion
@@ -133,7 +137,7 @@ class ChatBO
     public function GetListContato($id_chat)
     {
         $idUsuarioContexto = json_decode(BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO));
-        $lista = $this->ChatDAO->GetListaDeContatosConversa($id_chat,$idUsuarioContexto);
+        $lista = $this->ChatDAO->GetListaDeContatosConversa($id_chat, $idUsuarioContexto);
         foreach ($lista as $key => $value) {
             foreach ($value as $chave => $valor) {
                 if (($chave == "imagem") && $valor != null)

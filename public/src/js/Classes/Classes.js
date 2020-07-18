@@ -97,7 +97,7 @@ const Valores = {
     6: "R$2000 - R$5000"
 
 }
-const MensagemEntidade = (id_chat_mensagen = -1, id_chat = -1, msg = '', id_usuario_destinatario = -1, id_usuario_remetente = -1, date = GetDataAtual(), time = new Date().toLocaleTimeString()) => {
+const MensagemEntidade = (id_chat_mensagen = -1, id_chat = -1, msg = '', id_usuario_destinatario = -1, id_usuario_remetente = -1, date = GetDataAtual(), time = new Date().toLocaleTimeString(), _visualizado = 0) => {
     return {
         id_chat_mensagen: id_chat_mensagen,
         id_chat: id_chat,
@@ -106,7 +106,8 @@ const MensagemEntidade = (id_chat_mensagen = -1, id_chat = -1, msg = '', id_usua
         id_usuario_remetente: id_usuario_remetente,
         id_usuario_destinatario: id_usuario_destinatario,
         date: date,
-        time: time
+        time: time,
+        visualizado: _visualizado
     }
 }
 const SeparadorMensagemEntidade = (id = -1, msg = 'Hoje', date = new Date().toISOString().split('T')[0]) => {

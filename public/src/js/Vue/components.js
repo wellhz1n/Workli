@@ -2205,7 +2205,18 @@ WMCHAT = Vue.component('wm-chat', {
             deep: true,
             handler(nv, ov) {
                 if (nv != undefined || nv != null) {
-                    if (ov == undefined || nv.length != ov.length) {
+                    let visualizou = false;
+                    nv.map((item, index) => {
+                        if (ov != undefined && ov.length == 0)
+                            visualizou = true;
+                        if (ov != undefined && (ov.length > 0 && ov.length == nv.length)) {
+
+                            if (ov[index].visualizado != item.visualizado)
+                                visualizou = true;
+                        }
+                    });
+
+                    if (ov == undefined || visualizou || ov.length != nv.length) {
 
                         this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
                         setTimeout(() => {
@@ -2254,16 +2265,27 @@ WMCHAT = Vue.component('wm-chat', {
     <div v-if="item.tipo == 'msg' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
         <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTF" >
-        {{item.msg}}            
-        <div class="tempoTF">{{item.time.slice(0,5)}}</div>
+        <p class="m-0">{{item.msg}}</p>            
+        <div class="tempoTF">
+        <div class="TTICON">
+        <p class="m-0 ">{{item.time.slice(0,5)}}</p> 
+        <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
+        <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
+        </div>
+        </div>
         </div>
     </div>
 
     <div class="textoCliente" v-else-if="item.tipo == 'msg'">
         <wm-user-img :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
-                {{item.msg}}            
-            <div class="tempoTC">{{item.time.slice(0,5)}}</div>
+                <p class="m-0">{{item.msg}}</p>            
+            <div class="tempoTC">
+            <div class="TTICON">
+            <p class="m-0">{{item.time.slice(0,5)}}</p> 
+            </div>
+            </div>
+           
         </div>
     </div>
     </div>

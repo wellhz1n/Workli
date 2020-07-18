@@ -62,7 +62,7 @@ class TipoServicoDAO{
             $resultado = Sql("select ts.id,ts.nome,s.servicos,ts.imagem from tipo_servico ts 
             inner join(
                 select count(id) as servicos, id_tipo_servico from servico 
-                where servico .Ativo  = 1
+                where (servico.situacao = 0 or servico.situacao = 1 or servico.situacao  = 2)
                 group by 
                 id_tipo_servico 
             )as s on s.id_tipo_servico = ts.id

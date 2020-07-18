@@ -1197,7 +1197,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 .textoTC {
     background-color: #EFEFEF;
     border-radius: 0 15px 15px 15px;
-    padding: 5px 3% !important;
+    padding: 5px 2% !important;
     margin-right: 4% !important;
     margin-top: 10px;
     color: #252525;
@@ -1231,8 +1231,8 @@ textarea::-webkit-scrollbar-thumb:hover {
 .textoTF {
     background-color: #3979F3;
     border-radius: 15px 0px 15px 15px;
-    padding: 5px 3% !important;
-    margin-left: 4% !important;
+    padding: 5px 2% !important;
+    /* margin-left: 4% !important; */
     margin-top: 10px;
     color: #fff;
     font-size: 15px;
@@ -1251,6 +1251,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin-top: 6px;
     margin-left: 6%;
     font-size: 14px;
+    display: flex;
 }
 
 .tempoTC {
@@ -1261,6 +1262,13 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin-top: 6px;
     margin-left: 6%;
     font-size: 14px;
+    display: flex;
+}
+
+.TTICON {
+    height: 20px;
+    width: 100%;
+    display: flex;
 }
 
 .dataChatDiv {

@@ -85,6 +85,122 @@
 
 
     </ul>
+    <!-- NOTIFICAÇÔES -->
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-bell"></i>
+        </a>
+        <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
+          <div style="height: 300px;" class=" linkCor">
+            <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
+              <h6>Notificações</h6>
+              <a style=""><i class="fas fa-external-link-alt"></i></a>
+            </div>
+            <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
+            <div class="row" style="height: 250px;width: 100%;margin: 0px;">
+              <div class="col-12 notificacoesScrool">
+                <div class="itemnotificacao">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-info"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="itemnotificacao Green">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-comment-dollar"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="itemnotificacao Blue1">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-comments"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
+                <div class="itemnotificacao Yellow1">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="itemnotificacao Red1">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-times"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="itemnotificacao Green">
+                  <div class="ItemNotificacaoIcone">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                      <p class="m-0 font_Poopins_B">Titulo</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
+                        vamos deixar o texto maior para testar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <!-- Fim NOTIFICACOES-->
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropmenulogado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -186,3 +302,8 @@
 if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
+<script>
+  $("#navbarDropdownNotify").click(function(e) {
+    e.stopPropagation();
+  })
+</script>
