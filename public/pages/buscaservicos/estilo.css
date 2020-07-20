@@ -332,7 +332,7 @@
     
     .valorDoSlider {
         text-align: center;
-        color: var(--corASerModificada, rgb(132, 83, 18)) !important;
+        color: var(--corASerModificada, rgb(2, 68, 15)) !important;
         font-size: 25px;
         display: flex;
         justify-content: center;
@@ -567,7 +567,7 @@
     }
     
     #patrocinado {
-        background-color: #EC9A29;
+        background-color: #71d653;
     }
     
     #destacado {

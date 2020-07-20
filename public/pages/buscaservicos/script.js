@@ -218,8 +218,8 @@ $(document).ready(async() => {
 
 
 
-                    /* Valores das cores de inicio e final: rgb(3, 7, 30) e  rgb(250, 163, 6)*/
-                    let corASerModificada = "rgb(" + ((porcentagemAtual * 2.47) + 3) + ", " + ((porcentagemAtual * 1.56) + 7) + ", " + ((porcentagemAtual * -0.06) + 30) + ")";
+                    /* Valores das cores de inicio e final: rgb(3, 7, 30) e  rgb(0, 128, 0)*/
+                    let corASerModificada = "rgb(" + ((porcentagemAtual * -0.03) + 3) + ", " + ((porcentagemAtual * 1.21) + 7) + ", " + ((porcentagemAtual * -0.30) + 30) + ")";
                     $(".valorDoSlider")[0].style.setProperty('--corASerModificada', corASerModificada);
 
                     $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
