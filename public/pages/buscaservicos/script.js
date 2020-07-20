@@ -279,10 +279,10 @@ $(document).ready(async() => {
 
 
                 /* ATIVADOR DO BOTÃO */
-                $(".botaoProposta").on("click", () => {
-                    $(".aguardeBotao").addClass("aguardeBotaoClick");
-                    $(".textoMandarProposta").addClass("textoMandarPropostaClick");
-                });
+                // $(".botaoProposta").on("click", () => {
+                //     $(".aguardeBotao").addClass("aguardeBotaoClick");
+                //     $(".textoMandarProposta").addClass("textoMandarPropostaClick");
+                // });
                 /* -------------------*/
             }, 1);
             setTimeout(() => {

@@ -167,12 +167,7 @@
                             </div>
                         </div>
                         <div class="terceiraParteProposta">
-                            <div class="botaoProposta">
-                                <div class="textoMandarProposta">Mandar Proposta</div>
-                                <a href="#" class="aguardeBotao">
-                                    Aguarde...
-                                </a>
-                            </div>
+                            <button class="botaoProposta">Mandar Proposta</button>
                         </div>
                     </div>
                 </div>

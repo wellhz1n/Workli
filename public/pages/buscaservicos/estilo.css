@@ -585,12 +585,8 @@
     }
     /* #region BOTÃO PROPOSTA*/
     
-    .aguardeBotao {
-        text-decoration: none;
-    }
-    
     .botaoProposta {
-        background: #dfe6e9;
+        background: #2d3436 ;
         border-radius: 40px;
         display: flex;
         align-items: center;
@@ -600,55 +596,22 @@
         overflow: hidden;
         position: relative;
         cursor: pointer;
-        transition: .3s linear;
+        transition: .2s linear;
+        color: white;
+        outline: none;
+        border: none;
+        height: 37px;
+        font-size: 24px;
     }
     
     .botaoProposta:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
+    }
+    .botaoProposta:focus {
+        transform: scale(1.10);
+        outline: none;
     }
     
-    .botaoProposta .textoMandarProposta {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #2d3436;
-        color: #f1f1f1;
-        text-align: center;
-        font-size: 26px;
-        z-index: 999;
-        transition: .1s linear;
-        border-radius: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .botaoProposta .aguardeBotao {
-        flex: 1;
-        font-size: 26px;
-        color: #2d3436;
-        text-align: center;
-        transform: translateX(-100%);
-        opacity: 0;
-        transition: .3s linear;
-    }
-    /* .botaoProposta .aguardeBotao:nth-of-type(1){
-        transition-delay: .2s;
-      } */
-    
-    .botaoPropostaClick {
-        transform: scale(1.1);
-    }
-    
-    .aguardeBotaoClick {
-        opacity: 1;
-        transform: translateX(0) !important;
-    }
-    
-    .textoMandarPropostaClick {
-        transform: translateX(-100%) !important;
-        transition-delay: .1s;
-    }
     /* #endregion  */
     /* ---------------------- FIM PROPOSTA BODY ----------------------*/
     /*------------------ FIM BODY MODAL -----------------------------*/
