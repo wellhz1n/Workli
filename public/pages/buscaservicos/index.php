@@ -96,7 +96,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="bodyProposta">
-                        <div class="bodyHeader">
+                        <div class="bodyHeader" id="paddingDetalhesProposta">
                             <div class="BHDetalhes">
                                 Detalhes da Proposta
                             </div>
@@ -126,7 +126,14 @@
 
                                 <div class="descricaoDaProposta">
                                     <div class="textoVS textoDP">Descreva sua proposta</div>
-                                    <textarea id="descricaoDaPropostaInput" name="descricaoDaPropostaInput" rows="5" cols="33" maxlength="5000" placeholder="Escreva aqui os detalhes da sua proposta...">
+                                    <textarea 
+                                        id="descricaoDaPropostaInput" 
+                                        name="descricaoDaPropostaInput" 
+                                        rows="5" 
+                                        cols="33" 
+                                        maxlength="5000" 
+                                        placeholder="Escreva aqui os detalhes da sua proposta..."
+                                    >
                                     </textarea>
                                 </div>
                             </div>
@@ -138,7 +145,14 @@
                                     <label class="upgradeCard" for="upgradeCardInput1">
                                         <div class="upgradeCardHeader row">
                                             <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                <input class="inputUpgrade" type="checkbox" value="" id="upgradeCardInput1">
+                                                <input 
+                                                    class="inputUpgrade" 
+                                                    type="checkbox" 
+                                                    id="upgradeCardInput1"
+                                                    @change="dataVue.Proposta.upgrades.upgrade1 = $event.target.checked"
+                                                    
+                                                >
+                                                <!-- dataVue.Proposta.upgrades.upgrade1 = $event.target.value == 'on'? true : false; -->
                                                 <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
                                             </div>
                                             <span class="tituloUpgradeHeader col-sm-6" id="patrocinado">PATROCINADO</span>
@@ -151,7 +165,12 @@
                                     <label class="upgradeCard" for="upgradeCardInput2" id="upgradeCardBaixo">
                                         <div class="upgradeCardHeader row">
                                             <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                <input class="inputUpgrade" type="checkbox" value="" id="upgradeCardInput2">
+                                                <input 
+                                                    class="inputUpgrade" 
+                                                    type="checkbox" 
+                                                    id="upgradeCardInput2" 
+                                                    @change="dataVue.Proposta.upgrades.upgrade2 = $event.target.checked"
+                                                >
                                                 <label class="labelInputUpgrade" for="upgradeCardInput2"></label>
                                             </div>
                                             <span class="tituloUpgradeHeader col-sm-6" id="destacado">DESTACADO</span>
@@ -173,6 +192,9 @@
                 </div>
             </div>
         </div>
+    </template>
+    <template v-slot:footer>
+        <div></div> <!-- Apenas para deixar o footer vazio.-->
     </template>
     <!-- Ainda vou melhorar o estilo desse modal -->
 </wm-modal>

@@ -221,6 +221,10 @@
         width: 85%;
     }
     
+    #paddingDetalhesProposta {
+        padding: 10px 4%;
+    }
+    
     .wrapperOfWrapperSlider {
         display: flex;
         flex-direction: column;
@@ -351,13 +355,14 @@
     .propostaSegundaParte {
         display: flex;
         flex: 1;
-        margin-bottom: 10px
+        margin: 15px 0;
+        border-left: 2px solid #ddd;
     }
     
     .botaoMandarProposta {
         margin: 10px 0;
     }
-    /* DESCRIÇÃO DA PROPOSTA */
+    /* #region DESCRIÇÃO DA PROPOSTA */
     
     #descricaoDaPropostaInput {
         width: 90%;
@@ -390,7 +395,8 @@
         border-top: 1px solid #ddd;
         padding-top: 5px;
     }
-    
+    /* #endregion */
+
     .cardProposta {
         border: #008000 solid 1px;
         border-radius: 10px;
@@ -401,8 +407,6 @@
     }
     
     .innerWrapperSegundaParte {
-        margin: 15px 0;
-        border-left: 2px solid #ddd;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -606,6 +610,7 @@
     
     .botaoProposta:hover {
         transform: scale(1.05);
+        background: #464f52 ;
     }
     .botaoProposta:focus {
         transform: scale(1.10);

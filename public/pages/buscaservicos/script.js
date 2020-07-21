@@ -6,7 +6,17 @@ $(document).ready(async() => {
     await app.$set(dataVue, "FiltroProjeto", { C: Array(), Q: "", P: 1 });
 
     app.$set(dataVue, "Carregando", true);
+    /* ENTIDADE DA PROPOSTA */
+    app.$set(dataVue, "Proposta", {
+        idProjeto: -1,
+        valorSlider: "",
+        descricaoInput: "",
+        upgrades: {
+            upgrade1: false,
+            upgrade2: false
+        },
 
+    });
     let CategoriaParan = GetParam();
 
     app.$set(dataVue, "Categorias", await GetCategorias());
@@ -165,7 +175,7 @@ $(document).ready(async() => {
                     this.innerHTML = "<input type='range' id='rangeSlider' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
 
-                    $("#valorAtualSlider")[0].innerHTML = "R$ " + (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2 + ",00&nbsp;";
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
 
                     /* Atualiza o popover dentro da bolinha de interrogação*/
                     $("#linkPopover").attr("data-content", (
@@ -180,8 +190,9 @@ $(document).ready(async() => {
 
                     );
 
-
                     $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
+
+                    dataVue.Proposta.valorSlider = valorCliente;
                 });
 
                 $('#rangeSlider').on("input", function() {
@@ -239,7 +250,14 @@ $(document).ready(async() => {
                         ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
                         ""
                     ).split(".").join(","));
+
+                    /* ATUALIZA O DATAVUE COM O VALOR DO CLIENTE */
+                    dataVue.Proposta.valorSlider = valorCliente;
                 })
+
+                $("#descricaoDaPropostaInput").on("input",() => {
+                    dataVue.Proposta.descricaoInput = $("#descricaoDaPropostaInput")[0].value;
+                });
 
                 $("#rangeSlider").on("mouseover", function() {
                     $('#rangeSlider').addClass("hovered");
@@ -279,10 +297,8 @@ $(document).ready(async() => {
 
 
                 /* ATIVADOR DO BOTÃO */
-                // $(".botaoProposta").on("click", () => {
-                //     $(".aguardeBotao").addClass("aguardeBotaoClick");
-                //     $(".textoMandarProposta").addClass("textoMandarPropostaClick");
-                // });
+                $(".botaoProposta").on("click", () => {
+                });
                 /* -------------------*/
             }, 1);
             setTimeout(() => {
