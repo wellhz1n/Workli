@@ -122,3 +122,11 @@ const TipoMensagem = {
     MSG: 'msg',
     Separador: 'separador'
 }
+const TipoNotificacao = {
+    DEFAULT: 0,
+    PROPOSTA: 1,
+    CHAT: 2,
+    ALERT: 3,
+    ERROR: 4,
+    SUCCESS: 5
+}

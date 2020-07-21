@@ -2369,3 +2369,14 @@ WMChart = Vue.component('wm-chart', {
         });
     }
 });
+WMNotify = Vue.component('wm-notify', {
+    props: {
+        tipo: {
+            type: Number,
+            default: TipoNotificacao.DEFAULT
+        }
+    },
+    template: `
+        
+    `
+});

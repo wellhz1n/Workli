@@ -1,14 +1,18 @@
 <?php
 @require_once("../Enums/UpgradesEnum.php");
+@require_once("../Enums/SituacaoEnum.php");
+
 
 class Proposta {
     public $Id;
     public $IdCliente;
     public $IdFuncionario;
     public $IdServico;
+    public $DataCriacao;
     public $Upgrades;
     public $Descricao;
     public $Valor;
+    public $Situacao;
 
     public function __construct(
         $Id = -1,
@@ -17,7 +21,8 @@ class Proposta {
         $IdServico = -1,
         $Upgrades = UpgradeEnum::NDA,
         $Descricao = "",
-        $Valor = ""
+        $Valor = "",
+        $Situacao = SituacaoEnum::Em_Andamento
     ) {
         $this->Id = $Id;
         $this->IdCliente = $IdCliente;
@@ -26,5 +31,7 @@ class Proposta {
         $this->Upgrades = $Upgrades;
         $this->Descricao = $Descricao;
         $this->Valor = $Valor;
+        $this->Situacao = $Situacao;
+
     }
 }

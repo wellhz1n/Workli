@@ -13,4 +13,6 @@ CREATE TABLE proposta (
     FOREIGN KEY (idFuncionario) REFERENCES funcionario(id),
     FOREIGN KEY (idCliente) REFERENCES usuarios(id),
     FOREIGN KEY (idServico) REFERENCES servico(id)
-)
+);
+alter table proposta add column if not exists data_criacao timestamp default current_timestamp;
+alter table proposta add column if not exists situacao numeric(1) default 0;
