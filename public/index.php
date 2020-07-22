@@ -140,7 +140,8 @@ header('Content-Type: text/html; charset=utf-8');
                                     Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
                                     Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
                                     Nome: await GetSessaoPHP(SESSOESPHP.NOME),
-                                    id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO)
+                                    id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO),
+                                    id_funcionario:  await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO)
                                 }
                             },
                             async AtualizaUsuarioContexto() {
@@ -149,6 +150,7 @@ header('Content-Type: text/html; charset=utf-8');
                                 this.dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
                                 this.dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
                                 this.dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
+                                this.dataVue.UsuarioContexto.id_funcionario = await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO);
                             }
                         },
                         async beforeMount() {

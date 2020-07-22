@@ -7,15 +7,16 @@ class PropostaDAO {
 
     #region CRUD
     public function Salvar(Proposta $proposta){
-            $result = Sql("insert into proposta(id,idFuncionario,idCliente,idServico,valor,descricao,upgrades)
-                            Values(?,?,?,?,?,?,?)",
+            $result = Insert("insert INTO proposta (id,idFuncionario,idCliente,idServico,valor,descricao,upgrades)
+                            VALUES (?,?,?,?,?,?,?)",
                             [$proposta->Id,
                             $proposta->IdFuncionario,
-                            $proposta->IdFuncionario,
+                            $proposta->IdCliente,
                             $proposta->IdServico,
                             $proposta->Valor,
                             $proposta->Descricao,
                             $proposta->Upgrades]);
+
                             return $result;
     }
     #endregion

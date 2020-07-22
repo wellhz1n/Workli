@@ -286,6 +286,7 @@
     display: flex;
     font-size: 14px;
     padding: 10px;
+    align-items: center;
 }
 
 .headerChat a {

@@ -17,10 +17,11 @@ function Login($email, $senha)
                         u.nivel_usuario,
                         im.imagem,
                         func.curriculo,
-                        func.numero_telefone 
+                        func.numero_telefone,
+                        func.id as id_func
                   FROM usuarios AS u
                   LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id 
-                  LEFT JOIN funcionario AS func ON im.id_usuario = u.id
+                  LEFT JOIN funcionario AS func ON func.id_usuario = u.id
                   WHERE 
                         u.email = ?",[$email]);
     if (count($saida->resultados) > 0) {
@@ -34,7 +35,9 @@ function Login($email, $senha)
             CriaSecao(SecoesEnum::IDUSUARIOCONTEXTO, $saida->resultados[0]['id']);
             CriaSecao(SecoesEnum::FOTO_USUARIO, ConvertBlobToBase64($saida->resultados[0]['imagem']));
             CriaSecao(SecoesEnum::CURRICULO, $saida->resultados[0]['curriculo']);
+            CriaSecao(SecoesEnum::IDFUNCIONARIOCONTEXTO, $saida->resultados[0]['id_func']);
             CriaSecao(SecoesEnum::NUMERO_TELEFONE, $saida->resultados[0]['numero_telefone']);
+
             return true;
         } else {
             $msg = new stdClass();

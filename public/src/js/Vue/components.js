@@ -4,7 +4,8 @@ var dataVue = {
         Foto: null,
         NIVEL_USUARIO: 0,
         Nome: null,
-        id: null
+        id: null,
+        id_funcionario: null
     }
 };
 var computedVue = {};
@@ -1047,8 +1048,9 @@ var WMList = Vue.component('wm-lista', {
         },
         Ordenar: async function() {
             this.Order = !this.Order;
-            let ord = this.Order;
-            this.ListData = await this.busca(ord);
+            this.ListData = this.Order ? this.ListData.sort((a, b) => a.nome.localeCompare(b.nome)) :
+                this.ListData.sort((a, b) => b.nome.localeCompare(a.nome));
+
         },
 
     },

@@ -8,10 +8,12 @@ $(document).ready(async() => {
     app.$set(dataVue, "Carregando", true);
     /* ENTIDADE DA PROPOSTA */
     app.$set(dataVue, "Proposta", {
-        idProjeto: -1,
-        valorSlider: "",
-        descricaoInput: "",
-        upgrades: {
+        IdServico: -1,
+        IdCliente: -1,
+        IdFuncionario: -1,
+        Valor: "",
+        Descricao: "",
+        Upgrades: {
             upgrade1: false,
             upgrade2: false
         },
@@ -20,6 +22,11 @@ $(document).ready(async() => {
     let CategoriaParan = GetParam();
 
     app.$set(dataVue, "Categorias", await GetCategorias());
+    app.$set(dataVue, "PropostaController", {
+        carregando: false,
+        mandou: false
+    });
+
     app.$watch("dataVue.FiltroProjeto", async function(a, o) {
         //Guambiarra que da Orgulho pro pai
         var aObj = { C, P, Q } = JSON.parse(JSON.stringify(a));
@@ -98,6 +105,27 @@ $(document).ready(async() => {
     app.$set(dataVue, "modalVisivelController", false);
     app.$set(dataVue, "modalVisivelController1", false);
     app.$set(dataVue, "selecionadoController", {});
+
+    /* FUNÇÃO DE SALVAR */
+    app.$set(dataVue, "enviaproposta", async() => {
+        BloquearTelaSemLoader();
+        dataVue.PropostaController.carregando = true;
+        let result = await WMExecutaAjax("PropostaBO", "SalvarProposta", { proposta: dataVue.Proposta })
+        if (result.error != undefined) {
+            toastr.error("Algo deu errado, tente novamente", "Ops");
+            dataVue.PropostaController.carregando = false;
+        } else if (result == true) {
+            toastr.success("Proposta enviada com sucesso!", "Sucesso");
+            dataVue.PropostaController.carregando = false;
+            dataVue.PropostaController.mandou = true;
+        }
+
+        /* Desativa os inputs */
+        $(".inputProposta").attr("disabled", true);
+        $(".upgradeCard").attr("background-color", "#f2f2f2");
+
+        DesbloquearTelaSemLoader();
+    });
     app.$set(dataVue, "abremodal", async(propriedades) => {
         try {
 
@@ -119,6 +147,10 @@ $(document).ready(async() => {
             DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
+
+            dataVue.Proposta.IdServico = dataVue.selecionadoController.id;
+            dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
+            dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
 
             /* Algumas atualizacoes do modal*/
             setTimeout(() => {
@@ -172,7 +204,7 @@ $(document).ready(async() => {
                         this.className = "range rangeM"
 
                     }
-                    this.innerHTML = "<input type='range' id='rangeSlider' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
+                    this.innerHTML = "<input type='range' id='rangeSlider' class='inputProposta' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
 
                     $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
@@ -192,7 +224,7 @@ $(document).ready(async() => {
 
                     $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
 
-                    dataVue.Proposta.valorSlider = valorCliente;
+                    dataVue.Proposta.Valor = valorCliente;
                 });
 
                 $('#rangeSlider').on("input", function() {
@@ -252,11 +284,12 @@ $(document).ready(async() => {
                     ).split(".").join(","));
 
                     /* ATUALIZA O DATAVUE COM O VALOR DO CLIENTE */
-                    dataVue.Proposta.valorSlider = valorCliente;
+                    dataVue.Proposta.Valor = valorCliente;
+
                 })
 
-                $("#descricaoDaPropostaInput").on("input",() => {
-                    dataVue.Proposta.descricaoInput = $("#descricaoDaPropostaInput")[0].value;
+                $("#descricaoDaPropostaInput").on("input", () => {
+                    dataVue.Proposta.Descricao = $("#descricaoDaPropostaInput")[0].value;
                 });
 
                 $("#rangeSlider").on("mouseover", function() {
@@ -295,11 +328,6 @@ $(document).ready(async() => {
                 });
                 /* -------------------*/
 
-
-                /* ATIVADOR DO BOTÃO */
-                $(".botaoProposta").on("click", () => {
-                });
-                /* -------------------*/
             }, 1);
             setTimeout(() => {
                 $("#rangeSlider").attr("min", dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", ""));
@@ -318,6 +346,7 @@ $(document).ready(async() => {
     app.$set(dataVue, "callback", () => {
         dataVue.modalVisivelController = false;
         dataVue.selecionadoController = null;
+        dataVue.PropostaController.mandou = false;
     });
 
     //#region CHAT

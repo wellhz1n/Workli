@@ -5,6 +5,7 @@ var GoogleLogin = false;
 function ClassesStatics() {
     var CacheSeletor = [];
 }
+
 $(document).ready(async() => {
     async function AtualizaUsuarioContexto() {
         dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);

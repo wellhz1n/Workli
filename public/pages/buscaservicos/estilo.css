@@ -396,7 +396,7 @@
         padding-top: 5px;
     }
     /* #endregion */
-
+    
     .cardProposta {
         border: #008000 solid 1px;
         border-radius: 10px;
@@ -561,6 +561,20 @@
         -o-transform: scale(1);
         transform: scale(1);
     }
+    
+    .inputUpgrade:disabled+.labelInputUpgrade::before {
+        background-color: #e8e8e8;
+        ;
+    }
+    
+    .inputUpgrade:disabled:checked+.labelInputUpgrade::before {
+        background-color: #c9c9c9;
+        border-color: #aaa;
+    }
+    
+    .inputUpgrade:disabled:checked+.labelInputUpgrade::after {
+        color: #333;
+    }
     /* Transition */
     
     .labelInputUpgrade::before,
@@ -590,33 +604,26 @@
     /* #region BOTÃO PROPOSTA*/
     
     .botaoProposta {
-        background: #2d3436 ;
-        border-radius: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 10px 0;
-        padding: 0 10%;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        transition: .2s linear;
-        color: white;
-        outline: none;
-        border: none;
-        height: 37px;
-        font-size: 24px;
+        background: #2d3436 !important;
+        border-color: #282d2e !important;
+        border-radius: 40px !important;
+        width: 60% !important;
+        transition: all .1s ease-in-out;
+    }
+    
+    .botaoProposta.menor {
+        width: 58% !important;
     }
     
     .botaoProposta:hover {
-        transform: scale(1.05);
-        background: #464f52 ;
-    }
-    .botaoProposta:focus {
-        transform: scale(1.10);
-        outline: none;
+        transform: scale(1.02);
+        background: #464f52;
     }
     
+    .botaoProposta:focus {
+        transform: scale(1.05);
+        outline: none;
+    }
     /* #endregion  */
     /* ---------------------- FIM PROPOSTA BODY ----------------------*/
     /*------------------ FIM BODY MODAL -----------------------------*/

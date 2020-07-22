@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="wrapperSlider">
                                         <div id="precoMin" class="precoSlider">$200</div>
-                                        <input type="range" id="rangeSlider" />
+                                        <input type="range" id="rangeSlider" class="inputProposta"/>
                                         <div id="precoMax" class="precoSlider">$1000</div>
                                     </div>
                                     <div class="wrapperValorDoSlider">
@@ -126,14 +126,7 @@
 
                                 <div class="descricaoDaProposta">
                                     <div class="textoVS textoDP">Descreva sua proposta</div>
-                                    <textarea 
-                                        id="descricaoDaPropostaInput" 
-                                        name="descricaoDaPropostaInput" 
-                                        rows="5" 
-                                        cols="33" 
-                                        maxlength="5000" 
-                                        placeholder="Escreva aqui os detalhes da sua proposta..."
-                                    >
+                                    <textarea id="descricaoDaPropostaInput" name="descricaoDaPropostaInput" rows="5" cols="33" maxlength="5000" placeholder="Escreva aqui os detalhes da sua proposta..." class="inputProposta">
                                     </textarea>
                                 </div>
                             </div>
@@ -145,13 +138,7 @@
                                     <label class="upgradeCard" for="upgradeCardInput1">
                                         <div class="upgradeCardHeader row">
                                             <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                <input 
-                                                    class="inputUpgrade" 
-                                                    type="checkbox" 
-                                                    id="upgradeCardInput1"
-                                                    @change="dataVue.Proposta.upgrades.upgrade1 = $event.target.checked"
-                                                    
-                                                >
+                                                <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput1" @change="dataVue.Proposta.Upgrades.upgrade1 = $event.target.checked">
                                                 <!-- dataVue.Proposta.upgrades.upgrade1 = $event.target.value == 'on'? true : false; -->
                                                 <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
                                             </div>
@@ -165,12 +152,7 @@
                                     <label class="upgradeCard" for="upgradeCardInput2" id="upgradeCardBaixo">
                                         <div class="upgradeCardHeader row">
                                             <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                <input 
-                                                    class="inputUpgrade" 
-                                                    type="checkbox" 
-                                                    id="upgradeCardInput2" 
-                                                    @change="dataVue.Proposta.upgrades.upgrade2 = $event.target.checked"
-                                                >
+                                                <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput2" @change="dataVue.Proposta.Upgrades.upgrade2 = $event.target.checked">
                                                 <label class="labelInputUpgrade" for="upgradeCardInput2"></label>
                                             </div>
                                             <span class="tituloUpgradeHeader col-sm-6" id="destacado">DESTACADO</span>
@@ -185,8 +167,19 @@
 
                             </div>
                         </div>
-                        <div class="terceiraParteProposta">
-                            <button class="botaoProposta">Mandar Proposta</button>
+                        <div class="terceiraParteProposta" style="padding: 1%; width: 100%; display: flex; justify-content: center;">
+                            <div v-if="dataVue.PropostaController.carregando" style="width: 100%; display: flex; justify-content: center;">
+                                <button  class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
+                                    <div style="border-top-color: rgb(57 193 51) !important;" class="activity_in"></div>
+                                </button>
+                            </div>
+                            <div v-else-if="!dataVue.PropostaController.carregando && !dataVue.PropostaController.mandou" style="width: 100%; display: flex; justify-content: center;">
+                                <button :disabled="dataVue.Proposta.Descricao.length == 0" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" @click="dataVue.enviaproposta" style="cursor: pointer">Mandar Proposta</button>
+                            </div>
+                            <div v-else style="width: 100%; display: flex; justify-content: center;">
+                                <button :disabled="true" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light"  style="cursor: pointer; background-color:rgb(57 193 51) !important;border-color:rgb(57 193 51) !important;"><span><i class="fas fa-check text-light"></i></span></button>
+                            </div>
+                            <!-- <button class="botaoProposta" @click="">Mandar Proposta</button> -->
                         </div>
                     </div>
                 </div>
