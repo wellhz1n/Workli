@@ -16,3 +16,6 @@ CREATE TABLE proposta (
 );
 alter table proposta add column if not exists data_criacao timestamp default current_timestamp;
 alter table proposta add column if not exists situacao numeric(1) default 0;
+ALTER TABLE proposta MODIFY COLUMN idFuncionario int(11) NOT NULL;
+ALTER TABLE proposta MODIFY COLUMN idCliente int(11)  NOT NULL;
+ALTER TABLE proposta MODIFY COLUMN idServico int(11) NOT NULL;
