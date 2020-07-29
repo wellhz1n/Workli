@@ -32,6 +32,10 @@ try {
             else
             throw new Exception("Parametro Projeto Ausente");
         }
+
+        if($metodo == "BuscaNumeroProjetos") {
+            $ProjetoBO->BuscaNumeroProjetos();
+        }
     }
 } catch (Throwable $ex) {
     $msg = new stdClass();
@@ -128,9 +132,13 @@ class ProjetoBO
     public function BuscaDependenciasProjetoModal($id){
         $imagens = $this->ProjetoDAO->BuscaDependenciasModal($id);
         foreach ($imagens as $key => $value) {
-            $imagens[$key]["imagem"] =ConvertBlobToBase64($imagens[$key]["imagem"]);  
+            $imagens[$key]["imagem"] = ConvertBlobToBase64($imagens[$key]["imagem"]);  
         }
         echo json_encode($imagens);
+    }
+
+    public function BuscaNumeroProjetos() {
+        echo json_encode($this->ProjetoDAO->BuscaNumeroProjetos());
     }
     #endregion
 }

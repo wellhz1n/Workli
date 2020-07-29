@@ -52,13 +52,16 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if($metodo == "GetUsuarioById"){
         $userBO->GetUsuarioById($_POST["ID"]);
     }
+    if($metodo == "BuscaNumeroUsuarios") {
+        $userBO->BuscaNumeroUsuarios();
+    }
 }
 class UsuarioBO
 {
-    public $usuarioDAO = null;
+    public $usuarioDAO;
     function __construct()
     {
-        $this->usuarioDAO =  new UsuarioDAO;
+        $this->usuarioDAO =  new UsuarioDAO();
     }
     public function GetUsuarioById($id)
     {
@@ -305,5 +308,9 @@ class UsuarioBO
     public function Logout()
     {
         Deslogar();
+    }
+
+    public function BuscaNumeroUsuarios() {
+        echo json_encode($this->usuarioDAO->BuscaNumeroUsuarios());
     }
 }

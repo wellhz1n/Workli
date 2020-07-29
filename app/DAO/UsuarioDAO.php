@@ -105,7 +105,7 @@ class UsuarioDAO
                                  SET {$nomeCampo} = ?
                                  WHERE id_usuario = ?", [$valorCampo, $idUsuario]);
             } else {
-                $resultado = Update("UPDATE {$tabelaParaEditar} 
+                $resultado = Update("UPDATE {$tabelaParaEditar} *
                                  SET {$nomeCampo} = ?
                                  WHERE id = ?", [$valorCampo, $idUsuario]);
             }
@@ -143,5 +143,13 @@ class UsuarioDAO
                         where u.id = ? ", [$id]);
         return $retorno;
     }
+
+
+    public function BuscaNumeroUsuarios() 
+    {
+        $retorno = Sql("SELECT COUNT(id) FROM usuarios", []);
+        return $retorno->resultados[0];
+    }
+
 }
 // $USR->example();

@@ -35,6 +35,15 @@ $(document).ready(async() => {
     let menuHeader = $(`#menuHeader #${(MenuPai != null && GetPageName() != "home") ? MenuPai : GetPageName()}`)[0];
     $(menuHeader).addClass('MenuHeaderAtivo');
 
+    
+
+    //#region FOOTER
+        let numeroProjetos = await WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos");
+        let numeroUsuarios = await WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios");
+        debugger
+        $("#numeroFooterServices")[0].innerText = numeroProjetos["COUNT(id)"];
+        $("#numeroFooterUsers")[0].innerText = numeroUsuarios["COUNT(id)"];
+    //#endregion
 });
 
 //Funcoes de grid
@@ -734,3 +743,5 @@ function ChatSeparatorGenerator(msgs = []) {
 function GetDataAtual() {
     return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth()+1 <10?'0'+(new Date(new Date().toString('YYY-MM-DD')).getMonth()+1):new Date(new Date().toString('YYY-MM-DD')).getMonth()+1}-${new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
 }
+
+

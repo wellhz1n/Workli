@@ -1550,6 +1550,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         mostra_botao: {
             type: Boolean,
             default: true
+        },
+        texto_botao:{
+            type: String,
+            default:'Fazer Proposta'
         }
 
     },
@@ -1568,7 +1572,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             datanome: '',
             dataValor: '',
             dataid_ususario: -1,
-            mostrarmais: false
+            mostrarmais: false,
+            datatextoBotao:'Fazer Proposta'
 
         }
     },
@@ -1664,6 +1669,13 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 this.datanome = newval;
             }
         },
+        texto_botao:{
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.datatextoBotao = newval;
+            }
+        }
     },
     mounted() {},
     methods: {
@@ -1699,7 +1711,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 class="btn btn-secondary m-0 font_Poopins_SB"
                 @click="abrirModal"
             >
-                Fazer Proposta
+            {{datatextoBotao}}
+                
             </button>
         </div>
     </div>
