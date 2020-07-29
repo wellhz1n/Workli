@@ -112,10 +112,12 @@
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
                     <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
+                      <p class="m-0 font_Poopins">Descrição
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
                 <div class="itemnotificacao Green">
@@ -132,6 +134,9 @@
                       </p>
                     </div>
                   </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                  </div>
                 </div>
                 <div class="itemnotificacao Blue1">
                   <div class="ItemNotificacaoIcone">
@@ -146,6 +151,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
                 <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
@@ -163,6 +171,9 @@
                       </p>
                     </div>
                   </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                  </div>
                 </div>
                 <div class="itemnotificacao Red1">
                   <div class="ItemNotificacaoIcone">
@@ -177,6 +188,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
 
@@ -193,6 +207,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
 

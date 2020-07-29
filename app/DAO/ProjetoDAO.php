@@ -104,7 +104,7 @@ class ProjetoDAO
                                         then 1
                                         else 0
                                         end as propostaFuncionario":null;
-        $pg = (json_decode($pg) - 1) * 6;
+        $pg = (json_decode($pg)- 1) * 6;
         $retorno = Sql("
         select ceil(count(p.id)/6) as paginas,
                p.id,p.titulo,p.descricao,

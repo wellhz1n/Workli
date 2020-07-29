@@ -25,13 +25,13 @@ function Chartclass() {
     }
 };
 const GridEntidade = () => {
-        return {
-            titulo: 'Grid',
-            visivel: false,
-            entidade: ''
-        }
+    return {
+        titulo: 'Grid',
+        visivel: false,
+        entidade: ''
     }
-    //ENUMS
+}
+//ENUMS
 const Meses = {
     0: 'Janeiro',
     1: 'Fevereiro',
@@ -147,4 +147,11 @@ toastr.options = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+}
+
+const ToastType = {
+    SUCCESS: 'success',
+    ERROR: 'error',
+    WARN: 'warn',
+    INFO: 'info'
 }
