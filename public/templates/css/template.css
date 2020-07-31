@@ -19,7 +19,7 @@
 .itemMenu {
     font-size: 1.7em;
     font-family: Arial;
-    padding: 0 10% 0 0;
+    padding: 0 10% 0 0 !important;
     width: 100%;
 }
 

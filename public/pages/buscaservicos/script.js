@@ -120,7 +120,15 @@ $(document).ready(async() => {
             dataVue.PropostaController.mandou = true;
         }
 
-        /* Desativa os inputs */
+        /* Desativa os inputs após clicar no botão*/
+
+        //#region Variaveis para porcentagem
+        valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
+        valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
+        valorCliente = $(".inputProposta")[0].value;
+
+        porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
+        //#endregion
         $(".inputProposta").attr("disabled", true);
         $(".upgradeCard").attr("background-color", "#f2f2f2");
 
@@ -376,7 +384,7 @@ $(document).ready(async() => {
     //         MensagemEntidade(3, -1, 'Vou bem e você?', 1, 2, '2020-06-10', '12:15:04'),
     //         MensagemEntidade(4, -1, 'Desculpe a demora para responder, estou bem também', 2, usrContexto, '2020-06-11', '07:00:04'),
     //         MensagemEntidade(5, -1, 'Mas sobre o Projeto?', 2, usrContexto, '2020-06-11', '07:01:00'),
-    //         MensagemEntidade(6, -1, 'Não existe mais a nescessidade deste projeto', 1, 2, '2020-06-12', '12:00:04')
+    //         MensagemEntidade(6, -1, 'Não existe mais a necessidade deste projeto', 1, 2, '2020-06-12', '12:00:04')
     //     ];
     //     return msg;
     // }

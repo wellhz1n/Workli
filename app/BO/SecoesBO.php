@@ -1,8 +1,6 @@
 <?php
 include("../functions/Session.php");
 
-
-
 try {   
     if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $metodo = $_POST['metodo'];

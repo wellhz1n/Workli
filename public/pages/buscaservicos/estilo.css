@@ -283,7 +283,6 @@
     .clicked::-webkit-slider-thumb {
         -webkit-transform: scale(4.2) rotate(var(--r, 180deg)) !important;
     }
-    
     @keyframes rotateCoin {
         0% {
             transform: rotate(0deg);

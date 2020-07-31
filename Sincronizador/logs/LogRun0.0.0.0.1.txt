@@ -1,25 +1,25 @@
-2020-7-16
-            10:37:32 #INICIANDO A SYNC
-2020-7-16
-            10:37:32 #0.0.0.0.1,0.0.0.0.2
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS usuarios(
+2020-7-24
+            21:30:39 #INICIANDO A SYNC
+2020-7-24
+            21:30:39 #0.0.0.0.1,0.0.0.0.2
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS usuarios(
   id int(11) auto_increment NOT NULL,
   nome varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
   senha varchar(255) NOT NULL,
   constraint PK_USUARIO primary key (id)  
 )
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE usuarios MODIFY COLUMN email VARCHAR(255) UNIQUE KEY
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE usuarios ADD if not EXISTS nivel_usuario INT(1) NOT NULL DEFAULT 0
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE usuarios ADD cpf VARCHAR(11) NOT NULL UNIQUE KEY AFTER email
-2020-7-16
-            10:37:32 #[WRN]-INSERT IGNORE INTO usuarios (id, nome, email,senha,nivel_usuario,cpf) VALUES(-1, 'Root', 'root','202cb962ac59075b964b07152d234b70',2,'11111111111')
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS imagem_usuario(
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE usuarios MODIFY COLUMN email VARCHAR(255) UNIQUE KEY
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE usuarios ADD if not EXISTS nivel_usuario INT(1) NOT NULL DEFAULT 0
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE usuarios ADD cpf VARCHAR(11) NOT NULL UNIQUE KEY AFTER email
+2020-7-24
+            21:30:39 #[WRN]-INSERT IGNORE INTO usuarios (id, nome, email,senha,nivel_usuario,cpf) VALUES(-1, 'Root', 'root','202cb962ac59075b964b07152d234b70',2,'11111111111')
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS imagem_usuario(
   id INT(16) auto_increment NOT NULL,
   imagem LONGTEXT CHARACTER  SET BINARY,
   extensao_imagem varchar(255),
@@ -30,10 +30,10 @@
   constraint FK_USUARIOIMAGEMID FOREIGN KEY (id_usuario)
   REFERENCES usuarios(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE imagem_usuario MODIFY COLUMN if EXISTS imagem LONGTEXT CHARACTER  SET BINARY
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS funcionario(
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE imagem_usuario MODIFY COLUMN if EXISTS imagem LONGTEXT CHARACTER  SET BINARY
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS funcionario(
   id INT(16) auto_increment NOT NULL,
   curriculo TEXT,
   numero_telefone varchar(16),
@@ -43,18 +43,18 @@
   constraint FK_USUARIOFUNCID FOREIGN KEY (id_usuario)
   REFERENCES usuarios(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS tipo_servico(
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS tipo_servico(
   id INT auto_increment NOT NULL,
   nome varchar(255) NOT NULL,
   descricao TEXT,
   ativo int(1),
   PRIMARY KEY (id)
 )
-2020-7-16
-            10:37:32 #[WRN]-alter table tipo_servico MODIFY COLUMN descricao LONGTEXT
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS servico(
+2020-7-24
+            21:30:39 #[WRN]-alter table tipo_servico MODIFY COLUMN descricao LONGTEXT
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS servico(
   id INT auto_increment NOT NULL,
   id_usuario INT not Null,
   nome varchar(255) NOT NULL,
@@ -69,8 +69,8 @@
   constraint FK_ID_TIPOSERVICO FOREIGN KEY (id_tipo_servico)
   REFERENCES tipo_servico(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE if not EXISTS  servicos_funcionario(
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE if not EXISTS  servicos_funcionario(
   id INT auto_increment NOT NULL,
   horas_trabalhadas INT,
   id_funcionario int not null,
@@ -83,8 +83,8 @@
 	constraint FK_ID_SERVICOSERVICO FOREIGN key (id_servico)
   REFERENCES servico(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-CREATE TABLE IF NOT EXISTS foto_servico (
+2020-7-24
+            21:30:39 #[WRN]-CREATE TABLE IF NOT EXISTS foto_servico (
   id INT auto_increment NOT NULL,
   imagem MEDIUMBLOB,
   extensao_imagem varchar(15),
@@ -94,38 +94,38 @@
   FOREIGN KEY (id_servico)
   REFERENCES servico(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE funcionario MODIFY COLUMN curriculo mediumblob NULL
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE funcionario MODIFY COLUMN numero_telefone varchar(16) NULL
-2020-7-16
-            10:37:32 #[WRN]-set global net_buffer_length=1000000
-2020-7-16
-            10:37:32 #[WRN]-set global max_allowed_packet=1000000000
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE tipo_servico add  COLUMN imagem LONGTEXT CHARACTER  SET BINARY
-2020-7-16
-            10:37:32 #[WRN]-alter table foto_servico add COLUMN if not EXISTS principal int(1) DEFAULT 0
-2020-7-16
-            10:37:32 #[WRN]-alter table servico add COLUMN if not EXISTS nivel_projeto int(1)
-2020-7-16
-            10:37:32 #[WRN]-alter table servico modify COLUMN if  EXISTS valor int(2)
-2020-7-16
-            10:37:32 #[WRN]-alter table servico add COLUMN if not EXISTS nivel_profissional int(1)
-2020-7-16
-            10:37:32 #[WRN]-alter table servico add COLUMN if not EXISTS data_cadastro   timestamp DEFAULT CURRENT_TIMESTAMP
-2020-7-16
-            10:37:32 #[WRN]-alter table servico modify COLUMN if EXISTS Ativo int(1) DEFAULT 1
-2020-7-16
-            10:37:32 #[WRN]--- Wellington 14/06/2020 Tarefa #1 
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE funcionario MODIFY COLUMN curriculo mediumblob NULL
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE funcionario MODIFY COLUMN numero_telefone varchar(16) NULL
+2020-7-24
+            21:30:39 #[WRN]-set global net_buffer_length=1000000
+2020-7-24
+            21:30:39 #[WRN]-set global max_allowed_packet=1000000000
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE tipo_servico add  COLUMN imagem LONGTEXT CHARACTER  SET BINARY
+2020-7-24
+            21:30:39 #[WRN]-alter table foto_servico add COLUMN if not EXISTS principal int(1) DEFAULT 0
+2020-7-24
+            21:30:39 #[WRN]-alter table servico add COLUMN if not EXISTS nivel_projeto int(1)
+2020-7-24
+            21:30:39 #[WRN]-alter table servico modify COLUMN if  EXISTS valor int(2)
+2020-7-24
+            21:30:39 #[WRN]-alter table servico add COLUMN if not EXISTS nivel_profissional int(1)
+2020-7-24
+            21:30:39 #[WRN]-alter table servico add COLUMN if not EXISTS data_cadastro   timestamp DEFAULT CURRENT_TIMESTAMP
+2020-7-24
+            21:30:39 #[WRN]-alter table servico modify COLUMN if EXISTS Ativo int(1) DEFAULT 1
+2020-7-24
+            21:30:39 #[WRN]--- Wellington 14/06/2020 Tarefa #1 
 
  create table IF NOT EXISTS chat(
 	id_chat bigint auto_increment primary key,
 	id_servico int,
 	constraint CHAT_ID_SERVICO foreign key(id_servico) references servico(id) 
 )
-2020-7-16
-            10:37:32 #[WRN]-create table IF NOT EXISTS chat_mensagens(
+2020-7-24
+            21:30:39 #[WRN]-create table IF NOT EXISTS chat_mensagens(
 	id_chat_mensagens bigint auto_increment primary key,
 	id_chat bigint,
 	id_usuario_remetente int,
@@ -137,12 +137,12 @@
 	constraint FK_ID_USUARIO_REMETENTE foreign key(id_usuario_remetente) references usuarios(id),
 	constraint FK_ID_USUARIO_DESTINATARIO foreign key(id_usuario_destinatario) references usuarios(id)
 )
-2020-7-16
-            10:37:32 #[WRN]-ALTER TABLE chat_mensagens CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
-2020-7-16
-            10:37:32 #[WRN]-ALTER DATABASE worklidb CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci
-2020-7-16
-            10:37:32 #[WRN]--- TRIGGER RODAR MANUALMENTE
+2020-7-24
+            21:30:39 #[WRN]-ALTER TABLE chat_mensagens CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
+2020-7-24
+            21:30:39 #[WRN]-ALTER DATABASE worklidb CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci
+2020-7-24
+            21:30:39 #[WRN]--- TRIGGER RODAR MANUALMENTE
 -- delimiter $$
 -- create trigger set_Ativo_servico after update  
 -- on servico
@@ -152,8 +152,8 @@
 -- 		update servicos_funcionario 
 -- 		set servicos_funcionario.Ativo = 0 where servicos_funcionario.Situacao = 0 and 
 -- 		servicos_funcionario.id_servico = NEW.id
-2020-7-16
-            10:37:32 #[WRN]--- 	end if
-2020-7-16
-            10:37:32 #[WRN]--- end $$
+2020-7-24
+            21:30:39 #[WRN]--- 	end if
+2020-7-24
+            21:30:39 #[WRN]--- end $$
 -- delimiter
