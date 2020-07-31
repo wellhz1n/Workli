@@ -1,6 +1,6 @@
 let UltimoFiltro = { C: Array(), Q: "", P: 1 };
 let PaginaAntesDigitar = 1;
-$(document).ready(async() => {
+$(document).ready(async () => {
     var usrContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
     BloquearTela();
     await app.$set(dataVue, "FiltroProjeto", { C: Array(), Q: "", P: 1 });
@@ -27,7 +27,7 @@ $(document).ready(async() => {
         mandou: false
     });
 
-    app.$watch("dataVue.FiltroProjeto", async function(a, o) {
+    app.$watch("dataVue.FiltroProjeto", async function (a, o) {
         //Guambiarra que da Orgulho pro pai
         var aObj = { C, P, Q } = JSON.parse(JSON.stringify(a));
         if (o != undefined && (aObj.C.join() != UltimoFiltro.C.join() || aObj.P != UltimoFiltro.P || aObj.Q != UltimoFiltro.Q)) {
@@ -107,7 +107,7 @@ $(document).ready(async() => {
     app.$set(dataVue, "selecionadoController", {});
 
     /* FUNÇÃO DE SALVAR */
-    app.$set(dataVue, "enviaproposta", async() => {
+    app.$set(dataVue, "enviaproposta", async () => {
         BloquearTelaSemLoader();
         dataVue.PropostaController.carregando = true;
         let result = await WMExecutaAjax("PropostaBO", "SalvarProposta", { proposta: dataVue.Proposta })
@@ -115,6 +115,11 @@ $(document).ready(async() => {
             toastr.error("Algo deu errado, tente novamente", "Ops");
             dataVue.PropostaController.carregando = false;
         } else if (result == true) {
+            dataVue.Projetos.lista.map(x => {
+                if(x.id == dataVue.selecionadoController.id)
+                    x.propostaFuncionario = 1
+                return x;
+            });
             toastr.success("Proposta enviada com sucesso!", "Sucesso");
             dataVue.PropostaController.carregando = false;
             dataVue.PropostaController.mandou = true;
@@ -134,7 +139,7 @@ $(document).ready(async() => {
 
         DesbloquearTelaSemLoader();
     });
-    app.$set(dataVue, "abremodal", async(propriedades) => {
+    app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
 
             BloquearTela();
@@ -155,7 +160,8 @@ $(document).ready(async() => {
             DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
-
+            if(dataVue.UsuarioContexto.NIVEL_USUARIO == 1)
+            dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x=>{return dataVue.selecionadoController.id == x.id})[0].propostaFuncionario;
             dataVue.Proposta.IdServico = dataVue.selecionadoController.id;
             dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
             dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
@@ -169,7 +175,7 @@ $(document).ready(async() => {
                 bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
 
             }, 1);
-            setInterval(async() => {
+            setInterval(async () => {
                 if (dataVue.modalVisivelController == true) {
                     let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
                     dataVue.selecionadoController.msg = msg.map(x => {
@@ -198,7 +204,7 @@ $(document).ready(async() => {
                 $('#rangeSlider').wrap("<div class='range'></div>");
 
 
-                $('.range').each(function() {
+                $('.range').each(function () {
                     valorCliente = (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
                     taxaPorcentagem = 15;
                     taxaValor = (valorCliente / 100) * 15;
@@ -219,14 +225,14 @@ $(document).ready(async() => {
 
                     /* Atualiza o popover dentro da bolinha de interrogação*/
                     $("#linkPopover").attr("data-content", (
-                            "Você receberá: R$ " +
-                            (Math.round(valorCliente * 100) / 100).toFixed(2) +
-                            " - R$ " +
-                            (Math.round(taxaValor * 100) / 100).toFixed(2) +
-                            " = R$ " +
-                            ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
-                            ""
-                        ).split(".").join(",")
+                        "Você receberá: R$ " +
+                        (Math.round(valorCliente * 100) / 100).toFixed(2) +
+                        " - R$ " +
+                        (Math.round(taxaValor * 100) / 100).toFixed(2) +
+                        " = R$ " +
+                        ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
+                        ""
+                    ).split(".").join(",")
 
                     );
 
@@ -235,7 +241,7 @@ $(document).ready(async() => {
                     dataVue.Proposta.Valor = valorCliente;
                 });
 
-                $('#rangeSlider').on("input", function() {
+                $('#rangeSlider').on("input", function () {
                     valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
                     valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
                     valorTotal = valorMax - valorMin;
@@ -300,7 +306,7 @@ $(document).ready(async() => {
                     dataVue.Proposta.Descricao = $("#descricaoDaPropostaInput")[0].value;
                 });
 
-                $("#rangeSlider").on("mouseover", function() {
+                $("#rangeSlider").on("mouseover", function () {
                     $('#rangeSlider').addClass("hovered");
                 });
 
@@ -327,7 +333,7 @@ $(document).ready(async() => {
                 /* FIM JS DO SLIDER*/
 
                 /* ATIVADOR DO POPOVER */
-                $(function() {
+                $(function () {
                     $('[data-toggle="popover"]').popover()
                 })
 
@@ -358,7 +364,7 @@ $(document).ready(async() => {
     });
 
     //#region CHAT
-    app.$set(dataVue, "NovaMensagem", async(mensagem = MensagemEntidade()) => {
+    app.$set(dataVue, "NovaMensagem", async (mensagem = MensagemEntidade()) => {
         try {
 
             mensagem.id_chat = dataVue.selecionadoController.id_chat;

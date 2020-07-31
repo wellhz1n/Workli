@@ -22,7 +22,9 @@
     padding: 0 10% 0 0 !important;
     width: 100%;
 }
-
+.itemMenuPadding {
+    padding: 0 10% 0 0;
+}
 .itemMenuUltimo {
     padding: 0 20% 0 0;
 }
@@ -290,4 +292,11 @@
 
 .Green {
     background: #28A745 !important;
+}
+.hora{
+    position: relative;
+    padding-right: 10px;
+    font-size: 12px;
+    top: 35%;
+    right: 3%;
 }

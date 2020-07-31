@@ -1,5 +1,9 @@
 <?php
 @include("../Classes/Imagem.php");
+@include("../functions/Session.php");
+@include("../Enums/SecoesEnum.php");
+
+
 // @include("../functions/Conexao.php");
 class ProjetoDAO
 {
@@ -8,7 +12,6 @@ class ProjetoDAO
     {
         $retorno = false;
         $proj->Descricao = addslashes($proj->Descricao);
-
 
         if ($Novo) {
             $retorno = Insert(
@@ -57,6 +60,7 @@ class ProjetoDAO
         }
         return $retorno;
     }
+    
     private function SalvarImagemServico($img = [], $idServico)
     {
         for ($i = 0; $i < count($img); $i++) {
@@ -94,17 +98,25 @@ class ProjetoDAO
             if(json_decode($paginas->resultados[0]['paginas']) == 1)
                 $pg = 1;
         }
-        
-        $pg = (json_decode($pg) - 1) * 6;
+        $IdFuncionaro = BuscaSecaoValor(SecoesEnum::IDFUNCIONARIOCONTEXTO);
+        $sqlPropostaAcima = $IdFuncionaro != null ? ",p.propostaFuncionario":null;
+        $sqlPropostaParaFuncionario =  $IdFuncionaro != null ?" ,case when pp.idFuncionario = {$IdFuncionaro} 
+                                        then 1
+                                        else 0
+                                        end as propostaFuncionario":null;
+        $pg = (json_decode($pg)- 1) * 6;
         $retorno = Sql("
         select ceil(count(p.id)/6) as paginas,
                p.id,p.titulo,p.descricao,
-               p.categoria,p.nivel_projeto,
+               p.categoria,
+               p.nivel_projeto,
                p.nivel_profissional,
                p.valor,p.postado,
                p.usuario,
                p.id_usuario,
-               p.img 
+               p.img,
+               count(p.propostas)as propostas
+               {$sqlPropostaAcima}
                from
                     (select s.id ,
                     s.nome as titulo,
@@ -113,13 +125,16 @@ class ProjetoDAO
                     s.nivel_projeto,
                     s.nivel_profissional,
                     s.valor, 
+                    pp.id as propostas,
                     cast(time_format(TIMEDIFF(current_timestamp,s.data_cadastro),'%H') as int) as postado,
                     u.nome as usuario,
                     u.id as id_usuario,
-                    iu.imagem as img 
+                    iu.imagem as img
+                    {$sqlPropostaParaFuncionario}
                     from servico s 
                     inner join tipo_servico  ts on ts.id = s.id_tipo_servico and ts.ATIVO = 1
                     inner join  usuarios  u on u.id = s.id_usuario 
+                    left join proposta pp on pp.idServico = s.id and pp.situacao = 0
                     left join imagem_usuario iu on iu.id_usuario =u.id 
                     where s.situacao = 0
                     {$sqlcategoria}
@@ -143,6 +158,13 @@ class ProjetoDAO
         $retorno = Sql("select fs.id, fs.imagem, fs.principal 
                         from foto_servico fs where fs.id_servico = ? ", [$id]);
         return $retorno->resultados;
+    }
+
+
+    public function BuscaNumeroProjetos() 
+    {
+        $retorno = Sql("SELECT COUNT(id) FROM servico", []);
+        return $retorno->resultados[0];
     }
     #endregion
 }

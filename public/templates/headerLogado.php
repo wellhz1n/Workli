@@ -2,7 +2,10 @@
 // @session_start();
 ?>
 <nav class="navbar navbar-expand-lg NavbarGreen">
-  <a class="navbar-brand" href="">Workli</a>
+  <a class="navbar-brand" href="">
+    <img style="height: 90px;width: 130px;" src="../Logo/Logo1.png" />
+
+  </a>
   <button class="navbar-toggler text-black " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon">
       <i class="fas fa-bars" style="color:#218838; font-size:28px;"></i>
@@ -109,10 +112,12 @@
                       <p class="m-0 font_Poopins_B">Titulo</p>
                     </div>
                     <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
+                      <p class="m-0 font_Poopins">Descrição
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
                 <div class="itemnotificacao Green">
@@ -129,6 +134,9 @@
                       </p>
                     </div>
                   </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                  </div>
                 </div>
                 <div class="itemnotificacao Blue1">
                   <div class="ItemNotificacaoIcone">
@@ -143,6 +151,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
                 <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
@@ -160,6 +171,9 @@
                       </p>
                     </div>
                   </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                  </div>
                 </div>
                 <div class="itemnotificacao Red1">
                   <div class="ItemNotificacaoIcone">
@@ -174,6 +188,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
 
@@ -190,6 +207,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
+                  </div>
+                  <div class="hora">
+                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
                   </div>
                 </div>
 

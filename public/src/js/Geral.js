@@ -5,8 +5,39 @@ var GoogleLogin = false;
 function ClassesStatics() {
     var CacheSeletor = [];
 }
+$(document).ready(() => {
+    $(".itemMenu").addClass("itemMenuPadding");
+})
+$(document).ready(async () => {
 
-$(document).ready(async() => {
+    //#region NotificacaoNavegador
+    Notification.requestPermission(result => {
+        if (result === 'denied') {
+            console.log('Permission wasn\'t granted. Allow a retry.');
+            return;
+        } else if (result === 'default') {
+            console.log('The permission request was dismissed.');
+            return;
+        }
+    });
+    if (localStorage.getItem('Notificacao') == null) {
+
+        var notification = new Notification("Título", {
+            icon: 'http://localhost:8089/wellhz1n/Workli/Logo/LogoNotify.png',
+            body: "Texto da notificação"
+        });
+        localStorage.setItem('Notificacao', true);
+        notification.onclick = function () {
+            window.open("http://localhost:8089/wellhz1n/Workli/public/?page=home");
+        }
+        setTimeout(() => {
+            notification.close();
+        }, 6000)
+    }
+    //#endregion
+
+
+
     async function AtualizaUsuarioContexto() {
         dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
         dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
@@ -21,7 +52,7 @@ $(document).ready(async() => {
             url: '../app/BO/UsuarioBO.php',
             data: { metodo: 'Logout' },
             type: 'post',
-        }).then(async(output) => {
+        }).then(async (output) => {
             Rediredionar('home');
         });
     })
@@ -35,6 +66,14 @@ $(document).ready(async() => {
     let menuHeader = $(`#menuHeader #${(MenuPai != null && GetPageName() != "home") ? MenuPai : GetPageName()}`)[0];
     $(menuHeader).addClass('MenuHeaderAtivo');
 
+
+
+    //#region FOOTER
+    let numeroProjetos = await WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos");
+    let numeroUsuarios = await WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios");
+    $("#numeroFooterServices")[0].innerText = numeroProjetos["COUNT(id)"];
+    $("#numeroFooterUsers")[0].innerText = numeroUsuarios["COUNT(id)"];
+    //#endregion
 });
 
 //Funcoes de grid
@@ -111,10 +150,10 @@ async function Tabela(idtabela, action, BO) {
             data: {
                 metodo: action
             },
-            complete: async function(foi) {
+            complete: async function (foi) {
                 await DesbloquearTela();
             },
-            beforeSend: async function() {
+            beforeSend: async function () {
                 await BloquearTela();
             }
         },
@@ -298,10 +337,10 @@ function GerarGraficoAnual(idchart, tipo, labels = [], label, data = [], labelst
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
-                            //max: this.max,
-                            //callback: function (value) {
-                            //    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
-                            //},
+                        //max: this.max,
+                        //callback: function (value) {
+                        //    return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+                        //},
                     },
                     scaleLabel: {
                         display: true,
@@ -323,9 +362,9 @@ function GerarGraficoAnual(idchart, tipo, labels = [], label, data = [], labelst
 
 };
 
-function CliqueTabela(idtabela, tabela, Objeto = () => {}, editar = () => {}, limpar = () => {}) {
+function CliqueTabela(idtabela, tabela, Objeto = () => { }, editar = () => { }, limpar = () => { }) {
     let obj;
-    $(`#${idtabela} tbody`).on('click', 'tr', function() {
+    $(`#${idtabela} tbody`).on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
             limpar(obj);
@@ -336,7 +375,7 @@ function CliqueTabela(idtabela, tabela, Objeto = () => {}, editar = () => {}, li
             Objeto(obj);
         }
     });
-    $(`#${idtabela} tbody`).on('dblclick ', 'tr', function() {
+    $(`#${idtabela} tbody`).on('dblclick ', 'tr', function () {
 
         obj = tabela.row(this).data();
         Objeto(obj);
@@ -392,7 +431,7 @@ async function Logar(email, senha, mostramsg = true) {
         url: '../app/BO/UsuarioBO.php',
         data: { metodo: 'Logar', email: email, senha: senha },
         type: 'post',
-    }).then(async(output) => {
+    }).then(async (output) => {
         let saida;
         saida = JSON.parse(output);
         try {
@@ -428,7 +467,7 @@ function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
     dataProp.forEach(dt => {
         temp_data[dt] = dados[dt];
     });
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         await $.ajax({
             url: `../app/BO/${BO}.php`,
@@ -439,10 +478,10 @@ function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
                 try {
                     Resultados = ConvertJSON ? JSON.parse(Resultados) : Resultados;
                 }
-            catch (err) {
-                console.warn("ERRO PHP:\n" + Resultados);
+                catch (err) {
+                    console.warn("ERRO PHP:\n" + Resultados);
 
-            }
+                }
             if (Resultados.error != undefined)
                 console.error(`ERROR++++++++++++++++++++++++++:\n ${Resultados.error}`);
             resolve(Resultados);
@@ -553,7 +592,7 @@ async function COnvertImagemBLOBToBase64(img) {
 }
 async function LerImagem(input) {
 
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -561,13 +600,13 @@ async function LerImagem(input) {
             reader.readAsDataURL(input.files[0]); // convert to base64 string
             reader.onload = await
 
-            function(e) {
-                if (e != undefined) {
+                function (e) {
+                    if (e != undefined) {
 
-                    imgBase = e.target.result.split(',')[1];
-                    resolve(imgBase);
+                        imgBase = e.target.result.split(',')[1];
+                        resolve(imgBase);
+                    }
                 }
-            }
         }
     });
 }
@@ -598,7 +637,7 @@ function applyMask(value, mask, masked = true) {
         } else {
             if (masked) output += cMask
             if (cValue === cMask) iValue++
-                iMask++
+            iMask++
         }
     }
     return output
@@ -632,14 +671,14 @@ async function onSignIn(googleUser) {
     }
 
     function RegistraModal() {
-        $('#modalCriarContaGoogle').on('hide.bs.modal', function(e) {
+        $('#modalCriarContaGoogle').on('hide.bs.modal', function (e) {
             signOut();
         });
         $('#nome').text(nome);
         $('#email').text(email);
         $('#imagem').attr("src", `data:image/png;base64,${img}`);
         $("#modalCriarContaGoogle").modal('show');
-        $('#mdContinuar').on('click', async() => {
+        $('#mdContinuar').on('click', async () => {
             try {
                 BloquearTela();
 
@@ -662,18 +701,18 @@ async function onSignIn(googleUser) {
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function() {
+    auth2.signOut().then(function () {
         console.log('User signed out.');
     });
 }
 
 function BuscaImagemPorURLtoBase64(url) {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
         var xhr = await new XMLHttpRequest();
-        xhr.onload = function() {
+        xhr.onload = function () {
             var reader = new FileReader();
-            reader.onloadend = async function() {
+            reader.onloadend = async function () {
                 resolve(reader.result.split(',')[1]);
             }
             reader.readAsDataURL(xhr.response);
@@ -732,5 +771,31 @@ function ChatSeparatorGenerator(msgs = []) {
 
 
 function GetDataAtual() {
-    return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth()+1 <10?'0'+(new Date(new Date().toString('YYY-MM-DD')).getMonth()+1):new Date(new Date().toString('YYY-MM-DD')).getMonth()+1}-${new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
+    return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1 < 10 ? '0' + (new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1) : new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1}-${new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
+}
+
+
+function MostraMensagem(Mensagem, TipoMensagem = ToastType.INFO, Tiulo = document.title) {
+    debugger
+    switch (TipoMensagem) {
+        case ToastType.INFO:
+            toastr.info(Mensagem, Tiulo);
+            break;
+        case ToastType.SUCCESS:
+            toastr.success(Mensagem, Tiulo);
+            break;
+        case ToastType.ERROR:
+            toastr.error(Mensagem, Tiulo);
+            console.error("MENSAGEM \n"+Mensagem);
+            break;
+        case ToastType.WARN:
+            toastr.warning(Mensagem, Tiulo);
+            console.warn("MENSAGEM \n"+Mensagem);
+            break;
+
+        default:
+            toastr.info(Mensagem, Tiulo);
+            break;
+            
+    }
 }
