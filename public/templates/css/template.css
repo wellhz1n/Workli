@@ -1,302 +1,320 @@
 /*  ---------------------------------------  HEADER  ---------------------------------------  */
 
 #navHeader {
-    padding: 1% 23% 1% 20%;
-    z-index: 15 !important;
-    box-shadow: 0px 2px 11px #FFF;
+  padding: 1% 23% 1% 20%;
+  z-index: 15 !important;
+  box-shadow: 0px 2px 11px #fff;
 }
 
 #marca {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 2em;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2em;
 }
 
 .blocoMenuHeader {
-    flex-direction: row;
-    justify-content: flex-end;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .itemMenu {
-    font-size: 1.7em;
-    font-family: Arial;
-    padding: 0 10% 0 0 !important;
-    width: 100%;
+  font-size: 1.7em;
+  font-family: Arial;
+  padding: 0 10% 0 0 !important;
+  width: 100%;
 }
 .itemMenuPadding {
-    padding: 0 10% 0 0;
+  padding: 0 10% 0 0;
 }
 .itemMenuUltimo {
-    padding: 0 20% 0 0;
+  padding: 0 20% 0 0;
 }
 
 .itemMenuTexto {
-    font-family: Arial !important;
-    padding: 0 15% 0 0;
-    white-space: pre;
-    color: black !important;
+  font-family: Arial !important;
+  padding: 0 15% 0 0;
+  white-space: pre;
+  color: black !important;
 }
 
-
 /*  ---------------------------------------  FIM HEADER  -----------------------------------  */
-
 
 /* ---------------------------------------- ADM SIDE BAR ---------------------------------------  */
 
 #body-row {
-    margin-left: 0;
-    margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 #sidebar-container {
-    min-height: 100vh;
-    background-color: #333;
-    padding: 0;
+  min-height: 100vh;
+  background-color: #333;
+  padding: 0;
 }
-
 
 /* Sidebar sizes when expanded and expanded */
 
 .sidebar-expanded {
-    width: 230px;
+  width: 230px;
 }
 
 .sidebar-collapsed {
-    width: 60px;
+  width: 60px;
 }
-
 
 /* Menu item*/
 
 #sidebar-container .list-group a {
-    height: 50px;
-    color: white;
+  height: 50px;
+  color: white;
 }
-
 
 /* Submenu item*/
 
 #sidebar-container .list-group .sidebar-submenu a {
-    height: 45px;
-    padding-left: 30px;
+  height: 45px;
+  padding-left: 30px;
 }
 
 .sidebar-submenu {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
-
 
 /* Separators */
 
 .sidebar-separator-title {
-    background-color: #333;
-    height: 35px;
+  background-color: #333;
+  height: 35px;
 }
 
 .sidebar-separator {
-    background-color: #333;
-    height: 25px;
+  background-color: #333;
+  height: 25px;
 }
 
 .logo-separator {
-    background-color: #333;
-    height: 60px;
+  background-color: #333;
+  height: 60px;
 }
-
 
 /* Closed submenu icon */
 
 #sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
-    content: " \f0d7";
-    font-family: FontAwesome;
-    display: inline;
-    text-align: right;
-    padding-left: 10px;
+  content: " \f0d7";
+  font-family: FontAwesome;
+  display: inline;
+  text-align: right;
+  padding-left: 10px;
 }
-
 
 /* Opened submenu icon */
 
 #sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
-    content: " \f0da";
-    font-family: FontAwesome;
-    display: inline;
-    text-align: right;
-    padding-left: 10px;
+  content: " \f0da";
+  font-family: FontAwesome;
+  display: inline;
+  text-align: right;
+  padding-left: 10px;
 }
 
-
 /* ---------------------------------------- FIM ADM SIDE BAR -----------------------------------  */
-
 
 /* ---------------------------------------- FOOTER --------------------------------------------- */
 
 #footer {
-    background-color: #162e24;
-    width: 100%;
-    /* margin-top: 30px; */
-    padding: 50px 0 25px;
-    color: #F7F7F7;
-    bottom: 0;
-    bottom: 0;
-    left: 0;
+  background-color: #162e24;
+  width: 100%;
+  /* margin-top: 30px; */
+  padding: 50px 0 25px;
+  color: #f7f7f7;
+  bottom: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .corCinza {
-    color: #BEC0C2;
+  color: #bec0c2;
 }
 
 .numeroFooter {
-    color: #F7F7F7;
-    margin-right: 8px;
+  color: #f7f7f7;
+  margin-right: 8px;
 }
 
 .textoFooterWrapper {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .linhaFooter {
-    width: 80%;
-    background-color: #2b4034;
-    height: 1px;
+  width: 80%;
+  background-color: #2b4034;
+  height: 1px;
 }
 
 .linhaFooterWrapper {
-    flex: 1;
-    margin-top: 15px;
-    flex-basis: 100%;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  margin-top: 15px;
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .DropMenuCelular {
-    margin-left: 0px!important;
+  margin-left: 0px !important;
 }
 
 .UserTXTCell {
-    display: none;
+  display: none;
 }
-
 
 /* ---------------------------------------- FIM FOOTER --------------------------------------------- */
 
-@media (max-width:800px) {
-    .textoFooterWrapper {
-        font-size: 12px !important;
-    }
-    .DropMenuCelular {
-        margin-left: -4% !important;
-    }
-    .UserTXTCell {
-        display: block;
-    }
-    .UserContainer {
-        border-top: 1px solid #2b4034;
-        width: 100%;
-        justify-content: start;
-        margin-top: 5px;
-        padding: 2px;
-    }
-    li a[aria-expanded="true"] .UserContainer {
-        width: 94% !important;
-    }
+@media (max-width: 800px) {
+  .textoFooterWrapper {
+    font-size: 12px !important;
+  }
+  .DropMenuCelular {
+    margin-left: -4% !important;
+  }
+  .UserTXTCell {
+    display: block;
+  }
+  .UserContainer {
+    border-top: 1px solid #2b4034;
+    width: 100%;
+    justify-content: start;
+    margin-top: 5px;
+    padding: 2px;
+  }
+  li a[aria-expanded="true"] .UserContainer {
+    width: 94% !important;
+  }
 }
-
 
 /* NOTIFICACOES */
 
 .notificacoesScrool {
-    height: 240px;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  height: 240px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .notificacoesScrool::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
+  width: 8px;
+  cursor: pointer;
 }
 
 .notificacoesScrool::-webkit-scrollbar-track {
-    background: #21883844 !important;
-    width: 50px;
+  background: #21883844 !important;
+  width: 50px;
 }
-
 
 /* Handle */
 
 .notificacoesScrool::-webkit-scrollbar-thumb {
-    background: #218838 !important;
-    height: 10px;
+  background: #218838 !important;
+  height: 10px;
 }
-
 
 /* Handle on hover */
 
 .notificacoesScrool::-webkit-scrollbar-thumb:hover {
-    background: #1a692b !important;
+  background: #1a692b !important;
 }
 
 .itemnotificacao {
-    height: 100px;
-    width: 100%;
-    background: #56b7c9;
-    border-radius: 12px;
-    margin: 5px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  background: #56b7c9;
+  border-radius: 12px;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .ItemNotificacaoIcone {
-    width: 100px;
-    height: 50px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    font-size: 25px;
-    color: white;
+  width: 100px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 25px;
+  color: white;
 }
 
 .DadosNotificacao {
-    display: flex;
-    flex-direction: column;
-    color: white;
+  display: flex;
+  width: 100%;
+  height: min-content;
+  flex-direction: column;
+  color: white;
 }
 
-.TituloNotificacao {}
+.TituloNotificacao {
+}
 
 .descricaoNotificacao {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .Blue1 {
-    background: #0f8b8d !important;
+  background: #0f8b8d !important;
 }
 
 .Yellow1 {
-    background: #EC9A29 !important;
+  background: #ec9a29 !important;
 }
 
 .Red1 {
-    background: #a8201A !important;
+  background: #a8201a !important;
 }
 
 .Green1 {
-    background: #5eeb5b !important;
+  background: #5eeb5b !important;
 }
 
 .Green {
-    background: #28A745 !important;
+  background: #28a745 !important;
 }
-.hora{
-    position: relative;
-    padding-right: 10px;
-    font-size: 12px;
-    top: 35%;
-    right: 3%;
+.hora {
+  padding-right: 10px;
+  font-size: 12px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.notifyredBall {
+  position: relative;
+  top: -8px;
+  right: -8px;
+  font-size: smaller;
+  padding: 0px 6px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  animation: NotificacaoAnimacao 2s infinite alternate ease-in-out;
+  transform: scale(1.0);
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+  will-change: transform;
+}
+@keyframes NotificacaoAnimacao {
+  from {
+    background-color: red;
+    transform: scale(1.0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  to {
+    background-color: orange;
+    transform: scale(1.1);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
 }
