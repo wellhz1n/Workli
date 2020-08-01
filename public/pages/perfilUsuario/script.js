@@ -1,4 +1,3 @@
-
 $(document).ready(async () => {
     await BloquearTela();
     let img =  await GetSessaoPHP("FOTOUSUARIO");

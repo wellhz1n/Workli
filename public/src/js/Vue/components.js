@@ -613,13 +613,21 @@ var VSELECT = Vue.component('v-select', VueSelect.VueSelect);
 var WMUSERIMG = Vue.component('wm-user-img', {
     props: {
         img: String,
+        width: {
+            default: 224,
+            type: Number
+        },
+        height: {
+            default: 224,
+            type: Number
+        },
         class_icone: String,
         class_imagem: String,
         id: String
     },
     data: function() {
         return {
-            imgData: null
+            imgData: null,
         }
     },
     template: `
@@ -645,11 +653,8 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         </div> 
         <div v-show="this.imgData != null && this.imgData != '' ">
             <div>
-                <img style="
-                        height:224px;
-                        width:224px; 
-                        border-radius: 112px;
-                    " 
+                <img style="border-radius: 112px;"
+                    :style="[{width:this.width + 'px', height: this.height + 'px'}]"
                     :class="['my-4 mx-2', class_imagem ? class_imagem : '']" 
                     :src="this.imgData"/>
             </div>
@@ -657,8 +662,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     </div>
     `,
     mounted: function() {
-        // console.log(this.$refs.testevue);
-        // console.log(this.img)
+        // console.log("hey")
     },
     watch: {
         img: {

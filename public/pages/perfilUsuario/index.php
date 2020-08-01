@@ -7,17 +7,20 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 
 
 <div class="justify-content-center text-center m-0">
+    <div class="row imagemBackgroundPerfilWrapper">
+        <img id="imageBackgroundPerfil" src="src/img/background/background.png"></img>
+    </div>
+    <div class="row">
+        <span class="col-12" id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?><span></span>
+    </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
 
-            <div id="maskEditImg" class="editimgbox my-4 ml-2 " hidden>
-                <i class=" fas fa-edit pl-3" style="font-size: 50px;color:#fff" aria-hidden></i>
+            <div id="maskEditImg" class="editimgbox my-4 ml-2" hidden>
+                <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
             </div>
-            <wm-user-img :img="dataVue.Usuario.imagem" />
+            <wm-user-img :img="dataVue.Usuario.imagem" :width="200" :height="200"  />
         </div>
-    </div>
-    <div class="row">
-        <span class="col-12" id="bemVindo">Bem vindo, <?php echo $_SESSION[SecoesEnum::NOME] ?></span>
     </div>
 
     <?php
@@ -67,7 +70,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     if($_SESSION[SecoesEnum::NIVEL_USUARIO] == 1) { 
         echo componenteTexto("Currículo", $_SESSION[SecoesEnum::CURRICULO]); // Deixar Curriculo sem acento para não bugar. TODO: Consertar este problema
         echo componenteTexto("Telefone", $_SESSION[SecoesEnum::NUMERO_TELEFONE]);
-        echo componenteTexto("Avaliação Média", $_SESSION[SecoesEnum::AVALIACAO_MEDIA]);
+        // echo componenteTexto("Avaliação Média", $_SESSION[SecoesEnum::AVALIACAO_MEDIA]);
     }
     ?>
 
@@ -86,12 +89,15 @@ require "pages/perfilUsuario/componenteTexto/index.php";
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <div id="imgcontainerModal">
+                        <div id="imgcontainerModal" class="d-flex justify-content-center align-items-center">
 
-                            <div id="maskEditImgModal" class="editimgbox my-4 ml-2 " hidden>
-                                <i class=" fas fa-file-upload pl-3" style="font-size: 50px;color:#fff" aria-hidden></i>
+                            <div id="maskEditImgModal" class="editimgbox my-4 ml-2 ">
+                                <i class="fas fa-file-upload" style="font-size: 50px;color:#fff" aria-hidden></i>
                             </div>
-                            <wm-user-img :img="dataVue.Usuario.imgTemp == null? dataVue.Usuario.imagem : dataVue.Usuario.imgTemp" />
+                            <div id="maskEditImg" class="my-4 ml-2" hidden>
+                                <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
+                            </div>
+                            <wm-user-img :img="dataVue.Usuario.imgTemp == null? dataVue.Usuario.imagem : dataVue.Usuario.imgTemp"/>
                         </div>
                     </div>
                     <div class="col-4 my-5" style="font-size: 10px">

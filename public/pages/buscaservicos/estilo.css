@@ -424,6 +424,10 @@
         border-radius: 100%;
         font-size: 15px;
         -webkit-transform: scale(1);
+        
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        -webkit-font-smoothing: subpixel-antialiased;
     }
     
     .animacaoInterrogacao {
