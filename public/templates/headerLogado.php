@@ -92,7 +92,8 @@
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell"></i>
+          <span class="notifyredBall">9<sup>+</sup></span>
+          <i class="fas fa-bell" style="font-size: larger;"></i>
         </a>
         <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
           <div style="height: 300px;" class=" linkCor">
@@ -103,6 +104,9 @@
             <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
             <div class="row" style="height: 250px;width: 100%;margin: 0px;">
               <div class="col-12 notificacoesScrool">
+
+                <div class="dataChatDiv"><span class="dataChatDivTexto">Hoje</span></div>
+
                 <div class="itemnotificacao">
                   <div class="ItemNotificacaoIcone">
                     <i class="fas fa-info"></i>
@@ -115,9 +119,9 @@
                       <p class="m-0 font_Poopins">Descrição
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
                 <div class="itemnotificacao Green">
@@ -133,9 +137,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
                 <div class="itemnotificacao Blue1">
@@ -151,9 +155,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
                 <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
@@ -170,9 +174,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
                 <div class="itemnotificacao Red1">
@@ -188,9 +192,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
 
@@ -207,9 +211,9 @@
                         vamos deixar o texto maior para testar.
                       </p>
                     </div>
-                  </div>
-                  <div class="hora">
-                    <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    <div class="hora">
+                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
+                    </div>
                   </div>
                 </div>
 
