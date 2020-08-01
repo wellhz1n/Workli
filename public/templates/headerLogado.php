@@ -230,7 +230,7 @@
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropmenulogado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="d-flex UserContainer flex-row align-items-center ">
             <?php if (BuscaSecaoValor(SecoesEnum::FOTO_USUARIO) != "") { ?>
-              <img style="height: 40px;width: 40px;border-radius: 100%" class="mx-2 border border-success" src="data:image/png;base64,<?php echo $_SESSION[SecoesEnum::FOTO_USUARIO]; ?>" />
+              <img style="height: 40px;width: 40px;border-radius: 100%;object-fit: cover;" class="mx-2 border border-success" src="data:image/png;base64,<?php echo $_SESSION[SecoesEnum::FOTO_USUARIO]; ?>" />
             <?php } else { ?>
               <i style="color: #343a40; background: #fff; border-radius:100%; border: solid #fff 4px; font-size: 40px !important;" class="mx-2 fas fa-user-circle" aria-hidden></i>
             <?php } ?>

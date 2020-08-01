@@ -654,7 +654,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         <div v-show="this.imgData != null && this.imgData != '' ">
             <div>
                 <img style="border-radius: 112px;"
-                    :style="[{width:this.width + 'px', height: this.height + 'px'}]"
+                    :style="[{width:this.width + 'px', height: this.height + 'px','background-color':'white','object-fit': 'cover'}]"
                     :class="['my-4 mx-2', class_imagem ? class_imagem : '']" 
                     :src="this.imgData"/>
             </div>
