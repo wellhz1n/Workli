@@ -39,10 +39,10 @@ header('Content-Type: text/html; charset=utf-8');
     <script type="" src="src/js/bootstrap/bootstrap.js"></script>
     <script src="src/fontawesome-free-5.12.1-web/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="src/js/Chartjs/Chart.js" ></script>
-    <script src="src/js/select2/select2.min.js" ></script>
-    <script src="src/js/Toastr/toastr.min.js" ></script>
-    <script src="src/js/DataTable/datatables.min.js" ></script>
+    <script src="src/js/Chartjs/Chart.js"></script>
+    <script src="src/js/select2/select2.min.js"></script>
+    <script src="src/js/Toastr/toastr.min.js"></script>
+    <script src="src/js/DataTable/datatables.min.js"></script>
     <script src="src/js/jquery-validation/dist/jquery.validate.js"></script>
     <script src="src/js/Vue/vue.js"></script>
     <script src="src/js/Vue/vue-select.js"></script>
@@ -124,7 +124,7 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-loading': LoadingComponent,
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
-                            "wm-chart":WMChart
+                            "wm-chart": WMChart
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {
@@ -141,7 +141,7 @@ header('Content-Type: text/html; charset=utf-8');
                                     Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
                                     Nome: await GetSessaoPHP(SESSOESPHP.NOME),
                                     id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO),
-                                    id_funcionario:  await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO)
+                                    id_funcionario: await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO)
                                 }
                             },
                             async AtualizaUsuarioContexto() {
@@ -161,6 +161,16 @@ header('Content-Type: text/html; charset=utf-8');
 
                         }
                     });
+                    //#region FOOTER
+                    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
+                        $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+                    });
+                    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
+                        $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+                    });
+
+                    //#endregion
+                    
                     // console.clear();
                 </script>
 

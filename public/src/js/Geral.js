@@ -68,12 +68,15 @@ $(document).ready(async () => {
 
 
 
-    //#region FOOTER
-    let numeroProjetos = await WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos");
-    let numeroUsuarios = await WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios");
-    $("#numeroFooterServices")[0].innerText = numeroProjetos["COUNT(id)"];
-    $("#numeroFooterUsers")[0].innerText = numeroUsuarios["COUNT(id)"];
-    //#endregion
+//     //#region FOOTER
+//     WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
+//         $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+//     });
+//   WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
+//       $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+//   });
+    
+//     //#endregion
 });
 
 //Funcoes de grid

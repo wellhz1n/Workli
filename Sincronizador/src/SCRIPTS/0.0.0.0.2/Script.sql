@@ -19,3 +19,21 @@ alter table proposta add column if not exists situacao numeric(1) default 0;
 ALTER TABLE proposta MODIFY COLUMN idFuncionario int(11) NOT NULL;
 ALTER TABLE proposta MODIFY COLUMN idCliente int(11)  NOT NULL;
 ALTER TABLE proposta MODIFY COLUMN idServico int(11) NOT NULL;
+
+-- Wellington.Ramos em 2/08/2020 Tarefa #7
+create table IF NOT EXISTS notificacoes(
+		id bigint auto_increment primary key,
+		descricao varchar(255),
+		titulo varchar(100),
+		id_projeto int  null,
+		id_chat bigint  null,
+		id_usuario int,
+		id_usuario_criacao int,
+		data_hora timestamp default current_timestamp,
+        tipo int(1)default 0,
+		visto int(1) default 0,
+		constraint FK_PROJETO_NOTIFICACAO foreign key (id_projeto) references servico(id),
+		constraint FK_CHAT_NOTIFICACAO foreign key (id_chat) references chat(id_chat),
+		constraint FK_USUARIO_NOTIFICACAO foreign key (id_usuario) references usuarios(id),
+		constraint FK_USUARIO_CRIACAO_NOTIFICACAO foreign key (id_usuario_criacao) references usuarios(id)
+);

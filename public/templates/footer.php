@@ -5,10 +5,10 @@ $config = json_decode($config, true);
 <div id="footer">
     <div class="textoFooterWrapper">
         <div class="usuariosRegistrados corCinza px-5">
-            <span class="numeroFooter" id="numeroFooterUsers">100</span> Usuários Registrados
+            <span class="numeroFooter" id="numeroFooterUsers"></span> Usuários Registrados
         </div>
         <div class="servicosPublicados corCinza px-5">
-            <span class="numeroFooter" id="numeroFooterServices">100</span> Serviços Publicados
+            <span class="numeroFooter" id="numeroFooterServices"></span> Serviços Publicados
         </div>
 
         <div class="copyright px-5">
