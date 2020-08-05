@@ -9,6 +9,40 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
         <img id="imageBackgroundPerfil" src="src/img/background/background.png"></img>
+        <div id="cardsDadosProposta">
+            <div class="cardsDPWrapper">
+                <div class="cardDP">
+                    <span class="iconePerfil dinheiro"></span>
+                    <div class="textPerfilWrapper">
+                        <div class="numeroCardPerfil">R$ 0,00</div>
+                        <div class="textoCardPerfil">Seus ganhos</div>
+                    </div>
+                </div>
+                <div class="cardDP">
+                    <span class="iconePerfil olho"></span>
+                    <div class="textPerfilWrapper">
+                        <div class="numeroCardPerfil">0</div>
+                        <div class="textoCardPerfil">Propostas enviadas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cardsDPWrapper">
+                <div class="cardDP">
+                    <span class="iconePerfil martelo"></span>
+                    <div class="textPerfilWrapper">
+                        <div class="numeroCardPerfil">0</div>
+                        <div class="textoCardPerfil">Propostas Aceitas</div>
+                    </div>
+                </div>
+                <div class="cardDP">
+                    <span class="iconePerfil carimbo"></span>
+                    <div class="textPerfilWrapper">
+                        <div class="numeroCardPerfil">0</div>
+                        <div class="textoCardPerfil">Propostas Concluídas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <span class="col-12" id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?><span></span>
