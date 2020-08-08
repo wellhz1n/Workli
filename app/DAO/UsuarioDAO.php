@@ -144,6 +144,13 @@ class UsuarioDAO
         return $retorno;
     }
 
+    public function GetFuncionarioCompletobyId($id) {
+        $retorno = Sql("SELECT u.id,u.nome,u.email,u.cpf,u.nivel_usuario,im.imagem, func.avaliacao_media FROM usuarios AS u
+                        LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id  
+                        LEFT JOIN funcionario AS func ON func.id_usuario = u.id
+                        where u.id = ? ", [$id]);
+        return $retorno;
+    }
 
     public function BuscaNumeroUsuarios() 
     {

@@ -49,7 +49,6 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
-
             <div id="maskEditImg" class="editimgbox my-4 ml-2" hidden>
                 <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
             </div>
@@ -59,39 +58,53 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 
     <?php
     if($_SESSION[SecoesEnum::NIVEL_USUARIO] == 1) {
+        // echo "
+        // <div class='rating large star-icon value-2 half color-ok label-right' id='avaliacao'>
+        //     <div class='label-value'>
+        //         3
+        //     </div>
+        //     <div class='star-container'>
+        //         <div class='star'>
+        //             <i class='star-empty'></i>
+        //             <i class='star-half'></i>
+        //             <i class='star-filled'></i>
+        //         </div>
+        //         <div class='star'>
+        //             <i class='star-empty'></i>
+        //             <i class='star-half'></i>
+        //             <i class='star-filled'></i>
+        //         </div>
+        //         <div class='star'>
+        //             <i class='star-empty'></i>
+        //             <i class='star-half'></i>
+        //             <i class='star-filled'></i>
+        //         </div>
+        //         <div class='star'>
+        //             <i class='star-empty'></i>
+        //             <i class='star-half'></i>
+        //             <i class='star-filled'></i>
+        //         </div>
+        //         <div class='star'>
+        //             <i class='star-empty'></i>
+        //             <i class='star-half'></i>
+        //             <i class='star-filled'></i>
+        //         </div>
+        //     </div>
+        // </div>    
+        // ";
         echo "
-        <div class='rating large star-icon value-3 half color-ok label-right' id='avaliacao'>
-            <div class='label-value'>
-                3
+            <div class='wrapperStarRating'>
+                <star-rating 
+                        v-model='dataVue.Rating'
+                        :increment='0.5'
+                        :star-size='dataVue.StarSize'
+                        :fixed-points='1'
+                        text-class='textoEstrelas'
+                        :round-start-rating='false'
+                        :read-only='true'
+                        :padding='5'
+                ></star-rating>
             </div>
-            <div class='star-container'>
-                <div class='star'>
-                    <i class='star-empty'></i>
-                    <i class='star-half'></i>
-                    <i class='star-filled'></i>
-                </div>
-                <div class='star'>
-                    <i class='star-empty'></i>
-                    <i class='star-half'></i>
-                    <i class='star-filled'></i>
-                </div>
-                <div class='star'>
-                    <i class='star-empty'></i>
-                    <i class='star-half'></i>
-                    <i class='star-filled'></i>
-                </div>
-                <div class='star'>
-                    <i class='star-empty'></i>
-                    <i class='star-half'></i>
-                    <i class='star-filled'></i>
-                </div>
-                <div class='star'>
-                    <i class='star-empty'></i>
-                    <i class='star-half'></i>
-                    <i class='star-filled'></i>
-                </div>
-            </div>
-        </div>    
         ";
     }
 

@@ -86,17 +86,29 @@ $(document).ready(async () => {
 await DesbloquearTela();
 
 await retornaValorAvaliacao();
+
+
+    /* Pega os dados do usuário do banco */    
+    let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
+    let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": usuarioId });
+
+    // console.table(usuario)
+    // console.log(await GetSessaoPHP("IDUSUARIOCONTEXTO")) 
+    /*STAR RATING*/
+    await app.$set(dataVue, "Rating", parseFloat(usuario.avaliacao_media));
+    await app.$set(dataVue, "StarSize", 40);
+
+    if(innerWidth < 1300) {
+        await app.$set(dataVue, "StarSize", 30);
+    }
 });
 
 function retornaValorAvaliacao() {
     let funcTemp = async () => {
-        let avaliacaoMedia = await GetSessaoPHP("AVALIACAOMEDIA");
-        // Funcão que define o valor do rating:
-        let valorRating = Math.round(avaliacaoMedia * 2) / 2;
-        valorRating = ["value-" + valorRating, valorRating];
+        // let avaliacaoMedia = await GetSessaoPHP("AVALIACAOMEDIA");
         
-        ($(".rating").removeClass("value-3")).addClass(valorRating[0]);
-        $(".label-value")[0].innerText = Math.trunc(avaliacaoMedia * 10) / 10;
+        // ($(".rating").removeClass("value-3")).addClass(valorRating[0]);
+        // $(".label-value")[0].innerText = Math.trunc(avaliacaoMedia * 10) / 10;
     }
     return funcTemp();
 }

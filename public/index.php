@@ -58,6 +58,8 @@ header('Content-Type: text/html; charset=utf-8');
     <script scr="https://cdnjs.com/libraries/Chart.js"></script>
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
+    <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script> <!-- css star rating -->
+
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> <!-- Google Sans -->
@@ -124,7 +126,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-loading': LoadingComponent,
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
-                            "wm-chart": WMChart
+                            "wm-chart": WMChart,
+                            'star-rating': VueStarRating.default
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {

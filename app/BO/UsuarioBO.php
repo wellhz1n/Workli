@@ -52,6 +52,9 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if($metodo == "GetUsuarioById"){
         $userBO->GetUsuarioById($_POST["ID"]);
     }
+    if($metodo == "GetFuncionarioById") {
+        $userBO->GetFuncionarioById($_POST["ID"]);
+    }
     if($metodo == "BuscaNumeroUsuarios") {
         $userBO->BuscaNumeroUsuarios();
     }
@@ -61,7 +64,7 @@ class UsuarioBO
     public $usuarioDAO;
     function __construct()
     {
-        $this->usuarioDAO =  new UsuarioDAO();
+        $this->usuarioDAO = new UsuarioDAO();
     }
     public function GetUsuarioById($id)
     {
@@ -69,6 +72,15 @@ class UsuarioBO
         $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
         echo json_encode($saida[0]);
     }
+
+    public function GetFuncionarioById($id)
+    {
+        $saida = $this->usuarioDAO->GetFuncionarioCompletobyId($id)->resultados;
+        $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
+        echo json_encode($saida[0]);
+    }
+
+
     public function VerificaSeEmailExiste($email)
     {
         $teste = $this->usuarioDAO->VerificaEmail($email);

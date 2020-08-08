@@ -2,7 +2,7 @@
     margin: 0;  
 }
 
-/*#region Parte Superior*/
+/*#region Parte Superior --------------------------------------------------------------------------------------------*/
 
 /*#region Background ----------------------------------------------------------------------------------------------------------------------*/
 
@@ -58,7 +58,7 @@
 .cardDP {
     border: 2px solid #e5e5e5;
     border-radius: 10px;
-    width: 275px;
+    width: 40%;
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -68,6 +68,7 @@
 
 .textPerfilWrapper {
     text-align: left;
+    flex: 1;
 }
 
 .iconePerfil{
@@ -98,15 +99,13 @@
     }
     .iconePerfil {
         margin: 0;
+        padding: 10px;
     }
 }
-
-@media only screen and (max-width: 1300px) {
-    
-}
-
-@media only screen and (max-width: 900px) {
-    
+@media only screen and (max-width: 1095px) { 
+    .cardDP {
+        height: 155px;
+    }
 }
 .olho {
     background-position: -60px 0px;
@@ -178,5 +177,34 @@
 }
 /*#endregion ----------------------------------------------------------------------------------------------------------------------*/
 
+    /*#region Estrelas -------------------------------------------------------------------------------------------------------------------*/
 
-/*#endregion Parte Superior*/
+    .textoEstrelas {
+        font-size: 26px;
+        font-weight: 700;
+        user-select: none;
+    }
+
+    .wrapperStarRating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1%;
+        
+    }
+
+    @media only screen and (max-width: 1285px) { 
+        .textoEstrelas {
+            font-size: 22px;
+        }
+    }
+
+    /*#endregion --------------------------------------------------------------------------------------------------------------------------*/
+
+/*#endregion Parte Superior ----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
