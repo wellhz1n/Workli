@@ -2,6 +2,29 @@
     margin: 0;  
 }
 
+.iconeInterrogacaoWrapper {
+    color: #393939 !important;
+    border-radius: 100%;
+    font-size: 15px;
+    -webkit-transform: scale(1);
+    
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+.iconeInterrogacao {
+
+    display: flex;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.linkPopover {
+    height: fit-content;
+    outline: none;
+    font-size: 16px;
+    margin-left: 4px;
+}
 /*#region Parte Superior --------------------------------------------------------------------------------------------*/
 
 /*#region Background ----------------------------------------------------------------------------------------------------------------------*/
@@ -161,6 +184,7 @@
 #maskEditImg {
     min-width: 140px;
     min-height: 140px;
+    margin-top: 15px !important;
 }
 
 #maskEditImg svg {
@@ -175,12 +199,12 @@
 #avaliacao {
     margin-bottom: 2%;
 }
-/*#endregion ----------------------------------------------------------------------------------------------------------------------*/
+    /*#endregion ----------------------------------------------------------------------------------------------------------------------*/
 
     /*#region Estrelas -------------------------------------------------------------------------------------------------------------------*/
 
     .textoEstrelas {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 700;
         user-select: none;
     }
@@ -190,7 +214,13 @@
         justify-content: center;
         align-items: center;
         margin-left: 1%;
-        
+        margin-top: 10px;
+    }
+
+    @media only screen and (max-width: 1900px) { 
+        .textoEstrelas {
+            font-size: 23px;
+        }
     }
 
     @media only screen and (max-width: 1285px) { 
@@ -203,7 +233,219 @@
 
 /*#endregion Parte Superior ----------------------------------------------------------------------------------------------------------*/
 
+/*#region Parte Inferior - Cards -------------------------------------------------------------------------------- */
 
+    /*#region Linha de cima ------------------------------------------------------------------------------ */
+
+        .perfilCardHeader { 
+            padding: 10px 15px 10px 5% !important; 
+        }
+        .cardsPerfilSuperior {
+            display: flex;
+            justify-content: center;
+            margin: 35px 3% 0 3%;
+        }
+
+        #perfilCard {
+            flex: 3;
+            margin-right: 0.9%;
+        }
+        
+        #contatoCard{
+            flex: 2;
+            margin-right: 0.9%;
+        }
+        #statusCard{
+            flex: 2;
+        }
+        
+        .botaoEditarPerfil {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .botaoEditarPerfil:active {
+            font-size: 22px;
+        }
+
+
+        /*#region Perfil*/
+        .nomeEProfCP {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            margin-left: 2%;
+        }
+        
+        .nomeCP  {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .profCP {
+            margin-left: 1%;
+            font-size: 21px;
+            font-weight: 700;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profCPBolinha {
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 5%;
+        }
+
+        @media only screen and (max-width: 1500px) { 
+            .nomeCP {
+                font-size: 18px;
+            }
+            .profCP {
+                font-size: 17px;
+            }
+            .profCPBolinha {
+                font-size: 20px;
+            }
+        }
+
+        #tagsCPWrapper {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            overflow-x: auto;
+            width: 100%;
+            padding: 10px 0 10px 0;
+        }
+        /* SCROLL ---------------------------*/
+        #tagsCPWrapper::-webkit-scrollbar {
+            height: 7px;
+        }
+    
+        /* Track */
+        #tagsCPWrapper::-webkit-scrollbar-track {
+            background: rgb(222, 247, 208);
+        }
+
+        /* Handle */
+        #tagsCPWrapper::-webkit-scrollbar-thumb {
+            background: rgba(61, 230, 61, 0.5);
+        }
+        
+        /* Handle on hover */
+        #tagsCPWrapper::-webkit-scrollbar-thumb:hover {
+            background: rgba(61, 230, 61, 0.8);
+        }
+        /* END SCROLL ---------------------------*/
+
+        .tagCP {
+            padding: 5px 10px;
+            border: 2px solid rgb(144, 223, 144);
+            background-color: #e3fae5;
+            border-radius: 10px;
+            color: rgb(53, 78, 50);
+            white-space: nowrap;
+            margin: 0 0.8%;
+            font-weight: 700;
+
+        }
+
+        .descricaoPerfil {
+            margin-top: 25px;
+            text-align: justify;
+            text-indent: 5%;
+            font-size: 17px;
+        }
+
+
+
+        
+        /*#endregion Perfil*/
+
+        /*#region Contato*/
+        .emailsPerfil {
+            
+        }
+        #contatoBody {
+            text-align: left;
+        }
+        .tituloContato {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        /*#endregion Contato*/
+        /*#region Status da Conta*/
+
+        #statusBodyC {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #iconeSubstituto {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+            background-color: rgb(231, 125, 26);
+            border-radius: 100%;
+
+        }
+
+        #membroStatus {
+            margin-top: 15px;
+            color: #888;
+            font-size: 22px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .wrapperUpgradeButton {
+            display: flex;
+            margin-top: 15px;
+            height: 50px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        #upgrade {
+            border-radius: 40px;
+            border: 3px solid rgb(181, 230, 29);
+            background-color: rgb(238, 253, 191);
+            height: 40px;
+            width: 60%;
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            animation: botaoAnimation 3s infinite linear;
+        }
+
+        #upgrade:focus {
+            
+            outline: none;
+            width: 70%;
+            height: 45px;
+            
+            animation: none;
+        }
+
+        @keyframes botaoAnimation {
+            0%   {
+                width: 60%;
+                height: 40px;
+            }
+            50%  {
+                width: 65%;
+                height: 40px;
+            }
+            100% {
+                width: 60%;
+                height: 40px;
+            }
+          }
+        /*#endregion Status da Conta*/
+        /*#endregion Linha de cima ------------------------------------------------------------------------------ */
+
+/*#endregion Parte Inferior - Cards -------------------------------------------------------------------------------- */
 
 
 

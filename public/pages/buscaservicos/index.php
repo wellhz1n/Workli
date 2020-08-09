@@ -64,9 +64,9 @@
         <div class="bodyInterno">
             <div class="bodyBody">
                 <div class="d-flex">
-                    <div class="bodyDetalhes">
-                        <div class="bodyHeader">
-                            <div class="BHDetalhes">
+                    <div class="cardQuadrado bodyDetalhes">
+                        <div class="cardQuadradoHeader">
+                            <div class="cardQuadradoTitulo BHDetalhes">
                                 Detalhes do Projeto
                             </div>
                             <div class="wrapperBH2">
@@ -74,12 +74,12 @@
                                 <div class="BHPublicado"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>
                             </div>
                         </div>
-                        <div class="BDescricao" v-html="dataVue.selecionadoController.descricao">
+                        <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
                         </div>
                         <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
 
                     </div>
-                    <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1" class="bodyChat align-items-center">
+                    <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1" class="cardQuadrado bodyChat align-items-center">
                         <div style="display: flex;
                                     align-items: baseline;
                                     height: 30px;
@@ -95,9 +95,9 @@
                     </div>
                 </div>
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
-                    <div class="bodyProposta">
-                        <div class="bodyHeader" id="paddingDetalhesProposta">
-                            <div class="BHDetalhes">
+                    <div class="cardQuadrado bodyProposta">
+                        <div class="cardQuadradoHeader" id="paddingDetalhesProposta">
+                            <div class="cardQuadradoTitulo BHDetalhes">
                                 Detalhes da Proposta
                             </div>
                         </div>

@@ -1,4 +1,7 @@
 $(document).ready(async () => {
+    
+    
+
     await BloquearTela();
     let img =  await GetSessaoPHP("FOTOUSUARIO");
     await app.$set(dataVue, "Usuario", { imagem:img == ""?null:img, imgTemp: null });
@@ -11,7 +14,29 @@ $(document).ready(async () => {
         $('#maskEditImg').attr('hidden', 'hidden');
     });
 
+    // $("#tagsCPWrapper").on("mousewheel", function(event, delta) {
 
+    //     this.scrollLeft -= (delta * 300);
+    //     debugger
+    //     event.preventDefault();
+  
+    // });
+
+    function scrollHorizontally(e) {
+        e = window.event || e;
+        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        document.getElementById('tagsCPWrapper').scrollLeft -= (delta*20); // Multiplied by 40
+        e.preventDefault();
+    }
+    if (document.getElementById('tagsCPWrapper').addEventListener) {
+        // IE9, Chrome, Safari, Opera
+        document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
+        // Firefox
+        document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+    } else {
+        // IE 6/7/8
+        document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+    }
     //MODAL
     $('#maskEditImg').on('click', () => {
         $('#EditImgModal').modal('show');
@@ -92,15 +117,26 @@ await retornaValorAvaliacao();
     let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
     let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": usuarioId });
 
-    // console.table(usuario)
-    // console.log(await GetSessaoPHP("IDUSUARIOCONTEXTO")) 
     /*STAR RATING*/
     await app.$set(dataVue, "Rating", parseFloat(usuario.avaliacao_media));
     await app.$set(dataVue, "StarSize", 40);
 
-    if(innerWidth < 1300) {
+    if(innerWidth < 1620) {
+        await app.$set(dataVue, "StarSize", 32);
+    }
+    else if(innerWidth < 1300) {
         await app.$set(dataVue, "StarSize", 30);
     }
+
+
+    /* ATIVADOR DO POPOVER */
+    setTimeout(() => {
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    }, 10);
+    /*--------------------*/
+
 });
 
 function retornaValorAvaliacao() {
