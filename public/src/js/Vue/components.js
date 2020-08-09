@@ -14,7 +14,7 @@ var testeComp = Vue.component('teste-vue-a', {
     props: {
         text: String
     },
-    data: function() {
+    data: function () {
         return {
             texto: this.text
         }
@@ -26,7 +26,7 @@ var testeComp = Vue.component('teste-vue-a', {
         <p>{{texto}}</p>
     </div>
     `,
-    mounted: function() {
+    mounted: function () {
         console.log(this.$refs.testevue);
     }
 });
@@ -35,7 +35,7 @@ var ItemServico = Vue.component('item-servico', {
     props: {
         Servico: Object
     },
-    data: function() {
+    data: function () {
         return {}
     },
     template: `
@@ -86,7 +86,7 @@ var ItemServico = Vue.component('item-servico', {
     </div>
   </article>
     `,
-    mounted: function() {
+    mounted: function () {
         // console.log(this.$refs.testevue);
     }
 });
@@ -98,7 +98,7 @@ var Select2 = Vue.component('select2', {
     <slot></slot>
   </select>
   `,
-    mounted: function() {
+    mounted: function () {
         var vm = this
         $(this.$el)
             // init select2
@@ -106,29 +106,29 @@ var Select2 = Vue.component('select2', {
             .val(this.value)
             .trigger('change')
             // emit event on change.
-            .on('change', function() {
+            .on('change', function () {
                 // $emit('input', this.value);
 
             })
     },
     watch: {
-        value: function(value) {
+        value: function (value) {
             // update value
             $(this.$el)
                 .val(value)
                 .trigger('change')
         },
-        options: function(options) {
+        options: function (options) {
             // update options
             $(this.$el).select2('destroy')
             $(this.$el).select2({ data: options })
         }
     },
-    destroyed: function() {
+    destroyed: function () {
         $(this.$el).off().select2('destroy')
     },
     methods: {
-        inputChange: function(valor) {}
+        inputChange: function (valor) { }
     }
 });
 var WMContainer = Vue.component('wm-container', {
@@ -136,7 +136,7 @@ var WMContainer = Vue.component('wm-container', {
         campos: {
             type: Array,
             required: true,
-            default: function() { return []; }
+            default: function () { return []; }
         },
         id: {
             type: String,
@@ -145,7 +145,7 @@ var WMContainer = Vue.component('wm-container', {
         opcoes: {
             type: Object,
             required: true,
-            default: function() { return { titulo: 'Grid', visivel: false } }
+            default: function () { return { titulo: 'Grid', visivel: false } }
         }
     },
     computed: {
@@ -161,7 +161,7 @@ var WMContainer = Vue.component('wm-container', {
             this.dataCampos = camp;
         }
     },
-    data: function() {
+    data: function () {
         return {
             dataCampos: this.campos,
             dataOpcoes: this.opcoes
@@ -213,7 +213,7 @@ var WMContainer = Vue.component('wm-container', {
   </div>
   
   `,
-    mounted: function() {
+    mounted: function () {
         this.opcoes;
     }
 });
@@ -249,7 +249,7 @@ var WM_Input = Vue.component('wm-input', {
         }
     },
     computed: {},
-    data: function() {
+    data: function () {
         return {
             value: dataVue[this.entidade][this.campo],
             valueSemFormato: "",
@@ -273,20 +273,20 @@ var WM_Input = Vue.component('wm-input', {
  <div v-else></div>
     `,
     watch: {
-        disabled: async function(a) {
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
     methods: {
-        onchange: function(newVal, a) {
+        onchange: function (newVal, a) {
             WMLimpaErrorClass(this.id);
             dataVue[this.entidade][this.campo] = newVal;
             this.value = dataVue[this.entidade][this.campo];
         },
-        input: function(a) {
+        input: function (a) {
             WMLimpaErrorClass(this.id);
             dataVue[this.entidade][this.campo] = a;
             this.value = a;
@@ -348,7 +348,7 @@ var WM_TextArea = Vue.component('wm-textarea', {
         }
     },
     computed: {},
-    data: function() {
+    data: function () {
         return {
             value: dataVue[this.entidade][this.campo],
             valueSemFormato: "",
@@ -386,20 +386,20 @@ var WM_TextArea = Vue.component('wm-textarea', {
  <div v-else></div>
     `,
     watch: {
-        disabled: async function(a) {
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
     methods: {
-        onchange: function(newVal, a) {
+        onchange: function (newVal, a) {
             WMLimpaErrorClass(this.id);
             dataVue[this.entidade][this.campo] = newVal;
             this.value = dataVue[this.entidade][this.campo];
         },
-        input: function(a) {
+        input: function (a) {
             WMLimpaErrorClass(this.id);
             dataVue[this.entidade][this.campo] = a;
             this.value = a;
@@ -433,7 +433,7 @@ var WM_CheckBox = Vue.component('wm-checkbox', {
             default: () => { return () => { return false } }
         }
     },
-    data: function() {
+    data: function () {
         return {
             value: dataVue[this.entidade][this.campo],
             classe: this.disabled(this) ? 'desativado' : '',
@@ -453,20 +453,20 @@ var WM_CheckBox = Vue.component('wm-checkbox', {
  <div v-else></div>
     `,
     watch: {
-        value: function(v) {},
-        disabled: async function(a) {
+        value: function (v) { },
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
     methods: {
-        onchange: function(newVal) {
+        onchange: function (newVal) {
             dataVue[this.entidade][this.campo] = $(newVal.target).is(':checked');
             this.value = dataVue[this.entidade][this.campo];
         },
-        input: function(a) {}
+        input: function (a) { }
     }
 });
 var WM_Select = Vue.component('wm-select', {
@@ -486,7 +486,7 @@ var WM_Select = Vue.component('wm-select', {
         },
         titulo: {
             String,
-            default: function() { return 'Seletor' }
+            default: function () { return 'Seletor' }
         },
         visivel: {
             Function,
@@ -512,7 +512,7 @@ var WM_Select = Vue.component('wm-select', {
             default: false
         }
     },
-    data: function() {
+    data: function () {
         return {
             campoSeletor: 'Select' + this.campo,
             selecionado: dataVue[this.entidade][this.campoSeletor] || null,
@@ -560,21 +560,21 @@ var WM_Select = Vue.component('wm-select', {
                 </v-select>
     </div>
     `,
-    beforeMount: function() {
+    beforeMount: function () {
         if (dataVue[this.entidade][this.campoSeletor] == undefined)
             app.$set(dataVue[this.entidade], this.campoSeletor, null);
         else
             this.selecionado = dataVue[this.entidade][this.campoSeletor];
 
     },
-    mounted: async function(vm) {
+    mounted: async function (vm) {
         // this.selecionado =  this.$root.dataVue[this.entidade][this.campo];
     },
     watch: {
-        disabled: async function(a) {
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
@@ -585,7 +585,7 @@ var WM_Select = Vue.component('wm-select', {
             loading(true);
             await this.search(loading, search, this);
         },
-        search: async(loading, search, vm) => {
+        search: async (loading, search, vm) => {
             let data = await vm.ajax(search, vm.selecionado);
             vm.options = data;
             loading(false);
@@ -625,7 +625,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         class_imagem: String,
         id: String
     },
-    data: function() {
+    data: function () {
         return {
             imgData: null,
         }
@@ -661,7 +661,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         </div>
     </div>
     `,
-    mounted: function() {
+    mounted: function () {
         // console.log("hey")
     },
     watch: {
@@ -709,7 +709,7 @@ var WM_InputCpf = Vue.component('wm-input-cpf', {
             default: () => { return () => { return false } }
         }
     },
-    data: function() {
+    data: function () {
         return {
             value: dataVue[this.entidade][this.campo],
             valueSemFormato: "",
@@ -734,10 +734,10 @@ var WM_InputCpf = Vue.component('wm-input-cpf', {
  <div v-else ></div>
     `,
     watch: {
-        disabled: async function(a) {
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
@@ -745,12 +745,12 @@ var WM_InputCpf = Vue.component('wm-input-cpf', {
         $(this.$el.children[1]).mask('000.000.000-00');
     },
     methods: {
-        onchange: function(newVal, a) {
+        onchange: function (newVal, a) {
             WMLimpaErrorClass(this.id);
             dataVue[this.entidade][this.campo] = $(this.$el.children[1]).cleanVal();
             this.value = $(this.$el.children[1]).masked(dataVue[this.entidade][this.campo]);
         },
-        input: function(a) {
+        input: function (a) {
 
         }
     }
@@ -861,10 +861,10 @@ var WM_ImageUpload = Vue.component('wm-image-upload', {
  <div v-else ></div>
     `,
     watch: {
-        disabled: async function(a) {
+        disabled: async function (a) {
             this.classe = a(this) ? 'desativar' : '';
         },
-        visivel: function(v) {
+        visivel: function (v) {
             this.dataVisivel = v();
         }
     },
@@ -879,12 +879,12 @@ var WM_ImageUpload = Vue.component('wm-image-upload', {
         //  return x;
         // })
     },
-    mounted() {},
+    mounted() { },
     methods: {
-        onchange: function(newVal, a) {
+        onchange: function (newVal, a) {
 
         },
-        adicionar: async(lista, entidade, campo, limite, id) => {
+        adicionar: async (lista, entidade, campo, limite, id) => {
             if (lista.filter(x => !x.deletado).length == limite) {
                 toastr.info(`Limite de Imagens Atingido`, "Limite De Imgens");
                 return false;
@@ -894,7 +894,7 @@ var WM_ImageUpload = Vue.component('wm-image-upload', {
             input.attr("accept", "image/x-png,image/gif,image/jpeg");
             // add onchange handler if you wish to get the file :)
             input.trigger("click"); // opening dialog
-            await $(input).on('change', async() => {
+            await $(input).on('change', async () => {
                 let imgBase = await LerImagem($(input)[0]);
                 lista.push({ id: -1, img: imgBase, principal: limite == 1 || lista.length < 1 ? true : false, selecionado: false, deletado: false });
                 dataVue[entidade][campo] = lista;
@@ -943,7 +943,7 @@ var WM_ImageUpload = Vue.component('wm-image-upload', {
             this.imagemSelecionada = null;
             dataVue[this.entidade][this.campo] = this.listaImagem;
         },
-        input: function(a) {
+        input: function (a) {
 
         }
     }
@@ -960,7 +960,7 @@ var WMTIPOSERVICOITEM = Vue.component('tiposervicoItem', {
         },
         id: String
     },
-    data: function() {
+    data: function () {
         return {
             imgData: 'data:image/jpeg;base64,' + this.img,
             dataId: ""
@@ -980,7 +980,7 @@ var WMTIPOSERVICOITEM = Vue.component('tiposervicoItem', {
     </div>
 </div>
     `,
-    mounted: function() {
+    mounted: function () {
         // console.log(this.$refs.testevue);
     },
     watch: {
@@ -1021,7 +1021,7 @@ var WMList = Vue.component('wm-lista', {
             required: true
         }
     },
-    data: function() {
+    data: function () {
         return {
             ListData: [],
             Order: true
@@ -1029,7 +1029,7 @@ var WMList = Vue.component('wm-lista', {
     },
     computed: {
         icone: {
-            get: function() {
+            get: function () {
 
                 if (this.Order == true || this.Order == undefined)
                     return "fas fa-sort-alpha-up-alt";
@@ -1043,14 +1043,14 @@ var WMList = Vue.component('wm-lista', {
         }
     },
     methods: {
-        busca: async function(order) {
+        busca: async function (order) {
             let Lista = [];
             BloquearTela();
             Lista = await WMExecutaAjax(this.Arquivo, this.Metodo, { 'order': order })
             DesbloquearTela();
             return Lista
         },
-        Ordenar: async function() {
+        Ordenar: async function () {
             this.Order = !this.Order;
             this.ListData = this.Order ? this.ListData.sort((a, b) => a.nome.localeCompare(b.nome)) :
                 this.ListData.sort((a, b) => b.nome.localeCompare(a.nome));
@@ -1083,7 +1083,7 @@ var WMList = Vue.component('wm-lista', {
 </div>
 
     `,
-    mounted: function() {
+    mounted: function () {
         // console.log(this.$refs.testevue);
 
     },
@@ -1246,7 +1246,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                 this.faixaDePreco.push({ id: index, valor: n });
             });
         },
-        BuscaCategorias: async(context) => {
+        BuscaCategorias: async (context) => {
             let Lista = [];
             Lista = await WMExecutaAjax("TipoServicoBO", "GetTipoServicoCategoria");
             if (Lista.length > 0)
@@ -1555,9 +1555,9 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             type: Boolean,
             default: true
         },
-        texto_botao:{
+        texto_botao: {
             type: String,
-            default:'Fazer Proposta'
+            default: 'Fazer Proposta'
         }
 
     },
@@ -1577,7 +1577,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             dataValor: '',
             dataid_ususario: -1,
             mostrarmais: false,
-            datatextoBotao:'Fazer Proposta'
+            datatextoBotao: 'Fazer Proposta'
 
         }
     },
@@ -1673,7 +1673,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 this.datanome = newval;
             }
         },
-        texto_botao:{
+        texto_botao: {
             immediate: true,
             deep: true,
             handler(newval) {
@@ -1681,7 +1681,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             }
         }
     },
-    mounted() {},
+    mounted() { },
     methods: {
         mostrar() {
             this.mostrarmais = !this.mostrarmais;
@@ -1764,7 +1764,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
 WmModal = Vue.component('wm-modal', {
     props: {
         visivel: { Boolean, default: false },
-        callback: { Function, default: () => {} },
+        callback: { Function, default: () => { } },
         id: {
             type: String,
             required: true
@@ -1781,7 +1781,7 @@ WmModal = Vue.component('wm-modal', {
     data: () => {
         return {
             dataVisible: false,
-            dataCallback: () => {},
+            dataCallback: () => { },
         }
     },
     watch: {
@@ -2393,9 +2393,136 @@ WMNotify = Vue.component('wm-notify', {
         tipo: {
             type: Number,
             default: TipoNotificacao.DEFAULT
+        },
+        titulo: {
+            type: String,
+            default: ""
+        },
+        subtitulo: {
+            type: Object,
+            default: () => {
+                return {
+                    titulo: "",
+                    descricao: ""
+                }
+            }
+        },
+        descricao: {
+            type: String,
+            default: ""
+        },
+        hora: {
+            type: String,
+            default: "00:00"
+        }
+    },
+    data(){
+        return {
+            dataTipo: TipoNotificacao.DEFAULT,
+            dataTitulo: "",
+            dataSubtitulo: { titulo: "", descricao: "" },
+            dataDescricao: "",
+            dataHora: "00:00"
+        }
+    },
+    watch: {
+        tipo: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+
+                this.dataTipo = nv;
+            }
+        },
+        titulo: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.dataTitulo = nv;
+            }
+        },
+        subtitulo: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.dataSubtitulo = nv;
+            }
+        },
+        descricao: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.dataDescricao = nv;
+            }
+        },
+        hora: {
+            immediate: true,
+            deep: true,
+            handler(nv, ov) {
+                this.dataHora = nv;
+            }
+        }
+
+    },
+    beforeMount: () => {
+    },
+    computed: {
+        NotificacaoClasse: {
+            get: (contexto) => {
+                let classeBase = {
+                    classe: ['itemnotificacao'],
+                    icone: ['fas']
+                };
+                switch (contexto.dataTipo) {
+                    case TipoNotificacao.ERROR:
+                        classeBase.classe.push('Red1');
+                        classeBase.icone.push("fa-times");
+                        break;
+                    case TipoNotificacao.SUCCESS:
+                        classeBase.classe.push('Green');
+                        classeBase.icone.push("fa-check");
+                        break;
+                    case TipoNotificacao.PROPOSTA:
+                        classeBase.classe.push('Green');
+                        classeBase.icone.push("fa-comment-dollar");
+                        break;
+                    case TipoNotificacao.CHAT:
+                        classeBase.classe.push('Blue1');
+                        classeBase.icone.push("fa-comments");
+                        break;
+                    case TipoNotificacao.ALERT:
+                        classeBase.classe.push('Yellow1');
+                        classeBase.icone.push("fa-exclamation-triangle");
+                        break;
+                    default:
+                        classeBase.icone.push("fa-info");
+                        break;
+                }
+                return classeBase;
+            }
         }
     },
     template: `
-        
+            <div :class="NotificacaoClasse.classe">
+                    <div class="ItemNotificacaoIcone">
+                     <i :class="NotificacaoClasse.icone"></i>
+                    </div>
+                    <div class="DadosNotificacao">
+                    <div class="TituloNotificacao ">
+                        <p class="m-0 font_Poopins_B">{{this.dataTitulo}}</p>
+                    </div>
+                    <div class="DadosSubtitulo" v-if="this.dataSubtitulo.titulo != '' && this.dataSubtitulo.descricao != '' ">
+                        <p class="m-0 font_Poopins_SB" >{{this.dataSubtitulo.titulo}}</p>
+                        <p  class="m-0 ml-1 font_Poopins" style="font-size: 11px;">{{this.dataSubtitulo.descricao}}</p>
+                    </div>
+                    <div class="descricaoNotificacao ">
+                        <p class="m-0 font_Poopins">{{this.dataDescricao}}
+                        </p>
+                    </div>
+                    <div class="hora">
+                        <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>{{this.dataHora}}</p>
+                    </div>
+                    </div>
+            </div>
     `
 });

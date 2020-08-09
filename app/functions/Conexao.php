@@ -49,8 +49,8 @@ class ResultadoSql
     public $erros = null;
     function __construct($campos, $resultados, $erros)
     {
-        $this->campos = count($campos) > 0?$campos:[];
-        $this->resultados = count($resultados) > 0 ?$resultados:[];
+        $this->campos = count($campos) > 0 ? $campos : [];
+        $this->resultados = count($resultados) > 0 ? $resultados : [];
         $this->erros = $erros;
     }
 }
@@ -159,23 +159,66 @@ function GetNextID($tablename)
     WHERE table_name = ? order by `auto_increment` desc limit 1", [$tablename]);
     return $saida->resultados[0]["auto_increment"];
 }
-// function GetCampos($resultado)
-// {
-//     $campos = mysqli_fetch_fields($resultado);
-//     $saida = array();
-//     foreach ($campos as $key => $value) {
-//         array_push($saida, $value->name);
-//     }
-//     return $saida;
-// }
-// function GetRows($resultado)
-// {
-//     $saida = array();
-//     while ($arr = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-//         array_push($saida, $arr);
-//     }
-//     return $saida;
-// }
+//|---------------------------------------------------------------------------------------------------|
+//|----Para a Funcao FUncionar corretamente a Entidade e a Tabela devem possuir os nomes de Atributos |
+//|-----------------------------------------------Iguais----------------------------------------------|
+function GetByIdGeneric($tabela, $classe, $id)
+{
+    $c = new ReflectionClass($classe);
+    $classeArr = $c->getProperties();
+    $busca  = Sql(" show columns from {$tabela}");
+    $TabelaArr = $busca->resultados;
+    $KeyClass = [];
+    foreach ($classeArr as $key => $value) {
+        array_push($KeyClass,strtolower($value->name));
+    }
+    $TabelaSqlKey = [];
+    foreach ($TabelaArr as $key => $value) {
+        array_push($TabelaSqlKey, strtolower($value["Field"]));
+    }
+    $colunasMatcheds = array_intersect($KeyClass, $TabelaSqlKey);
+    $campoPrimario = "";
+    foreach ($TabelaArr as $key => $value) {
+        if ($value["Key"] == "PRI") {
+            $item = array_search(strtolower($value["Field"]), $colunasMatcheds);
+            if ($item !== false)
+                $campoPrimario = $colunasMatcheds[$item];
+        }
+    }
+    $sql = "select ".join(',',$colunasMatcheds)." from ".$tabela." where {$campoPrimario} = ?";
+    $buscaTabela = Sql($sql,[$id]);
+    // $a = 
+    if(count($buscaTabela->resultados) != 0){
+
+        $classeNova = new $classe();
+        foreach ($classeNova as $key => $value) {
+            $classeNova->$key = $buscaTabela->resultados[0][$key];
+        }
+        return $classeNova;
+    }
+    return null;
+ 
+}
+
+function GetColunsgeneric($tabela, $classe, $Apelido = "")
+{
+    $classeArr = get_object_vars($classe);
+    $busca  = Sql(" show columns from {$tabela}");
+    $TabelaArr = $busca->resultados;
+    $classeArr = array_keys($classeArr);
+    foreach ($classeArr as $key => $value) {
+        $classeArr[$key] = strtolower($value);
+    }
+    $TabelaSqlKey = [];
+    foreach ($TabelaArr as $key => $value) {
+        array_push($TabelaSqlKey, strtolower($value["Field"]));
+    }
+    $colunasMatcheds = array_intersect($classeArr, $TabelaSqlKey);
+    foreach ($colunasMatcheds as $key => $value) {
+        $colunasMatcheds[$key] = $Apelido . '.' . $value;
+    }
+    return join(',', $colunasMatcheds);
+}
 
 function utf8ize($d)
 {
