@@ -4,10 +4,13 @@ class NotificacoesDAO
 {
 private Notificacao $Not;
     public function Teste(){
-
+        
         //  $Not= GetByIdGeneric('notificacoes',Notificacao::class,1);
-            $this->Not = GetByIdGeneric('notificacoes',Notificacao::class,1);
-            
+            // $this->Not = GetByIdGeneric('notificacoes',Notificacao::class,1);
+            $sql = "select ".
+            GetColunsgeneric("notificacoes",Notificacao::class,"N",["titulo","descricao","id_projeto"]).
+            " from notificacoes N";
+
     }
     #region Busca Notificações
     public function BuscaNotificações($idUsuario)

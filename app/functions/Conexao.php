@@ -170,7 +170,7 @@ function GetByIdGeneric($tabela, $classe, $id)
     $TabelaArr = $busca->resultados;
     $KeyClass = [];
     foreach ($classeArr as $key => $value) {
-        array_push($KeyClass,strtolower($value->name));
+        array_push($KeyClass, strtolower($value->name));
     }
     $TabelaSqlKey = [];
     foreach ($TabelaArr as $key => $value) {
@@ -185,10 +185,10 @@ function GetByIdGeneric($tabela, $classe, $id)
                 $campoPrimario = $colunasMatcheds[$item];
         }
     }
-    $sql = "select ".join(',',$colunasMatcheds)." from ".$tabela." where {$campoPrimario} = ?";
-    $buscaTabela = Sql($sql,[$id]);
+    $sql = "select " . join(',', $colunasMatcheds) . " from " . $tabela . " where {$campoPrimario} = ?";
+    $buscaTabela = Sql($sql, [$id]);
     // $a = 
-    if(count($buscaTabela->resultados) != 0){
+    if (count($buscaTabela->resultados) != 0) {
 
         $classeNova = new $classe();
         foreach ($classeNova as $key => $value) {
@@ -197,23 +197,26 @@ function GetByIdGeneric($tabela, $classe, $id)
         return $classeNova;
     }
     return null;
- 
 }
 
-function GetColunsgeneric($tabela, $classe, $Apelido = "")
+function GetColunsgeneric($tabela, $classe, $Apelido = "", $Execao = [])
 {
-    $classeArr = get_object_vars($classe);
+    $c = new ReflectionClass($classe);
+    $classeArr = $c->getProperties();
     $busca  = Sql(" show columns from {$tabela}");
     $TabelaArr = $busca->resultados;
-    $classeArr = array_keys($classeArr);
+    $KeyClass = [];
     foreach ($classeArr as $key => $value) {
-        $classeArr[$key] = strtolower($value);
+        array_push($KeyClass, strtolower($value->name));
     }
     $TabelaSqlKey = [];
     foreach ($TabelaArr as $key => $value) {
         array_push($TabelaSqlKey, strtolower($value["Field"]));
     }
-    $colunasMatcheds = array_intersect($classeArr, $TabelaSqlKey);
+    $colunasMatcheds = array_intersect($KeyClass, $TabelaSqlKey);
+    if (count($Execao) != 0) {
+        $colunasMatcheds = array_diff($colunasMatcheds, $Execao);
+    }
     foreach ($colunasMatcheds as $key => $value) {
         $colunasMatcheds[$key] = $Apelido . '.' . $value;
     }
