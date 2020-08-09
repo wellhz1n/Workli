@@ -8,6 +8,7 @@
         <i class="fas fa-comments "></i> Chat
         </a>
     </div>
+    
 </div>
 
 </div>

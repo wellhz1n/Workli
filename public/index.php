@@ -82,13 +82,13 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </div>
     <div id="wrapperBody">
-        <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
 
         <?php if (Logado()[1] == "2") { ?>
             <div id="app" class="col p-4">
             <?php } else { ?>
                 <div id="app">
                 <?php } ?>
+        <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
                 <?php require load()[0]; ?>
                 </div>
                 <script type="text/javascript">
@@ -127,7 +127,8 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
                             "wm-chart": WMChart,
-                            'star-rating': VueStarRating.default
+                            'wm-notify':WMNotify,
+                            'star-rating': VueStarRating.default,
                             // 'wm-input-mask':WMINPUTMASK,
                         },
                         methods: {

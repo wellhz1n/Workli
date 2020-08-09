@@ -107,116 +107,13 @@
 
                 <div class="dataChatDiv"><span class="dataChatDivTexto">Hoje</span></div>
 
-                <div class="itemnotificacao">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-info"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="itemnotificacao Green">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-comment-dollar"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="itemnotificacao Blue1">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-comments"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="dataChatDiv"><span class="dataChatDivTexto">Ontem</span></div>
-                <div class="itemnotificacao Yellow1">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-exclamation-triangle"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="itemnotificacao Red1">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-times"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="itemnotificacao Green">
-                  <div class="ItemNotificacaoIcone">
-                    <i class="fas fa-check"></i>
-                  </div>
-                  <div class="DadosNotificacao">
-                    <div class="TituloNotificacao ">
-                      <p class="m-0 font_Poopins_B">Titulo</p>
-                    </div>
-                    <div class="descricaoNotificacao ">
-                      <p class="m-0 font_Poopins">Descrição da notificação e tals teste texto 1234
-                        vamos deixar o texto maior para testar.
-                      </p>
-                    </div>
-                    <div class="hora">
-                      <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>11:36</p>
-                    </div>
-                  </div>
-                </div>
-
+                <wm-notify :tipo="3" titulo="Teste" descricao="Agora Vai" :subtitulo="{titulo:'',descricao:''}"></wm-notify>
+                <wm-notify :tipo="2" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
+                <wm-notify :tipo="1" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
+                <wm-notify  titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
+                <wm-notify :tipo="4" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
+                <wm-notify :tipo="5" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
+ 
               </div>
             </div>
           </div>

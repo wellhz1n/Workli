@@ -246,7 +246,10 @@
   font-size: 25px;
   color: white;
 }
-
+.DadosSubtitulo{
+  display: flex;
+  font-size: 12px;
+}
 .DadosNotificacao {
   display: flex;
   width: 100%;
@@ -288,6 +291,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
 .notifyredBall {
   position: relative;
   top: -8px;

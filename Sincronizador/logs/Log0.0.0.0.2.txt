@@ -1,3 +1,0 @@
-2020-7-31 
-                        21:47:08 #Error: Unknown column 'Ativo' in 'servico'	2020-7-31 
-                        21:47:08 #Error: Table 'proposta' already exists	
