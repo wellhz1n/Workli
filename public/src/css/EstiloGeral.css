@@ -1339,13 +1339,28 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 /*----------------------------- Fim V-SELECT --------------------------------- */
 
-/*#region Estrelas --------------------------------------------------------------- */
-    /* .half {
-        content: '\2605';
-        color: gold;
-        margin-left: -20px;
-        width: 10px;
-        position: absolute;
-        overflow: hidden;
-    } */
+/*#region Caixas Padrão (Usadas no modal de proposta) --------------------------------------------------------------- */
+    .cardQuadrado {
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+        background-color: #fff;
+    }
+
+    .cardQuadradoHeader {
+        display: flex;
+        text-align: left;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Helvetica Neue";
+        border-bottom: 2px solid #ddd;
+        padding: 10px 5%;
+    }
+
+    .cardQuadradoTitulo {
+        color: #090f18;
+        font-weight: 700;
+        font-size: 22px;
+    }
+    .cardQuadradoBody {
+        margin: 10px 3.7%;
+    }
 /*#endregion --------------------------------------------------------------------- */

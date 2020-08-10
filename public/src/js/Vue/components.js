@@ -621,6 +621,10 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             default: 224,
             type: Number
         },
+        margem_imagem: {
+            default: "my-4",
+            type: String
+        },
         class_icone: String,
         class_imagem: String,
         id: String
@@ -642,7 +646,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                         border: solid #fff 4px; 
                         font-size: 15em;"
                     :class="[
-                        'my-3',
+                        margem_imagem,
                         'fas fa-user-circle',
                         class_icone ? class_icone : ''
                     ]"
@@ -655,7 +659,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             <div>
                 <img style="border-radius: 112px;"
                     :style="[{width:this.width + 'px', height: this.height + 'px','background-color':'white','object-fit': 'cover'}]"
-                    :class="['my-4 mx-2', class_imagem ? class_imagem : '']" 
+                    :class="['mx-2', class_imagem ? class_imagem : '', margem_imagem]" 
                     :src="this.imgData"/>
             </div>
         </div>
