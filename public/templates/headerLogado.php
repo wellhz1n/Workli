@@ -224,7 +224,5 @@ if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
 <script>
-  $("#navbarDropdownNotify").click(function(e) {
-    e.stopPropagation();
-  })
+
 </script>

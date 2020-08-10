@@ -2516,8 +2516,7 @@ WMNotify = Vue.component('wm-notify', {
                         <p  class="m-0 ml-1 font_Poopins" style="font-size: 11px;">{{this.dataSubtitulo.descricao}}</p>
                     </div>
                     <div class="descricaoNotificacao ">
-                        <p class="m-0 font_Poopins">{{this.dataDescricao}}
-                        </p>
+                        <div class="m-0 font_Poopins" v-html="this.dataDescricao"></div>
                     </div>
                     <div class="hora">
                         <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>{{this.dataHora}}</p>

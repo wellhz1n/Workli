@@ -5,11 +5,12 @@ var GoogleLogin = false;
 function ClassesStatics() {
     var CacheSeletor = [];
 }
-$(document).ready(() => {
-    $(".itemMenu").addClass("itemMenuPadding");
-})
-$(document).ready(async () => {
 
+$(document).ready(async () => {
+    $(".itemMenu").addClass("itemMenuPadding");
+    $("#navbarDropdownNotify").click(function (e) {
+        e.stopPropagation();
+    })
     //#region NotificacaoNavegador
     Notification.requestPermission(result => {
         if (result === 'denied') {
@@ -68,15 +69,15 @@ $(document).ready(async () => {
 
 
 
-//     //#region FOOTER
-//     WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
-//         $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
-//     });
-//   WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
-//       $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-//   });
-    
-//     //#endregion
+    //     //#region FOOTER
+    //     WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
+    //         $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+    //     });
+    //   WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
+    //       $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+    //   });
+
+    //     //#endregion
 });
 
 //Funcoes de grid
@@ -789,16 +790,16 @@ function MostraMensagem(Mensagem, TipoMensagem = ToastType.INFO, Tiulo = documen
             break;
         case ToastType.ERROR:
             toastr.error(Mensagem, Tiulo);
-            console.error("MENSAGEM \n"+Mensagem);
+            console.error("MENSAGEM \n" + Mensagem);
             break;
         case ToastType.WARN:
             toastr.warning(Mensagem, Tiulo);
-            console.warn("MENSAGEM \n"+Mensagem);
+            console.warn("MENSAGEM \n" + Mensagem);
             break;
 
         default:
             toastr.info(Mensagem, Tiulo);
             break;
-            
+
     }
 }
