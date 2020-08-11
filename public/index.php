@@ -102,6 +102,7 @@ header('Content-Type: text/html; charset=utf-8');
                         delimiters: ["{{", "}}"],
                         mixins: [Mixin],
                         components: {
+                            'wm-notify':WMNotify,
                             'teste-vue-a': testeComp,
                             'item-servico': ItemServico,
                             'select2': Select2,
@@ -127,7 +128,6 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
                             "wm-chart": WMChart,
-                            'wm-notify':WMNotify,
                             'star-rating': VueStarRating.default,
                             // 'wm-input-mask':WMINPUTMASK,
                         },

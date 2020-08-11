@@ -122,15 +122,7 @@
                   </div>
 
                 </div>
-                <!-- <div class="dataChatDiv"><span class="dataChatDivTexto">Hoje</span></div> -->
-
-                <!-- <wm-notify :tipo="3" titulo="Teste" descricao="Agora Vai" :subtitulo="{titulo:'',descricao:''}"></wm-notify>
-                <wm-notify :tipo="2" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="1" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="4" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="5" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify> -->
-
+            
               </div>
             </div>
           </div>
@@ -224,23 +216,13 @@
       </li>
 
     </ul>
-    <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> -->
   </div>
 </nav>
 <?php
 if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
-<script>
+<script type="application/javascript">
   $(document).ready(async () => {
     var NotificacaoInterval = null
     //#region Vue
