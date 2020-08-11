@@ -2426,8 +2426,7 @@ WMNotify = Vue.component('wm-notify', {
             dataTitulo: "",
             dataSubtitulo: { titulo: "", descricao: "" },
             dataDescricao: "",
-            dataHora: "00:00"
-        }
+            dataHora: "00:00"        }
     },
     watch: {
         tipo: {
@@ -2466,7 +2465,7 @@ WMNotify = Vue.component('wm-notify', {
                 this.dataHora = nv;
             }
         }
-
+        
     },
     beforeMount: () => {
     },
@@ -2506,10 +2505,29 @@ WMNotify = Vue.component('wm-notify', {
             }
         }
     },
+    methods:{
+    },
     template: `
             <div :class="NotificacaoClasse.classe">
                     <div class="ItemNotificacaoIcone">
-                     <i :class="NotificacaoClasse.icone"></i>
+                    <span v-show="this.dataTipo == 0">
+                     <i class="fas fa-info"></i>
+                     </span>
+                     <span v-show="this.dataTipo == 1">
+                     <i class="fas fa-comment-dollar"></i>
+                     </span>
+                     <span v-show="this.dataTipo == 2">
+                     <i class="fas fa-comments"></i>
+                     </span>
+                     <span v-show="this.dataTipo == 3">
+                     <i class="fas fa-exclamation-triangle"></i>
+                     </span>
+                     <span v-show="this.dataTipo == 4">
+                     <i class="fas fa-times"></i>
+                     </span>
+                     <span v-show="this.dataTipo == 5">
+                     <i class="fas fa-check"></i>
+                     </span>
                     </div>
                     <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">

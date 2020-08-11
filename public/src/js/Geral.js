@@ -464,7 +464,7 @@ function ReturnNamesRequiredInputs(formId) {
     return $(`#${formId} input`).filter((x, y) => y.required).map((x, y) => y.name)
 }
 
-function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
+function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true, MostraMensagem = false) {
 
     let temp_data = { metodo: metodo };
     let dataProp = Object.getOwnPropertyNames(dados);
@@ -484,10 +484,14 @@ function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true) {
                 }
                 catch (err) {
                     console.warn("ERRO PHP:\n" + Resultados);
-
+                    if (MostraMensagem)
+                        MostraMensagem("Algo Deu Errado", TipoMensagem.ERROR);
                 }
-            if (Resultados.error != undefined)
+            if (Resultados.error != undefined) {
                 console.error(`ERROR++++++++++++++++++++++++++:\n ${Resultados.error}`);
+                if (MostraMensagem)
+                    MostraMensagem("Algo Deu Errado", TipoMensagem.ERROR);
+            }
             resolve(Resultados);
         }).catch(err => {
             reject(err);

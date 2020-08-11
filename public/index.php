@@ -84,7 +84,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div id="wrapperBody">
 
         <?php if (Logado()[1] == "2") { ?>
-            <div id="app" class="col p-4">
+            <div id="app" >
             <?php } else { ?>
                 <div id="app">
                 <?php } ?>

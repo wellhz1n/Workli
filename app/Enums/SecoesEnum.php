@@ -19,5 +19,6 @@ abstract class SecoesEnum
     const AVALIACAO_MEDIA = "AVALIACAOMEDIA";
     //FIM USUARIO SECOES
     const SERVICOS = "SERVICOS";
+    const NUMNOTIFICACOES = "NUMNOTIFICACOES";
 
 }

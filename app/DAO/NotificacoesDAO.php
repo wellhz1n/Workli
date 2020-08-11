@@ -5,7 +5,7 @@ class NotificacoesDAO
 private Notificacao $Not;
   
     #region Busca Notificações
-    public function BuscaNotificações($idUsuario)
+    public function BuscaNotificacoes($idUsuario)
     {
         $sql =" 
         with Ncomum as (
@@ -86,12 +86,12 @@ private Notificacao $Not;
             select  distinct * from NProposta
             order by data_hora desc;
         ";
-        $result = Sql($sql,[$idUsuario]);
+        $result = Sql($sql,[$idUsuario,$idUsuario]);
         return $result->resultados;
     }
     public function NumeroNotificacoesNaoVistas($idUsuario)
     {
-        return count($this->BuscaNotificações($idUsuario));
+        return count($this->BuscaNotificacoes($idUsuario));
     }
     #endregion
     #region Cria Notificação
