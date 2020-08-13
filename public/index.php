@@ -84,7 +84,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div id="wrapperBody">
 
         <?php if (Logado()[1] == "2") { ?>
-            <div id="app" class="col p-4">
+            <div id="app" >
             <?php } else { ?>
                 <div id="app">
                 <?php } ?>
@@ -102,6 +102,7 @@ header('Content-Type: text/html; charset=utf-8');
                         delimiters: ["{{", "}}"],
                         mixins: [Mixin],
                         components: {
+                            'wm-notify':WMNotify,
                             'teste-vue-a': testeComp,
                             'item-servico': ItemServico,
                             'select2': Select2,
@@ -122,12 +123,11 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-projeto-item': WmProjetoItem,
                             'wm-modal': WmModal,
                             'wm-paginacao': Wm_Paginacao,
-                            'wm-error': WM_Error,
+                            'wm-error': WM_Error,   
                             'wm-loading': LoadingComponent,
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
                             "wm-chart": WMChart,
-                            'wm-notify':WMNotify,
                             'star-rating': VueStarRating.default,
                             // 'wm-input-mask':WMINPUTMASK,
                         },

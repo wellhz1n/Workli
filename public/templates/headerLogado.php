@@ -90,30 +90,39 @@
     </ul>
     <!-- NOTIFICAÇÔES -->
     <ul class="navbar-nav">
-      <li class="nav-item dropdown">
+      <li :class="['nav-item','dropdown']" id="DropC">
         <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="notifyredBall">9<sup>+</sup></span>
+          <?php
+          $n = BuscaSecaoValor(SecoesEnum::NUMNOTIFICACOES);
+          if ($n != null && $n > 0) {
+          ?>
+            <span class="notifyredBall"><?php echo $n > 9 ? '9<sup>+</sup>' : $n ?></span>
+          <?php } else { ?>
+            <span class="notifyredBall" hidden></span> <?php } ?>
           <i class="fas fa-bell" style="font-size: larger;"></i>
         </a>
-        <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
+        <div style="width: 28vw;min-width:350px; height: 300px;" :class="['dropdown-menu', 'DropMenuCelular', 'dropdown-menu-right', 'dropdown-info']" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
           <div style="height: 300px;" class=" linkCor">
             <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
               <h6>Notificações</h6>
-              <a style=""><i class="fas fa-external-link-alt"></i></a>
+              <a><i class="fas fa-external-link-alt"></i></a>
             </div>
             <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
             <div class="row" style="height: 250px;width: 100%;margin: 0px;">
               <div class="col-12 notificacoesScrool">
+                <div v-if="dataVue.DropCarregando">
+                  <wm-loading />
+                </div>
+                <div v-else>
+                  <div v-for="item in dataVue.DropLista">
+                    <div v-if="item.tipo == -1" class="dataChatDiv"><span class="dataChatDivTexto">{{item.titulo}}</span></div>
+                    <div style="cursor: pointer;" v-else @click="dataVue.ClickFuncao(this,item)">
+                      <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
+                    </div>
+                  </div>
 
-                <div class="dataChatDiv"><span class="dataChatDivTexto">Hoje</span></div>
-
-                <wm-notify :tipo="3" titulo="Teste" descricao="Agora Vai" :subtitulo="{titulo:'',descricao:''}"></wm-notify>
-                <wm-notify :tipo="2" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="1" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify  titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="4" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
-                <wm-notify :tipo="5" titulo="Teste2" descricao="Agora Vai2" :subtitulo="{titulo:'Vai Funcionar:',descricao:'Mais é claro'}"></wm-notify>
- 
+                </div>
+            
               </div>
             </div>
           </div>
@@ -207,24 +216,89 @@
       </li>
 
     </ul>
-    <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> -->
   </div>
 </nav>
 <?php
 if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
-<script>
-  $("#navbarDropdownNotify").click(function(e) {
-    e.stopPropagation();
-  })
+<script type="application/javascript">
+  $(document).ready(async () => {
+    var NotificacaoInterval = null
+    //#region Vue
+    app.$set(dataVue, 'DropOpen', false);
+    app.$set(dataVue, 'DropCarregando', false);
+    app.$set(dataVue, 'DropLista', []);
+    app.$set(dataVue, "ClickFuncao", (e, i = item) => {
+      console.log(i.id)
+      if (i.tipo == 2) {
+        if (app.dataVue.UsuarioContexto.id_funcionario != "")
+          RediredionarComParametros('chat', [{
+            chave: 'id_chat',
+            valor: i.id_chat
+          }]);
+        else{
+          RediredionarComParametros('chat', [{
+            chave: 'id_chat',
+            valor: i.id_chat
+          }, {
+            chave: 'id',
+            valor: i.id_usuario_criacao
+          }])
+        }
+
+      }
+
+    })
+    //#endregion
+    $('#DropC').on('show.bs.dropdown', async function() {
+      app.dataVue.DropOpen = true;
+      app.dataVue.DropCarregando = true;
+      WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
+        if (Resultado.error == undefined) {
+          app.dataVue.DropLista = Resultado;
+
+        }
+        app.dataVue.DropCarregando = false;
+
+        NotificacaoInterval = setInterval(async () => {
+          WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
+            if (Resultado.error == undefined) {
+              app.dataVue.DropLista = Resultado;
+
+            }
+          }).catch(Err => {
+            MostraMensagem("Algo Deu Errado", ToastType.ERROR);
+          })
+        }, 5000)
+      }).catch(Err => {
+        MostraMensagem("Algo Deu Errado", ToastType.ERROR);
+        app.dataVue.DropCarregando = false;
+      })
+    });
+    $('#DropC').on('hide.bs.dropdown', function() {
+      app.dataVue.DropOpen = false;
+      app.dataVue.DropLista = [];
+      clearInterval(NotificacaoInterval);
+
+    });
+    await WMExecutaAjax("NotificacoesBO", "GetNumeroNotificacoes").then(num => {
+      if (num != 0) {
+        $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
+        $($(".notifyredBall")[0]).removeAttr('hidden');
+      } else
+        $($(".notifyredBall")[0]).attr('hidden', 'hidden');
+
+    });
+    setInterval(async () => {
+      await WMExecutaAjax("NotificacoesBO", "GetNumeroNotificacoes").then(num => {
+        if (num != 0) {
+          $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
+          $($(".notifyredBall")[0]).removeAttr('hidden');
+        } else
+          $($(".notifyredBall")[0]).attr('hidden', 'hidden');
+
+      });
+    }, 5000);
+  });
 </script>
