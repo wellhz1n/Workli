@@ -703,7 +703,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             input.trigger("click"); // opening dialog
     
             $(input).on('change', async () => {
-                console.log("mudou");
                 let imgBase = await LerImagem($(input)[0]);
                 app.dataVue.Usuario.imgTemp = imgBase;
 
@@ -712,7 +711,8 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                     // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
                     // this.imgData = app.dataVue.Usuario.imgTemp;
                     // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
-                    console.log("entrou")
+                    
+                    this.colocaBanner();
                     app.dataVue.Usuario.imgTemp = null;
                     toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
                 }
@@ -724,10 +724,12 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             });
     
         });
+        this.colocaBanner();
     },
     methods: {
-        puxa() {
-            console.log(imgData)
+        async colocaBanner() {
+            let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById");
+            this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
         }
     },
     template: `

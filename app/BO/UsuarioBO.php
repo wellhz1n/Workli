@@ -2,7 +2,9 @@
     @include("../Classes/Usuario.php");
     @include("../DAO/UsuarioDAO.php");
     @include("../functions/ImageUtils.php");
-    @include("../functions/EnumUtils.php");
+    @include("../functions/EnumUtils.php"); 
+    @require_once("../Enums/SecoesEnum.php");
+    @require_once("../functions/Session.php");
 
 if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     $metodo = $_POST['metodo'];
@@ -60,6 +62,11 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if($metodo == "GetFuncionarioById") {
         $userBO->GetFuncionarioById($_POST["ID"]);
     }
+    if($metodo == "GetBannerById") {
+        $id = BuscaSecao(SecoesEnum::IDUSUARIOCONTEXTO);
+        $userBO->GetBannerById($id);
+    }
+
     if($metodo == "BuscaNumeroUsuarios") {
         $userBO->BuscaNumeroUsuarios();
     }
@@ -84,7 +91,12 @@ class UsuarioBO
         $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
         echo json_encode($saida[0]);
     }
-
+    public function GetBannerById($id)
+    {
+        $saida = $this->usuarioDAO->GetImagemBannerbyId($id)->resultados;
+        $saida[0]["imagem_banner"] = ConvertBlobToBase64($saida[0]["imagem_banner"]);
+        echo json_encode($saida[0]);
+    }
 
     public function VerificaSeEmailExiste($email)
     {
@@ -316,7 +328,7 @@ class UsuarioBO
 
     public function SalvaImagemBanner($img){
         
-        $idUsuario  = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        $idUsuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         try{
             $img = ConvertBase64ToBlob($img);
             $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img,$idUsuario);

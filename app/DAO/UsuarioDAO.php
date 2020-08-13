@@ -165,6 +165,13 @@ class UsuarioDAO
         return $retorno;
     }
 
+    public function GetImagemBannerbyId($id) {
+        $retorno = Sql("SELECT u.id, img.imagem_banner FROM usuarios as u
+                        LEFT JOIN imagem_usuario AS img ON img.id_usuario = u.id
+                        WHERE u.id = ? ", [$id]);
+        return $retorno;
+    }
+
     public function BuscaNumeroUsuarios() 
     {
         $retorno = Sql("SELECT COUNT(id) FROM usuarios");
