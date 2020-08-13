@@ -3,7 +3,7 @@
 
 abstract class SecoesEnum
 {
-    //USUARIO SECOES
+    #region USUARIO
     const LOGIN = "LOGIN";
     const NOME = "NOME";
     const EMAIL = "EMAIL";
@@ -11,14 +11,20 @@ abstract class SecoesEnum
     const NIVEL_USUARIO = "NIVELUSUARIO";
     const FOTO_USUARIO = "FOTOUSUARIO";
     const IDUSUARIOCONTEXTO = "IDUSUARIOCONTEXTO";
+
+    #region Funcionario
     const IDFUNCIONARIOCONTEXTO = "IDFUNCIONARIOCONTEXTO";
-
-
     const CURRICULO = "CURRICULO";
     const NUMERO_TELEFONE = "NUMEROTELEFONE";
     const AVALIACAO_MEDIA = "AVALIACAOMEDIA";
-    //FIM USUARIO SECOES
+    #endregion
+
+    #endregion
     const SERVICOS = "SERVICOS";
+    #region Notificacoes
     const NUMNOTIFICACOES = "NUMNOTIFICACOES";
+    const NOTIFICACOES = "NOTIFICACOES";
+
+    #endregion
 
 }

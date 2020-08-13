@@ -1,12 +1,9 @@
-2020-8-6
-            20:21:39 #INICIANDO A SYNC
-2020-8-6
-            20:21:39 #0.0.0.0.2
-2020-8-6
-            20:21:39 #[WRN]--- Wellington.Ramos em 15/07/2020 Tarefa #6
-alter table servico change Ativo situacao int(1) not null default 0
-2020-8-6
-            20:21:39 #[WRN]-CREATE TABLE IF NOT EXISTS proposta (
+2020-8-13
+            10:19:30 #INICIANDO A SYNC
+2020-8-13
+            10:19:30 #0.0.0.0.2
+2020-8-13
+            10:19:30 #[WRN]-CREATE TABLE IF NOT EXISTS proposta (
 	id INT AUTO_INCREMENT,
     idFuncionario INT,
     idCliente INT,
@@ -19,18 +16,18 @@ alter table servico change Ativo situacao int(1) not null default 0
     FOREIGN KEY (idCliente) REFERENCES usuarios(id),
     FOREIGN KEY (idServico) REFERENCES servico(id)
 )
-2020-8-6
-            20:21:39 #[WRN]-alter table proposta add column if not exists data_criacao timestamp default current_timestamp
-2020-8-6
-            20:21:39 #[WRN]-alter table proposta add column if not exists situacao numeric(1) default 0
-2020-8-6
-            20:21:39 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idFuncionario int(11) NOT NULL
-2020-8-6
-            20:21:39 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idCliente int(11)  NOT NULL
-2020-8-6
-            20:21:39 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idServico int(11) NOT NULL
-2020-8-6
-            20:21:39 #[WRN]--- Wellington.Ramos em 2/08/2020 Tarefa #7
+2020-8-13
+            10:19:30 #[WRN]-alter table proposta add column if not exists data_criacao timestamp default current_timestamp
+2020-8-13
+            10:19:30 #[WRN]-alter table proposta add column if not exists situacao numeric(1) default 0
+2020-8-13
+            10:19:30 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idFuncionario int(11) NOT NULL
+2020-8-13
+            10:19:30 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idCliente int(11)  NOT NULL
+2020-8-13
+            10:19:30 #[WRN]-ALTER TABLE proposta MODIFY COLUMN idServico int(11) NOT NULL
+2020-8-13
+            10:19:30 #[WRN]--- Wellington.Ramos em 2/08/2020 Tarefa #7
 create table IF NOT EXISTS notificacoes(
 		id bigint auto_increment primary key,
 		descricao varchar(255),
@@ -47,3 +44,5 @@ create table IF NOT EXISTS notificacoes(
 		constraint FK_USUARIO_NOTIFICACAO foreign key (id_usuario) references usuarios(id),
 		constraint FK_USUARIO_CRIACAO_NOTIFICACAO foreign key (id_usuario_criacao) references usuarios(id)
 )
+2020-8-13
+            10:19:30 #[WRN]-ALTER TABLE notificacoes MODIFY COLUMN descricao TEXT DEFAULT NULL NULL

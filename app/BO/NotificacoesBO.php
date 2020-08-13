@@ -55,14 +55,17 @@ class NotificacoesBO
     public function BuscaNotificacoesFormatado()
     {
         $idusuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-        $resultado =  $this->NotificacoesDAO->BuscaNotificacoes($idusuario);
+        $resultado =  $this->NotificacoesDAO->BuscaNotificacoes($idusuario,false);
         $novoArr = [];
+        $arrayVisualizar = [];
         array_splice($resultado, 10);
         date_default_timezone_set('America/Sao_Paulo');
         foreach ($resultado as $key => $value) {
             $hora =   new DateTime($resultado[$key]['data_hora']);
 
             $resultado[$key]['hora'] = $hora->format('H:i');
+            if($resultado[$key]['id'] != -1 && $resultado[$key]['visto'] == 0)
+              array_push($arrayVisualizar,$resultado[$key]['id']);
             // $hora = $hora->;
             if (date('Y-m-d') != $hora->format('Y-m-d')) {
                 $separador = new Notificacao();
@@ -85,6 +88,8 @@ class NotificacoesBO
             } else
                 array_push($novoArr, $resultado[$key]);
         }
+        $this->NotificacoesDAO->UpdateVistoVariasNotificacoes($arrayVisualizar);
+        CriaSecao(SecoesEnum::NOTIFICACOES,json_encode($novoArr));
         return $novoArr;
     }
 }

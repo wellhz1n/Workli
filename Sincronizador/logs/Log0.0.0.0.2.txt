@@ -1,0 +1,2 @@
+2020-8-13 
+                        10:19:30 #Error: Unknown column 'Ativo' in 'servico'	

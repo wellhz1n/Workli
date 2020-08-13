@@ -105,7 +105,7 @@
           <div style="height: 300px;" class=" linkCor">
             <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
               <h6>Notificações</h6>
-              <a><i class="fas fa-external-link-alt"></i></a>
+              <a @click="(a)=>{a.view.Rediredionar('notificacoes')}"><i class="fas fa-external-link-alt"></i></a>
             </div>
             <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
             <div class="row" style="height: 250px;width: 100%;margin: 0px;">
@@ -122,7 +122,7 @@
                   </div>
 
                 </div>
-            
+
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ if (Logado()[1] == '2')
             chave: 'id_chat',
             valor: i.id_chat
           }]);
-        else{
+        else {
           RediredionarComParametros('chat', [{
             chave: 'id_chat',
             valor: i.id_chat
@@ -252,8 +252,15 @@ if (Logado()[1] == '2')
     })
     //#endregion
     $('#DropC').on('show.bs.dropdown', async function() {
-      app.dataVue.DropOpen = true;
       app.dataVue.DropCarregando = true;
+      var CacheNoti = await GetSessaoPHP(SESSOESPHP.NOTIFICACOES);
+      if (CacheNoti != "") {
+        CacheNoti = JSON.parse(CacheNoti);
+        app.dataVue.DropLista = CacheNoti;
+        app.dataVue.DropCarregando = false;
+
+      }
+      app.dataVue.DropOpen = true;
       WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
         if (Resultado.error == undefined) {
           app.dataVue.DropLista = Resultado;

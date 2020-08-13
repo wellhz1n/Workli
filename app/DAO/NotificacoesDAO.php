@@ -2,12 +2,13 @@
 @require_once("../Classes/Notificacao.php");
 class NotificacoesDAO
 {
-private Notificacao $Not;
-  
+    private Notificacao $Not;
+
     #region Busca Notificações
-    public function BuscaNotificacoes($idUsuario)
+    public function BuscaNotificacoes($idUsuario, $BuscaNovo = true)
     {
-        $sql =" 
+        $visto = $BuscaNovo ? "and visto = 0" : null;
+        $sql = " 
         with Ncomum as (
             select distinct
                     N.id as id,
@@ -24,7 +25,7 @@ private Notificacao $Not;
                     N.visto as visto,
                     0 as patrocinado,
                     0 as destacado
-            from notificacoes N where N.id_usuario = ?  and visto = 0
+            from notificacoes N where N.id_usuario = ? {$visto}
             ),
             NMensagem as (
             select distinct
@@ -86,7 +87,7 @@ private Notificacao $Not;
             select  distinct * from NProposta
             order by data_hora desc;
         ";
-        $result = Sql($sql,[$idUsuario,$idUsuario]);
+        $result = Sql($sql, [$idUsuario, $idUsuario]);
         return $result->resultados;
     }
     public function NumeroNotificacoesNaoVistas($idUsuario)
@@ -100,32 +101,43 @@ private Notificacao $Not;
         $saida = false;
         if ($notificacao->id == -1) {
             $notificacao->id = GetNextID("notificacoes");
-           $saida = Insert("insert into 
+            $saida = Insert(
+                "insert into 
            notificacoes(id,titulo,descricao,id_projeto,id_chat,id_usuario,id_usuario_criacao,tipo)
            values(?,?,?,?,?,?,?,?)",
-            [$notificacao->id,
-            $notificacao->titulo,
-            $notificacao->descricao,
-            $notificacao->id_projeto,
-            $notificacao->id_chat,
-            $notificacao->id_usuario,
-            $notificacao->id_usuario_criacao,
-            $notificacao->tipo]);
-            
-        }
-        else{
-           $saida = Update(" Update notificacoes
+                [
+                    $notificacao->id,
+                    $notificacao->titulo,
+                    $notificacao->descricao,
+                    $notificacao->id_projeto,
+                    $notificacao->id_chat,
+                    $notificacao->id_usuario,
+                    $notificacao->id_usuario_criacao,
+                    $notificacao->tipo
+                ]
+            );
+        } else {
+            $saida = Update(" Update notificacoes
                                 titulo = ?,
                                 descricacao = ?,
                                 tipo = ?
-                                where id = ?",[
-                                    $notificacao->titulo,
-                                    $notificacao->descricao,
-                                    $notificacao->tipo,
-                                    $notificacao->id
-                                ]);
+                                where id = ?", [
+                $notificacao->titulo,
+                $notificacao->descricao,
+                $notificacao->tipo,
+                $notificacao->id
+            ]);
         }
         return $saida;
+    }
+    public function UpdateVistoVariasNotificacoes($ids = [])
+    {
+        $result = true;
+        if (count($ids) > 0) {
+            $ids = join(',', $ids);
+            $result = Update("update notificacoes set visto = 1 where id in({$ids})");
+        }
+        return $result;
     }
 
     #endregion

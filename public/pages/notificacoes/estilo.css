@@ -1,0 +1,13 @@
+.nav-item.nav-link.active{
+    background-color: #218838 !important;
+    color: white;
+}
+.nav-item.nav-link{
+    background-color: #9199a0 !important;
+    color: white;
+
+}
+.nav-item.nav-link{
+    border: 0px;
+    border-radius: 0px;
+}

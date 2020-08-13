@@ -63,6 +63,8 @@ const SESSOESPHP = {
     AVALIACAO_MEDIA: "AVALIACAOMEDIA",
     //FIM USUARIO SECOES
     SERVICOS: "SERVICOS",
+    NUMNOTIFICACOES: "NUMNOTIFICACOES",
+    NOTIFICACOES: "NOTIFICACOES"
 
 }
 const Projeto = () => {
@@ -160,21 +162,21 @@ const TipoNotificacao = {
     SUCCESS: 5
 }
 const NotificacaoEntidade =
- function (_id = -1,_descricao = "",_titulo="",_id_projeto = null,_id_chat= null ,
-           _id_usuario = null,_id_usuario_criacao = null, _date = GetDataAtual(),
-            _time = new Date().toLocaleTimeString(), _visto = 0,_tipo = TipoNotificacao.DEFAULT){
-    return {
-            id:_id,
-            descricao:_descricao,
-            titulo:_titulo,
-            id_projeto:_id_projeto,
-            id_chat:_id_chat,
-            id_usuario:_id_usuario,
-            id_usuario_criacao:_id_usuario_criacao,
-            data:_date,
-            tipe:_time,
-            visto:_visto,
-            tipo:_tipo
+    function (_id = -1, _descricao = "", _titulo = "", _id_projeto = null, _id_chat = null,
+        _id_usuario = null, _id_usuario_criacao = null, _date = GetDataAtual(),
+        _time = new Date().toLocaleTimeString(), _visto = 0, _tipo = TipoNotificacao.DEFAULT) {
+        return {
+            id: _id,
+            descricao: _descricao,
+            titulo: _titulo,
+            id_projeto: _id_projeto,
+            id_chat: _id_chat,
+            id_usuario: _id_usuario,
+            id_usuario_criacao: _id_usuario_criacao,
+            data: _date,
+            tipe: _time,
+            visto: _visto,
+            tipo: _tipo
+        }
     }
-}
 //#endregion
