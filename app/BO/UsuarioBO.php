@@ -43,6 +43,11 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $img = $_POST['IMAGEM'];
         $userBO->SalvaImagem($img);
     }
+
+    if($metodo == "SalvaImagemBanner"){
+        $img = $_POST['IMAGEM'];
+        $userBO->SalvaImagemBanner($img);
+    }
     if ($metodo == "Logar") {
         $userBO->Logar($_POST['email'], $_POST['senha']);
     }
@@ -308,6 +313,23 @@ class UsuarioBO
             echo json_encode($msg->error);
         }
     }
+
+    public function SalvaImagemBanner($img){
+        
+        $idUsuario  = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        try{
+            $img = ConvertBase64ToBlob($img);
+            $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img,$idUsuario);
+            $img = ConvertBlobToBase64($img,true);
+            echo "OK";
+        }
+        catch (Throwable $th) {
+            $msg = new stdClass();
+            $msg->error = $th->getMessage();
+            echo json_encode($msg->error);
+        }
+    }
+
 
     public function Logar($email, $senha)
     {

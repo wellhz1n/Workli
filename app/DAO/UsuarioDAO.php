@@ -136,6 +136,19 @@ class UsuarioDAO
 
         return $resultado;
     }
+
+    public function SalvarOuAtualizarImagemBanner($img, $idUsuario) {
+        $Busca = Sql("SELECT id FROM imagem_usuario WHERE id_usuario =?", [$idUsuario]);
+        if (count($Busca->resultados) == 1)
+            $resultado = Insert("UPDATE  imagem_usuario SET imagem_banner = ? WHERE id_usuario = ? ", [$img, $idUsuario]);
+        else
+            $resultado = Insert("INSERT INTO imagem_usuario(imagem_banner, id_usuario)
+        VALUES(?, ?)", [$img, $idUsuario]);
+
+        return $resultado;
+    }
+
+
     public function GetUsuarioCompletobyId($id)
     {
         $retorno  = Sql("select u.id,u.nome,u.email,u.cpf,u.nivel_usuario,im.imagem from usuarios as u
@@ -154,7 +167,7 @@ class UsuarioDAO
 
     public function BuscaNumeroUsuarios() 
     {
-        $retorno = Sql("SELECT COUNT(id) FROM usuarios", []);
+        $retorno = Sql("SELECT COUNT(id) FROM usuarios");
         return $retorno->resultados[0];
     }
 

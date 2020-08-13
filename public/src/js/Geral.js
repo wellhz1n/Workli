@@ -68,15 +68,15 @@ $(document).ready(async () => {
 
 
 
-//     //#region FOOTER
-//     WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
-//         $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
-//     });
-//   WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
-//       $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-//   });
+    // //#region FOOTER
+    // WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
+    //     $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+    // });
+    // WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
+    //     $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+    // });
     
-//     //#endregion
+    // //#endregion
 });
 
 //Funcoes de grid

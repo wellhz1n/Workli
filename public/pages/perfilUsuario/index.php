@@ -8,7 +8,10 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
-        <img id="imageBackgroundPerfil" src="src/img/background/background.png"></img>
+        <div id="imageBackgroundPerfil">
+             <span id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?></span></span>
+             <wm-user-banner/>
+        </div>
         <div id="cardsDadosProposta">
             <div class="cardsDPWrapper">
                 <div class="cardDP">
@@ -43,9 +46,6 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <span class="col-12" id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?><span></span>
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">

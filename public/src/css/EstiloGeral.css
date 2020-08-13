@@ -77,7 +77,10 @@ tr {
     cursor: pointer !important;
 }
 
-
+.cemXcem {
+    width: 100%;
+    height: 100%;
+}
 /* SERVICO ITEM STYLE */
 
 .label-rating {
@@ -1364,3 +1367,50 @@ textarea::-webkit-scrollbar-thumb:hover {
         margin: 10px 3.7%;
     }
 /*#endregion --------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+/*#region Banner do Usuário */
+
+.wrapperBannerUsuario {
+    z-index: 1;
+}
+
+.wrapperBannerUsuario:hover {
+    cursor: pointer;
+}
+
+.wrapperBannerUsuario:hover .botaoEditarBU{
+    visibility: visible;
+}
+
+#BUIcon {
+    font-size: 20px;
+}
+
+.botaoEditarWrapperBU {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3%;
+}
+.botaoEditarBU  {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    margin-top: 20px;
+}
+
+
+/*#endregion Banner do Usuário*/

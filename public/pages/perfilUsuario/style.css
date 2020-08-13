@@ -42,6 +42,8 @@
     color: #fff;
     margin-top: 15px;
     padding: 0;
+    position: absolute;
+    z-index: 2;
 }
 
 #bVNome {
@@ -53,13 +55,14 @@
 .imagemBackgroundPerfilWrapper {
     width: 100%;
     position: absolute;
-    z-index: -1;
 }
 
 #imageBackgroundPerfil {
     width: 100%;
+    /* height: 12.5vw; */
     height: 240px;
-    background-color: white !important;
+    display: flex;
+    justify-content: center;
 }
 /*#endregion Background ----------------------------------------------------------------------------------------------------------------------*/
 
@@ -152,10 +155,12 @@
 /*#endregion ----------------------------------------------------------------------------------------------------------------------*/
 /*#region Imagem Usuario ----------------------------------------------------------------------------------------------------------------------*/
 #imgcontainer {
-    margin-top: 25px;
+    /* margin-top: 5.75vw; */
+    margin-top: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 

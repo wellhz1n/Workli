@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS imagem_usuario(
 
 ALTER TABLE imagem_usuario MODIFY COLUMN if EXISTS imagem LONGTEXT CHARACTER  SET BINARY;
 
+ALTER TABLE imagem_usuario
+CHANGE extensao_imagem imagem_banner longblob;
+
 CREATE TABLE IF NOT EXISTS funcionario(
   id INT(16) auto_increment NOT NULL,
   curriculo TEXT,

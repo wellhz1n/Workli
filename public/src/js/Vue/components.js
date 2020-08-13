@@ -681,6 +681,105 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     }
 });
 
+var WMUSERBANNER = Vue.component('wm-user-banner', { 
+    /*O WIDTH e o HEIGHT são setados para 100%, então para modificar é só mudar o tamanho do pai.*/
+    /*O absolute e o z-index também devem ser setados pelo pai*/
+    /*Fiz assim para ter um maior nivel de edição sem precisar passar props.*/
+    props: {
+        img: String,
+        id: String
+    },
+    data: function () {
+        return {
+            imgData: null,
+        }
+    },
+    mounted: function () {
+        $('.wrapperBannerUsuario').on('click', () => {
+            var input = $(document.createElement("input"));
+            input.attr("type", "file");
+            input.attr("accept", "image/x-png,image/gif,image/jpeg");
+            // add onchange handler if you wish to get the file :)
+            input.trigger("click"); // opening dialog
+    
+            $(input).on('change', async () => {
+                console.log("mudou");
+                let imgBase = await LerImagem($(input)[0]);
+                app.dataVue.Usuario.imgTemp = imgBase;
+
+                let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagemBanner",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
+                if(retorno == "OK"){
+                    // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
+                    // this.imgData = app.dataVue.Usuario.imgTemp;
+                    // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
+                    console.log("entrou")
+                    app.dataVue.Usuario.imgTemp = null;
+                    toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+                }
+                else{
+                    toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+                    console.warn(`ERROR:::${retorno}`);
+                }
+
+            });
+    
+        });
+    },
+    methods: {
+        puxa() {
+            console.log(imgData)
+        }
+    },
+    template: `
+    <div class="cemXcem wrapperBannerUsuario">
+        <div class="botaoEditarWrapperBU">
+            <div class="botaoEditarBU">
+                <i class="fas fa-pen" id="BUIcon" aria-hidden></i>
+            </div>
+        </div>
+
+
+        <div
+            class="cemXcem" 
+            :style="[{display: 'block !important;'}]"
+            v-show="this.imgData == null || this.imgData == '' "
+        >
+            <img 
+                class="cemXcem"
+                src='src/img/background/background.png' 
+            />
+        </div>
+        
+        
+        <div 
+            class="cemXcem"
+            v-show="this.imgData != null && this.imgData != '' "
+        >
+            <img 
+                class="cemXcem"
+                :src='this.imgData' 
+            />
+        </div>
+
+    </div>
+    `,
+    
+    watch: {
+        img: {
+            immediate: true,
+            handler(v) {
+                if (v != null && v != "") {
+                    this.imgData = 'data:image/jpeg;base64,' + v;
+                }
+                else
+                    this.imgData = null;
+            }
+        }
+    }
+    /* // <img :style="[{width: '100%', height: '100%']"
+        //             :src="this.imgData"/>
+    */
+});
 
 var WM_InputCpf = Vue.component('wm-input-cpf', {
     props: {
