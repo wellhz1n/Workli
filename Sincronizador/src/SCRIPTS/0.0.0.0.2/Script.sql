@@ -38,3 +38,6 @@ create table IF NOT EXISTS notificacoes(
 		constraint FK_USUARIO_CRIACAO_NOTIFICACAO foreign key (id_usuario_criacao) references usuarios(id)
 );
 ALTER TABLE notificacoes MODIFY COLUMN descricao TEXT DEFAULT NULL NULL;
+
+ALTER TABLE imagem_usuario
+CHANGE extensao_imagem imagem_banner longblob;

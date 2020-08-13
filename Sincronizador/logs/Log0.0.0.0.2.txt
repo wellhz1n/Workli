@@ -1,0 +1,3 @@
+2020-8-13 
+                        10:25:05 #Error: Unknown column 'Ativo' in 'servico'	2020-8-13 
+                        10:25:05 #Error: Unknown column 'extensao_imagem' in 'imagem_usuario'	
