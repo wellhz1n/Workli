@@ -1,6 +1,6 @@
 $(document).ready(async () => {
     //#region Vuedata
-    await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
+    await app.$set(dataVue, 'Tabs', { Notificacao: false, Propostas: true });
     await app.$set(dataVue, 'TabNCategorias', GetTipoMensagem());
     await app.$set(dataVue, "TabNPagina", 1);
     await app.$set(dataVue, "TabNListCarregando", false);

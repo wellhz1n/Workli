@@ -5,7 +5,7 @@
 ">
     <nav>
         <div class="nav nav-tabs" style="display: flex; justify-content: space-around;" id="nav-tab" role="tablist">
-            <a style="border-top-left-radius: 5px;" :class="['nav-item', 'nav-link','w-50',dataVue.Tabs.Notificacao == true?'active':null]" id="nav-notificacoes-tab">Notificações</a>
+            <a style="border-top-left-radius: 5px;display: flex;" :class="['nav-item', 'nav-link','w-50',dataVue.Tabs.Notificacao == true?'active':null]" id="nav-notificacoes-tab">Notificações  <div  style="height: 10px;width: 10px; background-color: red;border-radius: 100%;opacity: 0.8;" v-if="dataVue.NotificacaoNumero > 0" ></div></a>
             <a style="border-top-right-radius: 5px;" :class="['nav-item', 'nav-link','w-50',dataVue.Tabs.Propostas == true?'active':null]" id="nav-proposta-tab">Propostas</a>
 
         </div>
@@ -79,11 +79,41 @@
 
             </div>
             <div key=2 v-else-if="dataVue.Tabs.Propostas" id="nav-profile">
-                <div class=" WrapperNotificacoesTab" style="height: 60vh;">
-
-                    <div class="col-12  ">
-                        <p>aaaaa</p>
+                <div class=" WrapperNotificacoesTab" style="height: min-content;">
+                <p class="m-0 p-0" style="font-size: 12px;opacity: 0.6;">*Recomendamos as propostas patrocinadas e as <span style="color: #ad18f9;">brilhantes</span></p>
+                    <div class="" style="height: 50vh;width: 100%;padding: 3%; margin-top: -2%;" >
+                        <div class="header" style="display: flex;align-items: center;">
+                            <div class="linha col mx-2"></div>
+                            <p class="col-sm-4 col-md-2 mx-2 p-0 m-0" style="text-align: center;">Propostas Patrocinadas</p>
+                            <div class="linha col mx-2"></div>
+                        </div>
+                        <div class="col-12 p-2 ScrollVerde" style="height: 90%;
+                         overflow-y: auto;">
+                            <div class="PropostaItem my-2 ">
+                            </div>
+                            <div class="PropostaItem my-2 Brilha">
+                            </div>
+                            <div class="PropostaItem my-2">
+                            </div>
+                        </div>
                     </div>
+                    <div class="" style="height: 60vh;width: 100%;padding: 3%;" >
+                        <div class="header" style="display: flex;align-items: center;">
+                            <div class="linha col mx-2"></div>
+                            <p class="col-sm-4 col-md-2 mx-2 p-0 m-0" style="text-align: center;">Propostas Normais</p>
+                            <div class="linha col mx-2"></div>
+                        </div>
+                        <div class="col-12 p-2  ScrollVerde" style="height: 90%;
+                         overflow-y: auto;">
+                            <div class="PropostaItem my-2 ">
+                            </div>
+                            <div class="PropostaItem my-2 Brilha">
+                            </div>
+                            <div class="PropostaItem my-2">
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </transition>

@@ -234,6 +234,7 @@ if (Logado()[1] == '2')
     app.$set(dataVue, 'DropOpen', false);
     app.$set(dataVue, 'DropCarregando', false);
     app.$set(dataVue, 'DropLista', []);
+    app.$set(dataVue, 'NotificacaoNumero', 0);
     app.$set(dataVue, "ClickFuncao", (e, i = item) => {
       console.log(i.id)
       if (i.tipo == 2) {
@@ -298,6 +299,7 @@ if (Logado()[1] == '2')
       if (num != 0) {
         $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
         $($(".notifyredBall")[0]).removeAttr('hidden');
+        app.dataVue.NotificacaoNumero = num;
 
       } else
         $($(".notifyredBall")[0]).attr('hidden', 'hidden');
@@ -311,6 +313,7 @@ if (Logado()[1] == '2')
           $($(".notifyredBall")[0]).removeAttr('hidden');
           if (num != valorAnterior) {
             document.dispatchEvent(Evento);
+            app.dataVue.NotificacaoNumero = num;
             valorAnterior = num;
           }
 

@@ -91,3 +91,53 @@
 .NotificacoesListWrapper::-webkit-scrollbar-thumb:hover {
   background: #1a692b !important;
 }
+
+
+
+.ScrollVerde::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+
+.ScrollVerde::-webkit-scrollbar-track {
+  background: #21883844 !important;
+  width: 50px;
+}
+
+/* Handle */
+
+.ScrollVerde::-webkit-scrollbar-thumb {
+  background: #218838 !important;
+  height: 10px;
+}
+
+/* Handle on hover */
+
+.ScrollVerde::-webkit-scrollbar-thumb:hover {
+  background: #1a692b !important;
+}
+
+
+.linha{
+  height: 2px;
+  border-radius: 20px;
+  background-color:#777777 ;
+}
+.PropostaItem{
+  height: 100px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #218838;
+}
+.PropostaItem.Brilha{
+  animation: Brilha 1.5s infinite alternate ease-in-out;
+}
+@keyframes Brilha{
+  from{
+    box-shadow: inset 0px 0px 10px 1.5px #ad18f9;
+    
+  }
+  to{
+    box-shadow: inset 0px 0px 10px 3px #d0f918;
+  }
+}
