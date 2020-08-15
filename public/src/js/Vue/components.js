@@ -15,15 +15,15 @@ LoadingComponent = Vue.component('wm-loading', {
     props: {
         cor: {
             type: String,
-            default: ()=>{return'#28a745 '}
+            default: () => { return '#28a745 ' }
         },
         msg: {
             type: String,
-            default: ()=>{return'Carregando...'}
+            default: () => { return 'Carregando...' }
         },
         top: {
-            type: [String,Number],
-            default: ()=>{return'0'}
+            type: [String, Number],
+            default: () => { return '0' }
         }
     },
     data: () => {
@@ -37,21 +37,21 @@ LoadingComponent = Vue.component('wm-loading', {
         cor: {
             immediate: true,
             deep: true,
-            handler(v,o) {
+            handler(v, o) {
                 this.datacor = v;
             }
         },
         msg: {
             immediate: true,
             deep: true,
-            handler(v,o) {
+            handler(v, o) {
                 this.datamsg = v;
             },
         },
         top: {
             immediate: true,
             deep: true,
-            handler(v,o) {
+            handler(v, o) {
                 this.datatop = v;
             }
         }
@@ -2108,12 +2108,17 @@ WM_Error = Vue.component('wm-error', {
         mensagem: {
             type: String,
             default: "Estamos com Problemas,Por favor tente novamente"
+        },
+        tamanhoicon: {
+            type: [String, Number],
+            default: 190
         }
     },
     data: () => {
         return {
             msg: '',
             faces: ["surprise", "sad-cry", "dizzy", "meh", "tired", "kiss", "frown"],
+            iconsize: 190
         }
 
     },
@@ -2132,13 +2137,22 @@ WM_Error = Vue.component('wm-error', {
             handler(n, o) {
                 this.msg = n;
             }
+        },
+        tamanhoicon: {
+            immediate: true,
+            deep: true,
+            handler(n, o) {
+                this.iconsize = n;
+            }
         }
     },
     template: `
-    <div class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 10%">
-        <p>{{this.msg}}</p>
-         <i style="font-size: 200px;opacity: 0.4;" :class="ClasseProcessada"></i>
-</div>
+    <div class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 10%;height:min-content">
+        <p class="m-0 p-0">{{this.msg}}</p>
+        <div :style="[{'font-size': this.iconsize+'px'},{opacity: 0.4},{height:'min-content'}]">
+         <i  :class="ClasseProcessada"></i>
+        </div>
+ </div>
     `
 });
 

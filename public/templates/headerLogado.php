@@ -113,13 +113,18 @@
                 <div v-if="dataVue.DropCarregando" style="height: 100%;display: flex;align-items: center;">
                   <wm-loading />
                 </div>
-                <div v-else>
+                <div v-else-if="dataVue.DropLista.length != 0">
                   <div v-for="item in dataVue.DropLista">
                     <div v-if="item.tipo == -1" class="dataChatDiv"><span class="dataChatDivTexto">{{item.titulo}}</span></div>
                     <div style="cursor: pointer;" v-else @click="dataVue.ClickFuncao(this,item)">
                       <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
                     </div>
                   </div>
+                </div>
+                <div v-else style="height: 100%; width: 100%; display: flex;align-items: center;
+                justify-content: center;
+                font-size: 15px;">
+                  <wm-error tamanhoicon="100" style="margin-top: 0px !important;" mensagem="Nenhuma Notificação encontrada" />
                 </div>
 
               </div>
