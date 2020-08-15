@@ -5,9 +5,17 @@ class NotificacoesDAO
     private Notificacao $Not;
 
     #region Busca Notificações
-    public function BuscaNotificacoes($idUsuario, $BuscaNovo = true)
+    public function BuscaNotificacoes($idUsuario, $BuscaNovo = true, $SemProposta = false, $filtros = [])
     {
+        $FiltraTipo = null;
+        if (count($filtros) > 0) {
+
+            $FiltraTipo = "and tipo in (" . join(',', $filtros) . ")";
+        }
+
         $visto = $BuscaNovo ? "and visto = 0" : null;
+        $SemProp = !$SemProposta ? " union 
+        select  distinct * from NProposta" : null;
         $sql = " 
         with Ncomum as (
             select distinct
@@ -80,16 +88,107 @@ class NotificacoesDAO
                 inner join usuarios U on u.id = f.id_usuario
                 where NC.tipo = 1
             )
-            select * from ncomum where tipo <> 1
+            select * from ncomum where tipo <> 1 {$FiltraTipo}
             union  
             select distinct  * from NMensagem
-            union 
-            select  distinct * from NProposta
+                {$SemProp}
             order by data_hora desc;
         ";
         $result = Sql($sql, [$idUsuario, $idUsuario]);
         return $result->resultados;
     }
+
+    public function BuscaNotificacoesComPaginacao($idUsuario, $filtros = [], $pagina = 1)
+    {
+        $FiltraTipo = null;
+        $mostraChat = "union  
+        select distinct  * from NMensagem";
+        $apenasChat =  "select * from ncomum where tipo <> 1 {$FiltraTipo}";
+        $tem2 = false;
+        if (count($filtros) > 0) {
+            if (count($filtros) == 1 && $filtros[0] == 2) {
+                $apenasChat = null;
+                $mostraChat = "   
+                select distinct  * from NMensagem";
+                unset($filtros[0]);
+            }
+            //TODO ARRUMAR ESSA PARADA AQUI PARA FILTRAR O CHAT E TALS
+            if (($key = array_search(2, $filtros)) !== false) {
+                unset($filtros[$key]);
+                $mostraChat = " union  
+                select distinct  * from NMensagem";
+                $tem2 = true;
+            }
+            if (count($filtros) > 0) {
+                $mostraChat = $tem2 ? $mostraChat : null;
+                $FiltraTipo = "and tipo in (" . join(',', $filtros) . ")";
+                $apenasChat =  "select * from ncomum where tipo <> 1 {$FiltraTipo}";
+            }
+        }
+
+
+        $sql = " 
+        with Ncomum as (
+            select distinct
+                    N.id as id,
+                    N.titulo as titulo,
+                    null as subtitulo,
+                    null as subdescricao,
+                    N.descricao  COLLATE utf8mb4_unicode_ci as descricao ,
+                    N.id_chat as id_chat,
+                    N.tipo as tipo,
+                    N.id_projeto as id_projeto,
+                    N.id_usuario as id_usuario,
+                    N.id_usuario_criacao as id_usuario_criacao,
+                    N.data_hora as data_hora,
+                    N.visto as visto,
+                    0 as patrocinado,
+                    0 as destacado
+            from notificacoes N where N.id_usuario = ? 
+            ),
+            NMensagem as (
+            select distinct
+                    -1 as id,
+                    'Nova Mensagem' as titulo,
+                    'enviada por:' as subtitulo,
+                    U.nome as subdescricao,
+                    CM.msg as descricao,
+                    cm.id_chat as id_chat,
+                    2 as tipo,
+                    null as id_projeto,
+                    CM.id_usuario_destinatario as id_usuario,
+                    CM.id_usuario_remetente as id_usuario_criacao,
+                    CM.data_hora as data_hora,
+                    CM.visualizado as visto,
+                    0 as patrocinado,
+                    0 as destacado
+            from  chat_mensagens CM
+            inner join usuarios U on U.id = CM.id_usuario_remetente
+            where CM.id_usuario_destinatario = ? and CM.visualizado = 0
+            )
+            {$apenasChat}
+           {$mostraChat}
+            order by data_hora desc;
+        ";
+        $result = Sql($sql, [$idUsuario, $idUsuario]);
+
+
+        $paginas = count($result->resultados) > 0 ? ceil((count($result->resultados)) / 6) - 1 : 1;
+        $paginas = $paginas == 0 ? 1 : $paginas;
+        $fimArray = (floor(count($result->resultados) / $paginas) * $pagina);
+        $inicioArr = (($pagina - 1) * 6);
+        $novoArr = [];
+        for ($i = $inicioArr; $i < count($result->resultados); $i++) {
+            if ($i >= $inicioArr && $i <= $fimArray)
+                array_push($novoArr, $result->resultados[$i]);
+        }
+      
+        // FUCK YOU ARRAY_SPLICE 🤬
+        // array_splice($ArrayPagina,  $fimArray>count($ArrayPagina)? (0 - count($ArrayPagina)):(0 - $fimArray),6);
+        return [$paginas, $novoArr];
+    }
+
+
     public function NumeroNotificacoesNaoVistas($idUsuario)
     {
         return count($this->BuscaNotificacoes($idUsuario));

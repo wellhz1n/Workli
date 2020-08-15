@@ -10,25 +10,60 @@ var dataVue = {
 };
 var computedVue = {};
 
-var testeComp = Vue.component('teste-vue-a', {
+
+LoadingComponent = Vue.component('wm-loading', {
     props: {
-        text: String
+        cor: {
+            type: String,
+            default: ()=>{return'#28a745 '}
+        },
+        msg: {
+            type: String,
+            default: ()=>{return'Carregando...'}
+        },
+        top: {
+            type: [String,Number],
+            default: ()=>{return'0'}
+        }
     },
-    data: function () {
+    data: () => {
         return {
-            texto: this.text
+            datamsg: '',
+            datacor: '',
+            datatop: ''
+        }
+    },
+    watch: {
+        cor: {
+            immediate: true,
+            deep: true,
+            handler(v,o) {
+                this.datacor = v;
+            }
+        },
+        msg: {
+            immediate: true,
+            deep: true,
+            handler(v,o) {
+                this.datamsg = v;
+            },
+        },
+        top: {
+            immediate: true,
+            deep: true,
+            handler(v,o) {
+                this.datatop = v;
+            }
         }
     },
     template: `
-    <div>
-        <p>{{text}}</p>
-        <input v-model="texto"/>
-        <p>{{texto}}</p>
-    </div>
-    `,
-    mounted: function () {
-        console.log(this.$refs.testevue);
-    }
+    <div class="col-12 mx-2 justify-content-center">
+    <div class="d-flex justify-content-center flex-column align-items-center" :style="{'margin-top':this.datatop +'%' }">
+        <div class="spinner-border" :style="{'color': this.datacor + ' !important'}"></div>
+        <p>{{this.datamsg}}</p>
+    </div>  
+    </div>  
+    `
 });
 
 var ItemServico = Vue.component('item-servico', {
@@ -681,7 +716,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     }
 });
 
-var WMUSERBANNER = Vue.component('wm-user-banner', { 
+var WMUSERBANNER = Vue.component('wm-user-banner', {
     /*O WIDTH e o HEIGHT são setados para 100%, então para modificar é só mudar o tamanho do pai.*/
     /*O absolute e o z-index também devem ser setados pelo pai*/
     /*Fiz assim para ter um maior nivel de edição sem precisar passar props.*/
@@ -701,28 +736,28 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             input.attr("accept", "image/x-png,image/gif,image/jpeg");
             // add onchange handler if you wish to get the file :)
             input.trigger("click"); // opening dialog
-    
+
             $(input).on('change', async () => {
                 let imgBase = await LerImagem($(input)[0]);
                 app.dataVue.Usuario.imgTemp = imgBase;
 
-                let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagemBanner",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
-                if(retorno == "OK"){
+                let retorno = await WMExecutaAjax("UsuarioBO", "SalvaImagemBanner", { 'IMAGEM': app.dataVue.Usuario.imgTemp }, false);
+                if (retorno == "OK") {
                     // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
                     // this.imgData = app.dataVue.Usuario.imgTemp;
                     // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
-                    
+
                     this.colocaBanner();
                     app.dataVue.Usuario.imgTemp = null;
-                    toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+                    toastr.info('Imagem Atualizada com Sucesso!', 'Sucesso',);
                 }
-                else{
-                    toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+                else {
+                    toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`, 'Algo Deu Errado');
                     console.warn(`ERROR:::${retorno}`);
                 }
 
             });
-    
+
         });
         this.colocaBanner();
     },
@@ -765,7 +800,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
 
     </div>
     `,
-    
+
     watch: {
         img: {
             immediate: true,
@@ -2107,48 +2142,7 @@ WM_Error = Vue.component('wm-error', {
     `
 });
 
-LoadingComponent = Vue.component('wm-loading', {
-    props: {
-        cor: {
-            type: String,
-            default: '#28a745 '
-        },
-        msg: {
-            type: String,
-            default: 'Carregando...'
-        }
-    },
-    data: () => {
-        return {
-            datamsg: 'Carregando...',
-            datacor: '#28a745'
-        }
-    },
-    template: `
-    <div class="col-12 mx-2 justify-content-center">
-    <div class="d-flex justify-content-center flex-column align-items-center" style="margin-top: 20%">
-        <div class="spinner-border" :style="{'color': this.datacor + ' !important'}"></div>
-        <p>{{this.datamsg}}</p>
-    </div>  
-    </div>  
-    `,
-    watch: {
-        cor: {
-            immediate: true,
-            deep: true,
-            handler(v) {
-                this.datacor = v;
-            }
-        },
-        msg: {
-            immediate: true,
-            deep: true,
-            handler(v) {
-                this.datamsg = v;
-            }
-        }
-    }
-});
+
 WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     props: {
         imgs: {
@@ -2521,13 +2515,14 @@ WMNotify = Vue.component('wm-notify', {
             default: "00:00"
         }
     },
-    data(){
+    data() {
         return {
             dataTipo: TipoNotificacao.DEFAULT,
             dataTitulo: "",
             dataSubtitulo: { titulo: "", descricao: "" },
             dataDescricao: "",
-            dataHora: "00:00"        }
+            dataHora: "00:00"
+        }
     },
     watch: {
         tipo: {
@@ -2566,7 +2561,7 @@ WMNotify = Vue.component('wm-notify', {
                 this.dataHora = nv;
             }
         }
-        
+
     },
     beforeMount: () => {
     },
@@ -2606,7 +2601,7 @@ WMNotify = Vue.component('wm-notify', {
             }
         }
     },
-    methods:{
+    methods: {
     },
     template: `
             <div :class="NotificacaoClasse.classe">

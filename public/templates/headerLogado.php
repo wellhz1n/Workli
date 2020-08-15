@@ -110,7 +110,7 @@
             <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
             <div class="row" style="height: 250px;width: 100%;margin: 0px;">
               <div class="col-12 notificacoesScrool">
-                <div v-if="dataVue.DropCarregando">
+                <div v-if="dataVue.DropCarregando" style="height: 100%;display: flex;align-items: center;">
                   <wm-loading />
                 </div>
                 <div v-else>
@@ -120,7 +120,6 @@
                       <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
                     </div>
                   </div>
-
                 </div>
 
               </div>
@@ -225,6 +224,7 @@ if (Logado()[1] == '2')
 <script type="application/javascript">
   $(document).ready(async () => {
     var NotificacaoInterval = null
+    var Evento = new CustomEvent("BuscaNotificacao");
     //#region Vue
     app.$set(dataVue, 'DropOpen', false);
     app.$set(dataVue, 'DropCarregando', false);
@@ -253,13 +253,13 @@ if (Logado()[1] == '2')
     //#endregion
     $('#DropC').on('show.bs.dropdown', async function() {
       app.dataVue.DropCarregando = true;
-      var CacheNoti = await GetSessaoPHP(SESSOESPHP.NOTIFICACOES);
-      if (CacheNoti != "") {
-        CacheNoti = JSON.parse(CacheNoti);
-        app.dataVue.DropLista = CacheNoti;
-        app.dataVue.DropCarregando = false;
+      // var CacheNoti = await GetSessaoPHP(SESSOESPHP.NOTIFICACOES);
+      // if (CacheNoti != "") {
+      //   CacheNoti = JSON.parse(CacheNoti);
+      //   app.dataVue.DropLista = CacheNoti;
+      //   app.dataVue.DropCarregando = false;
 
-      }
+      // }
       app.dataVue.DropOpen = true;
       WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
         if (Resultado.error == undefined) {
@@ -293,15 +293,22 @@ if (Logado()[1] == '2')
       if (num != 0) {
         $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
         $($(".notifyredBall")[0]).removeAttr('hidden');
+
       } else
         $($(".notifyredBall")[0]).attr('hidden', 'hidden');
 
     });
+    var valorAnterior = 0;
     setInterval(async () => {
       await WMExecutaAjax("NotificacoesBO", "GetNumeroNotificacoes").then(num => {
         if (num != 0) {
           $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
           $($(".notifyredBall")[0]).removeAttr('hidden');
+          if (num != valorAnterior) {
+            document.dispatchEvent(Evento);
+            valorAnterior = num;
+          }
+
         } else
           $($(".notifyredBall")[0]).attr('hidden', 'hidden');
 
