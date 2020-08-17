@@ -124,10 +124,13 @@
   background-color:#777777 ;
 }
 .PropostaItem{
-  height: 100px;
+  height: min-content;
   width: 100%;
   border-radius: 10px;
-  background-color: #218838;
+  background-color: #9199A0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1%;
 }
 .PropostaItem.Brilha{
   animation: Brilha 1.5s infinite alternate ease-in-out;
@@ -140,4 +143,49 @@
   to{
     box-shadow: inset 0px 0px 10px 3px #d0f918;
   }
+}
+.WrapperBotoesProposta{
+  display: flex;
+}
+.BotoesProposta{
+  height: 45px;
+  width: 45px;
+  border-radius: 100%;
+  border: 1px solid #777777aa;
+  background: transparent;
+  opacity: 0.7;
+  transition: .2s ease-in-out all;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:white !important;
+  padding: 3px;
+  margin: 2px;
+}
+.BotoesProposta.Aceitar{
+  border: 1.5px solid #1d7730 !important;
+  background: #218837d5 !important;
+  /* color: #218837 !important; */
+}
+.BotoesProposta.Recusar{
+  border: 1.5px solid #851a14 !important;
+  background: #a8201ad5 !important;
+  /* color: #a8201a !important; */
+}
+.BotoesProposta:hover{
+  opacity: 1;
+}
+.TituloProposta{
+}
+.imagemProposta{
+  height: min-content;
+  width: 50px;
+}
+.iconeImagemNull{
+  font-size: 50px !important;
+}
+.imagemTamanhoUser{
+  height: 50px !important;
+  width: 50px !important;
 }
