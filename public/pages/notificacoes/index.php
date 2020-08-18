@@ -80,7 +80,7 @@
             </div>
             <div key=2 v-else-if="dataVue.Tabs.Propostas" id="nav-profile">
                 <div class=" WrapperNotificacoesTab" style="height: min-content;">
-                    <p class="m-0 p-0" style="font-size: 12px;opacity: 0.6;">*Recomendamos as propostas patrocinadas e as <span style="color: #ad18f9;">brilhantes</span></p>
+                    <p class="m-0 p-0" style="font-size: 12px;opacity: 0.6;">*Recomendamos as propostas patrocinadas e as <span style="color: #218838;">brilhantes</span></p>
                     <div class="" style="height: 50vh;width: 100%;padding: 3%; margin-top: -2%;">
                         <div class="header" style="display: flex;align-items: center;">
                             <div class="linha col mx-2"></div>
