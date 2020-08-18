@@ -105,24 +105,28 @@
           <div style="height: 300px;" class=" linkCor">
             <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
               <h6>Notificações</h6>
-              <a><i class="fas fa-external-link-alt"></i></a>
+              <a @click="(a)=>{a.view.Rediredionar('notificacoes')}"><i class="fas fa-external-link-alt"></i></a>
             </div>
             <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
             <div class="row" style="height: 250px;width: 100%;margin: 0px;">
               <div class="col-12 notificacoesScrool">
-                <div v-if="dataVue.DropCarregando">
+                <div v-if="dataVue.DropCarregando" style="height: 100%;display: flex;align-items: center;">
                   <wm-loading />
                 </div>
-                <div v-else>
+                <div v-else-if="dataVue.DropLista.length != 0">
                   <div v-for="item in dataVue.DropLista">
                     <div v-if="item.tipo == -1" class="dataChatDiv"><span class="dataChatDivTexto">{{item.titulo}}</span></div>
                     <div style="cursor: pointer;" v-else @click="dataVue.ClickFuncao(this,item)">
                       <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
                     </div>
                   </div>
-
                 </div>
-            
+                <div v-else style="height: 100%; width: 100%; display: flex;align-items: center;
+                justify-content: center;
+                font-size: 15px;">
+                  <wm-error tamanhoicon="100" style="margin-top: 0px !important;" mensagem="Nenhuma Notificação encontrada" />
+                </div>
+
               </div>
             </div>
           </div>
@@ -225,10 +229,12 @@ if (Logado()[1] == '2')
 <script type="application/javascript">
   $(document).ready(async () => {
     var NotificacaoInterval = null
+    var Evento = new CustomEvent("BuscaNotificacao");
     //#region Vue
     app.$set(dataVue, 'DropOpen', false);
     app.$set(dataVue, 'DropCarregando', false);
     app.$set(dataVue, 'DropLista', []);
+    app.$set(dataVue, 'NotificacaoNumero', 0);
     app.$set(dataVue, "ClickFuncao", (e, i = item) => {
       console.log(i.id)
       if (i.tipo == 2) {
@@ -237,7 +243,7 @@ if (Logado()[1] == '2')
             chave: 'id_chat',
             valor: i.id_chat
           }]);
-        else{
+        else {
           RediredionarComParametros('chat', [{
             chave: 'id_chat',
             valor: i.id_chat
@@ -252,8 +258,15 @@ if (Logado()[1] == '2')
     })
     //#endregion
     $('#DropC').on('show.bs.dropdown', async function() {
-      app.dataVue.DropOpen = true;
       app.dataVue.DropCarregando = true;
+      // var CacheNoti = await GetSessaoPHP(SESSOESPHP.NOTIFICACOES);
+      // if (CacheNoti != "") {
+      //   CacheNoti = JSON.parse(CacheNoti);
+      //   app.dataVue.DropLista = CacheNoti;
+      //   app.dataVue.DropCarregando = false;
+
+      // }
+      app.dataVue.DropOpen = true;
       WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
         if (Resultado.error == undefined) {
           app.dataVue.DropLista = Resultado;
@@ -286,15 +299,24 @@ if (Logado()[1] == '2')
       if (num != 0) {
         $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
         $($(".notifyredBall")[0]).removeAttr('hidden');
+        app.dataVue.NotificacaoNumero = num;
+
       } else
         $($(".notifyredBall")[0]).attr('hidden', 'hidden');
 
     });
+    var valorAnterior = 0;
     setInterval(async () => {
       await WMExecutaAjax("NotificacoesBO", "GetNumeroNotificacoes").then(num => {
         if (num != 0) {
           $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
           $($(".notifyredBall")[0]).removeAttr('hidden');
+          if (num != valorAnterior) {
+            document.dispatchEvent(Evento);
+            app.dataVue.NotificacaoNumero = num;
+            valorAnterior = num;
+          }
+
         } else
           $($(".notifyredBall")[0]).attr('hidden', 'hidden');
 

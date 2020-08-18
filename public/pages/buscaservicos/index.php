@@ -27,7 +27,7 @@
                 <wm-paginacao :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" v-on:changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" />
             </div>
             <div class="col-12 mx-2 justify-content-center">
-                <wm-loading v-if="dataVue.Carregando"></wm-loading>
+                <wm-loading v-if="dataVue.Carregando" style="margin-top: 15%;"></wm-loading>
                 <div v-else>
                     <div v-if="dataVue.Projetos.lista.length < 1 ">
                         <wm-error mensagem="Nenhum projeto encontrado" />
@@ -35,12 +35,6 @@
                     <wm-projeto-item v-else :texto_botao="dataVue.UsuarioContexto.NIVEL_USUARIO == 0?'Ver Detalhes':item.propostaFuncionario == 0 ?'Fazer Proposta':'Ver Detalhes'" :titulo="item.titulo" :publicado="item.postado" :propostas="JSON.parse(item.propostas)" :categoria="item.categoria" :identidade="item.id" :id="'item'+item.id" :tamanhodoprojeto="item.nivel_projeto" :nivelprofissional="item.nivel_profissional" :descricao="item.descricao" :nome="item.usuario" :img="item.img" :valor="item.valor" :id_usuario="item.id_usuario" v-for="item in dataVue.Projetos.lista" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
     </div>
 </div>

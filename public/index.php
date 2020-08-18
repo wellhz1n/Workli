@@ -103,7 +103,7 @@ header('Content-Type: text/html; charset=utf-8');
                         mixins: [Mixin],
                         components: {
                             'wm-notify':WMNotify,
-                            'teste-vue-a': testeComp,
+                            'wm-loading': LoadingComponent,
                             'item-servico': ItemServico,
                             'select2': Select2,
                             'wm-container': WMContainer,
@@ -124,7 +124,6 @@ header('Content-Type: text/html; charset=utf-8');
                             'wm-modal': WmModal,
                             'wm-paginacao': Wm_Paginacao,
                             'wm-error': WM_Error,   
-                            'wm-loading': LoadingComponent,
                             'wm-image-viewer': WM_IMAGEVIEWER,
                             'wm-chat': WMCHAT,
                             "wm-chart": WMChart,
