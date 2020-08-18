@@ -10,7 +10,9 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
              <span id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?></span></span>
-             <wm-user-banner/>
+             <wm-user-banner @aberto-modal="v => dataVue.abremodal(v)" @recebe-imagem="imgData => dataVue.mudaImagemBanner(imgData)" :imgcropada="dataVue.imagemCropada"/>
+
+             
         </div>
         <div id="cardsDadosProposta">
             <div class="cardsDPWrapper">
@@ -195,5 +197,18 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         </div>
     </div>
 </div>
+
+<!-- Modal de Crop -->
+
+
+<wm-crop-modal 
+    :img="dataVue.imagemBanner" 
+    :visivel="dataVue.modalVisivelController" 
+    :proporcao="8/1" 
+    titulo="RECORTAR IMAGEM DE BANNER"
+    @imagem-cropada="img => {dataVue.passaImagemCropada(img); debugger} "
+/>
+
+
 
 <script type="" src="pages/perfilUsuario/script.js"></script>

@@ -687,7 +687,11 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
     /*Fiz assim para ter um maior nivel de edição sem precisar passar props.*/
     props: {
         img: String,
-        id: String
+        id: String,
+        imgcropada: {
+            type: String, 
+            default: ""
+        }
     },
     data: function () {
         return {
@@ -695,6 +699,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         }
     },
     mounted: function () {
+
         $('.wrapperBannerUsuario').on('click', () => {
             var input = $(document.createElement("input"));
             input.attr("type", "file");
@@ -705,32 +710,57 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             $(input).on('change', async () => {
                 let imgBase = await LerImagem($(input)[0]);
                 app.dataVue.Usuario.imgTemp = imgBase;
-
-                let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagemBanner",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
-                if(retorno == "OK"){
-                    // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
-                    // this.imgData = app.dataVue.Usuario.imgTemp;
-                    // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
-                    
-                    this.colocaBanner();
-                    app.dataVue.Usuario.imgTemp = null;
-                    toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
-                }
-                else{
-                    toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
-                    console.warn(`ERROR:::${retorno}`);
-                }
-
+                this.abrirModal(app.dataVue.Usuario.imgTemp);
             });
     
         });
+        if(this.imgcropada != "") {
+        //     let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagemBanner",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
+        //     if(retorno == "OK"){
+        //         // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
+        //         // this.imgData = app.dataVue.Usuario.imgTemp;
+        //         // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
+                
+        //         this.colocaBanner();
+        //         app.dataVue.Usuario.imgTemp = null;
+        //         toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+        //     }
+        //     else{
+        //         toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+        //         console.warn(`ERROR:::${retorno}`);
+        //     }
+        }
         this.colocaBanner();
     },
     methods: {
         async colocaBanner() {
             let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById");
             this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
+        },
+
+        abrirModal(img) {
+            this.$emit("aberto-modal", true);
+            this.$emit("recebe-imagem", 'data:image/jpeg;base64,' + img)
+        },
+        async salvarImagem(imgcropada) {
+            debugger
+            let retorno = await WMExecutaAjax("UsuarioBO", "SalvaImagemBanner", {'IMAGEM': imgcropada}, false);
+            if(retorno == "OK"){
+                // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
+                // this.imgData = app.dataVue.Usuario.imgTemp;
+                // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
+                
+                this.colocaBanner();
+                app.dataVue.Usuario.imgTemp = null;
+                toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+            }
+            else{
+                toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+                console.warn(`ERROR:::${retorno}`);
+            }
         }
+
+        
     },
     template: `
     <div class="cemXcem wrapperBannerUsuario">
@@ -776,7 +806,16 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                 else
                     this.imgData = null;
             }
+        },
+        imgcropada: {
+            immediate: true,
+            handler(v) {
+                console.log("hey");
+                this.imgCropadaData = v;
+                this.salvarImagem(imgCropadaData);
+            }
         }
+
     }
     /* // <img :style="[{width: '100%', height: '100%']"
         //             :src="this.imgData"/>
@@ -1912,6 +1951,9 @@ WmModal = Vue.component('wm-modal', {
                 this.dataVisible = false;
                 this.dataCallback();
             }
+        },
+        abrirModal() {
+            console.log("modal aberto");
         }
     },
     template: `
@@ -2648,3 +2690,88 @@ WMNotify = Vue.component('wm-notify', {
             </div>
     `
 });
+
+
+
+
+
+
+
+
+
+/*#region MODAL CROP -------------------------------------------*/
+
+var WMCROPMODAL = Vue.component('wm-crop-modal', { 
+    props: {
+        img: {
+            type: String,
+            default: null
+        },
+        proporcao: {
+            type: Number,
+            default: 1
+        },
+        titulo: {
+            type: String,
+            default: "RECORTAR IMAGEM"
+        },
+        visivel: Boolean,
+        id: String
+    },
+
+    data(){
+        return {
+            modalVisivel: false,
+            canvas: ""       
+        }
+    },
+    watch: {
+        visivel: {
+            immediate: true,
+            deep: true,
+            handler(visivelE) {
+                this.modalVisivel = visivelE;
+            }
+        },
+    },
+    methods: {
+
+        change({coordinates, canvas}) {
+            this.canvas = canvas;
+        },
+        emitirImagemCropada() {
+            this.$emit("imagem-cropada", (this.canvas).toDataURL())
+        }
+    },
+
+
+    template: `
+    <wm-modal id="modalCrop" :visivel="this.modalVisivel" :callback="() => {this.modalVisivel = false}">
+        <template v-slot:header>
+            <div id="tituloModalCrop">
+                {{titulo}}
+            </div>
+        </template>
+        <template v-slot:body>
+            <div id="bodyModalCrop">
+                <cropper 
+                    classname="cropperPerfil"
+                    :src="img"
+                    :stencil-props="{aspectRatio: proporcao}"
+                    @change="change"
+                ></cropper>
+                <div id="botaoSalvarWrapper">
+                    <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
+                        Salvar <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </template>
+        <template v-slot:footer>
+            <div></div> <!-- Apenas para deixar o footer vazio.-->
+        </template>
+    </wm-modal>
+    `
+    
+});
+/*#endregion MODAL CROP ---------------------------------------*/

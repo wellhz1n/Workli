@@ -4,7 +4,7 @@ $(document).ready(async () => {
 
     await BloquearTela();
     let img =  await GetSessaoPHP("FOTOUSUARIO");
-    await app.$set(dataVue, "Usuario", { imagem:img == ""?null:img, imgTemp: null });
+    await app.$set(dataVue, "Usuario", { imagem:img == ""? null : img, imgTemp: null });
     $("#Titulo").text("Editar Usuário");
 
 
@@ -137,6 +137,28 @@ await retornaValorAvaliacao();
     }, 10);
     /*--------------------*/
 
+    /*----------------- CÓDIGO PARA ABRIR MODAL --------------*/
+    app.$set(dataVue, "modalVisivelController", false);
+    app.$set(dataVue, "abremodal", async () => {
+        dataVue.modalVisivelController = true;
+        dataVue.imagemCropada = null;
+    });
+
+    /*--------------------------------------------------------*/
+
+    /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
+    app.$set(dataVue, "imagemBanner", "");
+    app.$set(dataVue, "mudaImagemBanner", async (imgData) => {
+        dataVue.imagemBanner = imgData;
+    });
+    /*--------------------------------------------------------*/
+
+    /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
+    app.$set(dataVue, "imagemCropada", "");
+    app.$set(dataVue, "passaImagemCropada", async (img) => {
+        dataVue.imagemCropada = img;
+    });
+    /*--------------------------------------------------------*/
 });
 
 function retornaValorAvaliacao() {

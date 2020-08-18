@@ -827,6 +827,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     justify-content: center;
     align-items: center;
     cursor: pointer !important;
+    z-index: 3;
 }
 
 .modalHeader,
@@ -1414,3 +1415,66 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 
 /*#endregion Banner do Usuário*/
+
+
+
+
+
+/*#region Modal Crop ------------------------------------------------------------------------------------------------*/
+
+
+#tituloModalCrop {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+.modalBody {
+    height: 100%;
+}
+#bodyModalCrop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #f8f8f8;
+    padding: 60px 2% 30px 2%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+#botaoSalvarModalCrop {
+    margin-top: 30px;
+    height: 40px;
+    width: 30%;
+    border-radius: 10px;
+    border: none;
+    background-color: #3ab83a;
+    font-family: Poppins-Bold;
+    color: white;
+    word-spacing: 5px;
+    letter-spacing: 1px;
+    font-size: 20px;
+    
+}
+#botaoSalvarModalCrop:focus {
+    outline: none;
+    border: 3px solid #319731;
+}
+#botaoSalvarWrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 5%;
+}
+
+.cropperPerfil {
+    max-width: 95%;
+    max-height: 82%;
+}
+/*#endregion Modal Crop ------------------------------------------------------------------------------------------------*/
