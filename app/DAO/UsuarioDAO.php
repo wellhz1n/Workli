@@ -111,9 +111,6 @@ class UsuarioDAO
             }
         } else { // Se não existir nada na tabela
             if ($tabelaParaEditar == "servicos_funcionario") {
-
-
-
                 $resultado = Insert("insert INTO {$tabelaParaEditar} ($nomeCampo, numeros_servicos, id_funcionario) 
                                  VALUES (?,?,?)", [$valorCampo, $totalServicos, $idFuncionario]);
             } else {
@@ -140,7 +137,7 @@ class UsuarioDAO
     public function SalvarOuAtualizarImagemBanner($img, $idUsuario) {
         $Busca = Sql("SELECT id FROM imagem_usuario WHERE id_usuario =?", [$idUsuario]);
         if (count($Busca->resultados) == 1)
-            $resultado = Insert("UPDATE  imagem_usuario SET imagem_banner = ? WHERE id_usuario = ? ", [$img, $idUsuario]);
+            $resultado = Insert("UPDATE imagem_usuario SET imagem_banner = ? WHERE id_usuario = ? ", [$img, $idUsuario]);
         else
             $resultado = Insert("INSERT INTO imagem_usuario(imagem_banner, id_usuario)
         VALUES(?, ?)", [$img, $idUsuario]);

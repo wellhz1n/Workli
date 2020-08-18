@@ -731,6 +731,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
     data: function () {
         return {
             imgData: null,
+            imgCropadaData: ""
         }
     },
     mounted: function () {
@@ -778,13 +779,10 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             this.$emit("recebe-imagem", 'data:image/jpeg;base64,' + img)
         },
         async salvarImagem(imgcropada) {
-            debugger
+            imgcropada = imgcropada.split(",")[1];
             let retorno = await WMExecutaAjax("UsuarioBO", "SalvaImagemBanner", {'IMAGEM': imgcropada}, false);
+            debugger
             if(retorno == "OK"){
-                // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
-                // this.imgData = app.dataVue.Usuario.imgTemp;
-                // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
-                
                 this.colocaBanner();
                 app.dataVue.Usuario.imgTemp = null;
                 toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
@@ -845,9 +843,11 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         imgcropada: {
             immediate: true,
             handler(v) {
-                console.log("hey");
                 this.imgCropadaData = v;
-                this.salvarImagem(imgCropadaData);
+                if(this.imgCropadaData) {
+                    this.salvarImagem(this.imgCropadaData);
+                }
+                
             }
         }
 

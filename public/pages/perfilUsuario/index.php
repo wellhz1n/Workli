@@ -206,7 +206,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     :visivel="dataVue.modalVisivelController" 
     :proporcao="8/1" 
     titulo="RECORTAR IMAGEM DE BANNER"
-    @imagem-cropada="img => {dataVue.passaImagemCropada(img); debugger} "
+    @imagem-cropada="img => {dataVue.passaImagemCropada(img);} "
 />
 
 
