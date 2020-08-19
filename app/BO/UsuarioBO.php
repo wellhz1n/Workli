@@ -63,7 +63,7 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->GetFuncionarioById($_POST["ID"]);
     }
     if($metodo == "GetBannerById") {
-        $id = BuscaSecao(SecoesEnum::IDUSUARIOCONTEXTO);
+        $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         $userBO->GetBannerById($id);
     }
 

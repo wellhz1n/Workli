@@ -127,7 +127,7 @@
   height: min-content;
   width: 100%;
   border-radius: 10px;
-  background-color: #9199A0;
+  background-color: #c9e9f1;
   display: flex;
   justify-content: space-between;
   padding: 1%;
@@ -137,11 +137,11 @@
 }
 @keyframes Brilha{
   from{
-    box-shadow: inset 0px 0px 10px 1.5px #ad18f9;
+    box-shadow:  0px 0px 10px 3px #c9e9f1;
     
   }
   to{
-    box-shadow: inset 0px 0px 10px 3px #d0f918;
+    box-shadow:  0px 0px 10px 7px #e8f961;
   }
 }
 .WrapperBotoesProposta{
@@ -153,7 +153,7 @@
   border-radius: 100%;
   border: 1px solid #777777aa;
   background: transparent;
-  opacity: 0.7;
+  opacity: 0.8;
   transition: .2s ease-in-out all;
   cursor: pointer;
   display: flex;

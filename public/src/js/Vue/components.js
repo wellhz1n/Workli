@@ -721,7 +721,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         img: String,
         id: String,
         imgcropada: {
-            type: String, 
+            type: String,
             default: ""
         }
     },
@@ -765,15 +765,15 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             if(retorno == "OK"){
                 this.colocaBanner();
                 app.dataVue.Usuario.imgTemp = null;
-                toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+                toastr.info('Imagem Atualizada com Sucesso!', 'Sucesso',);
             }
-            else{
-                toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+            else {
+                toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`, 'Algo Deu Errado');
                 console.warn(`ERROR:::${retorno}`);
             }
         }
 
-        
+
     },
     template: `
     <div class="cemXcem wrapperBannerUsuario">
@@ -824,10 +824,10 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             immediate: true,
             handler(v) {
                 this.imgCropadaData = v;
-                if(this.imgCropadaData) {
+                if (this.imgCropadaData) {
                     this.salvarImagem(this.imgCropadaData);
                 }
-                
+
             }
         }
 
@@ -2695,7 +2695,7 @@ WMNotify = Vue.component('wm-notify', {
 
 /*#region MODAL CROP -------------------------------------------*/
 
-var WMCROPMODAL = Vue.component('wm-crop-modal', { 
+var WMCROPMODAL = Vue.component('wm-crop-modal', {
     props: {
         img: {
             type: String,
@@ -2713,7 +2713,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         id: String
     },
 
-    data(){
+    data() {
         return {
             modalVisivel: false,
             canvas: "" 
@@ -2730,7 +2730,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
     },
     methods: {
 
-        change({coordinates, canvas}) {
+        change({ coordinates, canvas }) {
             this.canvas = canvas;
         },
         emitirImagemCropada() {
@@ -2774,6 +2774,6 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         </template>
     </wm-modal>
     `
-    
+
 });
 /*#endregion MODAL CROP ---------------------------------------*/
