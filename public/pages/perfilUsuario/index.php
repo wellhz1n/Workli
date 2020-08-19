@@ -54,7 +54,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
             <div id="maskEditImg" class="editimgbox ml-2" hidden>
                 <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
             </div>
-            <wm-user-img :img="dataVue.Usuario.imagem" :width="200" :height="200" :margem_imagem="'mt-4'"/>
+            <wm-user-img :img="dataVue.Usuario.imagem" :width="'14.2vw'" :height="'14.2vw'" :margem_imagem="'mt-4'"/>
         </div>
     </div>
 
@@ -204,9 +204,11 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 <wm-crop-modal 
     :img="dataVue.imagemBanner" 
     :visivel="dataVue.modalVisivelController" 
-    :proporcao="8/1" 
+    :proporcao="35/6" 
     titulo="RECORTAR IMAGEM DE BANNER"
-    @imagem-cropada="img => {dataVue.passaImagemCropada(img);} "
+    @imagem-cropada="img => {dataVue.passaImagemCropada(img);}"
+    @fechar-modal="dataVue.fechamodal"
+
 />
 
 

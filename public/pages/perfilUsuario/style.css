@@ -59,8 +59,8 @@
 
 #imageBackgroundPerfil {
     width: 100%;
-    /* height: 12.5vw; */
-    height: 240px;
+    /* height: 240px; */
+    height: 17.15vw;
     display: flex;
     justify-content: center;
 }
@@ -157,8 +157,8 @@
 /*#endregion ----------------------------------------------------------------------------------------------------------------------*/
 /*#region Imagem Usuario ----------------------------------------------------------------------------------------------------------------------*/
 #imgcontainer {
-    /* margin-top: 5.75vw; */
     margin-top: 110px;
+    margin-top: 7.857vw;
     display: flex;
     align-items: center;
     justify-content: center;

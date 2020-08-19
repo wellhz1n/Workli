@@ -649,12 +649,12 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     props: {
         img: String,
         width: {
-            default: 224,
-            type: Number
+            default: '224px',
+            type: String
         },
         height: {
-            default: 224,
-            type: Number
+            default: '224px',
+            type: String
         },
         margem_imagem: {
             default: "my-4",
@@ -692,17 +692,14 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         </div> 
         <div v-show="this.imgData != null && this.imgData != '' ">
             <div>
-                <img style="border-radius: 112px;"
-                    :style="[{width:this.width + 'px', height: this.height + 'px','background-color':'white','object-fit': 'cover'}]"
+                <img style="border-radius: 100%;"
+                    :style="[{width:this.width, height: this.height,'background-color':'white','object-fit': 'cover'}]"
                     :class="['mx-2', class_imagem ? class_imagem : '', margem_imagem]" 
                     :src="this.imgData"/>
             </div>
         </div>
     </div>
     `,
-    mounted: function () {
-        // console.log("hey")
-    },
     watch: {
         img: {
             immediate: true,
@@ -750,22 +747,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             });
 
         });
-        if(this.imgcropada != "") {
-        //     let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagemBanner",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
-        //     if(retorno == "OK"){
-        //         // dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
-        //         // this.imgData = app.dataVue.Usuario.imgTemp;
-        //         // this.$emit("imagem-banner", app.dataVue.Usuario.imgTemp)
-                
-        //         this.colocaBanner();
-        //         app.dataVue.Usuario.imgTemp = null;
-        //         toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
-        //     }
-        //     else{
-        //         toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
-        //         console.warn(`ERROR:::${retorno}`);
-        //     }
-        }
         this.colocaBanner();
     },
     methods: {
@@ -781,7 +762,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         async salvarImagem(imgcropada) {
             imgcropada = imgcropada.split(",")[1];
             let retorno = await WMExecutaAjax("UsuarioBO", "SalvaImagemBanner", {'IMAGEM': imgcropada}, false);
-            debugger
             if(retorno == "OK"){
                 this.colocaBanner();
                 app.dataVue.Usuario.imgTemp = null;
@@ -1899,7 +1879,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             </button>
         </div>
     </div>
-    <div class="projetoHeader2 ">
+    <div class="projetoHeader2">
         <div class="d-flex flex-row justify-content-space-between">
             <div class="mx-2">
                 <p class="font_Poopins_SB"><strong>Publicado</strong>: {{this.datapublicado}}</p>
@@ -1955,6 +1935,10 @@ WmModal = Vue.component('wm-modal', {
         width: {
             type: String,
             default: "80%"
+        },
+        heightModal: {
+            type: String,
+            default: "92%"
         }
     },
     data: () => {
@@ -1987,20 +1971,21 @@ WmModal = Vue.component('wm-modal', {
                 this.dataCallback();
             }
         },
-        abrirModal() {
-            console.log("modal aberto");
+        fecharModalUnico() {
+            this.dataVisible = false;
+            this.dataCallback();
         }
     },
     template: `
     <transition name="modal-fade">
-        <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal" >
-            <div :style="[{'height':height+' !important'},{'width':width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']" >
+        <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal">
+            <div :style="[{'height':height+' !important'},{'width':width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
                 <div class="modalHeader">
                     <slot name="header">
                         Título Header
                     </slot>
                     <button
-                    :id="id + 'close'"
+                        :id="id + 'close'"
                         type="button"
                         class="btn-close btnCloseModal"
                         @click="fecharModal"
@@ -2008,7 +1993,7 @@ WmModal = Vue.component('wm-modal', {
                         X
                     </button>
                 </div>
-                <div class="modalBody">
+                <div class="modalBody" :style="[{'height':this.heightModal}]">
                     <slot name="body">
                     Body padrão
                     </slot>
@@ -2731,7 +2716,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
     data(){
         return {
             modalVisivel: false,
-            canvas: ""       
+            canvas: "" 
         }
     },
     watch: {
@@ -2749,13 +2734,21 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
             this.canvas = canvas;
         },
         emitirImagemCropada() {
+            this.$refs.fecharRef.fecharModalUnico();
             this.$emit("imagem-cropada", (this.canvas).toDataURL())
+            this.$emit("fechar-modal", true) //Emite para fechar o modal
         }
     },
 
 
     template: `
-    <wm-modal id="modalCrop" :visivel="this.modalVisivel" :callback="() => {this.modalVisivel = false}">
+    <wm-modal 
+        id="modalCrop" 
+        :visivel="this.modalVisivel" 
+        :callback="() => {this.modalVisivel = false}" 
+        ref="fecharRef"
+        heightModal="92%"
+    >
         <template v-slot:header>
             <div id="tituloModalCrop">
                 {{titulo}}

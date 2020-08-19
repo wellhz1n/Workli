@@ -137,11 +137,15 @@ await retornaValorAvaliacao();
     }, 10);
     /*--------------------*/
 
-    /*----------------- CÓDIGO PARA ABRIR MODAL --------------*/
+    /*----------------- CÓDIGO PARA ABRIR e fechar MODAL --------------*/
     app.$set(dataVue, "modalVisivelController", false);
     app.$set(dataVue, "abremodal", async () => {
         dataVue.modalVisivelController = true;
         dataVue.imagemCropada = null;
+    });
+
+    app.$set(dataVue, "fechamodal", async () => {
+        dataVue.modalVisivelController = false;
     });
 
     /*--------------------------------------------------------*/
