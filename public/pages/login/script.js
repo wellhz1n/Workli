@@ -259,7 +259,7 @@ function ativaBotaoFuncionarioClientes() {
         $(".tituloRegistrar").text("Registrar — Cliente")
 
         // Texto Switch
-        $(".switchTexto").text("Deseja-se registrar como Funcionário?")
+        $(".switchTexto").text("Registrando-se como Cliente")
 
 
         // Usado dentro do modal
@@ -276,7 +276,7 @@ function ativaBotaoFuncionarioClientes() {
         $(".tituloRegistrar").text("Registrar — Funcionário")
 
         // Texto Switch
-        $(".switchTexto").text("Deseja-se registrar como Cliente?")
+        $(".switchTexto").text("Registrando-se como Funcionário")
 
         // Usado dentro do modal
         $("#legenda").text("Funcionário");

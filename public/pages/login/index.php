@@ -101,7 +101,7 @@
                         <div class="d-flex justify-content-center w-100">
                             <div class="switchWrapperCard">
                                 <div class="switchWrapper">
-                                    <span class="switchTexto">Deseja-se registrar como Funcionário?</span>
+                                    <span class="switchTexto">Registrando-se como Cliente</span>
                                     <div class="switch">    
                                         <input type="checkbox" class="checkFuncionario" name="checkFuncionario">
                                         <span class="deslize round botaoDeTroca"></span>
@@ -139,7 +139,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Para concluir o Cadastro Preencha os Campos</h5>
+                <h5 class="modal-title">Para Concluir o Cadastro Preencha os Campos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -152,7 +152,7 @@
                 </span>
                 <div class="p-2 w-100">
                     <div class="dropdown-divider"></div>
-                    <p>Digite seu cpf</p>
+                    <p>Digite seu CPF</p>
                     <div class="wrap-input100 validate-input" data-validate="Cpf é necessário">
                         <input class="input100 cpf" type="text" id="cpfModal" name="cpf" placeholder="Cpf">
                         <span class="focus-input100"></span>

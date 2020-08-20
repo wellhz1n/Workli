@@ -1969,6 +1969,7 @@ WmModal = Vue.component('wm-modal', {
             if ((key.target.id == this.id + 'close' || key.target.id == this.id) && key.target.classList["value"].split(" ").filter(x => x == "btn-close" || x == "modalBackdrop").length > 0) {
                 this.dataVisible = false;
                 this.dataCallback();
+                this.$emit("fechar-modal-inside",true);
             }
         },
         fecharModalUnico() {
@@ -2736,8 +2737,11 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         emitirImagemCropada() {
             this.$refs.fecharRef.fecharModalUnico();
             this.$emit("imagem-cropada", (this.canvas).toDataURL())
-            this.$emit("fechar-modal", true) //Emite para fechar o modal
-        }
+            this.$emit("fechar-modal");
+        },
+        fecharModal() {
+            this.$emit("fechar-modal"); //Emite para fechar o modal
+        }   
     },
 
 
@@ -2747,7 +2751,8 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         :visivel="this.modalVisivel" 
         :callback="() => {this.modalVisivel = false}" 
         ref="fecharRef"
-        heightModal="92%"
+        heightModal="91.2%"
+        @fechar-modal-inside="fecharModal"
     >
         <template v-slot:header>
             <div id="tituloModalCrop">

@@ -207,7 +207,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     :proporcao="35/6" 
     titulo="RECORTAR IMAGEM DE BANNER"
     @imagem-cropada="img => {dataVue.passaImagemCropada(img);}"
-    @fechar-modal="dataVue.fechamodal"
+    @fechar-modal="() => {dataVue.fechamodal()}"
 
 />
 
