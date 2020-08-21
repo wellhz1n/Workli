@@ -69,7 +69,7 @@ class TipoServicoBO
                         border: solid;
                     }' />";
 
-            if ($value["Ativo"] == '1')
+            if ($value["Ativo"] == '0')
                 array_push($teste->resultados[$key]["AtivoIcone"], "<i class='fas fa-check' style='position:relative;top:5vh;left:40%;color:green;' />");
             else
                 array_push($teste->resultados[$key]["AtivoIcone"], "<i class='fas fa-times' style='position:relative;top:5vh;left:40%;color:red;' />");

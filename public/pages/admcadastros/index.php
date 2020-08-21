@@ -1,6 +1,6 @@
-<div class="col-12 p-0 m-0">
-    <div id="menucont" class="row  p-0 m-0 ">
-        <div class="col-12 d-flex flex-row  p-0 m-0" style="flex-wrap: wrap;">
+<div class="col p-0 m-0" style="height: 100%;">
+    <div id="menucont" class="row  p-0 m-0 " style="height: 100%;">
+        <div class="col-12 d-flex flex-row  p-0 m-0" style="flex-wrap: wrap;height: 100%;">
 
             <div class="text-center box-prod-menu " id="menu-tipoServico">
                 <!-- <img src="src/img/icons/cadastros/categoria_produto.png" class=" prod-box" alt="Alternate Text" /> -->

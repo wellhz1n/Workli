@@ -1,6 +1,6 @@
 <script type="application/javascript" src="pages/clienthome/script.js"></script>
 <link rel="stylesheet" type="text/css" href="pages/clienthome/estilo.css" />
-<div class="col-12">
+<div class="col-12" style="height: 100%;">
     <!-- <h1>Bem Vindo Cliente: <?php echo BuscaSecaoValor(SecoesEnum::NOME) ?>
         <div class="row mx-2">
             <div @click="dataVue.imgClick(item)" v-for="item in dataVue.img" class="mr-2 imgViewerContainer">

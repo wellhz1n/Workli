@@ -1,4 +1,4 @@
-<div class="col-12 p-0 m-0">
+<div class="col p-0 m-0">
 <div class="header-table">
         <h5 class="p-2" id="title">Tipo de Serviço</h5>
     </div>

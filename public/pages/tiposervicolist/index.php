@@ -1,6 +1,6 @@
 <script type="" src="pages/tiposervicolist/script.js"></script>
 
-<div class="col-12 p-0 m-0">
+<div class="col-12 p-0 m-0" style="height: 100%;">
     <br>
     <div class="col-12">
         <div class="header-table bg-green">

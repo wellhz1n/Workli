@@ -6,7 +6,11 @@ function ClassesStatics() {
     var CacheSeletor = [];
 }
 
+
+
+
 $(document).ready(async () => {
+
     $(".itemMenu").addClass("itemMenuPadding");
     $("#navbarDropdownNotify").click(function (e) {
         e.stopPropagation();
@@ -811,4 +815,11 @@ function MostraMensagem(Mensagem, TipoMensagem = ToastType.INFO, Tiulo = documen
             break;
 
     }
+}
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+       return null;
+    }
+    return decodeURI(results[1]) || 0;
 }

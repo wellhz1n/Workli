@@ -83,7 +83,7 @@ $(document).ready(async() => {
             dataVue.tipoServicoEntidade["id_tipoServico"] = Row["id"];
             dataVue.tipoServicoEntidade["nome"] = Row["nome"];
             dataVue.tipoServicoEntidade["descricao"] = Row["descricao"];
-            dataVue.tipoServicoEntidade["ativo"] = Row["Ativo"] == "0" ? 0 : 1;
+            dataVue.tipoServicoEntidade["ativo"] = Row["Ativo"] == "0" ? true : false;
 
 
             $('#Listagem').attr('hidden', 'hidden');
@@ -133,7 +133,7 @@ $(document).ready(async() => {
 
         TpS.nome = dataVue.tipoServicoEntidade["nome"];
         TpS.descricao = dataVue.tipoServicoEntidade["descricao"];
-        TpS.Ativo = dataVue.tipoServicoEntidade["ativo"] ? 1 : 0;
+        TpS.Ativo = dataVue.tipoServicoEntidade["ativo"] ? 0 : 1;
         TpS.imagem = dataVue.tipoServicoEntidade["imagem"].filter(x => !x.deletado).length > 0 ? dataVue.tipoServicoEntidade["imagem"].filter(x => !x.deletado)[0].img : null;
     }
 
@@ -168,7 +168,7 @@ $(document).ready(async() => {
             id_tipoServico: -1,
             nome: '',
             descricao: '',
-            ativo: 1,
+            ativo: 0,
             imagem: []
         }
     }
