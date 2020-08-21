@@ -12,7 +12,7 @@ class TipoServicoDAO{
     }
     public function GetTipoServicoCategoria()
     {
-        $resultado = Sql("select id,nome,descricao FROM tipo_servico where ATIVO = 0 order by nome asc");
+        $resultado = Sql("select id,nome,descricao FROM tipo_servico where ativo = 0 order by nome asc");
         foreach ($resultado->resultados as $key => $value) {
             $resultado->resultados[$key]['descricao'] = stripslashes($resultado->resultados[$key]['descricao']);
         }
@@ -22,7 +22,7 @@ class TipoServicoDAO{
     {
         $ord = $ord == 'true'? 'ASC':'DESC';
         $resultado = Sql("select ts.id , ts.nome , ts.descricao , ts.imagem FROM tipo_servico as ts
-                        where ts.Ativo = ? Order by nome {$ord} ",[1]);
+                        where ts.Ativo = ? Order by nome {$ord} ",[0]);
         foreach ($resultado->resultados as $key => $value) {
             $resultado->resultados[$key]['descricao'] = stripslashes($resultado->resultados[$key]['descricao']);
             $resultado->resultados[$key]['servicos'] = $this->GetServicosNumeroPorTipo_Servico( $resultado->resultados[$key]['id']);

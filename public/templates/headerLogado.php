@@ -226,7 +226,7 @@
 if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
-<script >
+<script  type="application/javascript">
   $(document).ready(async () => {
     var NotificacaoInterval = null
     var Evento = new CustomEvent("BuscaNotificacao");

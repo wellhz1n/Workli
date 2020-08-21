@@ -11,11 +11,6 @@ function ClassesStatics() {
 
 $(document).ready(async () => {
 
-
-
-
-
-    
     $(".itemMenu").addClass("itemMenuPadding");
     $("#navbarDropdownNotify").click(function (e) {
         e.stopPropagation();

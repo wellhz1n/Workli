@@ -20,7 +20,6 @@ $(document).ready(async () => {
 
     });
     let CategoriaParan = GetParam();
-
     app.$set(dataVue, "Categorias", await GetCategorias());
     app.$set(dataVue, "PropostaController", {
         carregando: false,
@@ -58,6 +57,7 @@ $(document).ready(async () => {
 
 
     async function GetCategorias() {
+        debugger
         var Resultado = await WMExecutaAjax("TipoServicoBO", "GetTipoServicoCategoria");
         Resultado = Resultado.map(x => {
             return {
