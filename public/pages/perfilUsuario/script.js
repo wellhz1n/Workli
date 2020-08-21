@@ -8,12 +8,6 @@ $(document).ready(async () => {
     $("#Titulo").text("Editar Usuário");
 
 
-    $('#imgcontainer').hover(() => {
-        $('#maskEditImg').removeAttr('hidden');
-    }, () => {
-        $('#maskEditImg').attr('hidden', 'hidden');
-    });
-
     // $("#tagsCPWrapper").on("mousewheel", function(event, delta) {
 
     //     this.scrollLeft -= (delta * 300);
@@ -38,56 +32,34 @@ $(document).ready(async () => {
         document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
     }
     //MODAL
-    $('#maskEditImg').on('click', () => {
-        $('#EditImgModal').modal('show');
-        $('#maskEditImg').attr('hidden', 'hidden');
-    });
+    // $('#maskEditImg').on('click', () => {
+    //     $('#EditImgModal').modal('show');
+    //     $('#maskEditImg').attr('hidden', 'hidden');
+    // });
 
-    $('#imgcontainerModal').hover(() => {
-        $('#maskEditImgModal').removeAttr('hidden');
-    }, () => {
-        $('#maskEditImgModal').attr('hidden', 'hidden');
-    });
+    // $('#maskEditImgModal').on('click', () => {
+    //     $('#maskEditImgModal').attr('hidden', 'hidden');
+    //     var input = $(document.createElement("input"));
+    //     input.attr("type", "file");
+    //     input.attr("accept", "image/x-png,image/gif,image/jpeg");
+    //     // add onchange handler if you wish to get the file :)
+    //     input.trigger("click"); // opening dialog
 
-    $('#maskEditImgModal').on('click', () => {
-        $('#maskEditImgModal').attr('hidden', 'hidden');
-        var input = $(document.createElement("input"));
-        input.attr("type", "file");
-        input.attr("accept", "image/x-png,image/gif,image/jpeg");
-        // add onchange handler if you wish to get the file :)
-        input.trigger("click"); // opening dialog
-
-        $(input).on('change', async () => {
-            let imgBase = await LerImagem($(input)[0]);
-            app.dataVue.Usuario.imgTemp = imgBase;
-        });
-        return false; // avoiding navigation
+    //     $(input).on('change', async () => {
+    //         let imgBase = await LerImagem($(input)[0]);
+    //         app.dataVue.Usuario.imgTemp = imgBase;
+    //     });
+    //     return false; // avoiding navigation
 
 
-    });
-    $('#FechaModal').click(async () => {
-       await $('#EditImgModal').modal('hide');
-       setTimeout(()=>{
-           app.dataVue.Usuario.imgTemp = null;
+    // });
+    // $('#FechaModal').click(async () => {
+    //    await $('#EditImgModal').modal('hide');
+    //    setTimeout(()=>{
+    //        app.dataVue.Usuario.imgTemp = null;
 
-       },800);
-    })
-    $('#SalvarImg').click(async () => {
-       let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagem",{'IMAGEM':app.dataVue.Usuario.imgTemp},false);
-        if(retorno == "OK"){
-            await $('#EditImgModal').modal('hide');
-            dataVue.Usuario.imagem = dataVue.Usuario.imgTemp;
-            app.dataVue.Usuario.imgTemp = null;
-            toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
-        }
-        else{
-            toastr.info(`Imagem Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
-            console.warn(`ERROR:::${retorno}`);
-            
-
-        }
-
-    });
+    //    },800);
+    // })
     $('.cpf').mask('000.000.000-00');
     $('.telefone').mask('(00) 0000-0000');
 
@@ -128,7 +100,6 @@ await retornaValorAvaliacao();
         await app.$set(dataVue, "StarSize", 30);
     }
 
-
     /* ATIVADOR DO POPOVER */
     setTimeout(() => {
         $(function () {
@@ -151,18 +122,46 @@ await retornaValorAvaliacao();
     /*--------------------------------------------------------*/
 
     /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
-    app.$set(dataVue, "imagemBanner", "");
-    app.$set(dataVue, "mudaImagemBanner", async (imgData) => {
-        dataVue.imagemBanner = imgData;
+    app.$set(dataVue, "imagemToCrop", "");
+    app.$set(dataVue, "mudaImagemToCrop", async (imgData) => {
+        dataVue.imagemToCrop = imgData;
     });
     /*--------------------------------------------------------*/
 
     /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
-    app.$set(dataVue, "imagemCropada", "");
+    app.$set(dataVue, "imagemCropadaBanner", "");
+    app.$set(dataVue, "imagemCropadaUsuario", "");
+
     app.$set(dataVue, "passaImagemCropada", async (img) => {
-        dataVue.imagemCropada = img;
+        if(img.componente == "banner") 
+        {
+            dataVue.imagemCropadaBanner = img.img;
+        } 
+        else 
+        {
+            dataVue.imagemCropadaUsuario = img.img;
+        }
     });
     /*--------------------------------------------------------*/
+
+    /* Código para configurações do modal crop */
+    app.$set(dataVue, "configuracoesCrop", 
+    {
+        proporcao: '1/1',
+        titulo: 'RECORTAR IMAGEM',
+        componente: '',
+        redondo: "rectangle-stencil"
+
+    });
+
+    app.$set(dataVue, "salvaConfiguracoes", async (arrayConfig) => {
+        dataVue.configuracoesCrop.proporcao = arrayConfig.proporcao;
+        dataVue.configuracoesCrop.titulo = arrayConfig.titulo;
+        dataVue.configuracoesCrop.componente = arrayConfig.componente;
+        if(arrayConfig.redondo) {
+            dataVue.configuracoesCrop.redondo = "circle-stencil";
+        }
+    });
 });
 
 function retornaValorAvaliacao() {

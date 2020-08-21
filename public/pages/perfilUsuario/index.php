@@ -10,7 +10,12 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
              <span id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?></span></span>
-             <wm-user-banner @aberto-modal="v => dataVue.abremodal(v)" @recebe-imagem="imgData => dataVue.mudaImagemBanner(imgData)" :imgcropada="dataVue.imagemCropada"/>
+             <wm-user-banner 
+                @aberto-modal="v => dataVue.abremodal(v)" 
+                @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
+                :imgcropada="dataVue.imagemCropadaBanner" 
+                @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
+            />
 
              
         </div>
@@ -51,10 +56,20 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
-            <div id="maskEditImg" class="editimgbox ml-2" hidden>
+            <!-- <div id="maskEditImg" class="editimgbox ml-2" hidden>
                 <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
-            </div>
-            <wm-user-img :img="dataVue.Usuario.imagem" :width="'14.2vw'" :height="'14.2vw'" :margem_imagem="'mt-4'"/>
+            </div> -->
+            <wm-user-img 
+                :img="dataVue.Usuario.imagem" 
+                :width="'14.2vw'" 
+                :height="'14.2vw'" 
+                :margem_imagem="'mt-4'" 
+                :editavel="true"
+                @aberto-modal="v => dataVue.abremodal(v)" 
+                @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
+                :imgcropada="dataVue.imagemCropadaUsuario"
+                @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
+            />
         </div>
     </div>
 
@@ -202,13 +217,11 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 
 
 <wm-crop-modal 
-    :img="dataVue.imagemBanner" 
+    :img="dataVue.imagemToCrop" 
     :visivel="dataVue.modalVisivelController" 
-    :proporcao="35/6" 
-    titulo="RECORTAR IMAGEM DE BANNER"
     @imagem-cropada="img => {dataVue.passaImagemCropada(img);}"
     @fechar-modal="() => {dataVue.fechamodal()}"
-
+    :configs="dataVue.configuracoesCrop"
 />
 
 

@@ -647,7 +647,6 @@ var VSELECT = Vue.component('v-select', VueSelect.VueSelect);
 
 var WMUSERIMG = Vue.component('wm-user-img', {
     props: {
-        img: String,
         width: {
             default: '224px',
             type: String
@@ -660,18 +659,73 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             default: "my-4",
             type: String
         },
+        editavel: {
+            type: Boolean,
+            default: false
+        },
+        imgcropada: {
+            type: String,
+            default: ""
+        },
+        img: String,
         class_icone: String,
         class_imagem: String,
         id: String
+        
     },
     data: function () {
         return {
             imgData: null,
+            imgCropadaData: ""
+        }
+    },
+    methods: {
+        abrirModal(img) {
+            this.$emit("aberto-modal", true);
+            this.$emit("recebe-imagem", 'data:image/jpeg;base64,' + img);
+            this.$emit("configuracoes-crop", 
+            {
+                proporcao: 1, 
+                titulo: "RECORTAR IMAGEM DE USUÁRIO",
+                componente: "",
+                redondo: true
+            });
+        },
+        async salvarImagem(imgcropada) {
+            imgcropada = imgcropada.split(",")[1];
+            let retorno = await WMExecutaAjax("UsuarioBO","SalvaImagem",{'IMAGEM': imgcropada},false);
+            if(retorno == "OK"){
+                dataVue.Usuario.imagem = imgcropada;
+                app.dataVue.Usuario.imgTemp = null;
+                toastr.info('Imagem Atualizada com Sucesso!','Sucesso',);
+            }
+            else{
+                toastr.info(`Imagem Não Atualizada:<br><strong>${retorno}</strong>`,'Algo Deu Errado');
+                console.warn(`ERROR:::${retorno}`);
+            }
+        },
+        async pegarImagem() {
+            var input = $(document.createElement("input"));
+            input.attr("type", "file");
+            input.attr("accept", "image/x-png,image/gif,image/jpeg");
+            // add onchange handler if you wish to get the file :)
+            input.trigger("click"); // opening dialog
+
+            $(input).on('change', async () => {
+                let imgBase = await LerImagem($(input)[0]);
+                app.dataVue.Usuario.imgTemp = imgBase;
+                this.abrirModal(app.dataVue.Usuario.imgTemp);
+            });
         }
     },
     template: `
     <div>
-        <div v-show="this.imgData == null || this.imgData == '' " >
+        <div v-show="this.imgData == null || this.imgData == '' " 
+            :class="this.editavel ? 'wmUserImageWrapper' : ''"
+            @click="this.pegarImagem">
+            <div class="editimgbox">   
+                <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
+            </div>
             <div>
                 <i 
                     style="
@@ -690,13 +744,21 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 ></i>
             </div>
         </div> 
-        <div v-show="this.imgData != null && this.imgData != '' ">
-            <div>
-                <img style="border-radius: 100%;"
-                    :style="[{width:this.width, height: this.height,'background-color':'white','object-fit': 'cover'}]"
-                    :class="['mx-2', class_imagem ? class_imagem : '', margem_imagem]" 
-                    :src="this.imgData"/>
+        <div 
+            v-show="
+                    this.imgData != null &&
+                    this.imgData != ''
+                "
+            :class="this.editavel ? 'wmUserImageWrapper' : ''"
+            @click="this.pegarImagem"
+        >
+            <div class="editimgbox">   
+                <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
+            <img style="border-radius: 100%;"
+                :style="[{width:this.width, height: this.height,'background-color':'white','object-fit': 'cover'}]"
+                :class="class_imagem ? class_imagem : '', margem_imagem" 
+                :src="this.imgData"/>
         </div>
     </div>
     `,
@@ -709,6 +771,16 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 else
                     this.imgData = null;
             }
+        },
+        imgcropada: {
+            immediate: true,
+            handler(v) {
+                this.imgCropadaData = v;
+                if (this.imgCropadaData) {
+                    this.salvarImagem(this.imgCropadaData);
+                }
+
+            }
         }
     }
 });
@@ -717,6 +789,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
     /*O WIDTH e o HEIGHT são setados para 100%, então para modificar é só mudar o tamanho do pai.*/
     /*O absolute e o z-index também devem ser setados pelo pai*/
     /*Fiz assim para ter um maior nivel de edição sem precisar passar props.*/
+
     props: {
         img: String,
         id: String,
@@ -732,7 +805,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         }
     },
     mounted: function () {
-
         $('.wrapperBannerUsuario').on('click', () => {
             var input = $(document.createElement("input"));
             input.attr("type", "file");
@@ -745,7 +817,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                 app.dataVue.Usuario.imgTemp = imgBase;
                 this.abrirModal(app.dataVue.Usuario.imgTemp);
             });
-
         });
         this.colocaBanner();
     },
@@ -758,7 +829,14 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         abrirModal(img) {
             this.$emit("aberto-modal", true);
             this.$emit("recebe-imagem", 'data:image/jpeg;base64,' + img)
+            this.$emit("configuracoes-crop", 
+            {
+                proporcao: 35/6, 
+                titulo: "RECORTAR IMAGEM DE BANNER",
+                componente: "banner"
+            });
         },
+        
         async salvarImagem(imgcropada) {
             imgcropada = imgcropada.split(",")[1];
             let retorno = await WMExecutaAjax("UsuarioBO", "SalvaImagemBanner", {'IMAGEM': imgcropada}, false);
@@ -772,8 +850,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                 console.warn(`ERROR:::${retorno}`);
             }
         }
-
-
     },
     template: `
     <div class="cemXcem wrapperBannerUsuario">
@@ -830,7 +906,6 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
 
             }
         }
-
     }
     /* // <img :style="[{width: '100%', height: '100%']"
         //             :src="this.imgData"/>
@@ -2702,13 +2777,13 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
             type: String,
             default: null
         },
-        proporcao: {
-            type: Number,
-            default: 1
-        },
-        titulo: {
-            type: String,
-            default: "RECORTAR IMAGEM"
+        configs: {
+            type: Object,
+            default: () => ({
+                proporcao: 1,
+                titulo: "RECORTAR IMAGEM",
+                componente: ""
+            })
         },
         visivel: Boolean,
         id: String
@@ -2736,7 +2811,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         },
         emitirImagemCropada() {
             this.$refs.fecharRef.fecharModalUnico();
-            this.$emit("imagem-cropada", (this.canvas).toDataURL())
+            this.$emit("imagem-cropada", {img: (this.canvas).toDataURL(), componente: this.configs.componente});
             this.$emit("fechar-modal");
         },
         fecharModal() {
@@ -2756,7 +2831,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
     >
         <template v-slot:header>
             <div id="tituloModalCrop">
-                {{titulo}}
+                {{configs.titulo}}
             </div>
         </template>
         <template v-slot:body>
@@ -2764,7 +2839,8 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
                 <cropper 
                     classname="cropperPerfil"
                     :src="img"
-                    :stencil-props="{aspectRatio: proporcao}"
+                    :stencil-props="{aspectRatio: configs.proporcao}"
+                    :stencil-component="configs.redondo"
                     @change="change"
                 ></cropper>
                 <div id="botaoSalvarWrapper">
