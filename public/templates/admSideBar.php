@@ -1,11 +1,10 @@
-
 <style>
     * {
-    transition: all .2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        transition: all .2s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     }
 </style>
 
-<link rel="stylesheet" href="templates/css/template.css"> 
+<link rel="stylesheet" href="templates/css/template.css">
 
 
 
@@ -15,14 +14,14 @@
             <a href="#submenu1" data-toggle="collapse" id="admpaineldecontrole" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span class="fas fa-tachometer-alt fa-fw mr-3"></span>
-                    <span class="menu-collapsed" style="font-size: 14px">Painél de Controle</span>
+                    <span class="menu-collapsed" style="font-size: 14px">Painel de Controle</span>
                     <span class="fas fa-angle-down ml-auto"></span>
                 </div>
             </a>
             <div id='submenu1' class="collapse sidebar-submenu">
                 <a href="#" class="list-group-item list-group-item-action bg-secondary text-white">
                     <span class="fas fa-columns mr-3"></span>
-                    <span class="menu-collapsed" >Painel</span>
+                    <span class="menu-collapsed">Painel</span>
                 </a>
                 <a href="#" class="list-group-item list-group-item-action  bg-secondary text-white">
                     <span class="fas  fa-chart-pie mr-3"></span>
@@ -50,7 +49,7 @@
                     <span class="menu-collapsed">Usuario</span>
                 </a>
             </div>
-            
+
 
             <a href="#submenu3" data-toggle="collapse" id="" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-start align-items-center">
@@ -66,7 +65,7 @@
                 </a>
 
             </div>
-            <a data-toggle="sidebar-colapse" style="cursor: pointer!important;" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
+            <a  data-toggle="sidebar-colapse" style="cursor: pointer!important;" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span id="collapse-icon" class="fa  fa-2x mr-3 "></span>
                     <span id="collapse-text" class="menu-collapsed" style="font-size: 14px">Fechar</span>
@@ -80,7 +79,7 @@
         // Hide submenus
         if (sessionStorage.getItem('FECHAMENULATERAL') == undefined)
             sessionStorage.setItem('FECHAMENULATERAL', true);
-         MenuLateralColapsado = true;
+        MenuLateralColapsado = true;
         Padrao();
 
         $('#body-row .collapse').collapse('hide');
@@ -89,15 +88,29 @@
         $('#collapse-icon').addClass('fa-angle-left');
 
         // Collapse click
-        $('[data-toggle=sidebar-colapse]').click(function() {
-            SidebarCollapse();
-            SetMenuAtivo();
-        });
-        ClickMenuColapsed();
+        this.parent.window.onload = () => {
+            ClickMenuColapsed();
+            if (sessionStorage.getItem('FECHAMENULATERAL') && !MenuLateralColapsado)
+                $('[data-toggle="sidebar-colapse"]').click();
+            $('[data-toggle="sidebar-colapse"]').click(function(e) {
+                if(e.view != undefined){
+
+                    SidebarCollapse();
+                    SetMenuAtivo();
+                }
+                
+            });
+        }
+        
+
         SetMenuAtivo();
-        if (sessionStorage.getItem('FECHAMENULATERAL') && !MenuLateralColapsado)
-            $('[data-toggle=sidebar-colapse]').click();
-        function Padrao(){
+
+
+
+
+
+
+        function Padrao() {
             $('.menu-collapsed').addClass('d-none');
             $('.sidebar-submenu').addClass('d-none');
             $('.fa-angle-down').addClass('d-none');
@@ -130,6 +143,7 @@
         }
 
         function ClickMenuColapsed() {
+
             let menus = $('#menu > a').map((x, a) => a.id);
             menus = menus.filter((x, obj) => obj != "");
             menus.map((indice, obj) => {

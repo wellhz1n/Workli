@@ -21,3 +21,14 @@ $config = json_decode($config, true);
         <p class="font_Poopins" style="font-size: 14px;font-style: italic;opacity: 0.6;"><?php echo $config["versao"] ?></p>
     </div>
 </div>
+<script>
+    //#region FOOTER
+    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
+        $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+    });
+    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
+        $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+    });
+
+    //#endregion
+</script>

@@ -127,7 +127,8 @@
   height: min-content;
   width: 100%;
   border-radius: 10px;
-  background-color: #c9e9f1;
+  background-image: url('../../src/img/background/background.png');
+  color: white;
   display: flex;
   justify-content: space-between;
   padding: 1%;
@@ -164,9 +165,8 @@
   margin: 2px;
 }
 .BotoesProposta.Aceitar{
-  border: 1.5px solid #1d7730 !important;
-  background: #218837d5 !important;
-  /* color: #218837 !important; */
+  border: 1.5px solid #165461 !important;
+  background: #1d6c7dd5 !important;
 }
 .BotoesProposta.Recusar{
   border: 1.5px solid #851a14 !important;

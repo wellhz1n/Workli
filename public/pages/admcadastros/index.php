@@ -1,4 +1,4 @@
-<div class="col-12 p-0 m-0">
+<div class="col p-0 m-0">
     <div id="menucont" class="row  p-0 m-0 ">
         <div class="col-12 d-flex flex-row  p-0 m-0" style="flex-wrap: wrap;">
 

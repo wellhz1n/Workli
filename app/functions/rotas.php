@@ -18,29 +18,11 @@ function load()
 
 
     if (!file_exists($page)) {
-        echo "
-            
-            <div id='error404' >
-            <div id='error404content'>
-            <h3 class='' id='t-error' onload='aleta()'>
-            A pagina <label class=''>{$home}</label> 
-            Não existe
-            </h3>
-           <p>
-            Por favor volte para a segurança!,Caso tenha alguma duvida entre em contato conosco.
-           </p>
-            </div>
-            <div id='error404img'></div>
-            </div>
-            <script> 
-                $('#Titulo').text('404');
-            </script>
-            ";
 
-
-        error_reporting(0);
         // ini_set(“display_errors”, 0 );
-
+        $logado = Logado();
+        $page ="pages/404/index.php";
+        return [$page, ucwords($home), $logado];
     } else {
 
         $logado = Logado();
@@ -81,7 +63,7 @@ function load()
 function ReturnPage($page, $enum1, $paginaInicial)
 {
     $enum = array_merge(EnumParaArray($enum1), EnumParaArray(GeralPagesEnum::class));
-    $pagina ="";
+    $pagina = "";
     if (strtolower($page) == strtolower("home"))
         $pagina = "pages/{$paginaInicial}/index.php";
     else

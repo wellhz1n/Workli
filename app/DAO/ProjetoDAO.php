@@ -89,7 +89,7 @@ class ProjetoDAO
         $likep = $q != "" ? " and s.nome like'%$q%'" : null;
         $paginas = Sql("
         select  ceil(count(s.id)/6) as paginas from servico s
-        inner join tipo_servico  ts on ts.id = s.id_tipo_servico  and ts.ATIVO = 1
+        inner join tipo_servico  ts on ts.id = s.id_tipo_servico  and ts.ATIVO = 0
         where s.situacao = 0
         {$sqlcategoria}
         {$likep}
@@ -132,7 +132,7 @@ class ProjetoDAO
                     iu.imagem as img
                     {$sqlPropostaParaFuncionario}
                     from servico s 
-                    inner join tipo_servico  ts on ts.id = s.id_tipo_servico and ts.ATIVO = 1
+                    inner join tipo_servico  ts on ts.id = s.id_tipo_servico and ts.ATIVO = 0
                     inner join  usuarios  u on u.id = s.id_usuario 
                     left join proposta pp on pp.idServico = s.id and pp.situacao = 0
                     left join imagem_usuario iu on iu.id_usuario =u.id 

@@ -59,7 +59,7 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
     <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script> <!-- css star rating -->
-    <script src="https://unpkg.com/vue-advanced-cropper@latest/dist/index.umd.js"></script> <!-- CROP IMAGE --> 
+    <script src="https://unpkg.com/vue-advanced-cropper@latest/dist/index.umd.js"></script> <!-- CROP IMAGE -->
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> <!-- Google Sans -->
@@ -74,113 +74,101 @@ header('Content-Type: text/html; charset=utf-8');
 <script src="src/js/Vue/components.js"></script>
 
 <body>
-
+    
     <div id="loading" hidden>
         <div>
             <i class="fas fa-wrench licon"></i>
             <p>Carregando....</p>
         </div>
     </div>
-    <div id="wrapperBody">
-
-        <?php if (Logado()[1] == "2") { ?>
-            <div id="app" >
-            <?php } else { ?>
-                <div id="app">
-                <?php } ?>
-        <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
-                <?php require load()[0]; ?>
-                </div>
-                <script type="text/javascript">
-                    var Mixin = {
-                        data: {
-                            dataVue
-                        }
-                    }
-                    var app = new Vue({
-                        el: '#app',
-                        delimiters: ["{{", "}}"],
-                        mixins: [Mixin],
-                        components: {
-                            'wm-notify':WMNotify,
-                            'wm-loading': LoadingComponent,
-                            'item-servico': ItemServico,
-                            'select2': Select2,
-                            'wm-container': WMContainer,
-                            'wm-input': WM_Input,
-                            'wm-input-cpf': WM_InputCpf,
-                            'wm-checkbox': WM_CheckBox,
-                            'wm-select': WM_Select,
-                            'v-select': VSELECT,
-                            'wm-user-img': WMUSERIMG,
-                            'wm-image-upload': WM_ImageUpload,
-                            'tiposervicoItem': WMTIPOSERVICOITEM,
-                            'wm-lista': WMList,
-                            'wm-percent': WMPercent,
-                            'wm-textarea': WM_TextArea,
-                            'wm-projeto': WM_NovoProjeto,
-                            'wm-home-item': HomeItem,
-                            'wm-projeto-item': WmProjetoItem,
-                            'wm-modal': WmModal,
-                            'wm-paginacao': Wm_Paginacao,
-                            'wm-error': WM_Error,   
-                            'wm-image-viewer': WM_IMAGEVIEWER,
-                            'wm-chat': WMCHAT,
-                            "wm-chart": WMChart,
-                            'star-rating': VueStarRating.default
-                            // 'wm-input-mask':WMINPUTMASK,
-                        },
-                        methods: {
-                            Redirect(page) {
-                                Rediredionar(page);
-                            },
-                            RedirectComParan(page, paran = []) {
-                                RediredionarComParametros(page, paran);
-                            },
-                            async GetUsuarioDeContexto() {
-                                return {
-                                    NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO),
-                                    Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
-                                    Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
-                                    Nome: await GetSessaoPHP(SESSOESPHP.NOME),
-                                    id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO),
-                                    id_funcionario: await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO)
-                                }
-                            },
-                            async AtualizaUsuarioContexto() {
-                                this.dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
-                                this.dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
-                                this.dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-                                this.dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
-                                this.dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
-                                this.dataVue.UsuarioContexto.id_funcionario = await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO);
-                            }
-                        },
-                        async beforeMount() {
-                            await this.AtualizaUsuarioContexto();
-                        },
-                        watch: {
-                            'dataVue': function(val) {}
-
-                        }
-                    });
-                    //#region FOOTER
-                    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
-                        $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
-                    });
-                    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
-                        $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-                    });
-
-                    //#endregion
-                    
-                    // console.clear();
-                </script>
-
-
-            </div>
-
+    <div id="app">
+    <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
+    <div id="wrapperBody" class="col p-0">
+            <?php require load()[0]; ?>
+        </div>
+    </div>
 </body>
+<script type="text/javascript">
+        var Mixin = {
+            data: {
+                dataVue
+            }
+        }
+        var app = new Vue({
+            el: '#app',
+            delimiters: ["{{", "}}"],
+            mixins: [Mixin],
+            components: {
+                'wm-notify': WMNotify,
+                'wm-loading': LoadingComponent,
+                'item-servico': ItemServico,
+                'select2': Select2,
+                'wm-container': WMContainer,
+                'wm-input': WM_Input,
+                'wm-input-cpf': WM_InputCpf,
+                'wm-checkbox': WM_CheckBox,
+                'wm-select': WM_Select,
+                'v-select': VSELECT,
+                'wm-user-img': WMUSERIMG,
+                'wm-image-upload': WM_ImageUpload,
+                'tiposervicoItem': WMTIPOSERVICOITEM,
+                'wm-lista': WMList,
+                'wm-percent': WMPercent,
+                'wm-textarea': WM_TextArea,
+                'wm-projeto': WM_NovoProjeto,
+                'wm-home-item': HomeItem,
+                'wm-projeto-item': WmProjetoItem,
+                'wm-modal': WmModal,
+                'wm-paginacao': Wm_Paginacao,
+                'wm-error': WM_Error,
+                'wm-image-viewer': WM_IMAGEVIEWER,
+                'wm-chat': WMCHAT,
+                "wm-chart": WMChart,
+                'star-rating': VueStarRating.default
+                // 'wm-input-mask':WMINPUTMASK,
+            },
+            methods: {
+                Redirect(page) {
+                    Rediredionar(page);
+                },
+                RedirectComParan(page, paran = []) {
+                    RediredionarComParametros(page, paran);
+                },
+                async GetUsuarioDeContexto() {
+                    return {
+                        NIVEL_USUARIO: await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO),
+                        Email: await GetSessaoPHP(SESSOESPHP.EMAIL),
+                        Foto: await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO),
+                        Nome: await GetSessaoPHP(SESSOESPHP.NOME),
+                        id: await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO),
+                        id_funcionario: await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO)
+                    }
+                },
+                async AtualizaUsuarioContexto() {
+                    this.dataVue.UsuarioContexto.Nome = await GetSessaoPHP(SESSOESPHP.NOME);
+                    this.dataVue.UsuarioContexto.id = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
+                    this.dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
+                    this.dataVue.UsuarioContexto.Email = await GetSessaoPHP(SESSOESPHP.EMAIL);
+                    this.dataVue.UsuarioContexto.Foto = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
+                    this.dataVue.UsuarioContexto.id_funcionario = await GetSessaoPHP(SESSOESPHP.IDFUNCIONARIOCONTEXTO);
+                }
+            },
+            async beforeMount() {
+                await this.AtualizaUsuarioContexto();
+            },
+            watch: {
+                'dataVue': function(val) {}
+
+            }
+        });
+
+
+
+
+        
+        // console.clear();
+    </script>
+
 <?php
 if (load()[1] != "Login" && load()[1] != "Chat") {
     require 'templates/footer.php';
