@@ -737,7 +737,8 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                     :class="[
                         margem_imagem,
                         'fas fa-user-circle',
-                        class_icone ? class_icone : ''
+                        class_icone ? class_icone : '',
+                        width ? 'iconeUsuario' : '' 
                     ]"
                     aria-hidden
                     
@@ -863,7 +864,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         <div
             class="cemXcem" 
             :style="[{display: 'block !important;'}]"
-            v-show="this.imgData == null || this.imgData == '' "
+            v-show="this.imgData == null || this.imgData == '' == this.imgData == undefined "
         >
             <img 
                 class="cemXcem"
@@ -876,6 +877,8 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
             class="cemXcem"
             v-show="this.imgData != null && this.imgData != '' "
         >
+            <div class="gradientBanner">
+            </div>
             <img 
                 class="cemXcem"
                 :src='this.imgData' 
