@@ -81,9 +81,9 @@ header('Content-Type: text/html; charset=utf-8');
             <p>Carregando....</p>
         </div>
     </div>
-    <div id="app" style="height: 100%;">
-        <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
-        <div id="wrapperBody" class="col p-0" style="height: 100%;" >
+    <div id="wrapperBody" class="col p-0" style="height: 100%;" >
+        <div id="app" style="height: 100%;">
+            <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
             <?php require load()[0]; ?>
             <?php
         if (load()[1] != "Login" && load()[1] != "Chat" && (load()[2] == true && BuscaSecaoValor("NIVELUSUARIO") != 2)) {
