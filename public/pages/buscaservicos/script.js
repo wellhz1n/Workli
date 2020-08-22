@@ -57,7 +57,6 @@ $(document).ready(async () => {
 
 
     async function GetCategorias() {
-        debugger
         var Resultado = await WMExecutaAjax("TipoServicoBO", "GetTipoServicoCategoria");
         Resultado = Resultado.map(x => {
             return {

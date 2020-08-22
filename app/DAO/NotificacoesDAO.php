@@ -14,8 +14,8 @@ class NotificacoesDAO
         }
 
         $visto = $BuscaNovo ? "and visto = 0" : null;
-        $SemProp = !$SemProposta ? " union 
-        select  distinct * from NProposta" : null;
+        $SemProp = !$SemProposta ? " union  
+        select  distinct * from NProposta where id_usuario = {$idUsuario} " : null;
         $sql = " 
         with Ncomum as (
             select distinct
@@ -57,36 +57,38 @@ class NotificacoesDAO
             ),
             NProposta as(
                 select distinct
-                    NC.id as id,
-                    'Nova Proposta' as titulo,
-                    'Projeto:' as subtitulo,
-                    S.nome as subdescricao,
-                    concat('<strong>Funcionario</strong>: <small>',U.nome,'</small><br/><strong>Valor</strong>: <small>R$:',P.valor,'</small><br/>',p.descricao) COLLATE utf8mb4_unicode_ci as descricao  ,
-                    NC.id_chat as id_chat,
-                    NC.tipo as tipo,
-                    NC.id_projeto as id_projeto,
-                    NC.id_usuario as id_usuario,
-                    NC.id_usuario_criacao as id_usuario_criacao,
-                    NC.data_hora as data_hora,
-                    NC.visto as visto,
-                    case P.upgrades
-                    when 0 then 0
-                    when 3 then 1
-                    when 2 then 0
-                    else 1
-                    end  as patrocinado,
-                    case P.upgrades
-                    when 0 then 0
-                    when 3 then 1
-                    when 1 then 0
-                    else 1
-                    end  as destacado
-                from Ncomum NC 
-                inner join servico S on S.id = NC.id_projeto
-                inner join funcionario F on F.id_usuario =  NC.id_usuario_criacao
-                inner join proposta P on p.idFuncionario =F.id and p.idServico = S.id and p.data_criacao = NC.data_hora
-                inner join usuarios U on u.id = f.id_usuario
-                where NC.tipo = 1
+                P.id as id,
+                'Nova Proposta' as titulo,
+                'Projeto:' as subtitulo,
+                S.nome as subdescricao,
+                concat('<strong>Funcionario</strong>: <small>',U.nome,'</small><br/><strong>Valor</strong>: <small>R$:',P.valor,'</small><br/>',p.descricao) COLLATE utf8mb4_unicode_ci as descricao  ,
+                null as id_chat,
+                1 as tipo,
+                S.id as id_projeto,
+                UC.id as id_usuario,
+                U.id as id_usuario_criacao,
+                P.data_criacao  as data_hora,
+                case P.situacao 
+                when 0 then 0
+                else 1 
+                end as visto,
+                case P.upgrades
+                when 0 then 0
+                when 3 then 1
+                when 2 then 0
+                else 1
+                end  as patrocinado,
+                case P.upgrades
+                when 0 then 0
+                when 3 then 1
+                when 1 then 0
+                else 1
+                end  as destacado
+            from proposta P
+            inner join servico S on S.id = P.idServico
+            inner join funcionario F on F.id =  P.idFuncionario
+            inner join usuarios U on u.id = F.id_usuario
+            inner join usuarios UC on UC.id = s.id_usuario
             )
             select * from ncomum where tipo <> 1 {$FiltraTipo}
             union  

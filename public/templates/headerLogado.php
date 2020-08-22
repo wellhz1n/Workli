@@ -101,7 +101,7 @@
             <span class="notifyredBall" hidden></span> <?php } ?>
           <i class="fas fa-bell" style="font-size: larger;"></i>
         </a>
-        <div style="width: 28vw;min-width:350px; height: 300px;" :class="['dropdown-menu', 'DropMenuCelular', 'dropdown-menu-right', 'dropdown-info']" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
+        <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
           <div style="height: 300px;" class=" linkCor">
             <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
               <h6>Notificações</h6>
