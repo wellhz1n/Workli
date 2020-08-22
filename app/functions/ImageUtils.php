@@ -38,7 +38,7 @@ function ConvertBase64ToBlob($img, $valorMax = false, $usuario = false)
 
     $image_p = imagecreatetruecolor($width, $height);
     imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $info[0], $info[1]);
-    imagejpeg($image_p, '../../public/tmp/imgLow.' . $type, $valorMax ? 100 : $usuario ? 80 : 70);
+    imagejpeg($image_p, '../../public/tmp/imgLow.' . $type, $valorMax ? 100 : $usuario ? 100 : 70);
 
 
     if ($valorMax) { /* Checa para ver se é maior que 4mb*/
