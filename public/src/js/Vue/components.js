@@ -794,6 +794,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
     props: {
         img: String,
         id: String,
+        height_banner: String,
         imgcropada: {
             type: String,
             default: ""
@@ -893,6 +894,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         <div 
             class="cemXcem"
             v-show="this.imgData != null && this.imgData != '' "
+            :style="{height: this.height_banner}"
         >
             <div class="gradientBanner">
             </div>
@@ -2833,7 +2835,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
     },
     methods: {
 
-        change({ coordinates, canvas }) {
+        change({coordinates, canvas }) {
             this.canvas = canvas;
         },
         emitirImagemCropada() {

@@ -315,7 +315,7 @@ class UsuarioBO
         try{
             $img = ConvertBase64ToBlob($img, false,true);
             $this->usuarioDAO->SalvarOuAtualizarImagem($img,$idUsuario);
-            $img = ConvertBlobToBase64($img,true);
+            $img = ConvertBlobToBase64($img, true);
             CriaSecao(SecoesEnum::FOTO_USUARIO,$img);
             echo "OK";
         }
