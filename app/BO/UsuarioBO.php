@@ -313,7 +313,7 @@ class UsuarioBO
         
         $idUsuario  = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         try{
-            $img = ConvertBase64ToBlob($img, true);
+            $img = ConvertBase64ToBlob($img, false,true);
             $this->usuarioDAO->SalvarOuAtualizarImagem($img,$idUsuario);
             $img = ConvertBlobToBase64($img,true);
             CriaSecao(SecoesEnum::FOTO_USUARIO,$img);
@@ -330,7 +330,7 @@ class UsuarioBO
         
         $idUsuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         try{
-            $img = ConvertBase64ToBlob($img, true, true);
+            $img = ConvertBase64ToBlob($img, true);
             $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img,$idUsuario);
             echo "OK";
         }
