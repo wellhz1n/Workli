@@ -15,6 +15,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                 :imgcropada="dataVue.imagemCropadaBanner" 
                 @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
+                height_banner="17.15vw"
             />
 
              
