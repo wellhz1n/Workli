@@ -214,17 +214,14 @@
             margin: 35px 3% 0 3%;
         }
 
-        #perfilCard {
-            flex: 3;
-            margin-right: 0.9%;
+        @media only screen and (max-width: 1450px) { 
+            .cardsPerfilSuperior {
+                margin: 65px 3% 0 3%;
+            }
         }
-        
-        #contatoCard{
-            flex: 2;
-            margin-right: 0.9%;
-        }
-        #statusCard{
-            flex: 2;
+
+        .paddingCardInterno {
+            padding-right: 0.9% !important;
         }
         
         .botaoEditarPerfil {
@@ -252,7 +249,6 @@
         }
 
         .profCP {
-            margin-left: 1%;
             font-size: 21px;
             font-weight: 700;
             color: #aaa;
@@ -263,7 +259,8 @@
         .profCPBolinha {
             font-size: 24px;
             font-weight: 700;
-            margin-right: 5%;
+            margin: 0 2% 0 2%;
+            color: #aaa;
         }
 
         @media only screen and (max-width: 1500px) { 
@@ -275,6 +272,19 @@
             }
             .profCPBolinha {
                 font-size: 20px;
+            }
+        }
+        @media only screen and (max-width: 1200px) {  
+            .nomeEProfCP {
+                display: flex;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .profCPBolinha {
+                font-size: 30px;
+                line-height: 19px;
             }
         }
 

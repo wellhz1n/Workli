@@ -656,7 +656,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             type: String
         },
         margem_imagem: {
-            default: "my-4",
+            default: "mt-4",
             type: String
         },
         editavel: {
@@ -824,7 +824,9 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
     methods: {
         async colocaBanner() {
             let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById");
-            this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
+            if(retorno.imagem_banner) {
+                this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
+            }
         },
 
         abrirModal(img) {
@@ -2806,6 +2808,13 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
                 this.modalVisivel = visivelE;
             }
         },
+        configs: {
+            immediate: true,
+            deep: true,
+            handler(e) {
+                
+            }
+        }
     },
     methods: {
 

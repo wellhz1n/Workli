@@ -1,7 +1,7 @@
 <?php
 
 
-function ConvertBase64ToBlob($img, $valorMax = false)
+function ConvertBase64ToBlob($img, $valorMax = false, $usuario = false)
 {
     $blobData = base64_decode($img);
     $type = @explode('/', getimagesizefromstring($blobData)['mime'])[1];
@@ -26,7 +26,7 @@ function ConvertBase64ToBlob($img, $valorMax = false)
     
     //REDIMENCIONA E DIMINUI A QUALIDADE
 
-    if(!$valorMax) {
+    if(!$valorMax || $usuario) {
         $info = getimagesize('../../public/tmp/img.' . $type);
 
         if ($info['mime'] == 'image/jpeg') {
@@ -34,8 +34,8 @@ function ConvertBase64ToBlob($img, $valorMax = false)
         } elseif ($info['mime'] == 'image/png') {
             $image = imagecreatefrompng('../../public/tmp/img.' . $type);
         }
-        $height = 600;
-        $width = 600;
+        $height = !$usuario ? 600 : 200;
+        $width = !$usuario ? 600 : 200;
         $ratio_orig = $info[0]/$info[1];
 
         if ($width/$height > $ratio_orig) 

@@ -330,7 +330,7 @@ class UsuarioBO
         
         $idUsuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         try{
-            $img = ConvertBase64ToBlob($img, true);
+            $img = ConvertBase64ToBlob($img, true, true);
             $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img,$idUsuario);
             echo "OK";
         }

@@ -160,6 +160,8 @@ await retornaValorAvaliacao();
         dataVue.configuracoesCrop.componente = arrayConfig.componente;
         if(arrayConfig.redondo) {
             dataVue.configuracoesCrop.redondo = "circle-stencil";
+        } else {
+            dataVue.configuracoesCrop.redondo = "rectangle-stencil";
         }
     });
 });
