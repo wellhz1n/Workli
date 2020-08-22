@@ -32,6 +32,14 @@ $(document).ready(async () => {
     });
     app.dataVue.TabNCarregando = false;
 
+
+
+    //#region TAB PROPOSTA
+            //TODO TRAZER AS PROPOSTAS AI BELE WELL DO FUTURO
+            // await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes")
+            //{listaP: Array(1), listaN: Array(0)}
+    //#endregion
+
 });
 
 const GetTipoMensagem = () => {

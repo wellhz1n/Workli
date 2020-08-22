@@ -196,6 +196,12 @@ class NotificacoesDAO
         return count($this->BuscaNotificacoes($idUsuario));
     }
     #endregion
+    
+    #region Tela Proposta E Notificação
+
+    
+    #endregion
+    
     #region Cria Notificação
     public function SalvarAtualizarNotificacao(Notificacao $notificacao)
     {
