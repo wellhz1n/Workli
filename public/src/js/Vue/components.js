@@ -2835,7 +2835,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
     },
     methods: {
 
-        change({coordinates, canvas }) {
+        change({ coordinates, canvas }) {
             this.canvas = canvas;
         },
         emitirImagemCropada() {
@@ -2887,3 +2887,54 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
 
 });
 /*#endregion MODAL CROP ---------------------------------------*/
+
+//#region  PropostaItem
+WM_PROPOSTA = Vue.component('wm-proposta', {
+
+    props: {
+        titulo,
+        descricao,
+        categoria,
+        imagem_funcionario,
+        nome,
+
+    },
+    data: () => {
+        return {}
+    },
+    template:`
+    <div class="PropostaItem my-2  ">
+    <div class="TituloProposta">
+
+        <h4 class="font_Poopins_B">Projeto: Criar Case Propostas</h4>
+        <p class="font_Poopins" style="font-size: 12px;">descricao do projeto e tals jdlksads sdkçad dakaçsd dakçdas dakdçad dkaçdksaç dakçdsa
+            dsaldkjal sdlkadsla lsdajalkd dsajdlk
+            daplçdjalksçd adjaslkdjalkd adjlkasdjlsdjl asdajdlkajd djalkd adsjsalkda dlakjdlkad adjlakdjal dadjklaj
+        </p>
+        <span style="background-color: #ec9a29;" class="badge badge-pill">Software</span>
+        <div style="display: flex; align-items: center; height: 60px; ">
+            <wm-user-img class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+            <div class="d-flex">
+                <p class="p-0 m-0 ml-1">Rogério</p>
+                <span class="mx-1"><i style="color: #ec9a29;font-size: 13px;" class="fas fa-star"></i><span style="font-size:12px ;">4</span></span>
+            </div>
+        </div>
+    </div>
+    <div style="height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;">
+        <span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:200</span>
+        <div class="WrapperBotoesProposta">
+            <a class="BotoesProposta Recusar"><i class="fas fa-times"></i></a>
+            <a class="BotoesProposta Aceitar"><i class="fas fa-check"></i></a>
+
+        </div>
+    </div>
+</div>
+
+    `
+
+})
+//#endregion

@@ -35,6 +35,18 @@ $(document).ready(async () => {
 
 
     //#region TAB PROPOSTA
+        if(dataVue.UsuarioContexto.NIVEL_USUARIO == 0){
+
+            app.$set(dataVue,"Propostas",{listaP:[],listaN:[]});
+            
+            $busca = await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes");
+            debugger
+            if($busca.error == undefined){
+                app.dataVue.Propostas.listaP = $busca.listaP;
+                app.dataVue.Propostas.listaN = $busca.listaN;
+            }
+
+        }
             //TODO TRAZER AS PROPOSTAS AI BELE WELL DO FUTURO
             // await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes")
             //{listaP: Array(1), listaN: Array(0)}
