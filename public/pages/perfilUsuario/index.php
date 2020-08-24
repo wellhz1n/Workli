@@ -57,9 +57,6 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
-            <!-- <div id="maskEditImg" class="editimgbox ml-2" hidden>
-                <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
-            </div> -->
             <wm-user-img 
                 :img="dataVue.Usuario.imagem" 
                 :width="'14.2vw'" 
@@ -110,7 +107,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                     <div class="cardQuadradoTitulo">
                         Perfil
                     </div>
-                    <div class="botaoEditarPerfil">
+                    <div id="botaoEditarPerfil">
                         <i class="fa fa-edit"></i>
                     </div>
                 </div>
@@ -182,9 +179,36 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         </div>
     </div>
 </div>
+
+<!--#region Modal de Edit Perfil-->
+<wm-modal 
+        :visivel="dataVue.modalVisivelEditPerfil" 
+        :callback="dataVue.callbackEP"
+        id="modalEdit"
+>
+    <template v-slot:header>
+        <div class="tituloModalEP">
+            EDITAR DADOS DO PERFIL        
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="bodyModalEP">
+            
+            <!-- <div id="botaoSalvarWrapper">
+                <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
+                    Salvar <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </div> -->
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div> <!-- Apenas para deixar o footer vazio.-->
+    </template>
+</wm-modal>
+<!--#endregion -->
+
+
 <!-- Modal de Crop -->
-
-
 <wm-crop-modal 
     :img="dataVue.imagemToCrop" 
     :visivel="dataVue.modalVisivelController" 

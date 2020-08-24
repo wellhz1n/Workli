@@ -224,12 +224,12 @@
             padding-right: 0.9% !important;
         }
         
-        .botaoEditarPerfil {
+        #botaoEditarPerfil {
             font-size: 20px;
             cursor: pointer;
         }
 
-        .botaoEditarPerfil:active {
+        #botaoEditarPerfil:active {
             font-size: 22px;
         }
 
@@ -421,10 +421,23 @@
             }
           }
         /*#endregion Status da Conta*/
-        /*#endregion Linha de cima ------------------------------------------------------------------------------ */
+    /*#endregion Linha de cima ------------------------------------------------------------------------------ */
 
 /*#endregion Parte Inferior - Cards -------------------------------------------------------------------------------- */
 
+/*#region Parte Modal ---------------------------------------------------------------------------------------------- */
 
+.tituloModalEP {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+/* #endregion Parte Modal -------------------------------------------------------------------------------------------*/
 
 

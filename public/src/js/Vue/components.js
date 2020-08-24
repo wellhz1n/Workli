@@ -2051,7 +2051,7 @@ WmModal = Vue.component('wm-modal', {
             if ((key.target.id == this.id + 'close' || key.target.id == this.id) && key.target.classList["value"].split(" ").filter(x => x == "btn-close" || x == "modalBackdrop").length > 0) {
                 this.dataVisible = false;
                 this.dataCallback();
-                this.$emit("fechar-modal-inside",true);
+                this.$emit("fechar-modal-inside", true);
             }
         },
         fecharModalUnico() {

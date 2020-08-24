@@ -110,6 +110,7 @@ await retornaValorAvaliacao();
 
     /*----------------- CÓDIGO PARA ABRIR e fechar MODAL --------------*/
     app.$set(dataVue, "modalVisivelController", false);
+
     app.$set(dataVue, "abremodal", async () => {
         dataVue.modalVisivelController = true;
         dataVue.imagemCropada = null;
@@ -119,6 +120,22 @@ await retornaValorAvaliacao();
         dataVue.modalVisivelController = false;
     });
 
+
+    
+    
+    app.$set(dataVue, "modalVisivelEditPerfil", false); /* Modal de Editar Perfil*/
+
+    function abrirFecharModalEP() {
+        dataVue.modalVisivelEditPerfil = !dataVue.modalVisivelEditPerfil;
+    }
+
+    $("#botaoEditarPerfil").on("click", () => {
+        abrirFecharModalEP();
+    })
+
+    app.$set(dataVue, "callbackEP", () => {
+        abrirFecharModalEP();
+    });
     /*--------------------------------------------------------*/
 
     /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
