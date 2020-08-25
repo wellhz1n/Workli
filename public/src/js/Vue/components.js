@@ -2882,7 +2882,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
                     :stencil-component="configs.redondo"
                     @change="change"
                 ></cropper>
-                <div id="botaoSalvarWrapper">
+         n  nhnn        <div id="botaoSalvarWrapper">
                     <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
                         Salvar <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
@@ -2899,34 +2899,128 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
 /*#endregion MODAL CROP ---------------------------------------*/
 
 //#region  PropostaItem
-WM_PROPOSTA = Vue.component('wm-proposta', {
+var WM_PROPOSTA = Vue.component('wm-proposta', {
 
     props: {
-        titulo,
-        descricao,
-        categoria,
-        imagem_funcionario,
-        nome,
+        titulo: {
+            type: String
+        },
+        descricao: {
+            type: String
+        },
+        categoria: {
+            type: String
+        },
+        imagem_funcionario: {
+            type: String
+        },
+        nome: {
+            type: String
+        },
+        valor: {
+            type: [String, Number]
+        },
+        avaliacao: {
+            type: [String, Number]
+        },
+        brilha: {
+            type: Boolean,
+            default:false
+        },
 
     },
     data: () => {
-        return {}
+        return {
+            dataTitulo: '',
+            dataDescricao: '',
+            dataCategoria: '',
+            dataImagemFuncionario: null,
+            dataNome: '',
+            dataValor: '',
+            dataAvaliacao: 0,
+            dataBrilha:false
+        }
     },
-    template:`
-    <div class="PropostaItem my-2  ">
+    watch: {
+        titulo: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataTitulo = n;
+            }
+        },
+        descricao: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataDescricao = n;
+            }
+        },
+        categoria: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataCategoria = n;
+            }
+        },
+        imagem_funcionario: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataImagemFuncionario = n;
+            }
+        },
+        nome: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataNome = n;
+            }
+        },
+        valor: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataValor = n;
+            }
+        },
+        avaliacao: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataAvaliacao = n;
+            }
+        },
+        brilha: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataBrilha = n;
+            }
+        }
+
+    },
+    methods: {
+        Cancelar(vue) {
+       
+            this.$emit("cancelar", this.$data);
+        },
+        Aprovar(vue){
+            this.$emit("aprovar", this.$data);
+        }
+    },
+    template: `
+    <div :class="['PropostaItem','my-2',this.dataBrilha?'Brilha':null]">
     <div class="TituloProposta">
 
-        <h4 class="font_Poopins_B">Projeto: Criar Case Propostas</h4>
-        <p class="font_Poopins" style="font-size: 12px;">descricao do projeto e tals jdlksads sdkçad dakaçsd dakçdas dakdçad dkaçdksaç dakçdsa
-            dsaldkjal sdlkadsla lsdajalkd dsajdlk
-            daplçdjalksçd adjaslkdjalkd adjlkasdjlsdjl asdajdlkajd djalkd adsjsalkda dlakjdlkad adjlakdjal dadjklaj
-        </p>
-        <span style="background-color: #ec9a29;" class="badge badge-pill">Software</span>
+        <h4 class="font_Poopins_B">Projeto: {{this.dataTitulo}}</h4>
+        <p class="font_Poopins" style="font-size: 12px;">{{this.dataDescricao}}</p>
+        <span style="background-color: #ec9a29;" class="badge badge-pill">{{this.dataCategoria}}</span>
         <div style="display: flex; align-items: center; height: 60px; ">
-            <wm-user-img class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+            <wm-user-img :img="this.dataImagemFuncionario" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
             <div class="d-flex">
-                <p class="p-0 m-0 ml-1">Rogério</p>
-                <span class="mx-1"><i style="color: #ec9a29;font-size: 13px;" class="fas fa-star"></i><span style="font-size:12px ;">4</span></span>
+                <p class="p-0 m-0 ml-1">{{this.dataNome}}</p>
+                <span class="mx-1"><i style="color: #ec9a29;font-size: 13px;" class="fas fa-star"></i><span style="font-size:12px ;">{{this.dataAvaliacao}}</span></span>
             </div>
         </div>
     </div>
@@ -2935,10 +3029,10 @@ WM_PROPOSTA = Vue.component('wm-proposta', {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;">
-        <span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:200</span>
+        <span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
         <div class="WrapperBotoesProposta">
-            <a class="BotoesProposta Recusar"><i class="fas fa-times"></i></a>
-            <a class="BotoesProposta Aceitar"><i class="fas fa-check"></i></a>
+            <a class="BotoesProposta Recusar" @click="Cancelar(this)"><i class="fas fa-times"></i></a>
+            <a class="BotoesProposta Aceitar"  @click="Aprovar(this)"><i class="fas fa-check"></i></a>
 
         </div>
     </div>

@@ -55,6 +55,14 @@ class ResultadoSql
     }
 }
 
+function GetIdUsuarioComIdFuncionario($idFuncionario)
+{
+    $sql = "select U.id from funcionario F 
+            inner join usuarios U on U.id = F.id_usuario
+            where F.id = ?";
+    $resultado = Sql($sql, [$idFuncionario]);
+    return $resultado->resultados[0];
+}
 function Sql($sql, $parans = [])
 {
     $parans ?? [];
@@ -192,7 +200,7 @@ function GetByIdGeneric($tabela, $classe, $id)
 
         $classeNova = new $classe();
         foreach ($classeNova as $key => $value) {
-            $classeNova->$key = $buscaTabela->resultados[0][$key];
+            $classeNova->$key = $buscaTabela->resultados[0][strtolower($key)];
         }
         return $classeNova;
     }

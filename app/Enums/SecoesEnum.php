@@ -26,5 +26,8 @@ abstract class SecoesEnum
     const NOTIFICACOES = "NOTIFICACOES";
 
     #endregion
+    #region Projeto
+    const SERVICOSSELETOR = "SERVICOSELETOR";
+    #endregion
 
 }

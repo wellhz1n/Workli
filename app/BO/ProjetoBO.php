@@ -1,10 +1,10 @@
 <?php
-@require_once("../Classes/Projeto.php");
-@require_once("../DAO/ProjetoDAO.php");
-@require_once("../functions/ImageUtils.php");
-@require_once("../Enums/SecoesEnum.php");
-@require_once("../functions/Session.php");
-@require_once("../functions/Conexao.php");
+require_once("../Classes/Projeto.php");
+require_once("../DAO/ProjetoDAO.php");
+require_once("../functions/ImageUtils.php");
+require_once("../Enums/SecoesEnum.php");
+require_once("../functions/Session.php");
+require_once("../functions/Conexao.php");
 try {
 
     if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
@@ -25,15 +25,18 @@ try {
             $P = empty($_POST["P"]) ? 1 : $_POST["P"];
             $ProjetoBO->BuscarProjeto($C, $Q, $P);
         }
-        if($metodo == "BuscaDependeciasModal"){
+        if ($metodo == "BuscaDependeciasModal") {
             if (isset($_POST['id'])) {
-                    $ProjetoBO->BuscaDependenciasProjetoModal($_POST['id']);
-            }
-            else
-            throw new Exception("Parametro Projeto Ausente");
+                $ProjetoBO->BuscaDependenciasProjetoModal($_POST['id']);
+            } else
+                throw new Exception("Parametro Projeto Ausente");
+        }
+        if ($metodo == "GETPROJETOSPORUSUARIOCONTEXTO") {
+            $saida = $ProjetoBO->GetProjetosPorUsuarioContexto();
+            echo json_encode($saida);
         }
 
-        if($metodo == "BuscaNumeroProjetos") {
+        if ($metodo == "BuscaNumeroProjetos") {
             $ProjetoBO->BuscaNumeroProjetos();
         }
     }
@@ -92,6 +95,10 @@ class ProjetoBO
         if (strlen(utf8_decode($p->Descricao)) < 50)
             throw new Exception("Numero minimo de caracteres para a Descrição Do Projeto é 50.");
     }
+    public function GetTituloProjetoPorId($idProjeto)
+    {
+        return $this->ProjetoDAO->GetTituloProjetoPorId($idProjeto);
+    }
     #endregion
     #region UTILS    
     private function AssociaProjetoCampo($proj)
@@ -129,16 +136,33 @@ class ProjetoBO
         $obj->paginaAtual = $P;
         echo json_encode($obj);
     }
-    public function BuscaDependenciasProjetoModal($id){
+    public function BuscaDependenciasProjetoModal($id)
+    {
         $imagens = $this->ProjetoDAO->BuscaDependenciasModal($id);
         foreach ($imagens as $key => $value) {
-            $imagens[$key]["imagem"] = ConvertBlobToBase64($imagens[$key]["imagem"]);  
+            $imagens[$key]["imagem"] = ConvertBlobToBase64($imagens[$key]["imagem"]);
         }
         echo json_encode($imagens);
     }
 
-    public function BuscaNumeroProjetos() {
+    public function BuscaNumeroProjetos()
+    {
         echo json_encode($this->ProjetoDAO->BuscaNumeroProjetos());
+    }
+    public function GetProjetosPorUsuarioContexto()
+    {
+        $idUsuarioContexto = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        if (BuscaSecaoValor(SecoesEnum::SERVICOSSELETOR) != null)
+            $resultados = json_decode(BuscaSecaoValor(SecoesEnum::SERVICOSSELETOR));
+        else {
+            $resultados = $this->ProjetoDAO->GetProjetosPorUsuario($idUsuarioContexto);
+            CriaSecao(SecoesEnum::SERVICOSSELETOR, json_encode($resultados));
+        }
+        return $resultados;
+    }
+    public function SetProjetoSituacao($idProjeto, $Situacao)
+    {
+        return $this->ProjetoDAO->SetProjetoSituacao($idProjeto, $Situacao);
     }
     #endregion
 }

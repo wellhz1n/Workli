@@ -1,13 +1,21 @@
 <?php
-@include("../Classes/Imagem.php");
-@include("../functions/Session.php");
-@include("../Enums/SecoesEnum.php");
+
+if (!class_exists(Imagem::class, false))
+    require_once("../Classes/Imagem.php");
+require_once("../functions/Session.php");
+if (!class_exists(SituacaoEnum::class, false))
+    require_once("../Enums/SecoesEnum.php");
 
 
 // @include("../functions/Conexao.php");
 class ProjetoDAO
 {
     #region CRUD
+    public function SetProjetoSituacao($idProjeto, $situacao)
+    {
+        $sql = "update servico set sitacao = ? where id =?";
+        return Update($sql, [$situacao, $idProjeto]);
+    }
     public function SalvarOuAtulizarProjeto(Projeto $proj, $Novo = false)
     {
         $retorno = false;
@@ -60,7 +68,7 @@ class ProjetoDAO
         }
         return $retorno;
     }
-    
+
     private function SalvarImagemServico($img = [], $idServico)
     {
         for ($i = 0; $i < count($img); $i++) {
@@ -79,6 +87,19 @@ class ProjetoDAO
             }
         }
     }
+
+    public function GetProjetosPorUsuario($idUsuario)
+    {
+        $sql = "select S.id,S.nome from servico S where S.id_usuario = ? and S.situacao = 0";
+        $result = Sql($sql, [$idUsuario]);
+        return $result->resultados;
+    }
+    public function GetTituloProjetoPorId($idProjeto)
+    {
+        $sql = "select S.nome from servico S where S.id = ? ";
+        $result = Sql($sql, [$idProjeto]);
+        return $result->resultados[0];
+    }
     #endregion
     #region Busca Dependencias
     public function BuscaProjeto($categoria = [], $q = "", $pg = 1)
@@ -94,17 +115,17 @@ class ProjetoDAO
         {$sqlcategoria}
         {$likep}
         ");
-        if(count($paginas->resultados) > 0){
-            if(json_decode($paginas->resultados[0]['paginas']) == 1)
+        if (count($paginas->resultados) > 0) {
+            if (json_decode($paginas->resultados[0]['paginas']) == 1)
                 $pg = 1;
         }
         $IdFuncionaro = BuscaSecaoValor(SecoesEnum::IDFUNCIONARIOCONTEXTO);
-        $sqlPropostaAcima = $IdFuncionaro != null ? ",p.propostaFuncionario":null;
-        $sqlPropostaParaFuncionario =  $IdFuncionaro != null ?" ,case when pp.idFuncionario = {$IdFuncionaro} 
+        $sqlPropostaAcima = $IdFuncionaro != null ? ",p.propostaFuncionario" : null;
+        $sqlPropostaParaFuncionario =  $IdFuncionaro != null ? " ,case when pp.idFuncionario = {$IdFuncionaro} 
                                         then 1
                                         else 0
-                                        end as propostaFuncionario":null;
-        $pg = (json_decode($pg)- 1) * 6;
+                                        end as propostaFuncionario" : null;
+        $pg = (json_decode($pg) - 1) * 6;
         $retorno = Sql("
         select ceil(count(p.id)/6) as paginas,
                p.id,p.titulo,p.descricao,
@@ -161,7 +182,7 @@ class ProjetoDAO
     }
 
 
-    public function BuscaNumeroProjetos() 
+    public function BuscaNumeroProjetos()
     {
         $retorno = Sql("SELECT COUNT(id) FROM servico", []);
         return $retorno->resultados[0];
