@@ -134,7 +134,7 @@ await retornaValorAvaliacao();
     })
 
     app.$set(dataVue, "callbackEP", () => {
-        abrirFecharModalEP();
+        dataVue.modalVisivelEditPerfil = false;
     });
     /*--------------------------------------------------------*/
 
@@ -181,6 +181,15 @@ await retornaValorAvaliacao();
             dataVue.configuracoesCrop.redondo = "rectangle-stencil";
         }
     });
+
+    app.$set(dataVue, "usuarioDados", {
+        nome: "",
+        profissao: ""
+    });
+
+
+    /* Atualiza os dados de editar perfil */
+    dataVue.usuarioDados.nome = dataVue.UsuarioContexto.Nome
 });
 
 function retornaValorAvaliacao() {

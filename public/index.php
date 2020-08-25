@@ -26,7 +26,7 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="stylesheet" type="text/css" href="src/js/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" type="text/css" href="src/js/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="src/css/starRating/star-rating.min.css" />
-
+    <link href="src/js/Vue/componentesExternos/vue-tags/dist/vue-tags-input.css" rel="stylesheet">
     <!-- Importações internas -->
     <link rel="stylesheet" href="src/css/EstiloGeral.css">
     <link rel="stylesheet" href="templates/css/template.css">
@@ -49,6 +49,7 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/Vue/axios.min.js"></script>
     <script src="src/js/jquery-mask/jquery.mask.js"></script>
     <script src="src/js/Classes/Classes.js"></script>
+    <script src="src/js/Vue/componentesExternos/vue-tags/dist/vue-tags-input.min.js"></script>
     <script src="src/js/Geral.js"></script>
 
     <script src="src/js/animsition/js/animsition.min.js"></script>
@@ -104,32 +105,33 @@ header('Content-Type: text/html; charset=utf-8');
         delimiters: ["{{", "}}"],
         mixins: [Mixin],
         components: {
-            'wm-notify': WMNotify,
-            'wm-loading': LoadingComponent,
-            'item-servico': ItemServico,
-            'select2': Select2,
-            'wm-container': WMContainer,
-            'wm-input': WM_Input,
-            'wm-input-cpf': WM_InputCpf,
-            'wm-checkbox': WM_CheckBox,
-            'wm-select': WM_Select,
-            'v-select': VSELECT,
-            'wm-user-img': WMUSERIMG,
-            'wm-image-upload': WM_ImageUpload,
-            'tiposervicoItem': WMTIPOSERVICOITEM,
-            'wm-lista': WMList,
-            'wm-percent': WMPercent,
-            'wm-textarea': WM_TextArea,
-            'wm-projeto': WM_NovoProjeto,
-            'wm-home-item': HomeItem,
-            'wm-projeto-item': WmProjetoItem,
-            'wm-modal': WmModal,
-            'wm-paginacao': Wm_Paginacao,
-            'wm-error': WM_Error,
-            'wm-image-viewer': WM_IMAGEVIEWER,
-            'wm-chat': WMCHAT,
-            "wm-chart": WMChart,
-            'star-rating': VueStarRating.default
+            // 'select2': Select2,
+            // 'star-rating': VueStarRating.default,
+            // 'tags-input':  VueTagsInput
+            // 'wm-notify': WMNotify,
+            // 'wm-loading': LoadingComponent,
+            // 'item-servico': ItemServico,
+            // 'wm-container': WMContainer,
+            // 'wm-input': WM_Input,
+            // 'wm-input-cpf': WM_InputCpf,
+            // 'wm-checkbox': WM_CheckBox,
+            // 'wm-select': WM_Select,
+            // 'v-select': VSELECT,
+            // 'wm-user-img': WMUSERIMG,
+            // 'wm-image-upload': WM_ImageUpload,
+            // 'tiposervicoItem': WMTIPOSERVICOITEM,
+            // 'wm-lista': WMList,
+            // 'wm-percent': WMPercent,
+            // 'wm-textarea': WM_TextArea,
+            // 'wm-projeto': WM_NovoProjeto,
+            // 'wm-home-item': HomeItem,
+            // 'wm-projeto-item': WmProjetoItem,
+            // 'wm-modal': WmModal,
+            // 'wm-paginacao': Wm_Paginacao,
+            // 'wm-error': WM_Error,
+            // 'wm-image-viewer': WM_IMAGEVIEWER,
+            // 'wm-chat': WMCHAT,
+            // "wm-chart": WMChart,
             // 'wm-input-mask':WMINPUTMASK,
         },
         methods: {

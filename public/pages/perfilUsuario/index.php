@@ -185,6 +185,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         :visivel="dataVue.modalVisivelEditPerfil" 
         :callback="dataVue.callbackEP"
         id="modalEdit"
+        height="65%"
 >
     <template v-slot:header>
         <div class="tituloModalEP">
@@ -192,13 +193,41 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         </div>
     </template>
     <template v-slot:body>
-        <div class="bodyModalEP">
-            
-            <!-- <div id="botaoSalvarWrapper">
-                <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
+        <div class="bodyModalEPWrapper">
+            <div class="bodyModalEP">
+                <wm-input 
+                    entidade="usuarioDados" 
+                    id="inputNomeP" 
+                    campo="nome" 
+                    titulo="Nome" 
+                    class_pai_wrapper="inputPerfil"
+                    :obrigatorio="true"
+                ></wm-input>
+                <wm-input 
+                    entidade="usuarioDados" 
+                    id="inputProfissaoP" 
+                    campo="profissao" 
+                    titulo="Profissão" 
+                    class_pai_wrapper="inputPerfil"
+                ></wm-input>
+                <div class="inputPerfil">
+                    <label>Adicionar competências</label>
+                    <tags-input placeholder="Tags input"></tags-input>
+                </div>
+                <wm-textarea
+                    entidade="usuarioDados" 
+                    id="inputDescricaoP" 
+                    campo="descricao" 
+                    titulo="Descrição" 
+                    class_pai_wrapper="inputPerfil"
+                ></wm-textarea>
+            </div>
+            <!-- WMVerificaForm() -->
+            <div id="botaoSalvarWrapperEP">
+                <button id="botaoSalvarEP" @click="salvarEP">
                     Salvar <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
-            </div> -->
+            </div>
         </div>
     </template>
     <template v-slot:footer>
