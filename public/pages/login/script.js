@@ -148,87 +148,6 @@ $(document).ready(() => {
     $(".textoOu").css("padding", "0 24px 0 24px")
 
 });
-// function alternaLadoImagem() {
-//     if ($('.funcionarioForm').hasClass('taNoRegistro')) {
-
-//         $('.funcionarioForm').removeClass("taNoRegistro");
-//         $("#formRegistrar").addClass("formRegistrarInvisivelTran")
-
-//         $("#formRegistrar").on('transitionend', () => {     
-//             $("#formRegistrar").removeClass("formRegistrarInvisivelTran");
-//             $("#formRegistrar").removeClass("formRegistrarVisivel");
-//             $(".sombraFundoRegistrar").removeClass("sombraFundoRegistrar");
-
-//             $(".usuarioForm").addClass("usuarioDivTran");
-//             $(".usuarioForm").on('transitionend', () => { 
-//                 $(".usuarioForm").removeClass("usuarioDivTran");
-//                 $(".usuarioForm").removeClass("usuarioDiv");
-//                 $(".funcionarioForm").addClass("funcionarioDivTrans");
-//                 $(".funcionarioForm").on('transitionend', () => { 
-//                     $(".funcionarioForm").removeClass("funcionarioDiv");
-//                     $("#formLogin").removeClass("formInvisivel");
-//                 });
-//             });
-//         });
-
-//         $(".funcionarioForm").removeClass("funcionarioDivTrans");
-//         // $(".usuarioForm").on('transitionend', () => { 
-//         //     $(".funcionarioForm").removeClass("funcionarioDiv");
-//         // });
-//         // $(".funcionarioForm").removeClass("funcionarioDiv")
-
-//         //     $(".funcionarioForm").on('transitionend', () => { 
-//         //         $(".usuarioForm").removeClass(".usuarioDiv");
-//         //         $(".usuarioForm").on('transitionend', () => { 
-//         //             $("#formLogin").removeClass(".formInvisivel");
-//         //         });
-//         //     });
-//         //     // $("#formRegistrar").removeClass("formRegistrarVisivel")
-//         //     // 
-//         //     // debugger
-//         // });
-
-
-//         // $("#Titulo").text("Login")
-
-
-
-//     } else {
-
-//         // $(".imagemPrincipalLogin").addClass("imagemIntermediariaDiv")
-
-//         // $("#Titulo").text("Registrar")
-//         debugger
-//         $(".funcionarioForm").removeClass("funcionarioDivTrans");
-
-//         $("#formLogin").addClass("formVisualmenteInvisivel");
-
-//         $("#formLogin").on('transitionend', () => { //Quando terminar a animação
-//             $("#formLogin").addClass("formInvisivel");
-//             $("#formLogin").removeClass("formVisualmenteInvisivel");
-//         });
-
-
-
-//         $(".sombraFundoLogar").addClass("sombraFundoRegistrar");
-
-//         $(".funcionarioForm").addClass("funcionarioDiv")
-//         $(".sombraFundoLogar").on('transitionend', () => { //Quando terminar a animação de aumentar o height;
-//             $(".funcionarioForm").on('transitionend', () => {
-//                 $(".usuarioForm").addClass("usuarioDiv");
-//             });
-//             $(".usuarioForm").on('transitionend', () => {
-//                 if ($('.funcionarioForm').hasClass('taNoRegistro')) 
-//                 {   
-//                     $("#formRegistrar").addClass("formRegistrarVisivel"); 
-//                 } else {
-//                 }
-//             });
-//         });
-//     }
-
-//     $('.funcionarioForm').addClass("taNoRegistro");
-// }
 
 function alternaLadoImagem() {
     if ($('.funcionarioForm').hasClass('funcionarioDiv')) {
@@ -288,3 +207,15 @@ function ativaBotaoFuncionarioClientes() {
         );
     }
 }
+
+$(function() { //Função para clicar no botão de finalizar quando clicar enter
+    $('form').each(function() {
+        $(this).find('input').keypress(function(e) {
+            if(e.which == 10 || e.which == 13) {
+                this.form[this.form.length - 1].click(); //Clica no ultimo item do array, se o botão de fizanalizar não for o ultimo não vai funcionar
+            }
+        });
+
+        $(this).find('input[type=submit]').hide();
+    });
+});

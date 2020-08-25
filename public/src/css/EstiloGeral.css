@@ -1527,7 +1527,11 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 .iconeUsuario {
-    font-size: 14.2vw !important;
     margin-top: 0 !important;
+    /* font-size: 3.5em !important; */
+}
+
+.iconeUsuarioTamanho {
+    font-size: 14.2vw !important;
 }
 /*#endregion Imagem do Usuário ------------------------------------------------------*/

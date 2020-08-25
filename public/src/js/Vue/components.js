@@ -663,6 +663,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             default: '224px',
             type: String
         },
+        class_icone: String,
         margem_imagem: {
             default: "mt-4",
             type: String
@@ -744,9 +745,10 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                         font-size: 15em;"
                     :class="[
                         margem_imagem,
+                        class_icone,
                         'fas fa-user-circle',
                         class_icone ? class_icone : '',
-                        width ? 'iconeUsuario' : '' 
+                        'iconeUsuario'
                     ]"
                     aria-hidden
                     

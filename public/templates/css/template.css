@@ -129,8 +129,13 @@
   bottom: 0;
   bottom: 0;
   left: 0;
+  position: relative;
 }
 
+.restApp { /* Class para jogar o footer la em baixo*/
+  flex-grow: 10;
+  flex-shrink: 10;
+}
 .corCinza {
   color: #bec0c2;
 }

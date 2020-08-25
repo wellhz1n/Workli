@@ -66,6 +66,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                 :imgcropada="dataVue.imagemCropadaUsuario"
                 @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
+                class_icone="iconeUsuarioTamanho"
             />
         </div>
     </div>

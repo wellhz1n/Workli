@@ -179,15 +179,19 @@
 <script>
     $("#Titulo").text("Login");
 
-    <?php if ($_GET["position"] == "registro") { ?>
-        alternaLadoImagem();
-        $("#Titulo").text("Registro");
-    <?php }
+<?php 
+    if(isset($_GET["position"])) {
+        if ($_GET["position"] == "registro") 
+        { ?>
+            alternaLadoImagem();
+            $("#Titulo").text("Registro");
+        <?php }
         $t = isset($_GET["t"]) ? $_GET["t"] : "c";
-        if($t == "f") {?>
+        if($t == "f") 
+        { ?>
             $(document).ready(() => {
                 ativaBotaoFuncionarioClientes()
             });
-          
-    <?php } ?>
+        <?php } 
+    } ?>
 </script>

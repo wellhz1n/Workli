@@ -52,5 +52,5 @@
     </div>
 </div>
 <script type="application/javascript">
-    $("#Titulo").text("Home-Cliete")
+    $("#Titulo").text("Home do Cliente")
 </script>

@@ -83,13 +83,14 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </div>
     <div id="wrapperBody" class="col p-0" style="height: 100%;" >
-        <div id="app" style="height: 100%;">
+        <div id="app" style="height: fit-content; min-height: 100%;" class="d-flex flex-column">
             <?php require Logado()[0] ? 'templates/headerLogado.php' : 'templates/header.php' ?>
             <?php require load()[0]; ?>
             <?php
-        if (load()[1] != "Login" && load()[1] != "Chat" && (load()[2] == true && BuscaSecaoValor("NIVELUSUARIO") != 2)) {
-            require 'templates/footer.php';
-        }
+            if (load()[1] != "Login" && load()[1] != "Chat" && (load()[2] == true && BuscaSecaoValor("NIVELUSUARIO") != 2)) {
+                echo "<div class='restApp'></div>";
+                require 'templates/footer.php';
+            }
         ?>
         </div>
     </div>

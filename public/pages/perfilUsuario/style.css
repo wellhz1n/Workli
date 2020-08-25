@@ -211,12 +211,12 @@
         .cardsPerfilSuperior {
             display: flex;
             justify-content: center;
-            margin: 35px 3% 0 3%;
+            margin: 35px 3% 40px 3%;
         }
 
         @media only screen and (max-width: 1450px) { 
             .cardsPerfilSuperior {
-                margin: 65px 3% 0 3%;
+                margin: 75px 3% 40px 3%;
             }
         }
 
@@ -342,9 +342,6 @@
         /*#endregion Perfil*/
 
         /*#region Contato*/
-        .emailsPerfil {
-            
-        }
         #contatoBody {
             text-align: left;
         }
