@@ -138,4 +138,9 @@ class NotificacoesBO
         $obj->lista = $novoArr;
         return $obj;
     }
+    public function NovaNotificacao($titulo, $descricao, $idUsuario, $idUsuarioCriacao, $tipo, $idProjeto = null, $idChat = null)
+    {
+        $Notificacao = new Notificacao(-1, $descricao, $titulo, $idProjeto, $idChat, $idUsuario, $idUsuarioCriacao, null, $tipo);
+        return $this->NotificacoesDAO->SalvarAtualizarNotificacao($Notificacao);
+    }
 }

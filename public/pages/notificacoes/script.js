@@ -21,35 +21,76 @@ $(document).ready(async () => {
     document.addEventListener("BuscaNotificacao", async () => {
         await BuscaListaNotificacoes();
     });
-    //await WMExecutaAjax("NotificacoesBO","BuscaNotificacoesFormatadoComParametros",{PARAMETROS:[]})
-    $('#nav-notificacoes-tab').on('click', () => {
-        app.dataVue.Tabs.Notificacao = true;
-        app.dataVue.Tabs.Propostas = false;
-    });
-    $('#nav-proposta-tab').on('click', () => {
-        app.dataVue.Tabs.Notificacao = false;
-        app.dataVue.Tabs.Propostas = true;
-    });
+
     app.dataVue.TabNCarregando = false;
 
 
 
     //#region TAB PROPOSTA
-        if(dataVue.UsuarioContexto.NIVEL_USUARIO == 0){
+    if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0) {
 
-            app.$set(dataVue,"Propostas",{listaP:[],listaN:[]});
-            
-            $busca = await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes");
-            debugger
-            if($busca.error == undefined){
-                app.dataVue.Propostas.listaP = $busca.listaP;
-                app.dataVue.Propostas.listaN = $busca.listaN;
-            }
+        app.$set(dataVue,"TabPFiltro",{Projeto:null});
+        //#region Seletor
+        var ProjetoSeletor = () => {
+            return {
+                id: 'ProjetosSeletor',
+                visivel: () => { return true },
+                titulo: 'Filtrar por projeto',
+                disabled: () => { return false },
+                entidade: "TabPFiltro",
+                campo: "Projeto",
+                limpavel: true,
+                icone: false,
+                obrigatorio: false,
+                ajax: async (ss) => {
+                    return await new Promise(async resolve => {
 
-        }
-            //TODO TRAZER AS PROPOSTAS AI BELE WELL DO FUTURO
-            // await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes")
-            //{listaP: Array(1), listaN: Array(0)}
+                        var saida = await WMExecutaAjax("ProjetoBO", "GETPROJETOSPORUSUARIOCONTEXTO");
+                        saida.map(item => {
+                            return {
+                                id: item.id,
+                                nome: item.nome
+                            }
+                        });
+                        resolve(saida);
+
+                    });
+                }
+            };
+        };
+       await  app.$set(dataVue,"ProjetoSeletor",ProjetoSeletor());
+
+        //#endregion
+
+        app.$watch("dataVue.TabPFiltro",async (n,o)=>{
+                   await  BuscaPropostas();
+        },{immediate:true,deep:true});
+
+
+        app.$set(dataVue, "PropostasCarregando", true);
+        app.$set(dataVue, "Propostas", { listaP: [], listaN: [] });
+
+        await BuscaPropostas();
+
+        app.$set(dataVue, "CancelaProposta", async (idProposta) => {
+            $cancelou = await WMExecutaAjax("PropostaBO","RECUSARPROPOSTA",{IDPROPOSTA:idProposta});
+            await  BuscaPropostas();
+            MostraMensagem("Proposta cancelada com sucesso.",ToastType.SUCCESS,"Sucesso");
+
+        });
+        app.$set(dataVue, "AprovaProposta", async (idProposta) => {
+            $AProvou = await WMExecutaAjax("PropostaBO","APROVARPROPOSTA",{IDPROPOSTA:idProposta});
+            await  BuscaPropostas();
+            MostraMensagem("Proposta aprovada com sucesso.",ToastType.SUCCESS,"Sucesso");
+
+        });
+
+
+
+    }
+    //TODO TRAZER AS PROPOSTAS AI BELE WELL DO FUTURO
+    // await WMExecutaAjax("PropostaBO","BuscaPropostasPendentesClientes")
+    //{listaP: Array(1), listaN: Array(0)}
     //#endregion
 
 });
@@ -91,4 +132,13 @@ const BuscaListaNotificacoes = async () => {
     }
     app.dataVue.TabNListCarregando = false;
 
+}
+
+async function BuscaPropostas() {
+    $busca = await WMExecutaAjax("PropostaBO", "BuscaPropostasPendentesClientes", { IDPROJETO: dataVue.TabPFiltro.Projeto });
+    if ($busca.error == undefined) {
+        app.dataVue.Propostas.listaP = $busca.listaP;
+        app.dataVue.Propostas.listaN = $busca.listaN;
+        app.dataVue.PropostasCarregando = false;
+    }
 }

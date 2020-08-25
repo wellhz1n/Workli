@@ -1,39 +1,21 @@
 <?php
-@require_once("../DAO/PropostaDAO.php");
-@require_once("../Enums/UpgradesEnum.php");
-@require_once("../functions/Conexao.php");
-@require_once("../functions/Session.php");
-@require_once("../Enums/SecoesEnum.php");
-@require_once("../functions/ImageUtils.php");
+#region Requires
+require_once("../DAO/PropostaDAO.php");
+require_once("../Enums/UpgradesEnum.php");
+require_once("../functions/Conexao.php");
+require_once("../functions/Session.php");
+require_once("../Enums/SecoesEnum.php");
+require_once("../Enums/TipoNotificacaoEnum.php");
+require_once("../functions/ImageUtils.php");
+require_once("../BO/NotificacoesBO.php");
+require_once("../Classes/BOGeneric.php");
+require_once("../DAO/ProjetoDAO.php");
 
 
-try {
-    if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
-        $metodo = $_POST['metodo'];
-        $PropostaBO = new PropostaBO();
-        if ($metodo == "SalvarProposta") {
-            if (isset($_POST['proposta'])) {
-                $proposta = $_POST['proposta'];
-                $proposta = $PropostaBO->CriaPropostaCampo($proposta);
-                echo json_encode($PropostaBO->SalvarProposta($proposta));
-            } else {
-                throw new Exception("O parâmetro Proposta está em falta.");
-            }
-        }
+#endregion
 
-        if ($metodo == "BuscaPropostasPendentesClientes") {
-            $projeto = isset($_POST['IDPROJETO']) ? $_POST['IDPROJETO'] : null;
-            $resultado = $PropostaBO->BuscaPropostasPendentesClientes($projeto);
-            $resultado = json_encode($resultado,JSON_UNESCAPED_UNICODE);
-            echo $resultado;
-        }
-    }
-} catch (\Throwable $ex) {
-    $msg = new stdClass();
-    $msg->error = $ex->getMessage();
-    echo json_encode($msg);
-}
-class PropostaBO
+
+class PropostaBO extends BOGeneric
 {
     private $PropostaDAO;
     private $Proposta;
@@ -74,6 +56,54 @@ class PropostaBO
         $saida->listaN = $listaN;
         return $saida;
     }
+    public function RecusarProposta($idProposta)
+    {
+
+        $Recusou = $this->PropostaDAO->RecusarProposta($idProposta);
+        if ($Recusou) {
+
+            $this->Proposta = GetByIdGeneric('proposta', Proposta::class, $idProposta);
+            $_ProjetoDAO =  new ProjetoDAO();
+            $Titulo = $_ProjetoDAO->GetTituloProjetoPorId($this->Proposta->IdServico);
+            $_NotificacaoBO = new NotificacoesBO();
+            $idUsuarioFuncionario = GetIdUsuarioComIdFuncionario($this->Proposta->IdFuncionario);
+            $_NotificacaoBO->NovaNotificacao(
+                "Proposta Recusada",
+                "Sua Proposta do Projeto: <strong style='color: yellow;'>{$Titulo["nome"]}</strong> foi Recusada.",
+                $idUsuarioFuncionario["id"],
+                $this->GetUsuarioContexto(),
+                TipoNotificacaoEnum::ERROR
+            );
+            return true;
+        } else
+            return false;
+    }
+    public function AprovarProposta($idProposta)
+    {
+
+        $idsParaRecusar = $this->PropostaDAO->GetPropostasParaoMesmoProjetoExecetoId($idProposta);
+        foreach ($idsParaRecusar as $key => $value) {
+            $this->RecusarProposta($value["id"]);
+        }
+        $Prop = $this->PropostaDAO->AprovarProposta($idProposta);
+        if ($Prop) {
+            $this->Proposta = GetByIdGeneric('proposta', Proposta::class, $idProposta);
+            $_ProjetoDAO =  new ProjetoDAO();
+            $Titulo = $_ProjetoDAO->GetTituloProjetoPorId($this->Proposta->IdServico);
+            $_NotificacaoBO = new NotificacoesBO();
+            $idUsuarioFuncionario = GetIdUsuarioComIdFuncionario($this->Proposta->IdFuncionario);
+            $_NotificacaoBO->NovaNotificacao(
+                "Proposta Aceita",
+                "Sua Proposta do Projeto: <strong style='color: yellow;'>{$Titulo["nome"]}</strong> foi Aceita.",
+                $idUsuarioFuncionario["id"],
+                $this->GetUsuarioContexto(),
+                TipoNotificacaoEnum::SUCCESS
+            );
+            $_ProjetoDAO->SetProjetoSituacao(1,$this->Proposta->IdServico);
+            return true;
+        } else
+            return false;
+    }
     #endregion
 
 
@@ -104,4 +134,51 @@ class PropostaBO
         return $p;
     }
     #endregion
+}
+
+
+
+try {
+    if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
+        $metodo = $_POST['metodo'];
+        $PropostaBO = new PropostaBO();
+        if ($metodo == "SalvarProposta") {
+            if (isset($_POST['proposta'])) {
+                $proposta = $_POST['proposta'];
+                $proposta = $PropostaBO->CriaPropostaCampo($proposta);
+                echo json_encode($PropostaBO->SalvarProposta($proposta));
+            } else {
+                throw new Exception("O parâmetro Proposta está em falta.");
+            }
+        }
+
+        if ($metodo == "BuscaPropostasPendentesClientes") {
+            $projeto = isset($_POST['IDPROJETO']) ? $_POST['IDPROJETO'] : null;
+            $resultado = $PropostaBO->BuscaPropostasPendentesClientes($projeto);
+            $resultado = json_encode($resultado, JSON_UNESCAPED_UNICODE);
+            echo $resultado;
+        }
+        if ($metodo == "RECUSARPROPOSTA") {
+            if (isset($_POST['IDPROPOSTA'])) {
+                $proposta = $_POST['IDPROPOSTA'];
+                $proposta = $PropostaBO->RecusarProposta($proposta);
+                echo json_encode($proposta);
+            } else {
+                throw new Exception("O parâmetro IDPROPOSTA está em falta.");
+            }
+        }
+        if ($metodo == "APROVARPROPOSTA") {
+            if (isset($_POST['IDPROPOSTA'])) {
+                $proposta = $_POST['IDPROPOSTA'];
+                $proposta = $PropostaBO->AprovarProposta($proposta);
+                echo json_encode($proposta);
+            } else {
+                throw new Exception("O parâmetro IDPROPOSTA está em falta.");
+            }
+        }
+    }
+} catch (\Throwable $ex) {
+    $msg = new stdClass();
+    $msg->error = $ex->getMessage();
+    echo json_encode($msg);
 }

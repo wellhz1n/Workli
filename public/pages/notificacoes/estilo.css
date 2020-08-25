@@ -21,6 +21,14 @@
 .fade-leave-to {
   opacity: 0;
 }
+.fader-enter-active,
+.fader-leave-active {
+  transition: opacity .1s ease-in-out;
+}
+.fader-enter,
+.fader-leave-to {
+  opacity: 0;
+}
 
 .filtrosWrapper {
   margin-top: 10px;
@@ -186,6 +194,28 @@
   font-size: 50px !important;
 }
 .imagemTamanhoUser{
-  height: 50px !important;
-  width: 50px !important;
+  height: 45px !important;
+  width: 45px !important;
+}
+.wrapperMensagemVazia{
+  display: flex;
+  padding: 1%;
+}
+.wrapperMensagemVazia > p{
+  padding: 4%;
+  word-break: break-word;
+}
+.wrapperMensagemVazia > img{
+  height: 58vh;
+  padding: 1%;
+}
+
+@media (max-width:800px) {
+  .wrapperMensagemVazia{
+      flex-direction: column;
+  }
+  .ContainerWrapperGeralNotificacoes{
+    width: 100% !important;
+    margin: 0px !important;
+  }
 }

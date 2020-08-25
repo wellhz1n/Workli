@@ -1,24 +1,25 @@
 <?php
-    @include("../Classes/Usuario.php");
-    @include("../DAO/UsuarioDAO.php");
-    @include("../functions/ImageUtils.php");
-    @include("../functions/EnumUtils.php"); 
+@require_once("../Classes/Usuario.php");
+@require_once("../DAO/UsuarioDAO.php");
+@require_once("../functions/ImageUtils.php");
+@require_once("../functions/EnumUtils.php");
+if (!class_exists(SituacaoEnum::class, false))
     @require_once("../Enums/SecoesEnum.php");
-    @require_once("../functions/Session.php");
+@require_once("../functions/Session.php");
 
 if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     $metodo = $_POST['metodo'];
     $userBO =  new UsuarioBO;
     if ($metodo == "GetUsuarioTable")
         $userBO->GetUsuarioTable();
-    if($metodo == "GetUsuarioAdmTable")
+    if ($metodo == "GetUsuarioAdmTable")
         $userBO->GetUsuarioAdmTable();
-    if($metodo == "GetUsuarioNivelSelect")
+    if ($metodo == "GetUsuarioNivelSelect")
         $userBO->GetUsuarioNivelSelect();
-    if($metodo == "DeleteUsuario"){
+    if ($metodo == "DeleteUsuario") {
         $id = $_POST['ID'];
         $userBO->DeleteUsuario($id);
-        }
+    }
     if ($metodo == "CadastraUsuario") {
         $_usr = $_POST['Usuario'];
         $userBO->CadastraUsuario($_usr);
@@ -31,7 +32,7 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $em = $_POST['EMAIL'];
         $userBO->VerificaSeEmailExiste($em);
     }
-    if($metodo == "RegistraUsuarioAdm"){
+    if ($metodo == "RegistraUsuarioAdm") {
         $_usr = $_POST['Usuario'];
         $userBO->RegistraUsuarioAdm($_usr);
     }
@@ -41,12 +42,12 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $idUsuario = $_POST['idUsuario'];
         $userBO->EditaUsuario($nomeCampo, $valorCampo, $idUsuario);
     }
-    if($metodo == "SalvaImagem"){
+    if ($metodo == "SalvaImagem") {
         $img = $_POST['IMAGEM'];
         $userBO->SalvaImagem($img);
     }
 
-    if($metodo == "SalvaImagemBanner"){
+    if ($metodo == "SalvaImagemBanner") {
         $img = $_POST['IMAGEM'];
         $userBO->SalvaImagemBanner($img);
     }
@@ -56,18 +57,18 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "Logout") {
         $userBO->Logout();
     }
-    if($metodo == "GetUsuarioById"){
+    if ($metodo == "GetUsuarioById") {
         $userBO->GetUsuarioById($_POST["ID"]);
     }
-    if($metodo == "GetFuncionarioById") {
+    if ($metodo == "GetFuncionarioById") {
         $userBO->GetFuncionarioById($_POST["ID"]);
     }
-    if($metodo == "GetBannerById") {
+    if ($metodo == "GetBannerById") {
         $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         $userBO->GetBannerById($id);
     }
 
-    if($metodo == "BuscaNumeroUsuarios") {
+    if ($metodo == "BuscaNumeroUsuarios") {
         $userBO->BuscaNumeroUsuarios();
     }
 }
@@ -117,16 +118,17 @@ class UsuarioBO
         echo json_encode($data);
         return json_encode($data);
     }
-    public function GetUsuarioNivelSelect(){
+    public function GetUsuarioNivelSelect()
+    {
         $nivelArr = EnumParaArray(NivelUsuario::class);
         $nivelIconeArr = EnumParaArray(NivelUsuarioIcone::class);
         $resultado = array();
         foreach ($nivelArr as $key => $value) {
             $cl = new stdClass;
             $cl->id = $value;
-            $cl->nome = $key == "Adm"?"Administrador":$key;
+            $cl->nome = $key == "Adm" ? "Administrador" : $key;
             $cl->icone = $nivelIconeArr[$key];
-            array_push($resultado,$cl);
+            array_push($resultado, $cl);
         }
         echo json_encode($resultado);
     }
@@ -139,13 +141,13 @@ class UsuarioBO
             $teste->resultados[$key]["NivelIcone"] = array();
             if ($value["nivel_usuario"] == '0')
                 array_push($teste->resultados[$key]["NivelIcone"], "<i class='fas fa-user' style='position:relative;left:40%;' />");
-            else if($value["nivel_usuario"] == '1')
+            else if ($value["nivel_usuario"] == '1')
                 array_push($teste->resultados[$key]["NivelIcone"], "<i class='fas fa-user-tie' style='position:relative;left:40%;' />");
-            else if($value["nivel_usuario"] == '2')
+            else if ($value["nivel_usuario"] == '2')
                 array_push($teste->resultados[$key]["NivelIcone"], "<i class='fas fa-user-shield' style='position:relative;left:40%;' />");
-            else if($value["nivel_usuario"] == '3')
+            else if ($value["nivel_usuario"] == '3')
                 array_push($teste->resultados[$key]["NivelIcone"], "<i class='fas fa-user-astronaut' style='position:relative;left:40%;' />");
-            }
+        }
         $data->data = $teste->resultados;
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
@@ -154,31 +156,31 @@ class UsuarioBO
         try {
             $usuario = json_decode($usuario, true);
             foreach ($usuario as $key => $valor) {
-                if($valor == "" && $key != "id") {
-                    throw new Exception("Preencha o campo ". ucwords($key)); //ucwords capitaliza as palavras
+                if ($valor == "" && $key != "id") {
+                    throw new Exception("Preencha o campo " . ucwords($key)); //ucwords capitaliza as palavras
                 }
             }
-            if(!filter_var($usuario["email"], FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($usuario["email"], FILTER_VALIDATE_EMAIL)) {
                 throw new Exception("Preencha o campo de email corretamente");
             }
 
             $usuario["cpf"] = str_replace(".", "", $usuario["cpf"]);
             $usuario["cpf"] = str_replace("-", "", $usuario["cpf"]); // Substitui os pontos e traços
 
-            if(strlen($usuario["cpf"]) != 11) {
+            if (strlen($usuario["cpf"]) != 11) {
                 throw new Exception("Preencha todo o campo de cpf");
             }
 
-            if($usuario["senha"] !== $usuario["repetirSenha"]) {
+            if ($usuario["senha"] !== $usuario["repetirSenha"]) {
                 throw new Exception("As duas senhas devem ser iguais.");
             }
 
-            
+
             $usuario['senha'] = md5($usuario['senha']);
             $usuario['nivel'] = isset($usuario['checkFuncionario']) ? 1 : 0;
-            $usuario['avaliacaoMedia'] = 4; 
+            $usuario['avaliacaoMedia'] = 4;
             $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
-       
+
             echo $Insert;
         } catch (Throwable $th) {
             $msg = new stdClass();
@@ -186,70 +188,69 @@ class UsuarioBO
             echo json_encode($msg->error);
         }
     }
-    public function RegistraUsuarioAdm($usuario){
-        try{
-            if(strlen($usuario["cpf"]) < 11)
+    public function RegistraUsuarioAdm($usuario)
+    {
+        try {
+            if (strlen($usuario["cpf"]) < 11)
                 throw new Exception("Cpf Invalido");
 
-            if($usuario['id'] == -1){
+            if ($usuario['id'] == -1) {
 
                 $usuario['senha'] = md5(123);
                 $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
                 echo $Insert;
-            }else{
+            } else {
                 $Up = $this->usuarioDAO->UpdateUsuario($usuario);
                 echo $Up;
             }
-
-        }
-        catch (Throwable $th) {
+        } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
         }
     }
-    public function RegistraUsuarioGoogle($usuario){
-        try{
-            if(strlen($usuario["cpf"]) < 11)
+    public function RegistraUsuarioGoogle($usuario)
+    {
+        try {
+            if (strlen($usuario["cpf"]) < 11)
                 throw new Exception("Cpf Invalido");
 
 
-                $usuario['senha'] = md5('');
-                $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
-                $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
-                $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']),$id);
-                
-                echo $Insert;
+            $usuario['senha'] = md5('');
+            $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
+            $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
+            $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);
 
-        }
-        catch (Throwable $th) {
+            echo $Insert;
+        } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
         }
     }
-    public function DeleteUsuario($id){
-        try{
-            if($id == BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO))
+    public function DeleteUsuario($id)
+    {
+        try {
+            if ($id == BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO))
                 throw new Exception("Não é possivel Remover o Usuario atual.");
             $delete = $this->usuarioDAO->DeleteUser($id);
             echo $delete;
-        }
-        catch (Throwable $th) {
+        } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
         }
     }
-    public function EditaUsuario($nomeCampo, $valorCampo, $idUsuario) {
+    public function EditaUsuario($nomeCampo, $valorCampo, $idUsuario)
+    {
 
         try {
-            if($valorCampo == "") {
-                throw new Exception("Preencha o campo ". ucwords($nomeCampo)); //ucwords capitaliza as palavras
+            if ($valorCampo == "") {
+                throw new Exception("Preencha o campo " . ucwords($nomeCampo)); //ucwords capitaliza as palavras
             }
 
-            if($nomeCampo == "cpf") {
-                if(strlen($valorCampo) != 14) {
+            if ($nomeCampo == "cpf") {
+                if (strlen($valorCampo) != 14) {
                     throw new Exception("Preencha todo o campo de Cpf");
                 }
                 $valorCampo = str_replace(".", "", $valorCampo);
@@ -260,15 +261,15 @@ class UsuarioBO
             $tabelaParaEditar = "usuarios";
 
             // IF ELSE PARA DEFINIR QUAL TABELA SERA EDITADA
-            if($nomeCampo == "curriculo" || $nomeCampo == "telefone") {
+            if ($nomeCampo == "curriculo" || $nomeCampo == "telefone") {
                 $tabelaParaEditar = "funcionario";
 
-                if($nomeCampo == "telefone") {
+                if ($nomeCampo == "telefone") {
                     $substituir = array("(", ")", " ", "-");
                     $valorCampo = str_replace($substituir, "", $valorCampo);
                     $nomeCampo = "numero_telefone";
                 }
-            } else if($nomeCampo == "avaliacaoMedia") {
+            } else if ($nomeCampo == "avaliacaoMedia") {
                 $numeroServicos = (Sql("SELECT sf.numeros_servicos FROM servicos_funcionario AS sf
                                         LEFT JOIN funcionario AS func ON func.id_usuario = $idUsuario  
                                         WHERE sf.id_funcionario = func.id"));
@@ -276,11 +277,10 @@ class UsuarioBO
 
                 $valorCampo = BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA) + ($valorCampo - BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA)) / $numeroServicos;
                 $tabelaParaEditar = "servicos_funcionario";
-                
-                if($nomeCampo == "avaliacaoMedia") {
+
+                if ($nomeCampo == "avaliacaoMedia") {
                     $nomeCampo = "avaliacao_media";
                 }
-                
             }
 
             $Insert = $this->usuarioDAO->EditaUsuario($nomeCampo, $valorCampo, $idUsuario, $tabelaParaEditar);
@@ -292,15 +292,15 @@ class UsuarioBO
                 CriaSecao(SecoesEnum::CPF, $valorCampo);
             } else if ($nomeCampo == "email") {
                 CriaSecao(SecoesEnum::EMAIL, $valorCampo);
-            } else if($nomeCampo == "curriculo") {
+            } else if ($nomeCampo == "curriculo") {
                 CriaSecao(SecoesEnum::CURRICULO, $valorCampo);
-            } else if($nomeCampo == "numero_telefone") {
+            } else if ($nomeCampo == "numero_telefone") {
                 CriaSecao(SecoesEnum::NUMERO_TELEFONE, $valorCampo);
-            } else if($nomeCampo == "avaliacao_media") {
+            } else if ($nomeCampo == "avaliacao_media") {
                 CriaSecao(SecoesEnum::AVALIACAO_MEDIA, $valorCampo);
             }
-                
-            
+
+
             echo $Insert . $numeroServicos;
         } catch (Throwable $th) {
             $msg = new stdClass();
@@ -309,32 +309,32 @@ class UsuarioBO
         }
     }
 
-    public function SalvaImagem($img){
-        
+    public function SalvaImagem($img)
+    {
+
         $idUsuario  = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-        try{
-            $img = ConvertBase64ToBlob($img, false,true);
-            $this->usuarioDAO->SalvarOuAtualizarImagem($img,$idUsuario);
+        try {
+            $img = ConvertBase64ToBlob($img, false, true);
+            $this->usuarioDAO->SalvarOuAtualizarImagem($img, $idUsuario);
             $img = ConvertBlobToBase64($img, true);
-            CriaSecao(SecoesEnum::FOTO_USUARIO,$img);
+            CriaSecao(SecoesEnum::FOTO_USUARIO, $img);
             echo "OK";
-        }
-        catch (Throwable $th) {
+        } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
         }
     }
 
-    public function SalvaImagemBanner($img){
-        
+    public function SalvaImagemBanner($img)
+    {
+
         $idUsuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-        try{
+        try {
             $img = ConvertBase64ToBlob($img, true);
-            $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img,$idUsuario);
+            $this->usuarioDAO->SalvarOuAtualizarImagemBanner($img, $idUsuario);
             echo "OK";
-        }
-        catch (Throwable $th) {
+        } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
@@ -355,7 +355,9 @@ class UsuarioBO
         Deslogar();
     }
 
-    public function BuscaNumeroUsuarios() {
+    public function BuscaNumeroUsuarios()
+    {
         echo json_encode($this->usuarioDAO->BuscaNumeroUsuarios());
     }
+ 
 }

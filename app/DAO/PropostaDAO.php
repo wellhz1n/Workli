@@ -25,6 +25,25 @@ class PropostaDAO
 
         return $result;
     }
+    public function RecusarProposta($idProposta)
+    {
+        $sql = "update proposta set situacao = 3 where id = ?";
+        $result = Update($sql, [$idProposta]);
+        return $result;
+    }
+    public function AprovarProposta($idProposta)
+    {
+        $sql = "update proposta set situacao = 1 where id = ?";
+        $result = Update($sql, [$idProposta]);
+        return $result;
+    }
+    public function GetPropostasParaoMesmoProjetoExecetoId($idProposta)
+    {
+        $sql = "select idServico from proposta where id = ?";
+        $resultado = Sql($sql, [$idProposta])->resultados[0];
+        $idsParaRecusar = Sql("select id from proposta where idServico = ? and id <> ?", [$resultado["idServico"], $idProposta])->resultados;
+        return $idsParaRecusar;
+    }
     #endregion
     #region Aba Proposta
     public function GetPropostaParaNotificacaoPendente($idUsuario, $idProjeto = null)
@@ -57,7 +76,7 @@ class PropostaDAO
          inner join servico S on S.id = P.idServico and S.situacao = 0
          inner join funcionario F on F.id = P.idFuncionario
          inner join usuarios UF on UF.id = F.id_usuario
-         inner join imagem_usuario IU on  IU.id_usuario = UF.id
+         left join imagem_usuario IU on  IU.id_usuario = UF.id
          inner join tipo_servico TS on TS.id = S.id_tipo_servico and TS.ativo = 0
          where P.idCliente = ? and P.situacao = 0 {$filtraProjeto}
          order by p.data_criacao";

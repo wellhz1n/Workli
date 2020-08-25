@@ -1,5 +1,5 @@
 <?php
-require("../../bootstrap.php");
+@require_once("../../bootstrap.php");
 class UsuarioDAO
 {
 
@@ -134,7 +134,8 @@ class UsuarioDAO
         return $resultado;
     }
 
-    public function SalvarOuAtualizarImagemBanner($img, $idUsuario) {
+    public function SalvarOuAtualizarImagemBanner($img, $idUsuario)
+    {
         $Busca = Sql("SELECT id FROM imagem_usuario WHERE id_usuario =?", [$idUsuario]);
         if (count($Busca->resultados) == 1)
             $resultado = Insert("UPDATE imagem_usuario SET imagem_banner = ? WHERE id_usuario = ? ", [$img, $idUsuario]);
@@ -154,7 +155,8 @@ class UsuarioDAO
         return $retorno;
     }
 
-    public function GetFuncionarioCompletobyId($id) {
+    public function GetFuncionarioCompletobyId($id)
+    {
         $retorno = Sql("SELECT u.id,u.nome,u.email,u.cpf,u.nivel_usuario,im.imagem, func.avaliacao_media FROM usuarios AS u
                         LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id  
                         LEFT JOIN funcionario AS func ON func.id_usuario = u.id
@@ -162,18 +164,19 @@ class UsuarioDAO
         return $retorno;
     }
 
-    public function GetImagemBannerbyId($id) {
+    public function GetImagemBannerbyId($id)
+    {
         $retorno = Sql("SELECT u.id, img.imagem_banner FROM usuarios as u
                         LEFT JOIN imagem_usuario AS img ON img.id_usuario = u.id
                         WHERE u.id = ? ", [$id]);
         return $retorno;
     }
 
-    public function BuscaNumeroUsuarios() 
+    public function BuscaNumeroUsuarios()
     {
         $retorno = Sql("SELECT COUNT(id) FROM usuarios");
         return $retorno->resultados[0];
     }
-
+   
 }
 // $USR->example();
