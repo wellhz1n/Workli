@@ -224,12 +224,12 @@
             padding-right: 0.9% !important;
         }
         
-        .botaoEditarPerfil {
+        #botaoEditarPerfil {
             font-size: 20px;
             cursor: pointer;
         }
 
-        .botaoEditarPerfil:active {
+        #botaoEditarPerfil:active {
             font-size: 22px;
         }
 
@@ -421,10 +421,86 @@
             }
           }
         /*#endregion Status da Conta*/
-        /*#endregion Linha de cima ------------------------------------------------------------------------------ */
+    /*#endregion Linha de cima ------------------------------------------------------------------------------ */
 
 /*#endregion Parte Inferior - Cards -------------------------------------------------------------------------------- */
 
+/*#region Parte Modal Editar Perfil ---------------------------------------------------------------------------------------------- */
 
+.tituloModalEP {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+
+.bodyModalEPWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    padding: 30px;
+}
+.bodyModalEP {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inputPerfil {
+    width: 75%;
+}
+
+.inputPerfil label {
+    font-size: 20px !important;
+    color: #090f18;
+    font-weight: 700;
+}
+
+.inputPerfil > input, .inputPerfil div.form-control {
+    margin-bottom: 15px;
+    cursor: text;
+}
+
+.inputPerfil div.form-control {
+    padding: 4px 12px 4px !important;
+}
+
+.inputPerfil > .row > .col-8 {
+    padding: 0 !important;
+}
+
+#botaoSalvarWrapperEP {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 5%;
+}
+#botaoSalvarEP {
+    margin-top: 30px;
+    height: 40px;
+    width: 30%;
+    border-radius: 10px;
+    border: none;
+    background-color: #3ab83a;
+    font-family: Poppins-Bold;
+    color: white;
+    word-spacing: 5px;
+    letter-spacing: 1px;
+    font-size: 20px;
+}
+
+#botaoSalvarEP:focus {
+    outline: none;
+    border: 3px solid #319731;
+}
+
+/* #endregion Parte Modal Editar Perfil-------------------------------------------------------------------------------------------*/
 
 

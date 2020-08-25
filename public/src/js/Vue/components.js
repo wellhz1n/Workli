@@ -193,6 +193,7 @@ var WMContainer = Vue.component('wm-container', {
             camp.map(x => {
                 x.stringEntidade = `dataVue.${x.entidade}.${x.campo}`;
             });
+            debugger
             this.dataCampos = camp;
         }
     },
@@ -270,6 +271,7 @@ var WM_Input = Vue.component('wm-input', {
             type: String,
             required: true
         },
+        class_pai_wrapper: String,
         obrigatorio: {
             Boolean,
             default: false
@@ -294,15 +296,18 @@ var WM_Input = Vue.component('wm-input', {
         }
     },
     template: `
-  <div v-if="this.visivel(this)">
+  <div v-if="this.visivel(this)" :class="[class_pai_wrapper]">
     <label style="font-size:20px" v-if="this.required" :for="id">{{titulo}} *</label>
     <label style="font-size:20px"  v-else :for="id">{{titulo}}</label>
-    <input type="text" 
-    :value="value"  :id="id" 
-    @input="input($event.target.value)" 
-    v-on:change="onchange($event.target.value)" 
-    :disabled="disabled(this)"
-    :class=" ['form-control','wminput',this.classe]" />
+    <input 
+        type="text" 
+        :value="value"  
+        :id="id" 
+        @input="input($event.target.value)" 
+        v-on:change="onchange($event.target.value)" 
+        :disabled="disabled(this)"
+        :class=" ['form-control','wminput',this.classe]" 
+    />
  
  </div>
  <div v-else></div>
@@ -380,7 +385,8 @@ var WM_TextArea = Vue.component('wm-textarea', {
         tamanhoMinimo: {
             type: Number,
             default: 0
-        }
+        },
+        class_pai_wrapper: String,
     },
     computed: {},
     data: function () {
@@ -393,7 +399,7 @@ var WM_TextArea = Vue.component('wm-textarea', {
         }
     },
     template: `
-  <div v-if="this.visivel(this)">
+  <div v-if="this.visivel(this)" :class="[class_pai_wrapper]">
   <div class="row justify-content-start">
         <div class="col-8">
         <label style="font-size:20px" v-if="this.required" :for="id">{{titulo}} *</label>
@@ -643,7 +649,9 @@ var WM_Select = Vue.component('wm-select', {
 });
 var VSELECT = Vue.component('v-select', VueSelect.VueSelect);
 
+var TAGSINPUT = Vue.component('tags-input', VueTagsInput.tagsInputs);
 
+var STARRATING = Vue.component('star-rating', VueStarRating.default);
 
 var WMUSERIMG = Vue.component('wm-user-img', {
     props: {

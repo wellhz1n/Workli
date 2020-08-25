@@ -57,9 +57,6 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
-            <!-- <div id="maskEditImg" class="editimgbox ml-2" hidden>
-                <i id="cameraIconPerfil" class="fas fa-camera" aria-hidden></i>
-            </div> -->
             <wm-user-img 
                 :img="dataVue.Usuario.imagem" 
                 :width="'14.2vw'" 
@@ -110,7 +107,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                     <div class="cardQuadradoTitulo">
                         Perfil
                     </div>
-                    <div class="botaoEditarPerfil">
+                    <div id="botaoEditarPerfil">
                         <i class="fa fa-edit"></i>
                     </div>
                 </div>
@@ -182,9 +179,65 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         </div>
     </div>
 </div>
+
+<!--#region Modal de Edit Perfil-->
+<wm-modal 
+        :visivel="dataVue.modalVisivelEditPerfil" 
+        :callback="dataVue.callbackEP"
+        id="modalEdit"
+        height="65%"
+>
+    <template v-slot:header>
+        <div class="tituloModalEP">
+            EDITAR DADOS DO PERFIL        
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="bodyModalEPWrapper">
+            <div class="bodyModalEP">
+                <wm-input 
+                    entidade="usuarioDados" 
+                    id="inputNomeP" 
+                    campo="nome" 
+                    titulo="Nome" 
+                    class_pai_wrapper="inputPerfil"
+                    :obrigatorio="true"
+                ></wm-input>
+                <wm-input 
+                    entidade="usuarioDados" 
+                    id="inputProfissaoP" 
+                    campo="profissao" 
+                    titulo="Profissão" 
+                    class_pai_wrapper="inputPerfil"
+                ></wm-input>
+                <div class="inputPerfil">
+                    <label>Adicionar competências</label>
+                    <tags-input placeholder="Tags input"></tags-input>
+                </div>
+                <wm-textarea
+                    entidade="usuarioDados" 
+                    id="inputDescricaoP" 
+                    campo="descricao" 
+                    titulo="Descrição" 
+                    class_pai_wrapper="inputPerfil"
+                ></wm-textarea>
+            </div>
+            <!-- WMVerificaForm() -->
+            <div id="botaoSalvarWrapperEP">
+                <button id="botaoSalvarEP" @click="salvarEP">
+                    Salvar <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div> <!-- Apenas para deixar o footer vazio.-->
+    </template>
+</wm-modal>
+<!--#endregion -->
+
+
 <!-- Modal de Crop -->
-
-
 <wm-crop-modal 
     :img="dataVue.imagemToCrop" 
     :visivel="dataVue.modalVisivelController" 

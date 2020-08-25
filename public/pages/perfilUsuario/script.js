@@ -110,6 +110,7 @@ await retornaValorAvaliacao();
 
     /*----------------- CÓDIGO PARA ABRIR e fechar MODAL --------------*/
     app.$set(dataVue, "modalVisivelController", false);
+
     app.$set(dataVue, "abremodal", async () => {
         dataVue.modalVisivelController = true;
         dataVue.imagemCropada = null;
@@ -119,6 +120,22 @@ await retornaValorAvaliacao();
         dataVue.modalVisivelController = false;
     });
 
+
+    
+    
+    app.$set(dataVue, "modalVisivelEditPerfil", false); /* Modal de Editar Perfil*/
+
+    function abrirFecharModalEP() {
+        dataVue.modalVisivelEditPerfil = !dataVue.modalVisivelEditPerfil;
+    }
+
+    $("#botaoEditarPerfil").on("click", () => {
+        abrirFecharModalEP();
+    })
+
+    app.$set(dataVue, "callbackEP", () => {
+        dataVue.modalVisivelEditPerfil = false;
+    });
     /*--------------------------------------------------------*/
 
     /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
@@ -164,6 +181,15 @@ await retornaValorAvaliacao();
             dataVue.configuracoesCrop.redondo = "rectangle-stencil";
         }
     });
+
+    app.$set(dataVue, "usuarioDados", {
+        nome: "",
+        profissao: ""
+    });
+
+
+    /* Atualiza os dados de editar perfil */
+    dataVue.usuarioDados.nome = dataVue.UsuarioContexto.Nome
 });
 
 function retornaValorAvaliacao() {
