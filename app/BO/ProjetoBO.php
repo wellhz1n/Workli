@@ -152,12 +152,7 @@ class ProjetoBO
     public function GetProjetosPorUsuarioContexto()
     {
         $idUsuarioContexto = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-        if (BuscaSecaoValor(SecoesEnum::SERVICOSSELETOR) != null)
-            $resultados = json_decode(BuscaSecaoValor(SecoesEnum::SERVICOSSELETOR));
-        else {
-            $resultados = $this->ProjetoDAO->GetProjetosPorUsuario($idUsuarioContexto);
-            CriaSecao(SecoesEnum::SERVICOSSELETOR, json_encode($resultados));
-        }
+        $resultados = $this->ProjetoDAO->GetProjetosPorUsuario($idUsuarioContexto);
         return $resultados;
     }
     public function SetProjetoSituacao($idProjeto, $Situacao)

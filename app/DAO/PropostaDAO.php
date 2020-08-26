@@ -79,7 +79,7 @@ class PropostaDAO
          left join imagem_usuario IU on  IU.id_usuario = UF.id
          inner join tipo_servico TS on TS.id = S.id_tipo_servico and TS.ativo = 0
          where P.idCliente = ? and P.situacao = 0 {$filtraProjeto}
-         order by p.data_criacao";
+         order by p.data_criacao desc";
         $result = Sql($sql, [$idUsuario]);
         return $result->resultados;
     }

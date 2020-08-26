@@ -1,7 +1,7 @@
 $(document).ready(async () => {
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-    await app.$set(dataVue, 'Tabs', { Notificacao: false, Propostas: true });
+    await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
     await app.$set(dataVue, 'TabNCategorias', GetTipoMensagem());
     await app.$set(dataVue, "TabNPagina", 1);
     await app.$set(dataVue, "TabNListCarregando", false);
@@ -17,9 +17,10 @@ $(document).ready(async () => {
     }, { deep: true });
     await app.$watch("dataVue.TabNCategorias", async function (a, o) {
         await BuscaListaNotificacoes();
-    }, { deep: true });
+    }, { immediate:true,deep: true });
     document.addEventListener("BuscaNotificacao", async () => {
         await BuscaListaNotificacoes();
+        await BuscaPropostas();
     });
 
     app.dataVue.TabNCarregando = false;
@@ -29,7 +30,7 @@ $(document).ready(async () => {
     //#region TAB PROPOSTA
     if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0) {
 
-        app.$set(dataVue,"TabPFiltro",{Projeto:null});
+        app.$set(dataVue, "TabPFiltro", { Projeto: null });
         //#region Seletor
         var ProjetoSeletor = () => {
             return {
@@ -58,13 +59,13 @@ $(document).ready(async () => {
                 }
             };
         };
-       await  app.$set(dataVue,"ProjetoSeletor",ProjetoSeletor());
+        await app.$set(dataVue, "ProjetoSeletor", ProjetoSeletor());
 
         //#endregion
 
-        app.$watch("dataVue.TabPFiltro",async (n,o)=>{
-                   await  BuscaPropostas();
-        },{immediate:true,deep:true});
+        app.$watch("dataVue.TabPFiltro", async (n, o) => {
+            await BuscaPropostas();
+        }, { immediate: true, deep: true });
 
 
         app.$set(dataVue, "PropostasCarregando", true);
@@ -73,16 +74,22 @@ $(document).ready(async () => {
         await BuscaPropostas();
 
         app.$set(dataVue, "CancelaProposta", async (idProposta) => {
-            $cancelou = await WMExecutaAjax("PropostaBO","RECUSARPROPOSTA",{IDPROPOSTA:idProposta});
-            await  BuscaPropostas();
-            MostraMensagem("Proposta cancelada com sucesso.",ToastType.SUCCESS,"Sucesso");
-
+            await BloquearTela()
+            $cancelou = await WMExecutaAjax("PropostaBO", "RECUSARPROPOSTA", { IDPROPOSTA: idProposta });
+            await BuscaPropostas();
+            MostraMensagem("Proposta cancelada com sucesso.", ToastType.SUCCESS, "Sucesso");
+            if (app.dataVue.Propostas.listaP.length == 0 && app.dataVue.Propostas.listaN.length == 0 && app, dataVue.TabPFiltro.Projeto != null)
+                app.$refs.SeletorFiltra.$refs.ProjetosSeletor.clearSelection();
+            await DesbloquearTela();
         });
         app.$set(dataVue, "AprovaProposta", async (idProposta) => {
-            $AProvou = await WMExecutaAjax("PropostaBO","APROVARPROPOSTA",{IDPROPOSTA:idProposta});
-            await  BuscaPropostas();
-            MostraMensagem("Proposta aprovada com sucesso.",ToastType.SUCCESS,"Sucesso");
-
+            await BloquearTela();
+            $AProvou = await WMExecutaAjax("PropostaBO", "APROVARPROPOSTA", { IDPROPOSTA: idProposta });
+            await BuscaPropostas();
+            MostraMensagem("Proposta aprovada com sucesso.", ToastType.SUCCESS, "Sucesso");
+            if (app.dataVue.Propostas.listaP.length == 0 && app.dataVue.Propostas.listaN.length == 0 && app, dataVue.TabPFiltro.Projeto != null)
+                app.$refs.SeletorFiltra.$refs.ProjetosSeletor.clearSelection();
+            await DesbloquearTela();
         });
 
 

@@ -99,7 +99,7 @@ class PropostaBO extends BOGeneric
                 $this->GetUsuarioContexto(),
                 TipoNotificacaoEnum::SUCCESS
             );
-            $_ProjetoDAO->SetProjetoSituacao(1,$this->Proposta->IdServico);
+            $_ProjetoDAO->SetProjetoSituacao($this->Proposta->IdServico,1);
             return true;
         } else
             return false;
