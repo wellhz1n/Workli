@@ -1,9 +1,1 @@
-2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.servico' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Can't create table `worklidbteste`.`proposta` (errno: 150 "Foreign key constraint is incorrectly formed")	2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.proposta' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.proposta' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.proposta' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.proposta' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Table 'worklidbteste.proposta' doesn't exist	2020-8-6 
-                        20:21:05 #Error: Can't create table `worklidbteste`.`notificacoes` (errno: 150 "Foreign key constraint is incorrectly formed")	
+2020-8-30:12:29:11 #Error: Query was empty

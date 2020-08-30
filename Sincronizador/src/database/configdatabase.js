@@ -17,4 +17,4 @@ var connection = mysql.createPool({
     password: '',
     database: STARTUP.database
 });
-module.exports = connection;
+module.exports = {connection,database:STARTUP.database};

@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Executar Sync",
+            "program": "${workspaceFolder}/Sincronizador/src/index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Executar API",
             "program": "${workspaceFolder}/WorkliNodeAPI/src/index.js"
         },

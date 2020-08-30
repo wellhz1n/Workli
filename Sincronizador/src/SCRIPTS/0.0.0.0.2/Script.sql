@@ -1,4 +1,4 @@
--- Wellington.Ramos em 15/07/2020 Tarefa #6
+-- Wellington.Ramos em 15/07/2020 Tarefa #6;
 alter table servico change Ativo situacao int(1) not null default 0 ;
 
 CREATE TABLE IF NOT EXISTS proposta (
@@ -20,7 +20,7 @@ ALTER TABLE proposta MODIFY COLUMN idFuncionario int(11) NOT NULL;
 ALTER TABLE proposta MODIFY COLUMN idCliente int(11)  NOT NULL;
 ALTER TABLE proposta MODIFY COLUMN idServico int(11) NOT NULL;
 
--- Wellington.Ramos em 2/08/2020 Tarefa #7
+-- Wellington.Ramos em 2/08/2020 Tarefa #7;
 create table IF NOT EXISTS notificacoes(
 		id bigint auto_increment primary key,
 		descricao varchar(255),
