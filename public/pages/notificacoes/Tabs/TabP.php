@@ -48,9 +48,9 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else>
-                        <p>Funcionario</p>
-                    </div>
-
+                    
                 </div>
+                        <div v-else>
+                            <p>Funcionario</p>
+                        </div>
 <script type="" src="pages/notificacoes/Tabs/TabP.js"></script>
