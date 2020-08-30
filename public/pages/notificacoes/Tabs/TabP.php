@@ -1,3 +1,4 @@
+<!-- Cliente -->
 <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0">
                     <div class="wrapperMensagemVazia" v-if="dataVue.Propostas !== undefined && dataVue.Propostas.listaP.length == 0 && dataVue.Propostas.listaN.length == 0 &&  !dataVue.PropostasCarregando && dataVue.TabPFiltro.Projeto == null ">
                         <p>Não encontramos nenhuma proposta para seus projetos, mas não se assuste é normal demorar um pouco para conseguir sua primeira proposta.</p>
@@ -50,7 +51,12 @@
                     </div>
                     
                 </div>
+<!-- FIM Cliente -->
+
+<!-- Funcionario -->
                         <div v-else>
                             <p>Funcionario</p>
                         </div>
+<!-- FIM Funcionario -->
+
 <script type="" src="pages/notificacoes/Tabs/TabP.js"></script>
