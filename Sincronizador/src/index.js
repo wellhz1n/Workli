@@ -1,47 +1,59 @@
-const banco = require("./database/configdatabase");
+const { connection: banco, database } = require("./database/configdatabase");
 const fs = require('fs');
 const path = require('path');
+const { resolve } = require("path");
 
 const APP = async () => {
+
     var pastas = [];
     let log = [];
     let logExec = [];
-    console.log('INICIANDO SYNC>>>>>>>>>>>>>>>>>>');
+    console.log("\x1b[41m","\x1b[37m","\x1b[5m",'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>INICIANDO SYNC>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     logExec.push('INICIANDO A SYNC')
     let pasta = path.resolve(__dirname, "SCRIPTS");
-    console.log(pasta);
-    fs.readdirSync(pasta).forEach(async f => pastas.push(f));
+    fs.readdirSync(pasta).map(async f => pastas.push(f));
     logExec.push(pastas);
-    console.log(pastas);
+    console.log("Versões Encontradas:","\x1b[32m",pastas);
     pastas = await VerificaUltimaSyncronizacao(pastas);
-    await pastas.forEach((p, i) => {
-        fs.readdirSync(path.resolve(__dirname, "SCRIPTS", p)).forEach(async file => {
+    for (const p of pastas) {
+        console.log("\x1b[35m",'INICIANDO Sql',"\x1b[32m",`${p}`)
+        const ListaFile = fs.readdirSync(path.resolve(__dirname, "SCRIPTS", p));
+        for (const file of ListaFile) {
             try {
                 await VerificaArquivo(p, file, log);
             } catch (err) {
                 log.push(err);
             }
-            await GerarLogeExecucao(logExec,p);
-            await GerarLog(log, p);
-        });
-    });
-    await SalvaUltimaSync();
-    await console.log('Fim');
-    setTimeout(()=>{
-        process.exit();
-    },10000);
+            GerarLogeExecucao(logExec, p);
+            GerarLog(log, p);
+        }
+        console.log("\x1b[35m",'FIM Sql',"\x1b[32m",`${p}`)
+
+    };
+    SalvaUltimaSync();
+    console.log("\x1b[41m","\x1b[37m","\x1b[5m",'-------------------------------------Fim------------------------------------');
+    process.exit();
+    // setTimeout(() => {
+    //    
+    // }, 10000);
 
     async function VerificaArquivo(p, file, listLog) {
+
         let query = fs.readFileSync(path.resolve(__dirname, "SCRIPTS", p, file)).toLocaleString();
         query = query.split(';');
-        query.forEach((item, i) => {
-            if (item == "" || item == "\r\n")
+        query.map((item, i) => {
+            if (item == "" || item == "\r\n"|| item == '')
                 query.splice(i, 1);
+            if (/--/.exec(item) != null)
+                query.splice(i, 1);
+            if (/[$][$][D][B][N][A][M][E][$][$]/.exec(item) != null)
+                query[i] = query[i].replace(/[$][$][D][B][N][A][M][E][$][$]/, database);
         });
-         for (let index = 0; index < query.length; index++) {
+
+        for (const item of query) {
             try {
-                let aply = await banco.query(`${query[index]}`);
-                logExec.push(`${aply.serverStatus == '2' ? "[OK]":"[WRN]"}-${query[index].trim()}`);
+                let aply = await banco.query(`${item}`);
+                logExec.push(`${aply[0].serverStatus == 2 ? "[OK]" : "[WRN]"}-${item.trim()}`);
             }
             catch (err) {
                 listLog.push(err);
@@ -66,17 +78,19 @@ const APP = async () => {
 
         catch (error) {
 
-            console.log("Tabela Sincronizacao Sendo Criada");
+            console.log("\x1b[32m","Tabela Sincronizacao Sendo Criada");
             let re = await banco.query("CREATE TABLE IF NOT EXISTS Sincronizador(id int(11) auto_increment Primary Key not null, data timestamp default current_timestamp,script varchar(255) not null)");
-            if (re[0])
-                console.log("Tabela Sincronizacao Criada");
+            if (re[0]) {
+                console.log("\x1b[32m","Tabela Sincronizacao Criada");
+                return localpastasArray;
+            }
         }
 
         return localpastasArray;
     }
     async function SalvaUltimaSync() {
         let localpastasArray = [];
-        await fs.readdirSync(pasta).forEach(async f => localpastasArray.push(f));
+        fs.readdirSync(pasta).forEach(async f => localpastasArray.push(f));
         if (localpastasArray.length > 1) {
             let scriptsJaexecutados = await banco.query(`select * from Sincronizador where script like ? `, [localpastasArray[localpastasArray.length - 2]]);
             if (scriptsJaexecutados[0].length > 0) {
@@ -85,28 +99,25 @@ const APP = async () => {
                 await banco.query(`insert into Sincronizador (script) values(?)`, [localpastasArray[localpastasArray.length - 2]]);
         }
     };
-   async function GerarLog(LogsList = [], p) {
+    function GerarLog(LogsList = [], p) {
         pathLog = path.resolve(__dirname, "..", "logs");
         let criarlog = fs.createWriteStream(`${pathLog}/Log${p}.txt`);
-        await LogsList.forEach(l => {
-            criarlog.write(`${new Date().toLocaleDateString('pt-BR')} 
-                        ${new Date().toLocaleTimeString()} #` + l + '\t');
-            console.log(`${new Date().toLocaleDateString('pt-BR')} 
-                     ${new Date().toLocaleTimeString()} #` + l + '\t');
+        LogsList.forEach(l => {
+            criarlog.write(`${new Date().toLocaleDateString('pt-BR')}:${new Date().toLocaleTimeString()} #` + l );
+            console.log( "\x1b[31m",`${new Date().toLocaleDateString('pt-BR')}:${new Date().toLocaleTimeString()} #` + l);
         });
         criarlog.end();
-        console.log('Arquivo de Log Criado em: ' + path.resolve('Log.txt'));
+        console.log("\x1b[32m",'Arquivo de Log Criado em: ' + path.resolve('Log.txt'));
 
     }
-    async function GerarLogeExecucao(LogsList = [], p) {
+    function GerarLogeExecucao(LogsList = [], p) {
         pathLog = path.resolve(__dirname, "..", "logs");
         let criarlog = fs.createWriteStream(`${pathLog}/LogRun${p}.txt`);
-        await LogsList.forEach(l => {
-            criarlog.write(`${new Date().toLocaleDateString('pt-BR')}
-            ${new Date().toLocaleTimeString()} #` + l + '\n');
+        LogsList.forEach(l => {
+            criarlog.write(`${new Date().toLocaleDateString('pt-BR')}:${new Date().toLocaleTimeString()} #` + l + '\n');
         });
         criarlog.end();
-        console.log('Arquivo de Log Criado em: ' + path.resolve(`LogRun${p}.txt`));
+        console.log("\x1b[32m",'Arquivo de LogExecucao Criado em: ' + path.resolve(`LogRun${p}.txt`));
 
     }
 

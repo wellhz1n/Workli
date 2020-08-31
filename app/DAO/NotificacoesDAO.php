@@ -42,7 +42,7 @@ class NotificacoesDAO
                     'enviada por:' as subtitulo,
                     U.nome as subdescricao,
                     CM.msg as descricao,
-                    cm.id_chat as id_chat,
+                    CM.id_chat as id_chat,
                     2 as tipo,
                     null as id_projeto,
                     CM.id_usuario_destinatario as id_usuario,
@@ -61,7 +61,7 @@ class NotificacoesDAO
                 'Nova Proposta' as titulo,
                 'Projeto:' as subtitulo,
                 S.nome as subdescricao,
-                concat('<strong>Funcionario</strong>: <small>',U.nome,'</small><br/><strong>Valor</strong>: <small>R$:',P.valor,'</small><br/>',p.descricao) COLLATE utf8mb4_unicode_ci as descricao  ,
+                concat('<strong>Funcionario</strong>: <small>',U.nome,'</small><br/><strong>Valor</strong>: <small>R$:',P.valor,'</small><br/>',P.descricao) COLLATE utf8mb4_unicode_ci as descricao  ,
                 null as id_chat,
                 1 as tipo,
                 S.id as id_projeto,
@@ -87,14 +87,14 @@ class NotificacoesDAO
             from proposta P
             inner join servico S on S.id = P.idServico
             inner join funcionario F on F.id =  P.idFuncionario
-            inner join usuarios U on u.id = F.id_usuario
-            inner join usuarios UC on UC.id = s.id_usuario
+            inner join usuarios U on U.id = F.id_usuario
+            inner join usuarios UC on UC.id = S.id_usuario
             )
             select * from ncomum where tipo <> 1 {$FiltraTipo}
             union  
             select distinct  * from NMensagem
                 {$SemProp}
-            order by data_hora desc;
+            order by data_hora desc
         ";
         $result = Sql($sql, [$idUsuario, $idUsuario]);
         return $result->resultados;
@@ -155,7 +155,7 @@ class NotificacoesDAO
                     'enviada por:' as subtitulo,
                     U.nome as subdescricao,
                     CM.msg as descricao,
-                    cm.id_chat as id_chat,
+                    CM.id_chat as id_chat,
                     2 as tipo,
                     null as id_projeto,
                     CM.id_usuario_destinatario as id_usuario,

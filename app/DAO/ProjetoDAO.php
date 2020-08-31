@@ -13,7 +13,7 @@ class ProjetoDAO
     #region CRUD
     public function SetProjetoSituacao($idProjeto, $situacao)
     {
-        $sql = "update servico set sitacao = ? where id =?";
+        $sql = "update servico set situacao = ? where id =?";
         return Update($sql, [$situacao, $idProjeto]);
     }
     public function SalvarOuAtulizarProjeto(Projeto $proj, $Novo = false)

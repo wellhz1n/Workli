@@ -15,7 +15,7 @@
                 </template>
             </div>
         </div>
-        <div style="height: 800vh" class="col-10  ">
+        <div style="height: fit-content;margin-bottom: 2%;" class="col-10  ">
             <div class="row justify-content-center ">
                 <div class="p-3 col-9">
                     <input placeholder="Pequise um Projeto" type="text" class="form-control" @input="
