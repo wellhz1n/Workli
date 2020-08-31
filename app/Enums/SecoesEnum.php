@@ -6,6 +6,7 @@ abstract class SecoesEnum
     #region USUARIO
     const LOGIN = "LOGIN";
     const NOME = "NOME";
+    const PROFISSAO = "PROFISSAO";
     const EMAIL = "EMAIL";
     const CPF = "CPF";
     const NIVEL_USUARIO = "NIVELUSUARIO";

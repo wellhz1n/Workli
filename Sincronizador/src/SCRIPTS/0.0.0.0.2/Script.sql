@@ -41,3 +41,14 @@ ALTER TABLE notificacoes MODIFY COLUMN descricao TEXT DEFAULT NULL NULL;
 
 ALTER TABLE imagem_usuario
 CHANGE extensao_imagem imagem_banner longblob;
+
+
+ALTER TABLE usuarios
+ADD COLUMN descricao TEXT
+AFTER nome;
+
+ALTER TABLE funcionario
+ADD COLUMN tags TEXT
+AFTER avaliacao_media,
+ADD COLUMN profissao VARCHAR(50)
+AFTER avaliacao_media;

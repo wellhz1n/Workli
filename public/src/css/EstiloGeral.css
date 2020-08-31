@@ -81,6 +81,10 @@ tr {
     width: 100%;
     height: 100%;
 }
+
+.d-contents {
+    display: contents;
+}
 /* SERVICO ITEM STYLE */
 
 .label-rating {
@@ -246,6 +250,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: infinite 2.3s loadingAnimation;
     -webkit-animation: infinite 2.3s loadingAnimation;
 }
 
@@ -1473,8 +1478,10 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 .cropperPerfil {
-    max-width: 95%;
-    max-height: 90%;
+    min-width: 60% !important;
+    min-height: 50% !important;
+    max-width: 90% !important;
+    max-height: 70% !important;
 }
 /*#endregion Modal Crop ------------------------------------------------------------------------------------------------*/
 
@@ -1535,3 +1542,42 @@ textarea::-webkit-scrollbar-thumb:hover {
     font-size: 14.2vw !important;
 }
 /*#endregion Imagem do Usuário ------------------------------------------------------*/
+
+
+/*#region Modal de Confirmação --------------------------------------- */
+
+#modalConfirmacao #filhoModal {
+    width: 25%;
+    height: 30%;
+    max-width: 300px;
+    max-height: 200px;
+}
+#tituloModalConfirmacao {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 20px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+
+#bodyModalConfirmacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    padding: 5px 5% 5px 5%;
+    font-size: 17px;
+}
+
+#footerModalConfirmacao {
+    padding: 10px 10% 10px 10%;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+/*#endregion Modal de Confirmação -----------------------------------*/

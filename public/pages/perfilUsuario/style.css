@@ -242,13 +242,17 @@
             justify-content: center;
             margin-left: 2%;
         }
+
+        .profissaoWrapper {
+            display: contents;
+        }
         
-        .nomeCP  {
+        #nomeCP  {
             font-size: 22px;
             font-weight: bold;
         }
 
-        .profCP {
+        #profCP {
             font-size: 21px;
             font-weight: 700;
             color: #aaa;
@@ -264,10 +268,10 @@
         }
 
         @media only screen and (max-width: 1500px) { 
-            .nomeCP {
+            #nomeCP {
                 font-size: 18px;
             }
-            .profCP {
+            #profCP {
                 font-size: 17px;
             }
             .profCPBolinha {
@@ -282,8 +286,9 @@
                 justify-content: center;
                 flex-direction: column;
             }
+
             .profCPBolinha {
-                font-size: 30px;
+                font-size: 28px;
                 line-height: 19px;
             }
         }
@@ -329,7 +334,7 @@
 
         }
 
-        .descricaoPerfil {
+        #descricaoPerfil {
             margin-top: 25px;
             text-align: justify;
             text-indent: 5%;
@@ -341,15 +346,6 @@
         
         /*#endregion Perfil*/
 
-        /*#region Contato*/
-        #contatoBody {
-            text-align: left;
-        }
-        .tituloContato {
-            font-weight: 700;
-            font-size: 18px;
-        }
-        /*#endregion Contato*/
         /*#region Status da Conta*/
 
         #statusBodyC {
@@ -458,6 +454,7 @@
     font-size: 20px !important;
     color: #090f18;
     font-weight: 700;
+    margin-bottom: 3px;
 }
 
 .inputPerfil > input, .inputPerfil div.form-control {
@@ -467,6 +464,19 @@
 
 .inputPerfil div.form-control {
     padding: 4px 12px 4px !important;
+}
+
+.shadowInputTags {
+    box-shadow: 0px 0px 0px 2px rgb(33, 136, 56);
+}
+
+.tagIndividual {
+    font-size: 30px !important;
+}
+
+.inputPerfil .wminput:focus {
+    border: 0;
+    box-shadow: 0px 0px 0px 2px rgb(33, 136, 56);
 }
 
 .inputPerfil > .row > .col-8 {
@@ -497,6 +507,8 @@
     outline: none;
     border: 3px solid #319731;
 }
+
+
 
 /* #endregion Parte Modal Editar Perfil-------------------------------------------------------------------------------------------*/
 

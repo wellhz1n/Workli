@@ -37,10 +37,8 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->RegistraUsuarioAdm($_usr);
     }
     if ($metodo == "EditaUsuario") {
-        $nomeCampo = $_POST['nomeCampo'];
-        $valorCampo = $_POST['valorCampo'];
-        $idUsuario = $_POST['idUsuario'];
-        $userBO->EditaUsuario($nomeCampo, $valorCampo, $idUsuario);
+        $usuarioDados = $_POST["UsuarioDados"];
+        $userBO->EditaUsuario($usuarioDados);
     }
     if ($metodo == "SalvaImagem") {
         $img = $_POST['IMAGEM'];
@@ -63,6 +61,11 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "GetFuncionarioById") {
         $userBO->GetFuncionarioById($_POST["ID"]);
     }
+
+    if ($metodo == "GetFuncionarioByIdDataEdit") {
+        $userBO->GetFuncionarioByIdDataEdit($_POST["ID"]);
+    }
+
     if ($metodo == "GetBannerById") {
         $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         $userBO->GetBannerById($id);
@@ -92,6 +95,13 @@ class UsuarioBO
         $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
         echo json_encode($saida[0]);
     }
+
+    public function GetFuncionarioByIdDataEdit($id) 
+    {
+        $saida = $this->usuarioDAO->GetFuncionarioDataEdit($id)->resultados;
+        echo json_encode($saida[0]);
+    }
+
     public function GetBannerById($id)
     {
         $saida = $this->usuarioDAO->GetImagemBannerbyId($id)->resultados;
@@ -241,67 +251,45 @@ class UsuarioBO
             echo json_encode($msg->error);
         }
     }
-    public function EditaUsuario($nomeCampo, $valorCampo, $idUsuario)
+    public function EditaUsuario($usuarioDados)
     {
 
         try {
-            if ($valorCampo == "") {
-                throw new Exception("Preencha o campo " . ucwords($nomeCampo)); //ucwords capitaliza as palavras
+
+            $usuarioDados["nome"] = trim($usuarioDados["nome"]); //Tira os espaços do começo e fim
+
+            if($usuarioDados["nome"] == "" || $usuarioDados["nome"] == null) {
+                throw new Exception("O campo de \"Nome\" é obrigatório.");
             }
-
-            if ($nomeCampo == "cpf") {
-                if (strlen($valorCampo) != 14) {
-                    throw new Exception("Preencha todo o campo de Cpf");
-                }
-                $valorCampo = str_replace(".", "", $valorCampo);
-                $valorCampo = str_replace("-", "", $valorCampo); // Substitui os pontos e traços
-            }
-
-
-            $tabelaParaEditar = "usuarios";
-
-            // IF ELSE PARA DEFINIR QUAL TABELA SERA EDITADA
-            if ($nomeCampo == "curriculo" || $nomeCampo == "telefone") {
-                $tabelaParaEditar = "funcionario";
-
-                if ($nomeCampo == "telefone") {
-                    $substituir = array("(", ")", " ", "-");
-                    $valorCampo = str_replace($substituir, "", $valorCampo);
-                    $nomeCampo = "numero_telefone";
-                }
-            } else if ($nomeCampo == "avaliacaoMedia") {
-                $numeroServicos = (Sql("SELECT sf.numeros_servicos FROM servicos_funcionario AS sf
-                                        LEFT JOIN funcionario AS func ON func.id_usuario = $idUsuario  
-                                        WHERE sf.id_funcionario = func.id"));
-                $numeroServicos = isset($numeroServicos->resultados[0]) ? $numeroServicos->resultados[0]["numeros_servicos"] + 1 : 1;
-
-                $valorCampo = BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA) + ($valorCampo - BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA)) / $numeroServicos;
-                $tabelaParaEditar = "servicos_funcionario";
-
-                if ($nomeCampo == "avaliacaoMedia") {
-                    $nomeCampo = "avaliacao_media";
-                }
-            }
-
-            $Insert = $this->usuarioDAO->EditaUsuario($nomeCampo, $valorCampo, $idUsuario, $tabelaParaEditar);
-
-
-            if ($nomeCampo == "nome") {
-                CriaSecao(SecoesEnum::NOME, $valorCampo);
-            } else if ($nomeCampo == "cpf") {
-                CriaSecao(SecoesEnum::CPF, $valorCampo);
-            } else if ($nomeCampo == "email") {
-                CriaSecao(SecoesEnum::EMAIL, $valorCampo);
-            } else if ($nomeCampo == "curriculo") {
-                CriaSecao(SecoesEnum::CURRICULO, $valorCampo);
-            } else if ($nomeCampo == "numero_telefone") {
-                CriaSecao(SecoesEnum::NUMERO_TELEFONE, $valorCampo);
-            } else if ($nomeCampo == "avaliacao_media") {
-                CriaSecao(SecoesEnum::AVALIACAO_MEDIA, $valorCampo);
+            if (strlen($usuarioDados["nome"]) < 3) { //Checa o length.
+                throw new Exception("O \"Nome\" é muito pequeno.");
             }
 
 
-            echo $Insert . $numeroServicos;
+            $partes = explode(',', $usuarioDados["tags"]);
+            $partes = array_map('trim', $partes);
+            $usuarioDados["tags"] = implode(',', $partes);
+
+            /* ----------------------------------- CÓDIGO DE CALCULO DE AVALIAÇÃO MÉDIA, NÃO DELETAR --------------------------------------*/
+
+            // $numeroServicos = (Sql("SELECT sf.numeros_servicos FROM servicos_funcionario AS sf
+            //                         LEFT JOIN funcionario AS func ON func.id_usuario = $idUsuario  
+            //                         WHERE sf.id_funcionario = func.id"));
+            // $numeroServicos = isset($numeroServicos->resultados[0]) ? $numeroServicos->resultados[0]["numeros_servicos"] + 1 : 1;
+
+            // $valorCampo = BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA) + ($valorCampo - BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA)) / $numeroServicos;
+            // $tabelaParaEditar = "servicos_funcionario";
+
+            // if ($nomeCampo == "avaliacaoMedia") {
+            //     $nomeCampo = "avaliacao_media";
+            // }
+            $Insert = $this->usuarioDAO->EditaUsuario($usuarioDados);
+
+            CriaSecao(SecoesEnum::NOME, $usuarioDados["nome"]);
+            CriaSecao(SecoesEnum::PROFISSAO, $usuarioDados["profissao"]);
+            
+            echo $Insert;
+
         } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();

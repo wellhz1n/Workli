@@ -1,6 +1,5 @@
 $(document).ready(async () => {
     
-    
 
     await BloquearTela();
     let img =  await GetSessaoPHP("FOTOUSUARIO");
@@ -16,20 +15,22 @@ $(document).ready(async () => {
   
     // });
 
-    function scrollHorizontally(e) {
-        e = window.event || e;
-        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        document.getElementById('tagsCPWrapper').scrollLeft -= (delta*20); // Multiplied by 40
-        e.preventDefault();
-    }
-    if (document.getElementById('tagsCPWrapper').addEventListener) {
-        // IE9, Chrome, Safari, Opera
-        document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
-        // Firefox
-        document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
-    } else {
-        // IE 6/7/8
-        document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+    if(document.getElementById("tagsCPWrapper")) {
+        function scrollHorizontally(e) {
+            e = window.event || e;
+            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+            document.getElementById('tagsCPWrapper').scrollLeft -= (delta*20); // Multiplied by 40
+            e.preventDefault();
+        }
+        if (document.getElementById('tagsCPWrapper').addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
+            // Firefox
+            document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+        } else {
+            // IE 6/7/8
+            document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+        }
     }
     //MODAL
     // $('#maskEditImg').on('click', () => {
@@ -60,29 +61,10 @@ $(document).ready(async () => {
 
     //    },800);
     // })
-    $('.cpf').mask('000.000.000-00');
-    $('.telefone').mask('(00) 0000-0000');
 
-    $(".telefone").keypress(() => {
-        if($(".telefone")[0].value[5] == "9" && $(".telefone")[0].value.length == 14) {
-            $(".telefone").keypress(() => {    
-                $('.telefone').mask('(00) 0 0000-0000');
-            });
-        };
-    });
-    
-    
-    $(".telefone").keyup((e) => {  
-        if ( $(".telefone")[0].value.length < 16) { 
-            if(e.keyCode == 8 || $(".telefone")[0].value[5] != 9 ) {        
-                $('.telefone').mask('(00) 0000-0000');
-            }
-        }
-    })
+    await DesbloquearTela();
 
-await DesbloquearTela();
-
-await retornaValorAvaliacao();
+    await retornaValorAvaliacao();
 
 
     /* Pega os dados do usuário do banco */    
@@ -127,15 +109,46 @@ await retornaValorAvaliacao();
 
     function abrirFecharModalEP() {
         dataVue.modalVisivelEditPerfil = !dataVue.modalVisivelEditPerfil;
+
+        setTimeout(
+            () => {
+                /* Aplica estilo css no input de tags */
+                $($("#tagsInput input")[0]).on("focus", ()=>{
+                    $($("#tagsInput .form-control")[0]).addClass("shadowInputTags");
+                });
+        
+                $($("#tagsInput input")[0]).on("focusout", ()=>{
+                    $($("#tagsInput .form-control")[0]).removeClass("shadowInputTags");
+                });
+                $($("#tagsInput input")[0]).attr("placeholder","Adicionar Tag")
+
+
+                $($("#tagsInput input")[0]).keydown(function(event){
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if(keycode == '8'){
+                        if($($("#tagsInput input")[0]).val() == "") {
+                            let tagsParaColocar = dataVue.usuarioDadosEdit.tags.split(",");
+                            tagsParaColocar.pop();
+                            dataVue.usuarioDadosEdit.tags = tagsParaColocar.join(",");
+                        }
+                    }
+                });
+        }, 200);
+        
     }
 
     $("#botaoEditarPerfil").on("click", () => {
         abrirFecharModalEP();
     })
 
-    app.$set(dataVue, "callbackEP", () => {
-        dataVue.modalVisivelEditPerfil = false;
+    app.$set(dataVue, "callbackEP", (salvar) => {
+        dataVue.abreModalConfirmacao();
+        if(salvar) {
+            dataVue.fechaModalConfirmacao(true, true);
+        }
     });
+
+    
     /*--------------------------------------------------------*/
 
     /*----------------- CÓDIGO PARA PASSAR IMAGEM PARA O CROP --------------*/
@@ -182,15 +195,90 @@ await retornaValorAvaliacao();
         }
     });
 
-    app.$set(dataVue, "usuarioDados", {
+
+    let funcionario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdDataEdit", {ID: usuarioId});
+    app.$set(dataVue, "usuarioDados", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
+            nome: funcionario.nome,
+            profissao: funcionario.profissao,
+            tags: funcionario.tags,
+            descricao: funcionario.descricao
+    });
+
+    atualizaOsDadosDoPerfil();
+
+
+    app.$set(dataVue, "usuarioDadosEdit", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
         nome: "",
-        profissao: ""
+        profissao: "",
+        tags: [],
+        descricao: ""
     });
 
 
-    /* Atualiza os dados de editar perfil */
-    dataVue.usuarioDados.nome = dataVue.UsuarioContexto.Nome
+    
+    /* Função de Salvar os dados*/ 
+    app.$set(dataVue, "mandarDados", async () => {
+        let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
+        let objectToSend = Object.assign(dataVue.usuarioDadosEdit, {"ID": usuarioId});
+        let resultado = await WMExecutaAjax("UsuarioBO", "EditaUsuario", {UsuarioDados: objectToSend});
+        if(resultado) {
+            if(resultado != 1) 
+            {
+                toastr.info(resultado, 'Ops');
+            }
+            else if(resultado == 1) 
+            {
+                let funcionario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdDataEdit", {ID: usuarioId});
+                toastr.success("Os seus novos dados foram salvos", "Dados Atualizados");
+                for (let prop in dataVue.usuarioDados) {
+                    if(prop == "avaliacao_media") {
+
+                    } else {
+                        dataVue.usuarioDados[prop] = funcionario[prop];
+                    }
+                }
+                atualizaOsDadosDoPerfil();
+            }
+
+        } else {
+            toastr.info("Dados inválidos", 'Ops');
+        }
+    });
+
+
+    /*Controle do modal de confirmação */
+    app.$set(dataVue, "modalVisivelControllerConfirmacao", false);
+
+    app.$set(dataVue, "abreModalConfirmacao", async () => {
+        dataVue.modalVisivelControllerConfirmacao = true;
+    });
+
+    app.$set(dataVue, "fechaModalConfirmacao", async (confirmacao, salvar) => {
+        // O parametro de confirmação é pra confirmar se é pra fechar mesmo, se só quiser fechar só colocar como true.
+        dataVue.modalVisivelControllerConfirmacao = false;
+        if(confirmacao) {
+            dataVue.modalVisivelEditPerfil = false;
+            if(!salvar) {
+                resetaOsDadosDoPerfil()
+            }
+        } else {
+        }
+    });
+
+    // app.$set(dataVue, "retornaProfissao", async () => {
+    //     async function retorno() {
+    //         return dataVue.usuarioDados.profissao;
+    //     }
+    //     await retorno();
+    // });
+
+    resetaOsDadosDoPerfil()
+
+
 });
+
+
+
 
 function retornaValorAvaliacao() {
     let funcTemp = async () => {
@@ -200,4 +288,37 @@ function retornaValorAvaliacao() {
         // $(".label-value")[0].innerText = Math.trunc(avaliacaoMedia * 10) / 10;
     }
     return funcTemp();
+}
+
+function atualizaOsDadosDoPerfil () {
+    /* Atualiza dados do perfil */
+    $("#bVNome").text(dataVue.usuarioDados.nome)
+    $("#nomeCP").text(dataVue.usuarioDados.nome)
+
+    if(dataVue.usuarioDados.profissao) {
+        $("#profCP").text(dataVue.usuarioDados.profissao)
+    }
+
+    if(dataVue.usuarioDados.tags && document.getElementById("tagsCPWrapper")) {
+        let tagsParaColocar = dataVue.usuarioDados.tags.split(",");
+        let tagsParaColocar2 = "";
+        tagsParaColocar.forEach(tag => {
+            tagsParaColocar2 += `<div class='tagCP'>${tag}</div>`;
+        });
+
+        document.getElementById("tagsCPWrapper").innerHTML = tagsParaColocar2;
+    }
+    if(dataVue.usuarioDados.descricao) {
+        document.getElementById("descricaoPerfil").innerHTML = dataVue.usuarioDados.descricao.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+}
+function resetaOsDadosDoPerfil() {
+    
+    /* Atualiza os dados do modal de editar perfil com o que tem dentro do usuario Dados 
+    (é mais rapido pois não puxa do banco, mas só serve quando descarta o modal) 
+    */
+    dataVue.usuarioDadosEdit.nome = dataVue.usuarioDados.nome;
+    dataVue.usuarioDadosEdit.descricao = dataVue.usuarioDados.descricao;
+    dataVue.usuarioDadosEdit.profissao = dataVue.usuarioDados.profissao;
+    dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : "";
 }
