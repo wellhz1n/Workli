@@ -141,6 +141,7 @@
   justify-content: space-between;
   padding: 1%;
 }
+
 .PropostaItem.Brilha{
   animation: Brilha 1.5s infinite alternate ease-in-out;
 }
@@ -210,6 +211,12 @@
   padding: 1%;
 }
 
+.PropostaFuncionarioItem{
+  display: flex;
+  height: 200px;
+  width: 100%;
+  background-color: #1a692b;
+}
 @media (max-width:800px) {
   .wrapperMensagemVazia{
       flex-direction: column;

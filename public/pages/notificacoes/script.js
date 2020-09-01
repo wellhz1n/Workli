@@ -1,10 +1,10 @@
 $(document).ready(async () => {
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-    await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
+    await app.$set(dataVue, 'Tabs', { Notificacao: false, Propostas: true });
     //#endregion
 
- 
+
     document.addEventListener("BuscaNotificacao", async () => {
         await BuscaListaNotificacoes();
         await BuscaPropostas();
@@ -14,7 +14,7 @@ $(document).ready(async () => {
 
 
 
- 
+
 });
 
 const GetTipoMensagem = () => {
@@ -23,6 +23,15 @@ const GetTipoMensagem = () => {
         Chat: false,
         Avisos: false,
         Cancelados: false,
+        Concluidos: false
+    }
+}
+const GetSituacaoProposta = () => {
+    return {
+        Pendente: false,
+        Em_Andamento: false,
+        Rejeitada: false,
+        Aprovada: false,
         Concluidos: false
     }
 }
@@ -38,6 +47,20 @@ const GetTipoNotificacoesArray = (TipoMensagens = GetTipoMensagem()) => {
         arr.push(TipoNotificacao.SUCCESS);
     if (TipoMensagens.Info)
         arr.push(TipoNotificacao.DEFAULT);
+    return arr;
+}
+const GetSituacaoArray = (SituacaoProposta = GetSituacaoProposta()) => {
+    var arr = [];
+    if (SituacaoProposta.Pendente)
+        arr.push(Situacao.Pendente);
+    if (SituacaoProposta.Em_Andamento)
+        arr.push(Situacao.Andamento);
+    if (SituacaoProposta.Rejeitada)
+        arr.push(Situacao.Rejeitada);
+    if (SituacaoProposta.Concluidos)
+        arr.push(Situacao.Concluido);
+    if (SituacaoProposta.Aprovada)
+        arr.push(Situacao.Aprovada);
     return arr;
 }
 const BuscaListaNotificacoes = async () => {

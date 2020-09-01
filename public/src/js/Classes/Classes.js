@@ -179,4 +179,13 @@ const NotificacaoEntidade =
             tipo: _tipo
         }
     }
+
 //#endregion
+const Situacao = {
+    Pendente: 0,
+    Andamento: 2,
+    Rejeitada: 3,
+    Aprovada: 1,
+    Concluido: 4
+
+}

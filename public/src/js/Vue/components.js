@@ -2925,7 +2925,7 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
         },
         brilha: {
             type: Boolean,
-            default:false
+            default: false
         },
 
     },
@@ -2938,7 +2938,7 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
             dataNome: '',
             dataValor: '',
             dataAvaliacao: 0,
-            dataBrilha:false
+            dataBrilha: false
         }
     },
     watch: {
@@ -3002,10 +3002,10 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
     },
     methods: {
         Cancelar(vue) {
-       
+
             this.$emit("cancelar", this.$data);
         },
-        Aprovar(vue){
+        Aprovar(vue) {
             this.$emit("aprovar", this.$data);
         }
     },
@@ -3041,4 +3041,165 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
     `
 
 })
+//#region Proposta Item Funcionario
+var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
+
+    props: {
+        titulo: {
+            type: String
+        },
+        descricao: {
+            type: String
+        },
+        categoria: {
+            type: String
+        },
+        imagem_cliente: {
+            type: String
+        },
+        nome: {
+            type: String
+        },
+        valor: {
+            type: [String, Number]
+        },
+        situacao: {
+            type: [String, Number],
+            default: 0
+        }
+
+    },
+    data: () => {
+        return {
+            dataTitulo: '',
+            dataDescricao: '',
+            dataCategoria: '',
+            dataImagemCliente: null,
+            dataNome: '',
+            dataValor: '',
+            dataSituacao: 0
+        }
+    },
+    watch: {
+        titulo: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataTitulo = n;
+            }
+        },
+        descricao: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataDescricao = n;
+            }
+        },
+        categoria: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataCategoria = n;
+            }
+        },
+        imagem_cliente: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataImagemCliente = n;
+            }
+        },
+        nome: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataNome = n;
+            }
+        },
+        valor: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataValor = n;
+            }
+        },
+        situacao: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataSituacao = n;
+            }
+        }
+    },
+    methods: {
+        Cancelar(vue) {
+
+            this.$emit("cancelar", this.$data);
+        },
+        Aprovar(vue) {
+            this.$emit("aprovar", this.$data);
+        }
+    },
+    computed: {
+        urlSituacao: {
+            get(a) {
+                url = '';
+                switch (a.dataSituacao) {
+                    case '0':
+                    case 0:
+                        url = 'src/img/background/backgroundC.png';
+                        break;
+                    case '2':
+                    case 2:
+                        url = 'src/img/background/backgroundB1.png';
+                        break;
+                    case '1':
+                    case 1:
+                        url = 'src/img/background/backgroundB2.png';
+                        break;
+                    case '3':
+                    case 3:
+                        url = 'src/img/background/backgroundR.png';
+                        break;
+                    case '4':
+                    case 4:
+                        url = 'src/img/background/background.png';
+                        break;
+                    default:
+                        url = 'src/img/background/background.png';
+                        break;
+                }
+                return url;
+            }
+        }
+    },
+    template: `
+    <div :class="['PropostaItem','my-2']" :style="{'background-image': 'url('+this.urlSituacao+') !important'}" >
+    <div class="TituloProposta">
+
+        <h4 class="font_Poopins_B">Projeto: {{this.dataTitulo}}</h4>
+        <p class="font_Poopins" style="font-size: 12px;">{{this.dataDescricao}}</p>
+        <span style="background-color: #ec9a29;" class="badge badge-pill">{{this.dataCategoria}}</span>
+        <div style="display: flex; align-items: center; height: 60px; ">
+            <wm-user-img :img="this.dataImagemCliente" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+            <div class="d-flex">
+                <p class="p-0 m-0 ml-1">{{this.dataNome}}</p>
+            </div>
+        </div>
+    </div>
+    <div style="height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;">
+        <span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
+        <span class="d-flex"><i class="fas fa-calendar-alt mx-2"></i><p class="m-0">15/05/2020</p></span>
+        
+    </div>
+</div>
+
+    `
+
+})
+//#region
 //#endregion
