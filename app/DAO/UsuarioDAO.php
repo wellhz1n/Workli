@@ -65,62 +65,49 @@ class UsuarioDAO
         $resultado = DeleteGenerico("usuarios", $id);
         return $resultado;
     }
-    public function EditaUsuario($nomeCampo, $valorCampo, $idUsuario, $tabelaParaEditar)
+    public function EditaUsuario($usuarioDados)
     {
+        $resultado = "";
+        
+        /* Checa para ver se é um funcionario */
+        $funcionario = Sql("SELECT nivel_usuario FROM usuarios WHERE id = ?", [$usuarioDados["ID"]]); 
 
-        $idPrimeiraVez = "";
+        /*Checa para ver se existe a row na tabela de funcionarios*/
+        $existe = Sql("SELECT EXISTS(SELECT * FROM funcionario WHERE id_usuario = ?)", [$usuarioDados["ID"]]);
 
-        $idFuncionario = Sql("SELECT id FROM funcionario WHERE id_usuario =?", [$idUsuario]);
-        $idFuncionario = isset($idFuncionario) ? $idFuncionario->resultados[0]["id"] : "";
-
-        $totalServicos = Sql("SELECT COUNT( * )
-                              FROM servicos_funcionario
-                              WHERE id_funcionario = ? AND
-                              Situacao = 1", [$idFuncionario]);
-
-        $idValor = $idUsuario;
-        if ($tabelaParaEditar == "usuarios") {
-            $idPrimeiraVez = "id";
-        } else if ($tabelaParaEditar == "servicos_funcionario") {
-            $idValor = $idFuncionario;
-
-            $idPrimeiraVez = "id_funcionario";
-        } else {
-            $idPrimeiraVez = "id_usuario";
-        }
-
-        $primeiraVez = Sql("select id FROM {$tabelaParaEditar} WHERE {$idPrimeiraVez} = ?", [$idValor]); //Checa para ver se é a primeira vez que é colocado algum dado dentro da tabela
-
-        if (count($primeiraVez->resultados) == 1) { // Se ja existir algum dado dentro da tabela
-            if ($tabelaParaEditar == "servicos_funcionario") {
-                $resultado = Update("UPDATE servicos_funcionario AS sf
-                                    INNER JOIN funcionario AS f ON f.id = sf.id_funcionario
-                                    SET {$nomeCampo} = ?,
-                                        numeros_servicos = ?
-                                    WHERE f.id_usuario = ?
-                            ", [$valorCampo, $totalServicos, $idUsuario]);
-                $resultado = $valorCampo;
-            } else if ($tabelaParaEditar != "usuarios") {
-                $resultado = Update("UPDATE {$tabelaParaEditar} 
-                                 SET {$nomeCampo} = ?
-                                 WHERE id_usuario = ?", [$valorCampo, $idUsuario]);
-            } else {
-                $resultado = Update("UPDATE {$tabelaParaEditar} *
-                                 SET {$nomeCampo} = ?
-                                 WHERE id = ?", [$valorCampo, $idUsuario]);
+        if($funcionario->resultados[0]["nivel_usuario"]) {
+            if($existe->resultados) { /*Se a row ja existe na tabela de func*/
+                $resultado = Update(
+                    "UPDATE usuarios AS US
+                    INNER JOIN funcionario AS FUNC
+                    ON US.id = FUNC.id_usuario 
+                    SET
+                    US.nome = ?,
+                    US.descricao = ?,
+                    FUNC.profissao = ?,
+                    FUNC.tags = ?
+                    where US.id = ?",
+                    [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["profissao"], $usuarioDados["tags"], $usuarioDados["ID"]]
+                );
+            } else { /*Se a row não existir na tabela de func (da update em usuarios e insert em funcionario)*/
+                $resultado = Insert(
+                "BEGIN;
+                UPDATE usuarios AS US set US.nome = ?, US.descricao = ? WHERE US.id = ?;
+                INSERT INTO funcionario(profissao, tags, id_usuario) 
+                VALUES(?, ?, ?);
+                COMMIT;
+                ",
+                [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"], $usuarioDados["profissao"], $usuarioDados["tags"], $usuarioDados["ID"]]);
             }
-        } else { // Se não existir nada na tabela
-            if ($tabelaParaEditar == "servicos_funcionario") {
-                $resultado = Insert("insert INTO {$tabelaParaEditar} ($nomeCampo, numeros_servicos, id_funcionario) 
-                                 VALUES (?,?,?)", [$valorCampo, $totalServicos, $idFuncionario]);
-            } else {
-                $resultado = Insert("insert INTO {$tabelaParaEditar} ({$nomeCampo}, id_usuario) 
-                                 VALUES (?,?)", [$valorCampo, $idUsuario]);
-            }
+        } else { /*Se o usuário for um cliente*/
+            $resultado = Update(
+                "UPDATE usuarios AS US SET US.nome = ?, US.descricao = ? WHERE US.id = ?
+                ",
+                [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"]]);   
         }
-
-
+        
         return $resultado;
+        // return $funcionario->resultados[0];
     }
     public function SalvarOuAtualizarImagem($img, $idUsuario)
     {
@@ -157,8 +144,16 @@ class UsuarioDAO
 
     public function GetFuncionarioCompletobyId($id)
     {
-        $retorno = Sql("SELECT u.id,u.nome,u.email,u.cpf,u.nivel_usuario,im.imagem, func.avaliacao_media FROM usuarios AS u
+        $retorno = Sql("SELECT u.id,u.nome,u.email,u.cpf,u.nivel_usuario, im.imagem, func.avaliacao_media FROM usuarios AS u
                         LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id  
+                        LEFT JOIN funcionario AS func ON func.id_usuario = u.id
+                        where u.id = ? ", [$id]);
+        return $retorno;
+    }
+
+    public function GetFuncionarioDataEdit($id)
+    {
+        $retorno = Sql("SELECT u.id, u.nome, u.descricao, func.profissao, func.tags FROM usuarios AS u
                         LEFT JOIN funcionario AS func ON func.id_usuario = u.id
                         where u.id = ? ", [$id]);
         return $retorno;

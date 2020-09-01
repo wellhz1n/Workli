@@ -1473,7 +1473,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
         entidade: {
             type: String,
             required: true
-        },
+        }
     },
     data: () => {
         return {
@@ -2043,9 +2043,13 @@ WmModal = Vue.component('wm-modal', {
             type: String,
             default: "80%"
         },
-        heightModal: {
-            type: String,
-            default: "92%"
+        x_visivel: {
+            type: Boolean,
+            default: true
+        },
+        tem_modal_confirmacao: {
+            type: Boolean,
+            default: false
         }
     },
     data: () => {
@@ -2074,7 +2078,9 @@ WmModal = Vue.component('wm-modal', {
     methods: {
         fecharModal(key) {
             if ((key.target.id == this.id + 'close' || key.target.id == this.id) && key.target.classList["value"].split(" ").filter(x => x == "btn-close" || x == "modalBackdrop").length > 0) {
-                this.dataVisible = false;
+                if (!this.tem_modal_confirmacao) {
+                    this.dataVisible = false;
+                }
                 this.dataCallback();
                 this.$emit("fechar-modal-inside", true);
             }
@@ -2087,7 +2093,7 @@ WmModal = Vue.component('wm-modal', {
     template: `
     <transition name="modal-fade">
         <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal">
-            <div :style="[{'height':height+' !important'},{'width':width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
+            <div id="filhoModal" :style="[{'height': height + ' !important'},{'width': width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
                 <div class="modalHeader">
                     <slot name="header">
                         Título Header
@@ -2097,13 +2103,14 @@ WmModal = Vue.component('wm-modal', {
                         type="button"
                         class="btn-close btnCloseModal"
                         @click="fecharModal"
+                        v-if="this.x_visivel"
                     >
                         X
                     </button>
                 </div>
                 <div class="modalBody" :style="[{'height':this.heightModal}]">
                     <slot name="body">
-                    Body padrão
+                        Body padrão
                     </slot>
                 </div>
                 <div class="modalFooter">
@@ -2882,7 +2889,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
                     :stencil-component="configs.redondo"
                     @change="change"
                 ></cropper>
-         n  nhnn        <div id="botaoSalvarWrapper">
+                <div id="botaoSalvarWrapper">
                     <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
                         Salvar <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
@@ -3201,5 +3208,61 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     `
 
 })
-//#region
 //#endregion
+
+//#region modal de confirmação
+
+var WMMODALCONFIRMACAO = Vue.component('wm-modal-confirmacao', {
+    props: {
+        visivel: Boolean,
+        id: String
+    },
+    data() {
+        return {
+            modalVisivel: false
+        }
+    },
+    watch: {
+        visivel: {
+            immediate: true,
+            deep: true,
+            handler(visivelE) {
+                this.modalVisivel = visivelE;
+            }
+        }
+    },
+    methods: {
+        fecharModal(resposta) {
+            this.$emit("fechar-modal", resposta); //Emite para fechar o modal
+        }
+    },
+    template: `
+        <wm-modal 
+            id="modalConfirmacao"
+            :visivel="this.modalVisivel" 
+            :callback="() => {this.modalVisivel = false}" 
+            @fechar-modal-inside="(e) => {fecharModal(!e);}"
+            :x_visivel="false"
+        >
+            <template v-slot:header>
+                <div id="tituloModalConfirmacao">
+                    Descartar alterações
+                </div>
+            </template>
+            <template v-slot:body>
+                <div id="bodyModalConfirmacao">
+                    Você tem certeza que deseja descartar as alterações?
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div id="footerModalConfirmacao">
+                    <button type="button" class="btn btn-secondary" @click="() => {fecharModal(false);}">Cancelar</button>
+                    <button type="button" class="btn btn-success"  @click="() => {fecharModal(true);}">Descartar</button>
+                </div>
+            </template>
+        </wm-modal>
+    `
+
+});
+
+//#endregion modal de confirmação

@@ -5,11 +5,12 @@
 require "pages/perfilUsuario/componenteTexto/index.php";
 ?>
 
+<!-- Modal de confirmação -->
 
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
-             <span id="bemVindo">Bem vindo, <br/><span id="bVNome"><?php echo $_SESSION[SecoesEnum::NOME] ?></span></span>
+             <span id="bemVindo">Bem vindo, <br/><span id="bVNome"></span></span>
              <wm-user-banner 
                 @aberto-modal="v => dataVue.abremodal(v)" 
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
@@ -71,38 +72,22 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         </div>
     </div>
 
-    <?php
-    if($_SESSION[SecoesEnum::NIVEL_USUARIO] == 1) {
-        echo "
-            <div class='wrapperStarRating'>
-                <star-rating 
-                        v-model='dataVue.Rating'
-                        :increment='0.5'
-                        :star-size='dataVue.StarSize'
-                        :fixed-points='1'
-                        text-class='textoEstrelas'
-                        :round-start-rating='false'
-                        :read-only='true'
-                        :padding='5'
-                ></star-rating>
-            </div>
-        ";
-    }
-
-    // echo componenteTexto("Nome", $_SESSION[SecoesEnum::NOME]);
-
-    // if ($_SESSION[SecoesEnum::NIVEL_USUARIO] != 2) { //Campos que só aparecem se for cliente ou funcionário
-    //     // echo componenteTexto("Cpf", $_SESSION[SecoesEnum::CPF]);
-    // }
-
-    // if($_SESSION[SecoesEnum::NIVEL_USUARIO] == 1) { 
-    //     echo componenteTexto("Currículo", $_SESSION[SecoesEnum::CURRICULO]); // Deixar Curriculo sem acento para não bugar. TODO: Consertar este problema
-    //     echo componenteTexto("Telefone", $_SESSION[SecoesEnum::NUMERO_TELEFONE]);
-    //     // echo componenteTexto("Avaliação Média", $_SESSION[SecoesEnum::AVALIACAO_MEDIA]);
-    // }
-    ?>
+    <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+        <div class='wrapperStarRating'>
+            <star-rating 
+                    v-model='dataVue.Rating'
+                    :increment='0.5'
+                    :star-size='dataVue.StarSize'
+                    :fixed-points='1'
+                    text-class='textoEstrelas'
+                    :round-start-rating='false'
+                    :read-only='true'
+                    :padding='5'
+            ></star-rating>
+        </div>
+    <?php }; ?>
     <div class="row cardsPerfilSuperior">
-        <div class="col-5 p-0 paddingCardInterno">
+        <div class="col-6 p-0 paddingCardInterno">
             <div class="cardQuadrado cemXcem">
                 <div class="cardQuadradoHeader perfilCardHeader">
                     <div class="cardQuadradoTitulo">
@@ -114,45 +99,22 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                 </div>
                 <div class="cardQuadradoBody">
                     <div class="nomeEProfCP">
-                        <div class="nomeCP">
-                            FUNCIONARIO FULANO CICLANO
+                        <div id="nomeCP">
                         </div>
-                        
-                        <span class="profCPBolinha">•</span>
-                        <div class="profCP"> Programador
+                        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+                            <div class="cemXcem profissaoWrapper">
+                                <span class="profCPBolinha">•</span>
+                                <div id="profCP"> 
+                                </div>
+                            </div>
+                        <?php }; ?>
+                    </div>
+                    <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+                        <div id="tagsCPWrapper">
                         </div>
+                    <?php }; ?>
+                    <div id="descricaoPerfil">
                     </div>
-                    <div id="tagsCPWrapper">
-                        <div class="tagCP">SQL</div>
-                        <div class="tagCP">Javascript</div>
-                        <div class="tagCP">PHP</div>
-                        <div class="tagCP">HTML</div>
-                        <div class="tagCP">CSS</div>
-                        <div class="tagCP">REACT</div>
-                        <div class="tagCP">REACT NATIVE</div>
-                        <div class="tagCP">VUE</div>
-                        <div class="tagCP">C++</div>
-                        <div class="tagCP">Java</div>
-                    </div>
-                    <div class="descricaoPerfil">
-                    Mussum Ipsum, cacilds vidis litro abertis. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. In elementis mé pra quem é amistosis quis leo. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Si num tem leite então bota uma pinga aí cumpadi!
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3 p-0 paddingCardInterno">
-            <div class="cardQuadrado cemXcem" id="contatoCard">
-                <div class="cardQuadradoHeader perfilCardHeader">
-                    <div class="cardQuadradoTitulo">
-                        Contato
-                    </div>
-                    <div class="botaoEditarPerfil" href="#">
-                        <i class="fa fa-edit"></i>
-                    </div>
-                </div>
-                <div class="cardQuadradoBody" id="contatoBody">
-                    <div class="tituloContato emailsPerfil"><i class="fa fa-envelope"></i> Emails:</div>
-                    <div class="tituloContato telefonesPerfil"><i class="fa fa-phone"></i> Telefones:</div>
                 </div>
             </div>
         </div>
@@ -186,7 +148,8 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         :visivel="dataVue.modalVisivelEditPerfil" 
         :callback="dataVue.callbackEP"
         id="modalEdit"
-        height="65%"
+        height="80%"
+        :tem_modal_confirmacao="true"
 >
     <template v-slot:header>
         <div class="tituloModalEP">
@@ -197,35 +160,63 @@ require "pages/perfilUsuario/componenteTexto/index.php";
         <div class="bodyModalEPWrapper">
             <div class="bodyModalEP">
                 <wm-input 
-                    entidade="usuarioDados" 
+                    entidade="usuarioDadosEdit" 
                     id="inputNomeP" 
                     campo="nome" 
                     titulo="Nome" 
                     class_pai_wrapper="inputPerfil"
                     :obrigatorio="true"
                 ></wm-input>
-                <wm-input 
-                    entidade="usuarioDados" 
-                    id="inputProfissaoP" 
-                    campo="profissao" 
-                    titulo="Profissão" 
-                    class_pai_wrapper="inputPerfil"
-                ></wm-input>
-                <div class="inputPerfil">
-                    <label>Adicionar competências</label>
-                    <tags-input placeholder="Tags input"></tags-input>
-                </div>
+                <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+                    <wm-input 
+                        entidade="usuarioDadosEdit" 
+                        id="inputProfissaoP" 
+                        campo="profissao" 
+                        titulo="Profissão" 
+                        class_pai_wrapper="inputPerfil"
+                    ></wm-input>
+                    <div class="inputPerfil" id="tagsInput">
+                        <label>Adicionar competências</label>
+                        <tags-input v-model="dataVue.usuarioDadosEdit.tags" label-style="success" delete-key="['46', '8']">
+                            <div class="tags-input"
+                                slot-scope="{tag, removeTag, inputEventHandlers, inputBindings }"
+                            >
+                                <span 
+                                    v-for="tag in dataVue.tags"
+                                    class="tags-input-tag"
+                                >
+                                    <span>{{ tag }}</span>
+                                    <button type="button" class="tags-input-remove"
+                                        v-on:click="removeTag(tag)"
+                                    >&times;
+                                    </button>
+                                </span>
+
+                                <input
+                                    class="tags-input-text"  
+                                    placeholder="Adicionar Tag..."
+                                    v-on="inputEventHandlers"
+                                    v-bind="inputBindings"
+                                >
+                                
+                            </div>
+                        </tags-input>
+                        
+                    </div>
+                <?php }; ?>
                 <wm-textarea
-                    entidade="usuarioDados" 
+                    entidade="usuarioDadosEdit" 
                     id="inputDescricaoP" 
                     campo="descricao" 
                     titulo="Descrição" 
                     class_pai_wrapper="inputPerfil"
+                    :maxlength="2000"
+                    :row="7"
                 ></wm-textarea>
             </div>
             <!-- WMVerificaForm() -->
             <div id="botaoSalvarWrapperEP">
-                <button id="botaoSalvarEP" @click="salvarEP">
+                <button id="botaoSalvarEP" @click="(salvar) => {dataVue.mandarDados(); dataVue.callbackEP(salvar);}">
                     Salvar <i class="fa fa-check" aria-hidden="true"></i>
                 </button>
             </div>
@@ -238,6 +229,14 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 <!--#endregion -->
 
 
+
+<!-- Modal de Confirmação -->
+<wm-modal-confirmacao
+    id="modalzin"
+    :visivel="dataVue.modalVisivelControllerConfirmacao" 
+    @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
+></wm-modal-confirmacao>
+
 <!-- Modal de Crop -->
 <wm-crop-modal 
     :img="dataVue.imagemToCrop" 
@@ -246,7 +245,6 @@ require "pages/perfilUsuario/componenteTexto/index.php";
     @fechar-modal="() => {dataVue.fechamodal()}"
     :configs="dataVue.configuracoesCrop"
 />
-
 
 
 <script type="" src="pages/perfilUsuario/script.js"></script>

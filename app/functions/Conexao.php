@@ -63,6 +63,7 @@ function GetIdUsuarioComIdFuncionario($idFuncionario)
     $resultado = Sql($sql, [$idFuncionario]);
     return $resultado->resultados[0];
 }
+
 function Sql($sql, $parans = [])
 {
     $parans ?? [];
