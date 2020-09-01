@@ -267,6 +267,14 @@
             color: #aaa;
         }
 
+
+        #descricaoPerfil {
+            margin-top: 25px;
+            text-align: justify;
+            text-indent: 5%;
+            font-size: 19px;
+        }
+        
         @media only screen and (max-width: 1500px) { 
             #nomeCP {
                 font-size: 18px;
@@ -290,6 +298,9 @@
             .profCPBolinha {
                 font-size: 28px;
                 line-height: 19px;
+            }
+            #descricaoPerfil {
+                font-size: 16px !important;
             }
         }
 
@@ -332,13 +343,6 @@
             margin: 0 0.8%;
             font-weight: 700;
 
-        }
-
-        #descricaoPerfil {
-            margin-top: 25px;
-            text-align: justify;
-            text-indent: 5%;
-            font-size: 19px;
         }
 
 

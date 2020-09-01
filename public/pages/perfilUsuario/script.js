@@ -143,7 +143,8 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "callbackEP", (salvar) => {
         dataVue.abreModalConfirmacao();
-        if(salvar) {
+        if(salvar && WMVerificaForm()) {
+            debugger
             dataVue.fechaModalConfirmacao(true, true);
         }
     });

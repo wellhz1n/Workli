@@ -259,7 +259,8 @@ class UsuarioBO
             $usuarioDados["nome"] = trim($usuarioDados["nome"]); //Tira os espaços do começo e fim
 
             if($usuarioDados["nome"] == "" || $usuarioDados["nome"] == null) {
-                throw new Exception("O campo de \"Nome\" é obrigatório.");
+                // throw new Exception("O campo de \"Nome\" é obrigatório.");
+                // Verifica form já faz isso
             }
             if (strlen($usuarioDados["nome"]) < 3) { //Checa o length.
                 throw new Exception("O \"Nome\" é muito pequeno.");

@@ -3051,8 +3051,6 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
 //#endregion
 
 //#region modal de confirmação
-
-
 var WMMODALCONFIRMACAO = Vue.component('wm-modal-confirmacao', {
     props: {
         visivel: Boolean,

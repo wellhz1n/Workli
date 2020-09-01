@@ -1,9 +1,6 @@
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
 
-<?php
-require "pages/perfilUsuario/componenteTexto/index.php";
-?>
 
 <!-- Modal de confirmação -->
 
@@ -27,7 +24,7 @@ require "pages/perfilUsuario/componenteTexto/index.php";
                     <span class="iconePerfil dinheiro"></span>
                     <div class="textPerfilWrapper">
                         <div class="numeroCardPerfil">R$ 0,00</div>
-                        <div class="textoCardPerfil">Seus ganhos</div>
+                        <div class="textoCardPerfil">Minha Carteira</div>
                     </div>
                 </div>
                 <div class="cardDP">
@@ -228,11 +225,100 @@ require "pages/perfilUsuario/componenteTexto/index.php";
 </wm-modal>
 <!--#endregion -->
 
+<!-- #region Modal de Edit Perfil -->
+<!-- <wm-modal 
+        :visivel="dataVue.modalVisivelEditPerfil" 
+        :callback="dataVue.callbackEP"
+        id="modalEdit"
+        height="80%"
+        :tem_modal_confirmacao="true"
+>
+    <template v-slot:header>
+        <div class="tituloModalEP">
+            EDITAR DADOS DO PERFIL        
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="bodyModalEPWrapper">
+            <div class="bodyModalEP">
+                <wm-input 
+                    entidade="usuarioDadosEdit" 
+                    id="inputNomeP" 
+                    campo="nome" 
+                    titulo="Nome" 
+                    class_pai_wrapper="inputPerfil"
+                    :obrigatorio="true"
+                ></wm-input>
+                <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+                    <wm-input 
+                        entidade="usuarioDadosEdit" 
+                        id="inputProfissaoP" 
+                        campo="profissao" 
+                        titulo="Profissão" 
+                        class_pai_wrapper="inputPerfil"
+                    ></wm-input>
+                    <div class="inputPerfil" id="tagsInput">
+                        <label>Adicionar competências</label>
+                        <tags-input v-model="dataVue.usuarioDadosEdit.tags" label-style="success" delete-key="['46', '8']">
+                            <div class="tags-input"
+                                slot-scope="{tag, removeTag, inputEventHandlers, inputBindings }"
+                            >
+                                <span 
+                                    v-for="tag in dataVue.tags"
+                                    class="tags-input-tag"
+                                >
+                                    <span>{{ tag }}</span>
+                                    <button type="button" class="tags-input-remove"
+                                        v-on:click="removeTag(tag)"
+                                    >&times;
+                                    </button>
+                                </span>
+
+                                <input
+                                    class="tags-input-text"  
+                                    placeholder="Adicionar Tag..."
+                                    v-on="inputEventHandlers"
+                                    v-bind="inputBindings"
+                                >
+                                
+                            </div>
+                        </tags-input>
+                        
+                    </div>
+                <?php }; ?> -->
+                <!-- <wm-textarea
+                    entidade="usuarioDadosEdit" 
+                    id="inputDescricaoP" 
+                    campo="descricao" 
+                    titulo="Descrição" 
+                    class_pai_wrapper="inputPerfil"
+                    :maxlength="2000"
+                    :row="7"
+                ></wm-textarea>
+            </div> -->
+            <!-- WMVerificaForm() -->
+            <div id="botaoSalvarWrapperEP">
+                <button id="botaoSalvarEP" @click="(salvar) => {dataVue.mandarDados(); dataVue.callbackEP(salvar);}">
+                    Salvar <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div> <!-- Apenas para deixar o footer vazio.-->
+    </template>
+</wm-modal>
+
+
+
+
+
+
 
 
 <!-- Modal de Confirmação -->
 <wm-modal-confirmacao
-    id="modalzin"
+    id="modalConfirmacao"
     :visivel="dataVue.modalVisivelControllerConfirmacao" 
     @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
 ></wm-modal-confirmacao>
