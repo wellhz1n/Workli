@@ -392,15 +392,20 @@
             font-weight: 700;
             color: #333;
             animation: botaoAnimation 3s infinite linear;
+            transition: 0.2s;
         }
 
         #upgrade:focus {
-            
             outline: none;
             width: 70%;
             height: 45px;
-            
             animation: none;
+        }
+
+        #upgrade:hover {
+            border: 3px solid rgb(171, 220, 19);
+            
+            background-color: rgb(228, 243, 181);
         }
 
         @keyframes botaoAnimation {
@@ -505,15 +510,47 @@
     word-spacing: 5px;
     letter-spacing: 1px;
     font-size: 20px;
+    transition: 0.2s;
 }
 
 #botaoSalvarEP:focus {
     outline: none;
     border: 3px solid #319731;
 }
+#botaoSalvarEP:hover {
+    background-color: #50c550;
+}
 
+#modalEdit .modalFooter{
+    border-top: none;
+}
 
-
+#modalEdit #filhoModal {
+    height: fit-content !important;
+    max-height: 90%;
+}
 /* #endregion Parte Modal Editar Perfil-------------------------------------------------------------------------------------------*/
 
+/*#region Parte Planos ----------------------------------------------------------*/
 
+.tituloModalPlanos {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+
+.bodyModalPlanoWrapper {
+    padding: 20px 5% 40px 5%;
+    display: flex;
+}
+
+#modalPlano #filhoModal{
+    max-height: 90%;
+}
+/*#endregion Parte Planos ----------------------------------------------------------*/
