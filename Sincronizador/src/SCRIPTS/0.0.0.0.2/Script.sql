@@ -59,4 +59,4 @@ ALTER TABLE funcionario
 DROP curriculo,
 DROP numero_telefone;
 
-
+DROP TABLE servicos_funcionario;
