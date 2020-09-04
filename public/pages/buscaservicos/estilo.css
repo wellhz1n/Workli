@@ -258,9 +258,6 @@
         -webkit-transform: scale(3.6) rotate(var(--r, 180deg))!important;
     }
     
-    .clicked {
-        /* -webkit-animation: giraMoeda linear 3s infinite; */
-    }
     
     .clicked::-webkit-slider-thumb {
         -webkit-transform: scale(4.2) rotate(var(--r, 180deg)) !important;

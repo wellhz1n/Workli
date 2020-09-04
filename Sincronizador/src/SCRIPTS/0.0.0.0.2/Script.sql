@@ -59,5 +59,8 @@ ALTER TABLE funcionario
 DROP curriculo,
 DROP numero_telefone;
 
+DROP TABLE servicos_funcionario;
+
 ALTER TABLE funcionario
-ADD COLUMN plano TINYINT DEFAULT 0;
+ADD COLUMN plano TINYINT DEFAULT 0
+AFTER tags;
