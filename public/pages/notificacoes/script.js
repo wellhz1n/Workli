@@ -94,6 +94,7 @@ async function BuscaPropostas() {
         if ($busca.error == undefined) {
             app.dataVue.TabPropostaFuncinarioTab.paginas = $busca.paginas;
             app.dataVue.PropostaFuncionario = $busca.lista;
+            app.dataVue.TabPFuncionarioPossuiAprovada = $busca.possuiAprovada;
             app.dataVue.PropostaFuncionarioCarregando = false;
         }
     }

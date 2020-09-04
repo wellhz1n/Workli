@@ -109,7 +109,10 @@ class PropostaDAO
         ORDER BY P.DATA_CRIACAO DESC
         ";
         $result = Sql($sql, [$idFunciorario]);
-
+        
+       $arr =  array_filter($result->resultados, function($v, $k) {
+            return  $v["SITUACAO"] == '1';
+        },ARRAY_FILTER_USE_BOTH);
         //PARADA QUE FAZ A PAGINAÇÃO 
         $paginas = count($result->resultados) > 0 ? ceil((count($result->resultados)) / 6) : 1;
         $paginas = $paginas == 0 ? 1 : $paginas;
@@ -120,7 +123,7 @@ class PropostaDAO
             if ($i >= $inicioArr && $i <= $fimArray)
                 array_push($novoArr, $result->resultados[$i]);
         }
-        return [$paginas, $novoArr];
+        return [$paginas, $novoArr,count($arr) > 0];
     }
 
 
