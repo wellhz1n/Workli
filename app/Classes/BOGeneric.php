@@ -5,13 +5,21 @@
 class BOGeneric
 {
     private $ID_USUARIOCONTEXTO;
+    private $ID_FUNCIONARIOCONTEXTO;
+
     public function __construct()
     {
-        $this->ID_USUARIOCONTEXTO = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        $this->GetUsuarioContexto();
+        $this->GetIdFuncionarioCOntexto();
     }
     public function GetUsuarioContexto()
     {
         $this->ID_USUARIOCONTEXTO = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
         return $this->ID_USUARIOCONTEXTO;
+    }
+    public function GetIdFuncionarioCOntexto()
+    {
+        $this->ID_FUNCIONARIOCONTEXTO = BuscaSecaoValor(SecoesEnum::IDFUNCIONARIOCONTEXTO);
+        return $this->ID_FUNCIONARIOCONTEXTO;
     }
 }

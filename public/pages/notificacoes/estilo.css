@@ -29,6 +29,17 @@
 .fader-leave-to {
   opacity: 0;
 }
+.fadefast-enter-active,
+.fadefast-leave-active {
+  transition: opacity .5s ease;
+}
+.fadefast-enter,
+.fadefast-leave-to {
+  opacity: 0;
+}
+
+
+
 
 .filtrosWrapper {
   margin-top: 10px;
@@ -216,6 +227,14 @@
   height: 200px;
   width: 100%;
   background-color: #1a692b;
+}
+.iconPCLick{
+  cursor: pointer;
+  color: #ffff !important;
+
+}
+.iconPCLick:hover{
+  color: #e6d979 !important;
 }
 @media (max-width:800px) {
   .wrapperMensagemVazia{

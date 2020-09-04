@@ -80,10 +80,21 @@ const BuscaListaNotificacoes = async () => {
 }
 
 async function BuscaPropostas() {
-    $busca = await WMExecutaAjax("PropostaBO", "BuscaPropostasPendentesClientes", { IDPROJETO: dataVue.TabPFiltro.Projeto });
-    if ($busca.error == undefined) {
-        app.dataVue.Propostas.listaP = $busca.listaP;
-        app.dataVue.Propostas.listaN = $busca.listaN;
-        app.dataVue.PropostasCarregando = false;
+    if (dataVue.UsuarioContexto.NIVEL_USUARIO == '0') {
+
+        $busca = await WMExecutaAjax("PropostaBO", "BuscaPropostasPendentesClientes", { IDPROJETO: dataVue.TabPFiltro.Projeto });
+        if ($busca.error == undefined) {
+            app.dataVue.Propostas.listaP = $busca.listaP;
+            app.dataVue.Propostas.listaN = $busca.listaN;
+            app.dataVue.PropostasCarregando = false;
+        }
+    }
+    else {
+        $busca = await WMExecutaAjax("PropostaBO", "BUSCAPROPOSTASFUNCIONARIOTAB", { FILTROS: GetSituacaoArray(app.dataVue.TabPSituacaoProposta), PAGINA: app.dataVue.TabPropostaFuncinarioTab.pagina_Atual })
+        if ($busca.error == undefined) {
+            app.dataVue.TabPropostaFuncinarioTab.paginas = $busca.paginas;
+            app.dataVue.PropostaFuncionario = $busca.lista;
+            app.dataVue.PropostaFuncionarioCarregando = false;
+        }
     }
 }

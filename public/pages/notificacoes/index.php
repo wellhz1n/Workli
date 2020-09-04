@@ -17,11 +17,11 @@
     </nav>
     <div class="tab-content" id="nav-tabContent" style="background-color: white;padding: 10px;">
         <transition name="fade" mode="out-in">
-            <div key=1 v-if="dataVue.Tabs.Notificacao" class="" id="nav-home">
+            <div key=1 v-if=" dataVue.Tabs!== undefined && dataVue.Tabs.Notificacao" class="" id="nav-home">
                 <?php require('Tabs/TabN.php') ?>
 
             </div>
-            <div key=2 v-else-if="dataVue.Tabs.Propostas" id="nav-profile">
+            <div key=2 v-else-if="dataVue.Tabs!== undefined && dataVue.Tabs.Propostas" id="nav-profile">
                 <?php require('Tabs/TabP.php') ?>
             </div>
         </transition>

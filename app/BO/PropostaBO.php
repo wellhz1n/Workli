@@ -99,10 +99,23 @@ class PropostaBO extends BOGeneric
                 $this->GetUsuarioContexto(),
                 TipoNotificacaoEnum::SUCCESS
             );
-            $_ProjetoDAO->SetProjetoSituacao($this->Proposta->IdServico,1);
+            $_ProjetoDAO->SetProjetoSituacao($this->Proposta->IdServico, 1);
             return true;
         } else
             return false;
+    }
+
+    function BuscaPropostasFuncionarioTab($filtros = [], $pagina = 1)
+    {
+        $pagina = json_decode($pagina);
+        $resultado =  $this->PropostaDAO->BuscaPropostaFuncionarioTab($this->GetIdFuncionarioCOntexto(), $filtros, $pagina);
+            foreach ($resultado[1] as $key => $value) {
+                    $resultado[1][$key]["IMAGEM"] = ConvertBlobToBase64($value["IMAGEM"]);
+            }
+        $obj = new stdClass();
+        $obj->paginas = $resultado[0];
+        $obj->lista = $resultado[1];
+        return $obj;
     }
     #endregion
 
@@ -175,6 +188,9 @@ try {
             } else {
                 throw new Exception("O parâmetro IDPROPOSTA está em falta.");
             }
+        }
+        if ($metodo == "BUSCAPROPOSTASFUNCIONARIOTAB") {
+            echo json_encode($PropostaBO->BuscaPropostasFuncionarioTab(isset($_POST["FILTROS"]) ? $_POST["FILTROS"] : [], $_POST["PAGINA"]));
         }
     }
 } catch (\Throwable $ex) {
