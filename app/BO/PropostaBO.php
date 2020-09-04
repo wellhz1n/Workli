@@ -147,6 +147,23 @@ class PropostaBO extends BOGeneric
         return $p;
     }
     #endregion
+    
+    #region retorna o valor de proposta média
+    public function RetornaValorPropostaMedia($idServico) {
+        try {
+            $resultado = $this->PropostaDAO->RetornaValorPropostaMedia($idServico);
+            // echo BuscaSecaoValor(SecoesEnum::PLANO);
+            echo json_encode($resultado);
+        } catch (Throwable $th) {
+            $msg = new stdClass();
+            $msg->error = $th->getMessage();
+            echo json_encode($msg->error);
+            
+        }
+        
+        // return $resultado[0]["soma"];
+    }
+    #endregion
 }
 
 
@@ -191,6 +208,10 @@ try {
         }
         if ($metodo == "BUSCAPROPOSTASFUNCIONARIOTAB") {
             echo json_encode($PropostaBO->BuscaPropostasFuncionarioTab(isset($_POST["FILTROS"]) ? $_POST["FILTROS"] : [], $_POST["PAGINA"]));
+        }
+
+        if ($metodo == "RetornaValorPropostaMedia") {
+            $resultado = $PropostaBO->RetornaValorPropostaMedia($_POST["ID_SERVICO"]);
         }
     }
 } catch (\Throwable $ex) {

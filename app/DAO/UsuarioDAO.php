@@ -36,8 +36,8 @@ class UsuarioDAO
             if (count($id->resultados) > 0) {
                 $id = $id->resultados[0]['id'];
                 $resultado = Insert(
-                    "insert into funcionario (id_usuario,curriculo,numero_telefone) values(?,?,?)",
-                    [$id, null, null]
+                    "insert into funcionario (id_usuario) values(?)",
+                    [$id]
                 );
             }
         }

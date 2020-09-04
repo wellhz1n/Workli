@@ -2494,11 +2494,13 @@ WMCHAT = Vue.component('wm-chat', {
 
                         this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
                         setTimeout(() => {
-                            if (nv.length != ov.length) {
+                            if(ov != undefined || ov != null) {
+                                if (nv.length != ov.length) {
 
-                                let scro = document.getElementById('bodyChatChat')
-                                scro.scrollHeight + 78;
-                                scro.scrollTop = scro.scrollHeight;
+                                    let scro = document.getElementById('bodyChatChat')
+                                    scro.scrollHeight + 78;
+                                    scro.scrollTop = scro.scrollHeight;
+                                }
                             }
                             return
 
@@ -2532,7 +2534,7 @@ WMCHAT = Vue.component('wm-chat', {
         }
     },
     template: `
-    <div v-if="!carregando">
+    <div v-if="!carregando" style="width: 100%;" >
     <div id="bodyChatChat" :style="{height:dataHeigth}">
     <div v-for="item in this.dataMensagens">
     <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>

@@ -130,8 +130,8 @@
                                 </div>
                                 <div class="propostaSegundaParte">
                                     <div class="innerWrapperSegundaParte">
-                                        <div class="cardProposta">Taxa relativa ao <b id="taxaModal">Plano Gratuito: 15%</b></div>
-                                        <div class="cardProposta">Valor médio das propostas: <b>R$ 200,00</b></div>
+                                        <div class="cardProposta">Taxa relativa ao <b id="taxaModal">Plano Padrão: 20%</b></div>
+                                        <div class="cardProposta">Valor médio das propostas: <b id='propostaMedia'>R$ 0,00</b></div>
                                         <div class="dataChatDiv"><span class="dataChatDivTexto">Upgrades</span></div>
                                         <label class="upgradeCard" for="upgradeCardInput1">
                                             <div class="upgradeCardHeader row">

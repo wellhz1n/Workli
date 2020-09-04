@@ -122,8 +122,16 @@ class PropostaDAO
         }
         return [$paginas, $novoArr];
     }
-
-
+    public function RetornaValorPropostaMedia($idServico)
+    {
+        $sql = "
+            SELECT ROUND(AVG(valor), 2) AS soma FROM proposta AS p
+            WHERE idServico = ?
+        ";
+        $result = Sql($sql, [$idServico]);
+        return $result->resultados;
+    }
+    
     #endregion
     #endregion
 }

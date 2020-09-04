@@ -170,8 +170,6 @@ $(document).ready(async () => {
                 if (($(".bodyDetalhes").first().height()) > 500) {
                     $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
                 }
-                var bodyChatScroll = document.getElementById("bodyChatChat");
-                bodyChatScroll.scrollTop = bodyChatScroll.scrollHeight;
 
             }, 1);
             setInterval(async () => {
@@ -363,11 +361,29 @@ $(document).ready(async () => {
                 });
                 /* -------------------*/
 
+
+                console.log(dataVue.Proposta.IdServico)
+                
+                setTimeout(async () => {
+                    if (dataVue.modalVisivelController == true) {  
+                        let resultadoProposta = await WMExecutaAjax("PropostaBO", "RetornaValorPropostaMedia", { ID_SERVICO: dataVue.Proposta.IdServico });
+                        debugger
+                        if(resultadoProposta[0].soma) {
+                            resultadoProposta = String(Number.parseFloat(resultadoProposta[0].soma).toFixed(2)).replace(".", ",");
+                        } else {
+                            resultadoProposta = "0,00"
+                        }
+                        document.getElementById("propostaMedia").innerText = `R$ ${resultadoProposta}`;
+                    }
+                }, 100);
             }, 1);
             setTimeout(() => {
                 $("#rangeSlider").attr("min", dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", ""));
                 $("#rangeSlider").attr("max", dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", ""));
             }, 10);
+
+            
+            
 
 
         } catch (error) {
