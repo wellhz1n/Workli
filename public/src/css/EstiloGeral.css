@@ -1627,6 +1627,18 @@ textarea::-webkit-scrollbar-thumb:hover {
     background-color: #50c550;
 }
 
+.corAzul {
+    background-color: #325dd1;
+}
+.corAzul:focus {
+    border: none;
+}
+
+.corAzul:hover {
+    background-color: #325dd1;
+    cursor: default;
+}
+
 .botaoWrapperPlanos { 
     height: 40px;
     width: 100%;
@@ -1650,7 +1662,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 .precoPlanos {
-    font-size: 2.9vw;
+    font-size: 2.5vw;
     color: #319731;
     font-family: inherit;
 }
@@ -1679,6 +1691,9 @@ textarea::-webkit-scrollbar-thumb:hover {
     .botaoSalvarCardPlano {
         font-size: 18px;
         word-spacing: 3px;
+    }
+    .precoPlanos { 
+        font-size: 2.9vw;
     }
 }
 

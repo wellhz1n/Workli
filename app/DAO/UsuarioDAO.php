@@ -173,5 +173,19 @@ class UsuarioDAO
         return $retorno->resultados[0];
     }
    
+    public function SetDadoUsuario($id, $coluna, $dado) {
+        $resultado = Update(
+            "UPDATE funcionario AS FUNC
+            INNER JOIN usuarios as US
+            ON FUNC.id_usuario = US.id
+            SET
+            FUNC.plano = ?
+            WHERE FUNC.id_usuario = ?",
+            [
+                $dado,
+                $id
+            ]
+        );
+    }
 }
 // $USR->example();

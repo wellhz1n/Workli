@@ -115,28 +115,40 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 p-0">
-            <div class="cardQuadrado cemXcem" id="statusCard">
-                <div class="cardQuadradoHeader">
-                    <div class="cardQuadradoTitulo">
-                        Status da Conta
+        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+            <div class="col-4 p-0">
+                <div class="cardQuadrado cemXcem" id="statusCard">
+                    <div class="cardQuadradoHeader">
+                        <div class="cardQuadradoTitulo">
+                            Status da Conta
+                        </div>
                     </div>
-                </div>
-                <div class="cardQuadradoBody" id="statusBodyC">
-                    <div id="iconeSubstituto"></div>
-                    <div id="membroStatus">Membro Básico
-                        <a class="linkPopover" tabindex="0" role="button" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Como Membro Básico, você tem uma taxa de 15% por serviço terminado, além de não possuir nenhum privilégio.">
-                            <span class="iconeInterrogacaoWrapper">
-                                <i class="fa fa-question-circle" class="iconeInterrogacao" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                    </div>
-                    <div class="wrapperUpgradeButton">
-                        <button id="upgrade" @click="() => {dataVue.abremodalPlanos()}">UPGRADE</button>
+                    <div class="cardQuadradoBody" id="statusBodyC">
+                        <img id="iconeStatus" :src="dataVue.iconePlano"></img>
+                        <div id="membroStatus">
+                            <span id="tituloMembroPlano"></span>
+                            <a 
+                                id="popoverPlano"
+                                class="linkPopover" 
+                                tabindex="0" 
+                                role="button" 
+                                data-trigger="focus" 
+                                data-toggle="popover" 
+                                data-placement="top" 
+                                data-content="Como Membro Básico, você tem uma taxa de 15% por serviço terminado, além de não possuir nenhum privilégio."
+                            >
+                                <span class="iconeInterrogacaoWrapper">
+                                    <i class="fa fa-question-circle" class="iconeInterrogacao" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="wrapperUpgradeButton">
+                            <button id="upgrade" @click="() => {dataVue.abremodalPlanos()}">UPGRADE</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php }; ?>
     </div>
 </div>
 
@@ -243,7 +255,7 @@
             <wm-card-plano
                 titulo="Membro Padrão"
                 icone="planoPadrao.svg"
-                :esconder_botao="true"
+                :botao_situacao="2"
                 preco="Gratuito"
             >
                 <template v-slot:descricao>
@@ -252,11 +264,13 @@
                     </span>
                 </template>
             </wm-card-plano>
-
             <wm-card-plano
                 titulo="Membro Plus"
                 icone="planoPlus.svg"
                 preco="25,00"
+                :plano_number="1"
+                @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
+                :botao_situacao="dataVue.situacaoBotao[0]"
             >
                 <template v-slot:descricao>
                     <span>
@@ -265,11 +279,13 @@
                     <span class="font-weight-bold">Ícone Plus</span>
                 </template>
             </wm-card-plano>
-
             <wm-card-plano
                 titulo="Membro Prime"
                 icone="planoPrime.svg"
                 preco="50,00"
+                :plano_number="2"
+                @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
+                :botao_situacao="dataVue.situacaoBotao[1]"
             >
                 <template v-slot:descricao>
                     <span>
@@ -281,12 +297,13 @@
                     <span class="font-weight-bold">Ícone Pro</span>
                 </template>
             </wm-card-plano>
-
-
             <wm-card-plano
                 titulo="Membro Master"
                 icone="planoMaster.svg"
-                preco="75,00"
+                preco="80,00"
+                :plano_number="3"
+                @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
+                :botao_situacao="dataVue.situacaoBotao[2]"
             >
                 <template v-slot:descricao>
                     <span>

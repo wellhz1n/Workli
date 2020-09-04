@@ -357,11 +357,10 @@
             flex-direction: column;
             align-items: center;
         }
-        #iconeSubstituto {
+        #iconeStatus {
             margin-top: 20px;
             width: 150px;
             height: 150px;
-            background-color: rgb(231, 125, 26);
             border-radius: 100%;
 
         }

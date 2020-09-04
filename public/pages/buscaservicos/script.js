@@ -206,6 +206,28 @@ $(document).ready(async () => {
                 $('.range').each(function () {
                     valorCliente = (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
                     taxaPorcentagem = 15;
+
+                    
+                    /* Seta a taxa (o retornaPlano seta também daquele cardzinho verde)*/
+                    taxaPorcentagem = dataVue.retornaPlano();
+                    switch (taxaPorcentagem) {
+                        case 0:
+                            taxaPorcentagem = 20;
+                            break;
+                        case 1:
+                            taxaPorcentagem = 15;
+                            break;
+                        case 2:
+                            taxaPorcentagem = 10;
+                            break;
+                        case 3:
+                            taxaPorcentagem = 5;
+                            break;
+                        default:
+                            break;
+                    }
+
+
                     taxaValor = (valorCliente / 100) * 15;
                     valorFuncionario = valorCliente - taxaValor;
 
@@ -235,7 +257,7 @@ $(document).ready(async () => {
 
                     );
 
-                    $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
+                    // $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
 
                     dataVue.Proposta.Valor = valorCliente;
                 });
@@ -396,5 +418,33 @@ $(document).ready(async () => {
     // app.$set(dataVue, "msg", GetMensagens());
     //#endregion
 
+
+    //#region Porcentagem do plano
+    app.$set(dataVue, "retornaPlano", async () => {
+        let planoN = Number.parseInt(await GetSessaoPHP("PLANO"));
+        let membro = "Padrão";
+        switch (planoN) {
+            case 0:
+                membro = "Padrão";
+                document.getElementById("taxaModal").innerText = `Plano ${membro}: 20%`;
+                break;
+            case 1:
+                membro = "Plus";
+                document.getElementById("taxaModal").innerText = `Plano ${membro}: 15%`;
+                break;
+            case 2:
+                membro = "Prime";
+                document.getElementById("taxaModal").innerText = `Plano ${membro}: 12%`;
+                break;
+            case 3:
+                membro = "Master";
+                document.getElementById("taxaModal").innerText = `Plano ${membro}: 8%`;
+                break;
+            default:
+                break;
+        }
+        return planoN;
+    });
+    //#endregion
 
 });

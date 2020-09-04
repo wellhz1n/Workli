@@ -16,8 +16,7 @@ function Login($email, $senha)
                         u.cpf,
                         u.nivel_usuario,
                         im.imagem,
-                        func.curriculo,
-                        func.numero_telefone,
+                        func.plano,
                         func.id as id_func
                   FROM usuarios AS u
                   LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id 
@@ -34,9 +33,8 @@ function Login($email, $senha)
             CriaSecao(SecoesEnum::CPF, $saida->resultados[0]['cpf']);
             CriaSecao(SecoesEnum::IDUSUARIOCONTEXTO, $saida->resultados[0]['id']);
             CriaSecao(SecoesEnum::FOTO_USUARIO, ConvertBlobToBase64($saida->resultados[0]['imagem']));
-            CriaSecao(SecoesEnum::CURRICULO, $saida->resultados[0]['curriculo']);
             CriaSecao(SecoesEnum::IDFUNCIONARIOCONTEXTO, $saida->resultados[0]['id_func']);
-            CriaSecao(SecoesEnum::NUMERO_TELEFONE, $saida->resultados[0]['numero_telefone']);
+            CriaSecao(SecoesEnum::PLANO, $saida->resultados[0]['plano']);
 
             return true;
         } else {

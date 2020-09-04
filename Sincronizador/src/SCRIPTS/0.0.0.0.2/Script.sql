@@ -48,7 +48,13 @@ ADD COLUMN descricao TEXT
 AFTER nome;
 
 ALTER TABLE funcionario
+ADD plano TINYINT DEFAULT 0
+AFTER avaliacao_media,
 ADD COLUMN tags TEXT
 AFTER avaliacao_media,
 ADD COLUMN profissao VARCHAR(50)
 AFTER avaliacao_media;
+
+ALTER TABLE funcionario
+DROP curriculo,
+DROP numero_telefone;

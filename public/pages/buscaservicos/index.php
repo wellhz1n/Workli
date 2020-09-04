@@ -18,9 +18,12 @@
         <div style="height: fit-content;margin-bottom: 2%;" class="col-10  ">
             <div class="row justify-content-center ">
                 <div class="p-3 col-9">
-                    <input placeholder="Pequise um Projeto" type="text" class="form-control" @input="
-                                                                                dataVue.FiltroProjeto.Q = $event.target.value;
-                                                                            " />
+                    <input 
+                        placeholder="Pequise um Projeto" 
+                        type="text"
+                        class="form-control" 
+                        @input="dataVue.FiltroProjeto.Q = $event.target.value;" 
+                    />
                 </div>
             </div>
             <div class="col-6 my-0">
@@ -127,7 +130,7 @@
                                 </div>
                                 <div class="propostaSegundaParte">
                                     <div class="innerWrapperSegundaParte">
-                                        <div class="cardProposta" id="taxaCardProposta">Você terá que pagar uma taxa de 5%</div>
+                                        <div class="cardProposta">Taxa relativa ao <b id="taxaModal">Plano Gratuito: 15%</b></div>
                                         <div class="cardProposta">Valor médio das propostas: <b>R$ 200,00</b></div>
                                         <div class="dataChatDiv"><span class="dataChatDivTexto">Upgrades</span></div>
                                         <label class="upgradeCard" for="upgradeCardInput1">

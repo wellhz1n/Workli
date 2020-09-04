@@ -3274,9 +3274,13 @@ var WMCARDPLANO= Vue.component('wm-card-plano', {
         icone: String,
         titulo: String,
         preco: String,
-        esconder_botao: {
-            type: String,
-            default: false
+        plano_number: {
+            type: Number,
+            default: 0
+        },
+        botao_situacao: {
+            type: Number,
+            default: 0
         }
     },
     computed: {
@@ -3299,6 +3303,11 @@ var WMCARDPLANO= Vue.component('wm-card-plano', {
             }
         }
     },
+    methods: {
+        botaoClicado() {
+            this.$emit("botao-clickado", this.plano_number);
+        }
+    },
     template: `
 
     <div class="cardPlano">
@@ -3313,7 +3322,10 @@ var WMCARDPLANO= Vue.component('wm-card-plano', {
             <span class="precoPlanos">{{preco}}</span>
         </div>
         <div class="botaoWrapperPlanos">
-            <button class="botaoSalvarCardPlano" v-if="!this.esconder_botao">
+            <button class="botaoSalvarCardPlano corAzul" v-if="this.botao_situacao == 1">
+                Assinado <i class="fas fa-check"></i>
+            </button>
+            <button class="botaoSalvarCardPlano" v-if="!this.botao_situacao" @click="botaoClicado">
                 Assinar <i class="fas fa-pen"></i>
             </button>
         </div>

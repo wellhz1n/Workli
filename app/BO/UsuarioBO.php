@@ -74,6 +74,14 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "BuscaNumeroUsuarios") {
         $userBO->BuscaNumeroUsuarios();
     }
+
+    if ($metodo == "SetDadoUsuario") {
+        $dados = $_POST["dados"];
+        if(!isset($dados["secao"])) {
+            $dados["secao"] = false;
+        }
+        $userBO->SetDadoUsuario($dados["ID"], $dados["coluna"], $dados["dado"], $dados["secao"]);
+    }
 }
 class UsuarioBO
 {
@@ -347,6 +355,26 @@ class UsuarioBO
     public function BuscaNumeroUsuarios()
     {
         echo json_encode($this->usuarioDAO->BuscaNumeroUsuarios());
+    }
+
+    public function SetDadoUsuario($id, $coluna, $dado, $secao) {
+        try {
+            $this->usuarioDAO->SetDadoUsuario($id, $coluna, $dado);
+            function retornaVariavel($secao) {
+                
+            }
+            $arraySecEnum = EnumParaArray("SecoesEnum");
+            if($secao) {
+                CriaSecao($arraySecEnum[$secao], $dado);
+            }
+            // echo BuscaSecaoValor(SecoesEnum::PLANO);
+            echo 1;
+        } catch (Throwable $th) {
+            $msg = new stdClass();
+            $msg->error = $th->getMessage();
+            echo json_encode($msg->error);
+            
+        }
     }
  
 }
