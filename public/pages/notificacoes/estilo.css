@@ -217,6 +217,14 @@
   width: 100%;
   background-color: #1a692b;
 }
+.iconPCLick{
+  cursor: pointer;
+  color: #ffff !important;
+
+}
+.iconPCLick:hover{
+  color: #e6d979 !important;
+}
 @media (max-width:800px) {
   .wrapperMensagemVazia{
       flex-direction: column;

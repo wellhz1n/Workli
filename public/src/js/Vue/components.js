@@ -3147,6 +3147,9 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             this.$emit("aprovar", this.$data);
         }
     },
+    mounted(){
+        $('[data-toggle="tooltip"]').tooltip()
+    },
     computed: {
         urlSituacao: {
             get(a) {
@@ -3199,7 +3202,10 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;">
-        <span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
+       <div class="d-flex"><span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
+       <span data-toggle="tooltip" title="Iniciar Serviço"  id="IconeEMAndamento" class="iconPCLick mx-2" v-show="dataSituacao == 1" ><i class="fas fa-tasks"></i></span>
+       <span  data-toggle="tooltip" title="Concluir Serviço"  id="IconeConcluir" class="iconPCLick mx-2" v-show="dataSituacao == 2" ><i class="fas fa-check-circle"></i></span>
+       </div>
         <span class="d-flex"><i class="fas fa-calendar-alt mx-2"></i><p class="m-0">15/05/2020</p></span>
         
     </div>

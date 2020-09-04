@@ -5,9 +5,10 @@
                 <div v-else class=" WrapperNotificacoesTab" style="height: 60vh;">
                     <div v-if="!dataVue.TabNCarregando">
 
-                        <div v-if="TabNPageController !== undefined && TabNPageController.paginas > 1" class="col-12 mt-3" style=" align-self: center;display: flex;justify-content: center;">
+                        <div v-if="dataVue.TabNPageController !== undefined && dataVue.TabNPageController.paginas > 1" class="col-12 mt-3" style=" align-self: center;display: flex;justify-content: center;">
                             <wm-paginacao :totaldepaginas="dataVue.TabNPageController.paginas" :paginaatual="JSON.parse(dataVue.TabNPageController.pagina_Atual)" v-on:changepagina="(a)=>{dataVue.TabNPageController.pagina_Atual= a}" />
                         </div>
+                       
                         <div class=" WrapperNotificacoesTabItem">
 
                             <div class="filtrosWrapper">
