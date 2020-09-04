@@ -71,6 +71,7 @@ $(document).ready(async () => {
         //#region  TAB PROPOSTA FUNCIONARIO
         //#region DataVue
         app.$set(dataVue,'TabPFuncionarioCarregando',true);
+        app.$set(dataVue,'TabPFuncionarioPossuiAprovada',false);
         app.$set(dataVue, 'TabPSituacaoProposta', GetSituacaoProposta());
         app.$set(dataVue, 'TabPropostaFuncinarioTab', { paginas: 1, pagina_Atual: 1 });
         app.$set(dataVue, "PropostaFuncionario", []);

@@ -11,7 +11,15 @@
                 dataVue.Tabs.Propostas = false;}" :style="[{'border-top-left-radius': '5px'},{display: 'flex'}, dataVue.UsuarioContexto.NIVEL_USUARIO == 2?{'border-top-right-radius': '5px'}:null]" :class="['nav-item', 'nav-link', dataVue.UsuarioContexto.NIVEL_USUARIO == 2?'w-100':'w-50',dataVue.Tabs.Notificacao == true?'active':null]" id="nav-notificacoes-tab">Notificações <div style="height: 10px;width: 10px; background-color: red;border-radius: 100%;opacity: 0.8;" v-if="dataVue.NotificacaoNumero > 0"></div></a>
             <a @click=" ()=>{
                 dataVue.Tabs.Notificacao = false;
-                dataVue.Tabs.Propostas = true;}" v-if=" dataVue.UsuarioContexto.NIVEL_USUARIO != 2" style="border-top-right-radius: 5px;display: flex;" :class="['nav-item', 'nav-link','w-50',dataVue.Tabs.Propostas == true?'active':null]" id="nav-proposta-tab">Propostas <div style="height: 10px;width: 10px; background-color: red;border-radius: 100%;opacity: 0.8;" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && ((dataVue.Propostas !== undefined && dataVue.Propostas.listaN.length > 0 )|| (dataVue.Propostas !== undefined && dataVue.Propostas.listaP.length > 0))"></div></a>
+                dataVue.Tabs.Propostas = true;}" v-if=" dataVue.UsuarioContexto.NIVEL_USUARIO != 2" 
+                style="border-top-right-radius: 5px;display: flex;" 
+                :class="['nav-item', 'nav-link','w-50',dataVue.Tabs.Propostas == true?'active':null]" 
+                id="nav-proposta-tab">Propostas <div 
+                style="height: 10px;width: 10px; background-color: red;border-radius: 100%;opacity: 0.8;" 
+                v-if="(dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && ((dataVue.Propostas !== undefined && dataVue.Propostas.listaN.length > 0 )|| (dataVue.Propostas !== undefined && dataVue.Propostas.listaP.length > 0)))
+                ||
+                (dataVue.UsuarioContexto.NIVEL_USUARIO == 1 && (dataVue.TabPFuncionarioPossuiAprovada !== undefined && dataVue.TabPFuncionarioPossuiAprovada ))
+                "></div></a>
 
         </div>
     </nav>

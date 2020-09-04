@@ -184,7 +184,7 @@ class NotificacoesDAO
             if ($i >= $inicioArr && $i <= $fimArray)
                 array_push($novoArr, $result->resultados[$i]);
         }
-      
+
         // FUCK YOU ARRAY_SPLICE 🤬
         // array_splice($ArrayPagina,  $fimArray>count($ArrayPagina)? (0 - count($ArrayPagina)):(0 - $fimArray),6);
         return [$paginas, $novoArr];
@@ -196,12 +196,12 @@ class NotificacoesDAO
         return count($this->BuscaNotificacoes($idUsuario));
     }
     #endregion
-    
+
     #region Tela Proposta E Notificação
 
-    
+
     #endregion
-    
+
     #region Cria Notificação
     public function SalvarAtualizarNotificacao(Notificacao $notificacao)
     {

@@ -115,6 +115,8 @@ class PropostaBO extends BOGeneric
         $obj = new stdClass();
         $obj->paginas = $resultado[0];
         $obj->lista = $resultado[1];
+        $obj->possuiAprovada = $resultado[2];
+
         return $obj;
     }
     #endregion
