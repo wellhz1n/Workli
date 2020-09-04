@@ -56,10 +56,13 @@
 <!-- Funcionario -->
 <div v-else>
     <div class=" WrapperNotificacoesTab" style="height: 60vh;">
-        <div v-if="!dataVue.TabNCarregando">
-            <div class="col-12 mt-3" style=" align-self: center;display: flex;justify-content: center;">
-                <wm-paginacao :totaldepaginas="dataVue.TabNPageController.paginas" :paginaatual="JSON.parse(dataVue.TabNPageController.pagina_Atual)" v-on:changepagina="(a)=>{dataVue.TabNPageController.pagina_Atual= a}" />
-            </div>
+    <transition name="fade" mode="out-in">
+    <div :key="0" v-if="dataVue.TabPFuncionarioCarregando !== undefined && !dataVue.TabPFuncionarioCarregando">
+            <transition name="fade" mode="out-in">
+                <div class="col-12 mt-3" v-if="dataVue.TabPropostaFuncinarioTab.paginas > 1" style=" align-self: center;display: flex;justify-content: center;">
+                    <wm-paginacao :totaldepaginas="dataVue.TabPropostaFuncinarioTab.paginas" :paginaatual="JSON.parse(dataVue.TabPropostaFuncinarioTab.pagina_Atual)" v-on:changepagina="(a)=>{dataVue.TabPropostaFuncinarioTab.pagina_Atual= a}" />
+                </div>
+            </transition>
             <div class=" WrapperNotificacoesTabItem">
 
                 <div class="filtrosWrapper">
@@ -75,37 +78,45 @@
                         <i style="color:#a8201a ;font-size: 20px;margin-left: -5px;" class="fas fa-times"></i>
                         <p class="mx-2">Rejeitada</p>
                     </span>
-                    <span  @click="dataVue.TabPSituacaoProposta.Aprovada = !dataVue.TabPSituacaoProposta.Aprovada; 
+                    <span @click="dataVue.TabPSituacaoProposta.Aprovada = !dataVue.TabPSituacaoProposta.Aprovada; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Aprovada?'active':null]">
                         <i style="color:#2855a7 ;font-size: 20px;margin-left: -5px;" class="fas fa-thumbs-up"></i>
                         <p class="mx-2">Aprovada</p>
                     </span>
-                    <span  @click="dataVue.TabPSituacaoProposta.Em_Andamento = !dataVue.TabPSituacaoProposta.Em_Andamento; 
+                    <span @click="dataVue.TabPSituacaoProposta.Em_Andamento = !dataVue.TabPSituacaoProposta.Em_Andamento; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Em_Andamento?'active':null]">
 
                         <i style="color:#0f8b8d ;font-size: 20px;margin-left: -8px;" class="fas fa-tasks"></i>
                         <p class="mx-2">Em Andamento</p>
 
                     </span>
-                    <span  @click="dataVue.TabPSituacaoProposta.Concluidos = !dataVue.TabPSituacaoProposta.Concluidos; 
+                    <span @click="dataVue.TabPSituacaoProposta.Concluidos = !dataVue.TabPSituacaoProposta.Concluidos; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Concluidos?'active':null]">
                         <i style="color:#28a745 ;font-size: 20px;margin-left: -5px;" class="fas fa-check-circle"></i>
                         <p class="mx-2">Concluidos</p>
                     </span>
                 </div>
                 <div class="col NotificacoesListWrapper">
-                    <wm-proposta-funcionario titulo="Teste Projeto" descricao="descrição" nome="Cliente" :imagem_cliente="null" :situacao="0" categoria="Só vái" valor="3000"></wm-proposta-funcionario>
-                    <wm-proposta-funcionario titulo="Teste Projeto" descricao="descrição" nome="Cliente" :imagem_cliente="null" :situacao="1" categoria="Só vái" valor="3000"></wm-proposta-funcionario>
-                    <wm-proposta-funcionario titulo="Teste Projeto" descricao="descrição" nome="Cliente" :imagem_cliente="null" :situacao="3" categoria="Só vái" valor="3000"></wm-proposta-funcionario>
-                    <wm-proposta-funcionario titulo="Teste Projeto" descricao="descrição" nome="Cliente" :imagem_cliente="null" :situacao="2" categoria="Só vái" valor="3000"></wm-proposta-funcionario>
-                    <wm-proposta-funcionario titulo="Teste Projeto" descricao="descrição" nome="Cliente" :imagem_cliente="null" :situacao="4" categoria="Só vái" valor="3000"></wm-proposta-funcionario>
+                    <transition name="fadefast" mode="out-in">
+                        <div style="height: 100%;
+                          display: flex;
+                         align-items: center;width: 75%;" v-if="dataVue.PropostaFuncionario === undefined || dataVue.PropostaFuncionarioCarregando == undefined ||dataVue.PropostaFuncionarioCarregando">
+                            <wm-loading></wm-loading>
+                        </div>
+                        <div :key="2" v-else-if="dataVue.PropostaFuncionario !== undefined &&  dataVue.PropostaFuncionario.length > 0">
+                                <wm-proposta-funcionario class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)" :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :imagem_cliente="item.IMAGEM" :situacao="item.SITUACAO" :categoria="item.CATEGORIA" :valor="item.VALOR" :data="item.DATAPROPOSTA"></wm-proposta-funcionario>
+                        </div>
+                        <div :key="3" style="width: 75%;" v-else-if=" dataVue.PropostaFuncionario.length == 0 && !dataVue.PropostaFuncionarioCarregando">
+                            <wm-error style="margin-top: 0px !important;" mensagem="Nenhuma Proposta foi encontrada" />
+                        </div>
+                    </transition>
                 </div>
             </div>
         </div>
-        <div v-else>
+        <div :key="1" v-else>
             <wm-loading />
         </div>
-
+    </transition>
     </div>
 </div>
 <!-- FIM Funcionario -->

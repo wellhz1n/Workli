@@ -83,5 +83,47 @@ class PropostaDAO
         $result = Sql($sql, [$idUsuario]);
         return $result->resultados;
     }
+
+    #region BuscaPropostasFuncionario
+
+    public function BuscaPropostaFuncionarioTab($idFunciorario, $filtros = [], $pagina = 1)
+    {
+        $filtrosSql = count($filtros) > 0 ? "and P.situacao in(" . join($filtros, ',') . ")" : null;
+
+        $sql = " 
+        SELECT P.ID,
+		S.NOME AS TITULO,
+		TS.NOME AS CATEGORIA,
+		P.DESCRICAO,
+		U.NOME AS CLIENTE,
+		IU.IMAGEM,
+        P.SITUACAO,
+        P.VALOR,
+		DATE_FORMAT(P.DATA_CRIACAO,'%d/%m/%Y') AS DATAPROPOSTA
+        FROM PROPOSTA P 
+        INNER JOIN SERVICO S ON S.ID = P.IDSERVICO
+        INNER JOIN TIPO_SERVICO TS ON TS.ID = S.ID_TIPO_SERVICO
+        INNER JOIN USUARIOS U ON U.ID = S.ID_USUARIO
+        LEFT JOIN IMAGEM_USUARIO IU ON IU.ID_USUARIO = U.ID
+        WHERE P.IDFUNCIONARIO = ? {$filtrosSql}
+        ORDER BY P.DATA_CRIACAO DESC
+        ";
+        $result = Sql($sql, [$idFunciorario]);
+
+        //PARADA QUE FAZ A PAGINAÇÃO 
+        $paginas = count($result->resultados) > 0 ? ceil((count($result->resultados)) / 6) : 1;
+        $paginas = $paginas == 0 ? 1 : $paginas;
+        $fimArray = (floor(count($result->resultados) / $paginas) * $pagina);
+        $inicioArr = (($pagina - 1) * 6);
+        $novoArr = [];
+        for ($i = $inicioArr; $i < count($result->resultados); $i++) {
+            if ($i >= $inicioArr && $i <= $fimArray)
+                array_push($novoArr, $result->resultados[$i]);
+        }
+        return [$paginas, $novoArr];
+    }
+
+
+    #endregion
     #endregion
 }

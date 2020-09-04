@@ -70,12 +70,29 @@ $(document).ready(async () => {
     else if (dataVue.UsuarioContexto.NIVEL_USUARIO == '1') {
         //#region  TAB PROPOSTA FUNCIONARIO
         //#region DataVue
+        app.$set(dataVue,'TabPFuncionarioCarregando',true);
         app.$set(dataVue, 'TabPSituacaoProposta', GetSituacaoProposta());
-
+        app.$set(dataVue, 'TabPropostaFuncinarioTab', { paginas: 1, pagina_Atual: 1 });
+        app.$set(dataVue, "PropostaFuncionario", []);
+        app.$set(dataVue, "PropostaFuncionarioCarregando", true);
 
         //#endregion
-        /* TODO PARA CASE PROPOSTAS Para CLIENTES A SER IMPLEMENTADA NA TAREFA #6 E #7*/
+        //#region Watchers
+        await app.$watch("dataVue.TabPropostaFuncinarioTab", async function (a, o) {
+            dataVue.PropostaFuncionarioCarregando = true;
+            await BuscaPropostas();
+        }, { deep: true });
+        await app.$watch("dataVue.TabPSituacaoProposta", async function (a, o) {
+            dataVue.PropostaFuncionarioCarregando = true;
+            await BuscaPropostas();
+        }, { immediate: true, deep: true });
+        //#endregion
 
+
+        //  await WMExecutaAjax("PropostaBO","BUSCAPROPOSTASFUNCIONARIOTAB",{FILTROS:[],PAGINA:1})
+
+
+        app.dataVue.TabPFuncionarioCarregando = false;
         //#endregion
     }
 })

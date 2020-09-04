@@ -3073,7 +3073,11 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
         situacao: {
             type: [String, Number],
             default: 0
+        }, data: {
+            type: String,
+            default: ""
         }
+
 
     },
     data: () => {
@@ -3084,7 +3088,8 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             dataImagemCliente: null,
             dataNome: '',
             dataValor: '',
-            dataSituacao: 0
+            dataSituacao: 0,
+            datadata:''
         }
     },
     watch: {
@@ -3136,6 +3141,13 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             handler(n) {
                 this.dataSituacao = n;
             }
+        },
+        data: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.datadata = n;
+            }
         }
     },
     methods: {
@@ -3183,6 +3195,13 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             }
         }
     },
+    methods:{
+        async AprovaSituacao(){
+            let idProposta = this.$vnode.data.key;
+            debugger
+        }
+    }
+    ,
     template: `
     <div :class="['PropostaItem','my-2']" :style="{'background-image': 'url('+this.urlSituacao+') !important'}" >
     <div class="TituloProposta">
@@ -3202,11 +3221,11 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;">
-       <div class="d-flex"><span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
-       <span data-toggle="tooltip" title="Iniciar Serviço"  id="IconeEMAndamento" class="iconPCLick mx-2" v-show="dataSituacao == 1" ><i class="fas fa-tasks"></i></span>
-       <span  data-toggle="tooltip" title="Concluir Serviço"  id="IconeConcluir" class="iconPCLick mx-2" v-show="dataSituacao == 2" ><i class="fas fa-check-circle"></i></span>
+       <div class="d-flex" style="width: 100%;justify-content: space-between;"><span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
+       <span @click="this.AprovaSituacao" data-toggle="tooltip" title="Iniciar Serviço"  id="IconeEMAndamento" class="iconPCLick mx-2" v-show="dataSituacao == 1" ><i class="fas fa-tasks"></i></span>
+       <span  @click="this.AprovaSituacao" data-toggle="tooltip" title="Concluir Serviço"  id="IconeConcluir" class="iconPCLick mx-2" v-show="dataSituacao == 2" ><i class="fas fa-check-circle"></i></span>
        </div>
-        <span class="d-flex"><i class="fas fa-calendar-alt mx-2"></i><p class="m-0">15/05/2020</p></span>
+        <span class="d-flex"><i class="fas fa-calendar-alt mx-2"></i><p class="m-0">{{this.datadata}}</p></span>
         
     </div>
 </div>

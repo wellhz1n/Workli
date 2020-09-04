@@ -29,6 +29,17 @@
 .fader-leave-to {
   opacity: 0;
 }
+.fadefast-enter-active,
+.fadefast-leave-active {
+  transition: opacity .5s ease;
+}
+.fadefast-enter,
+.fadefast-leave-to {
+  opacity: 0;
+}
+
+
+
 
 .filtrosWrapper {
   margin-top: 10px;
