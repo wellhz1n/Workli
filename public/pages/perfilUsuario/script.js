@@ -106,7 +106,14 @@ $(document).ready(async () => {
     })
 
     app.$set(dataVue, "callbackEP", (salvar) => {
-        dataVue.abreModalConfirmacao();
+        if(JSON.stringify(dataVue.usuarioDados) != JSON.stringify(dataVue.usuarioDadosEdit)) {
+            dataVue.abreModalConfirmacao();
+        } else {
+            dataVue.modalVisivelEditPerfil = false;
+        }
+
+
+
         if(salvar && WMVerificaForm()) {
             dataVue.fechaModalConfirmacao(true, true);
         }
@@ -172,17 +179,17 @@ $(document).ready(async () => {
     app.$set(dataVue, "usuarioDadosEdit", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
         nome: "",
         profissao: "",
-        tags: [],
+        tags: "",
         descricao: ""
     });
     resetaOsDadosDoPerfilEdit();
 
-
-    
     /* Função de Salvar os dados*/ 
     app.$set(dataVue, "mandarDados", async () => {
         let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-        let objectToSend = Object.assign(dataVue.usuarioDadosEdit, {"ID": usuarioId});
+
+        let objectToSend = CopiaEntidade(dataVue.usuarioDadosEdit);
+        objectToSend.ID = usuarioId;
         let resultado = await WMExecutaAjax("UsuarioBO", "EditaUsuario", {UsuarioDados: objectToSend});
         if(resultado) {
             if(resultado != 1) 
@@ -346,5 +353,5 @@ function resetaOsDadosDoPerfilEdit() {
     
     dataVue.usuarioDadosEdit.descricao = dataVue.usuarioDados.descricao;
     dataVue.usuarioDadosEdit.profissao = dataVue.usuarioDados.profissao;
-    dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : "";
+    dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : null;
 }
