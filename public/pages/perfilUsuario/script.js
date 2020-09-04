@@ -7,14 +7,6 @@ $(document).ready(async () => {
     $("#Titulo").text("Editar Usuário");
 
 
-    // $("#tagsCPWrapper").on("mousewheel", function(event, delta) {
-
-    //     this.scrollLeft -= (delta * 300);
-    //     debugger
-    //     event.preventDefault();
-  
-    // });
-
     if(document.getElementById("tagsCPWrapper")) {
         function scrollHorizontally(e) {
             e = window.event || e;
@@ -33,34 +25,6 @@ $(document).ready(async () => {
         }
     }
     //MODAL
-    // $('#maskEditImg').on('click', () => {
-    //     $('#EditImgModal').modal('show');
-    //     $('#maskEditImg').attr('hidden', 'hidden');
-    // });
-
-    // $('#maskEditImgModal').on('click', () => {
-    //     $('#maskEditImgModal').attr('hidden', 'hidden');
-    //     var input = $(document.createElement("input"));
-    //     input.attr("type", "file");
-    //     input.attr("accept", "image/x-png,image/gif,image/jpeg");
-    //     // add onchange handler if you wish to get the file :)
-    //     input.trigger("click"); // opening dialog
-
-    //     $(input).on('change', async () => {
-    //         let imgBase = await LerImagem($(input)[0]);
-    //         app.dataVue.Usuario.imgTemp = imgBase;
-    //     });
-    //     return false; // avoiding navigation
-
-
-    // });
-    // $('#FechaModal').click(async () => {
-    //    await $('#EditImgModal').modal('hide');
-    //    setTimeout(()=>{
-    //        app.dataVue.Usuario.imgTemp = null;
-
-    //    },800);
-    // })
 
     await DesbloquearTela();
 
@@ -144,7 +108,6 @@ $(document).ready(async () => {
     app.$set(dataVue, "callbackEP", (salvar) => {
         dataVue.abreModalConfirmacao();
         if(salvar && WMVerificaForm()) {
-            debugger
             dataVue.fechaModalConfirmacao(true, true);
         }
     });
@@ -266,12 +229,18 @@ $(document).ready(async () => {
         }
     });
 
-    // app.$set(dataVue, "retornaProfissao", async () => {
-    //     async function retorno() {
-    //         return dataVue.usuarioDados.profissao;
-    //     }
-    //     await retorno();
-    // });
+
+
+
+    /* Modal de Planos*/
+    app.$set(dataVue, "modalVisivelPlanos", false);
+    app.$set(dataVue, "abremodalPlanos", async () => {
+        dataVue.modalVisivelPlanos = true;
+    });
+
+    app.$set(dataVue, "callbackPlanos", () => {
+        dataVue.modalVisivelPlanos = false;
+    });
 
     resetaOsDadosDoPerfil()
 
@@ -283,10 +252,6 @@ $(document).ready(async () => {
 
 function retornaValorAvaliacao() {
     let funcTemp = async () => {
-        // let avaliacaoMedia = await GetSessaoPHP("AVALIACAOMEDIA");
-        
-        // ($(".rating").removeClass("value-3")).addClass(valorRating[0]);
-        // $(".label-value")[0].innerText = Math.trunc(avaliacaoMedia * 10) / 10;
     }
     return funcTemp();
 }

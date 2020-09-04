@@ -2114,8 +2114,8 @@ WmModal = Vue.component('wm-modal', {
                     </slot>
                 </div>
                 <div class="modalFooter">
-                <slot name="footer">
-                    Footer default
+                    <slot name="footer">
+                        Footer default
                     </slot>
                 </div>
             </div>
@@ -3285,6 +3285,68 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-confirmacao', {
                 </div>
             </template>
         </wm-modal>
+    `
+
+});
+
+//#endregion modal de confirmação
+
+
+
+//#region modal card do planos 
+var WMCARDPLANO= Vue.component('wm-card-plano', {
+    props: {
+        icone: String,
+        titulo: String,
+        preco: String,
+        esconder_botao: {
+            type: String,
+            default: false
+        }
+    },
+    computed: {
+        iconeComputado: { 
+            get(a) {
+                let iconeR = "src/img/icons/perfil/planoPadrao.svg";
+                if(a.icone) {
+                    iconeR = `src/img/icons/perfil/${a.icone}`;
+                }
+                return iconeR;
+            }
+        },
+        moeda: {
+            get(e) {
+                let moeda = "";
+                if(e.preco != "Gratuito") {
+                    moeda = "R$";
+                }
+                return moeda;
+            }
+        }
+    },
+    template: `
+
+    <div class="cardPlano">
+        <span class="cardPlanoTitulo">{{titulo}}</span>
+        <div>
+            <img 
+                :src="this.iconeComputado" 
+                class="planoImagem"/>
+        </div>
+        <div class="precoWrapperPlanos">
+            {{this.moeda}} 
+            <span class="precoPlanos">{{preco}}</span>
+        </div>
+        <div class="botaoWrapperPlanos">
+            <button class="botaoSalvarCardPlano" v-if="!this.esconder_botao">
+                Assinar <i class="fas fa-pen"></i>
+            </button>
+        </div>
+        <div class="descricaoPlanos">
+            <slot name="descricao">
+            </slot>
+        </div>
+    </div>
     `
 
 });
