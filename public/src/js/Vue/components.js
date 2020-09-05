@@ -714,7 +714,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             }
         },
         async pegarImagem() {
-            if(this.editavel) {
+            if (this.editavel) {
                 var input = $(document.createElement("input"));
                 input.attr("type", "file");
                 input.attr("accept", "image/x-png,image/gif,image/jpeg");
@@ -2496,7 +2496,7 @@ WMCHAT = Vue.component('wm-chat', {
 
                         this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
                         setTimeout(() => {
-                            if(ov != undefined || ov != null) {
+                            if (ov != undefined || ov != null) {
                                 if (nv.length != ov.length) {
 
                                     let scro = document.getElementById('bodyChatChat')
@@ -3080,8 +3080,13 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
         }, data: {
             type: String,
             default: ""
+        },
+        idcliente: {
+            type: [String, Number]
+        },
+        idservico: {
+            type: [String, Number]
         }
-
 
     },
     data: () => {
@@ -3093,7 +3098,9 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             dataNome: '',
             dataValor: '',
             dataSituacao: 0,
-            datadata:''
+            datadata: '',
+            dataIdCliente: 0,
+            dataIdServico:0
         }
     },
     watch: {
@@ -3152,6 +3159,20 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             handler(n) {
                 this.datadata = n;
             }
+        },
+        idcliente: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataIdCliente = n;
+            }
+        },
+        idservico: {
+            immediate: true,
+            deep: true,
+            handler(n) {
+                this.dataIdServico = n;
+            }
         }
     },
     methods: {
@@ -3163,7 +3184,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             this.$emit("aprovar", this.$data);
         }
     },
-    mounted(){
+    mounted() {
         $('[data-toggle="tooltip"]').tooltip()
     },
     computed: {
@@ -3199,10 +3220,23 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             }
         }
     },
-    methods:{
-        async AprovaSituacao(){
-            let idProposta = this.$vnode.data.key;
-            debugger
+    methods: {
+        async AprovaSituacao() {
+            if (this.dataSituacao == 1 || this.dataSituacao == 2) {
+                let idProposta = this.$vnode.data.key;
+                var result = await WMExecutaAjax("PropostaBO", "MudaSituacaoPropostaFuncionario",
+                    {
+                        IDPROPOSTA: idProposta, SITUACAO: this.dataSituacao,
+                        TITULO: this.dataTitulo, IDCLIENTE: this.dataIdCliente,
+                        IDSERVICO:this.dataIdServico
+                    });
+                    if(result !== undefined &&!result){
+                        MostraMensagem("Algo deu errado tente novamente mais tarde",ToastType.ERROR,"Propostas");
+                        return false;
+                    }
+                    this.dataSituacao = this.dataSituacao == 1?2:4;
+                    this.$emit("muda_situacao", {idProposta:idProposta})
+                }
         }
     }
     ,
@@ -3298,7 +3332,7 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-confirmacao', {
 
 
 //#region modal card do planos 
-var WMCARDPLANO= Vue.component('wm-card-plano', {
+var WMCARDPLANO = Vue.component('wm-card-plano', {
     props: {
         icone: String,
         titulo: String,
@@ -3313,10 +3347,10 @@ var WMCARDPLANO= Vue.component('wm-card-plano', {
         }
     },
     computed: {
-        iconeComputado: { 
+        iconeComputado: {
             get(a) {
                 let iconeR = "src/img/icons/perfil/planoPadrao.svg";
-                if(a.icone) {
+                if (a.icone) {
                     iconeR = `src/img/icons/perfil/${a.icone}`;
                 }
                 return iconeR;
@@ -3325,7 +3359,7 @@ var WMCARDPLANO= Vue.component('wm-card-plano', {
         moeda: {
             get(e) {
                 let moeda = "";
-                if(e.preco != "Gratuito") {
+                if (e.preco != "Gratuito") {
                     moeda = "R$";
                 }
                 return moeda;
