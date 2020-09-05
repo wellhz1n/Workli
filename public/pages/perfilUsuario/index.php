@@ -1,9 +1,6 @@
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
 
-
-<!-- Modal de confirmação -->
-
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">

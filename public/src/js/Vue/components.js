@@ -714,17 +714,19 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             }
         },
         async pegarImagem() {
-            var input = $(document.createElement("input"));
-            input.attr("type", "file");
-            input.attr("accept", "image/x-png,image/gif,image/jpeg");
-            // add onchange handler if you wish to get the file :)
-            input.trigger("click"); // opening dialog
+            if(this.editavel) {
+                var input = $(document.createElement("input"));
+                input.attr("type", "file");
+                input.attr("accept", "image/x-png,image/gif,image/jpeg");
+                // add onchange handler if you wish to get the file :)
+                input.trigger("click"); // opening dialog
 
-            $(input).on('change', async () => {
-                let imgBase = await LerImagem($(input)[0]);
-                app.dataVue.Usuario.imgTemp = imgBase;
-                this.abrirModal(app.dataVue.Usuario.imgTemp);
-            });
+                $(input).on('change', async () => {
+                    let imgBase = await LerImagem($(input)[0]);
+                    app.dataVue.Usuario.imgTemp = imgBase;
+                    this.abrirModal(app.dataVue.Usuario.imgTemp);
+                });
+            }
         }
     },
     template: `
