@@ -1,6 +1,5 @@
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
-
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
@@ -13,7 +12,7 @@
                 height_banner="17.15vw"
             />
 
-             
+   
         </div>
         <div id="cardsDadosProposta">
             <div class="cardsDPWrapper">
