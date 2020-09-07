@@ -254,9 +254,51 @@ $(document).ready(async () => {
         let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, sessao: "PLANO", tabela: "funcionario"}
         let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
         if(resultado) {
-            dataVue.callbackPlanos();
-            toastr.info("Upgrade na conta concedido.", 'Assinado!');
-            dataVue.iconePlano = await dataVue.retornaPlano();
+            let valorNaCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
+            let valor = 0;
+            switch (nivel) {
+                case 1:
+                    valor = 25;
+                    break;
+                case 2:
+                    valor = 50;
+                    break;
+                case 3:
+                    valor = 80;
+                    break;
+                default:
+                    break;
+            }
+            if(valor <= valorNaCarteira) {
+                switch (nivel) {
+                    case 0:
+                        toastr.info("Seus planos foram cancelados.", 'Assinado!');
+                        break;
+                    case 1:
+                        toastr.info("Você agora é um Membro Plus.", 'Assinado!');
+                        break;
+                    case 2:
+                        toastr.info("Você agora é um Membro Prime.", 'Assinado!');
+                        break;
+                    case 3:
+                        toastr.info("Você agora é um Membro Master.", 'Assinado!');
+                        break;
+                    default:
+                        toastr.info("Upgrade na conta concedido.", 'Assinado!');
+                        break;
+                }
+    
+                valor = valorNaCarteira - valor;
+                let objectToSend = {ID: usuarioId, coluna: "valor_carteira", dado: valor, sessao: "VALOR_CARTEIRA"}
+                let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+                dataVue.valorNaCarteira = valor.toFixed(2).replace(".", ",");
+
+                dataVue.callbackPlanos();
+                dataVue.iconePlano = await dataVue.retornaPlano();
+            } else {
+                toastr.error("Adicione mais fundos pelo botão \"+\" ao lado de sua carteira no perfil.", 'Falta de fundos na carteira!');
+            }
+            
             
         }
     });
@@ -360,7 +402,6 @@ $(document).ready(async () => {
         let formVerificado = WMVerificaForm()
 
         if(formVerificado && dataVue.usuarioDadosPagamento.cartao && dataVue.usuarioDadosPagamento.valor) {
-            debugger
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
             let valorNaCarteira = await GetSessaoPHP("VALORCARTEIRA");
             valor = parseFloat(valorNaCarteira) + parseFloat(valor);
