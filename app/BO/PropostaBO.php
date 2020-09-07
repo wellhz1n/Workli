@@ -104,14 +104,51 @@ class PropostaBO extends BOGeneric
         } else
             return false;
     }
+    function MudaSituacaoPropostaFuncionario($idproposta, $situacao, $titulo, $idcliente, $idservico)
+    {
+        $sucesso = true;
+        switch ($situacao) {
+            case 1:
+            case "1":
+                $sucesso = $this->PropostaDAO->SetSituacaoPropostaPorId($idproposta, 2);
+                $_NotificacaoBO = new NotificacoesBO();
+                $_NotificacaoBO->NovaNotificacao(
+                    "Funcionário Iniciou o Projeto",
+                    "Sua Proposta do Projeto: <strong style='color: yellow;'>{$titulo}</strong> foi Iniciada.",
+                    $idcliente,
+                    $this->GetUsuarioContexto(),
+                    TipoNotificacaoEnum::
+                    DEFAULT
+                );
+                $_ProjetoDAO =  new ProjetoDAO();
+                $_ProjetoDAO->SetProjetoSituacao($idservico, 2);
+
+                break;
+            case 2:
+            case "2":
+                $sucesso = $this->PropostaDAO->SetSituacaoPropostaPorId($idproposta, 4);
+                $_NotificacaoBO = new NotificacoesBO();
+                $_NotificacaoBO->NovaNotificacao(
+                    "Funcionário Finalizou o Projeto",
+                    "Seu Projeto: <strong style='color: yellow;'>{$titulo}</strong> foi Finalizado.",
+                    $idcliente,
+                    $this->GetUsuarioContexto(),
+                    TipoNotificacaoEnum::SUCCESS
+                );
+                $_ProjetoDAO =  new ProjetoDAO();
+                $_ProjetoDAO->SetProjetoSituacao($idservico, 4);
+                break;
+        }
+        return $sucesso;
+    }
 
     function BuscaPropostasFuncionarioTab($filtros = [], $pagina = 1)
     {
         $pagina = json_decode($pagina);
         $resultado =  $this->PropostaDAO->BuscaPropostaFuncionarioTab($this->GetIdFuncionarioCOntexto(), $filtros, $pagina);
-            foreach ($resultado[1] as $key => $value) {
-                    $resultado[1][$key]["IMAGEM"] = ConvertBlobToBase64($value["IMAGEM"]);
-            }
+        foreach ($resultado[1] as $key => $value) {
+            $resultado[1][$key]["IMAGEM"] = ConvertBlobToBase64($value["IMAGEM"]);
+        }
         $obj = new stdClass();
         $obj->paginas = $resultado[0];
         $obj->lista = $resultado[1];
@@ -149,9 +186,10 @@ class PropostaBO extends BOGeneric
         return $p;
     }
     #endregion
-    
+
     #region retorna o valor de proposta média
-    public function RetornaValorPropostaMedia($idServico) {
+    public function RetornaValorPropostaMedia($idServico)
+    {
         try {
             $resultado = $this->PropostaDAO->RetornaValorPropostaMedia($idServico);
             // echo BuscaSecaoValor(SecoesEnum::PLANO);
@@ -160,9 +198,8 @@ class PropostaBO extends BOGeneric
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
-            
         }
-        
+
         // return $resultado[0]["soma"];
     }
     #endregion
@@ -214,6 +251,15 @@ try {
 
         if ($metodo == "RetornaValorPropostaMedia") {
             $resultado = $PropostaBO->RetornaValorPropostaMedia($_POST["ID_SERVICO"]);
+        }
+        if ($metodo == "MudaSituacaoPropostaFuncionario") {
+            if (isset($_POST['IDPROPOSTA']) && isset($_POST['SITUACAO']) && isset($_POST['TITULO']) && isset($_POST['IDCLIENTE']) && isset($_POST['IDSERVICO'])) {
+                $idproposta = $_POST['IDPROPOSTA'];
+                $proposta = $PropostaBO->MudaSituacaoPropostaFuncionario($idproposta, $_POST['SITUACAO'], $_POST['TITULO'], $_POST['IDCLIENTE'], $_POST['IDSERVICO']);
+                echo json_encode($proposta);
+            } else {
+                throw new Exception("parâmetros [IDPROPOSTA,SITUACAO,TITULO,IDCLIENTE,IDSERVICO] estão em falta.");
+            }
         }
     }
 } catch (\Throwable $ex) {

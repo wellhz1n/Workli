@@ -99,6 +99,8 @@ class PropostaDAO
 		IU.IMAGEM,
         P.SITUACAO,
         P.VALOR,
+        U.ID AS IDCLIENTE,
+        S.ID AS IDSERVICO,
 		DATE_FORMAT(P.DATA_CRIACAO,'%d/%m/%Y') AS DATAPROPOSTA
         FROM PROPOSTA P 
         INNER JOIN SERVICO S ON S.ID = P.IDSERVICO
@@ -136,5 +138,8 @@ class PropostaDAO
     }
     
     #endregion
+   function SetSituacaoPropostaPorId($id,$situacao){
+       return Update("update proposta set situacao = ? where id = ?",[$situacao,$id]);
+   }
     #endregion
 }

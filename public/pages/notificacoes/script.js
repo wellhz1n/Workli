@@ -1,7 +1,7 @@
 $(document).ready(async () => {
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-    await app.$set(dataVue, 'Tabs', { Notificacao: false, Propostas: true });
+    await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
     //#endregion
 
 

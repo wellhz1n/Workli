@@ -56,67 +56,76 @@
 <!-- Funcionario -->
 <div v-else>
     <div class=" WrapperNotificacoesTab" style="height: 60vh;">
-    <transition name="fade" mode="out-in">
-    <div :key="0" v-if="dataVue.TabPFuncionarioCarregando !== undefined && !dataVue.TabPFuncionarioCarregando">
-            <transition name="fade" mode="out-in">
-                <div class="col-12 mt-3" v-if="dataVue.TabPropostaFuncinarioTab.paginas > 1" style=" align-self: center;display: flex;justify-content: center;">
-                    <wm-paginacao :totaldepaginas="dataVue.TabPropostaFuncinarioTab.paginas" :paginaatual="JSON.parse(dataVue.TabPropostaFuncinarioTab.pagina_Atual)" v-on:changepagina="(a)=>{dataVue.TabPropostaFuncinarioTab.pagina_Atual= a}" />
-                </div>
-            </transition>
-            <div class=" WrapperNotificacoesTabItem">
+        <transition name="fade" mode="out-in">
+            <div :key="0" v-if="dataVue.TabPFuncionarioCarregando !== undefined && !dataVue.TabPFuncionarioCarregando">
+                <transition name="fade" mode="out-in">
+                    <div class="col-12 mt-3" v-if="dataVue.TabPropostaFuncinarioTab.paginas > 1" style=" align-self: center;display: flex;justify-content: center;">
+                        <wm-paginacao :totaldepaginas="dataVue.TabPropostaFuncinarioTab.paginas" :paginaatual="JSON.parse(dataVue.TabPropostaFuncinarioTab.pagina_Atual)" v-on:changepagina="(a)=>{dataVue.TabPropostaFuncinarioTab.pagina_Atual= a}" />
+                    </div>
+                </transition>
+                <div class=" WrapperNotificacoesTabItem">
 
-                <div class="filtrosWrapper">
-                    <h2 class="font_Poopins_SB m-0 p-0 mb-3" style="font-size: 17px;">Situação da Proposta</h2>
-                    <span @click="dataVue.TabPSituacaoProposta.Pendente = !dataVue.TabPSituacaoProposta.Pendente; 
+                    <div class="filtrosWrapper">
+                        <h2 class="font_Poopins_SB m-0 p-0 mb-3" style="font-size: 17px;">Situação da Proposta</h2>
+                        <span @click="dataVue.TabPSituacaoProposta.Pendente = !dataVue.TabPSituacaoProposta.Pendente; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Pendente?'active':null]">
-                        <i style="color:rgb(152 152 152) ;font-size: 20px;margin-left: -8px;" class="fas fa-clock"></i>
-                        <p class="mx-2">Pendente</p>
-                    </span>
+                            <i style="color:rgb(152 152 152) ;font-size: 20px;margin-left: -8px;" class="fas fa-clock"></i>
+                            <p class="mx-2">Pendente</p>
+                        </span>
 
-                    <span @click="dataVue.TabPSituacaoProposta.Rejeitada = !dataVue.TabPSituacaoProposta.Rejeitada; 
+                        <span @click="dataVue.TabPSituacaoProposta.Rejeitada = !dataVue.TabPSituacaoProposta.Rejeitada; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Rejeitada?'active':null]">
-                        <i style="color:#a8201a ;font-size: 20px;margin-left: -5px;" class="fas fa-times"></i>
-                        <p class="mx-2">Rejeitada</p>
-                    </span>
-                    <span @click="dataVue.TabPSituacaoProposta.Aprovada = !dataVue.TabPSituacaoProposta.Aprovada; 
+                            <i style="color:#a8201a ;font-size: 20px;margin-left: -5px;" class="fas fa-times"></i>
+                            <p class="mx-2">Rejeitada</p>
+                        </span>
+                        <span @click="dataVue.TabPSituacaoProposta.Aprovada = !dataVue.TabPSituacaoProposta.Aprovada; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Aprovada?'active':null]">
-                        <i style="color:#2855a7 ;font-size: 20px;margin-left: -5px;" class="fas fa-thumbs-up"></i>
-                        <p class="mx-2">Aprovada</p>
-                    </span>
-                    <span @click="dataVue.TabPSituacaoProposta.Em_Andamento = !dataVue.TabPSituacaoProposta.Em_Andamento; 
+                            <i style="color:#2855a7 ;font-size: 20px;margin-left: -5px;" class="fas fa-thumbs-up"></i>
+                            <p class="ml-2 mr-1">Aprovada<div style="height: 10px;width: 10px; background-color: red;border-radius: 100%;opacity: 0.8;" v-if="(dataVue.UsuarioContexto.NIVEL_USUARIO == 1 && (dataVue.TabPFuncionarioPossuiAprovada !== undefined && dataVue.TabPFuncionarioPossuiAprovada ))
+                "></div>
+                            </p>
+                        </span>
+                        <span @click="dataVue.TabPSituacaoProposta.Em_Andamento = !dataVue.TabPSituacaoProposta.Em_Andamento; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Em_Andamento?'active':null]">
 
-                        <i style="color:#0f8b8d ;font-size: 20px;margin-left: -8px;" class="fas fa-tasks"></i>
-                        <p class="mx-2">Em Andamento</p>
+                            <i style="color:#0f8b8d ;font-size: 20px;margin-left: -8px;" class="fas fa-tasks"></i>
+                            <p class="mx-2">Em Andamento</p>
 
-                    </span>
-                    <span @click="dataVue.TabPSituacaoProposta.Concluidos = !dataVue.TabPSituacaoProposta.Concluidos; 
+                        </span>
+                        <span @click="dataVue.TabPSituacaoProposta.Concluidos = !dataVue.TabPSituacaoProposta.Concluidos; 
                                    " :class="['iconNotiAcao',dataVue.TabPSituacaoProposta !== undefined && dataVue.TabPSituacaoProposta.Concluidos?'active':null]">
-                        <i style="color:#28a745 ;font-size: 20px;margin-left: -5px;" class="fas fa-check-circle"></i>
-                        <p class="mx-2">Concluidos</p>
-                    </span>
-                </div>
-                <div class="col NotificacoesListWrapper">
-                    <transition name="fadefast" mode="out-in">
-                        <div style="height: 100%;
+                            <i style="color:#28a745 ;font-size: 20px;margin-left: -5px;" class="fas fa-check-circle"></i>
+                            <p class="mx-2">Concluidos</p>
+                        </span>
+                    </div>
+                    <div class="col NotificacoesListWrapper">
+                        <transition name="fadefast" mode="out-in">
+                            <div style="height: 100%;
                           display: flex;
                          align-items: center;width: 75%;" v-if="dataVue.PropostaFuncionario === undefined || dataVue.PropostaFuncionarioCarregando == undefined ||dataVue.PropostaFuncionarioCarregando">
-                            <wm-loading></wm-loading>
-                        </div>
-                        <div :key="2" v-else-if="dataVue.PropostaFuncionario !== undefined &&  dataVue.PropostaFuncionario.length > 0">
-                                <wm-proposta-funcionario class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)" :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :imagem_cliente="item.IMAGEM" :situacao="item.SITUACAO" :categoria="item.CATEGORIA" :valor="item.VALOR" :data="item.DATAPROPOSTA"></wm-proposta-funcionario>
-                        </div>
-                        <div :key="3" style="width: 75%;" v-else-if=" dataVue.PropostaFuncionario.length == 0 && !dataVue.PropostaFuncionarioCarregando">
-                            <wm-error style="margin-top: 0px !important;" mensagem="Nenhuma Proposta foi encontrada" />
-                        </div>
-                    </transition>
+                                <wm-loading></wm-loading>
+                            </div>
+                            <div :key="2" v-else-if="dataVue.PropostaFuncionario !== undefined &&  dataVue.PropostaFuncionario.length > 0">
+                                <wm-proposta-funcionario class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)" :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :idcliente="item.IDCLIENTE" @muda_situacao="({idProposta})=>{
+                                    if(dataVue.PropostaFuncionario.length == 1 && dataVue.PropostaFuncionario.filter(a=>{return a.ID == idProposta}).length == 1){
+                                        dataVue.PropostaFuncionario =[];
+                                         dataVue.TabPFuncionarioPossuiAprovada = false 
+                                        }
+                                        else
+                                            dataVue.PropostaFuncionario = dataVue.PropostaFuncionario.filter(a=>{return a.ID != idProposta});
+                                }" :idservico="item.IDSERVICO" :imagem_cliente="item.IMAGEM" :situacao="item.SITUACAO" :categoria="item.CATEGORIA" :valor="item.VALOR" :data="item.DATAPROPOSTA"></wm-proposta-funcionario>
+                            </div>
+                            <div :key="3" style="width: 75%;" v-else-if=" dataVue.PropostaFuncionario.length == 0 && !dataVue.PropostaFuncionarioCarregando">
+                                <wm-error style="margin-top: 0px !important;" mensagem="Nenhuma Proposta foi encontrada" />
+                            </div>
+                        </transition>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div :key="1" v-else>
-            <wm-loading />
-        </div>
-    </transition>
+            <div :key="1" v-else>
+                <wm-loading />
+            </div>
+        </transition>
     </div>
 </div>
 <!-- FIM Funcionario -->
