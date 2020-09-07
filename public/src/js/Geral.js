@@ -823,3 +823,18 @@ $.urlParam = function(name){
     }
     return decodeURI(results[1]) || 0;
 }
+
+async function AtualizaUsuarioColuna(idUsuario, coluna, dado, sessao, tabela) {
+    
+    let objectToSend = {ID: idUsuario, coluna: coluna, dado: dado}
+    if(sessao) {
+        objectToSend["sessao"] = sessao;
+    }
+    if(tabela) {
+        objectToSend["tabela"] = tabela;
+    }
+
+    let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+
+    return resultado;
+}

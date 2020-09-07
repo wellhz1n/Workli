@@ -269,8 +269,9 @@ $(document).ready(async () => {
 
         if(valor <= valorNaCarteira) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-            let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, sessao: "PLANO", tabela: "funcionario"}
-            let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+            
+            let resultado = AtualizaUsuarioColuna(usuarioId, "plano", nivel, "PLANO", "funcionario");
+
             if(resultado) {
                 switch (nivel) {
                     case 0:
@@ -291,8 +292,7 @@ $(document).ready(async () => {
                 }
     
                 valor = valorNaCarteira - valor;
-                let objectToSend = {ID: usuarioId, coluna: "valor_carteira", dado: valor, sessao: "VALOR_CARTEIRA"}
-                let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+                let resultado = AtualizaUsuarioColuna(usuarioId, "valor_carteira", valor, "VALOR_CARTEIRA");
                 dataVue.valorNaCarteira = valor.toFixed(2).replace(".", ",");
 
                 dataVue.callbackPlanos();
@@ -412,10 +412,12 @@ $(document).ready(async () => {
         if(formVerificado && dataVue.usuarioDadosPagamento.cartao && dataVue.usuarioDadosPagamento.valor) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
             let valorNaCarteira = await GetSessaoPHP("VALORCARTEIRA");
+            valorNaCarteira = isNaN(valorNaCarteira)? 0 : valorNaCarteira;
+
             valor = parseFloat(valorNaCarteira) + parseFloat(valor);
 
-            let objectToSend = {ID: usuarioId, coluna: "valor_carteira", dado: valor, sessao: "VALOR_CARTEIRA"}
-            let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+            let resultado = AtualizaUsuarioColuna(usuarioId, "valor_carteira", valor, "VALOR_CARTEIRA");
+
             if(resultado) {
                 dataVue.callbackCarteira();
                 toastr.info("Você pode checar o tanto que possui em carteira no seu perfil.", 'Fundos adicionados!');
