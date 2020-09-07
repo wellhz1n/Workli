@@ -297,7 +297,7 @@
             >
                 <template v-slot:descricao>
                     <span>
-                        <span class="font-weight-bold">10%</span> de taxa de intermediação
+                        <span class="font-weight-bold">12%</span> de taxa de intermediação
                     </span>
                     <span>
                         <span class="font-weight-bold">10</span> vales de patrocínio
@@ -315,7 +315,7 @@
             >
                 <template v-slot:descricao>
                     <span>
-                        <span class="font-weight-bold">5%</span> de taxa de intermediação
+                        <span class="font-weight-bold">8%</span> de taxa de intermediação
                     </span>
                     <span>
                         <span class="font-weight-bold">20</span> vales de patrocínio

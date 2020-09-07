@@ -250,38 +250,40 @@ $(document).ready(async () => {
     });
 
     app.$set(dataVue, "darUpgradePlano", async (nivel) => {
-        let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-        let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, sessao: "PLANO", tabela: "funcionario"}
-        let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
-        if(resultado) {
-            let valorNaCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
-            let valor = 0;
-            switch (nivel) {
-                case 1:
-                    valor = 25;
-                    break;
-                case 2:
-                    valor = 50;
-                    break;
-                case 3:
-                    valor = 80;
-                    break;
-                default:
-                    break;
-            }
-            if(valor <= valorNaCarteira) {
+
+        let valorNaCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
+        let valor = 0;
+        switch (nivel) {
+            case 1:
+                valor = 25;
+                break;
+            case 2:
+                valor = 50;
+                break;
+            case 3:
+                valor = 80;
+                break;
+            default:
+                break;
+        }
+
+        if(valor <= valorNaCarteira) {
+            let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
+            let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, sessao: "PLANO", tabela: "funcionario"}
+            let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+            if(resultado) {
                 switch (nivel) {
                     case 0:
                         toastr.info("Seus planos foram cancelados.", 'Assinado!');
                         break;
                     case 1:
-                        toastr.info("Você agora é um Membro Plus.", 'Assinado!');
+                        toastr.info("R$ 25,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Plus!');
                         break;
                     case 2:
-                        toastr.info("Você agora é um Membro Prime.", 'Assinado!');
+                        toastr.info("R$ 50,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Prime!');
                         break;
                     case 3:
-                        toastr.info("Você agora é um Membro Master.", 'Assinado!');
+                        toastr.info("R$ 80,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Master!');
                         break;
                     default:
                         toastr.info("Upgrade na conta concedido.", 'Assinado!');
@@ -295,12 +297,14 @@ $(document).ready(async () => {
 
                 dataVue.callbackPlanos();
                 dataVue.iconePlano = await dataVue.retornaPlano();
-            } else {
-                toastr.error("Adicione mais fundos pelo botão \"+\" ao lado de sua carteira no perfil.", 'Falta de fundos na carteira!');
             }
-            
-            
+
+        } else {
+            toastr.error("Adicione mais fundos pelo botão \"+\" ao lado de sua carteira.", 'Falta de fundos na carteira!');
         }
+            
+            
+        
     });
 
 
@@ -394,7 +398,11 @@ $(document).ready(async () => {
         dataVue.modalVisivelCarteira = false;
     });
 
-    app.$set(dataVue, "valorNaCarteira", parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ","));
+    app.$set(
+        dataVue, 
+        "valorNaCarteira", 
+        parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",") == "NaN" ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
+    );
 
     app.$set(dataVue, "adicionarFundos", async (valor) => {
 
