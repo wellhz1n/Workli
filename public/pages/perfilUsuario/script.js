@@ -251,7 +251,7 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "darUpgradePlano", async (nivel) => {
         let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-        let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, secao: "PLANO"}
+        let objectToSend = {ID: usuarioId, coluna: "plano", dado: nivel, sessao: "PLANO", tabela: "funcionario"}
         let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
         if(resultado) {
             dataVue.callbackPlanos();
@@ -317,6 +317,7 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "abremodalCarteira", async () => {
         dataVue.modalVisivelCarteira = true;
+
         setTimeout(() => {
             $("#inputDinheiro").on("keyup", (e) => {
                 let valorInput = $("#inputDinheiro").val();
@@ -329,7 +330,20 @@ $(document).ready(async () => {
             $("#inputDinheiro").on("change", () => {
                 let valorInput = $("#inputDinheiro").val();
                 $("#inputDinheiro").val(parseFloat(valorInput).toFixed(2));
+
+                dataVue.usuarioDadosPagamento.valor = valorInput;
             });
+
+            $("input[name='cartao']").on("change", (e) => {
+                let valorInput = e.currentTarget.id;
+                dataVue.usuarioDadosPagamento.cartao = valorInput;
+            });
+
+
+            $('#inputDataCartaoP').mask('00/00');
+            $('#inputCVCCartaoP').mask('0000');
+            $('#inputNumeroCartaoP').mask('0000 0000 0000 0000');
+            
         }, 100);
         
     });
@@ -338,15 +352,59 @@ $(document).ready(async () => {
         dataVue.modalVisivelCarteira = false;
     });
 
+    app.$set(dataVue, "valorNaCarteira", parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ","));
 
+    app.$set(dataVue, "adicionarFundos", async (valor) => {
+
+        $("#inputDinheiro").removeClass("erroImportant");
+        let formVerificado = WMVerificaForm()
+
+        if(formVerificado && dataVue.usuarioDadosPagamento.cartao && dataVue.usuarioDadosPagamento.valor) {
+            debugger
+            let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
+            let valorNaCarteira = await GetSessaoPHP("VALORCARTEIRA");
+            valor = parseFloat(valorNaCarteira) + parseFloat(valor);
+
+            let objectToSend = {ID: usuarioId, coluna: "valor_carteira", dado: valor, sessao: "VALOR_CARTEIRA"}
+            let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+            if(resultado) {
+                dataVue.callbackCarteira();
+                toastr.info("Você pode checar o tanto que possui em carteira no seu perfil.", 'Fundos adicionados!');
+                dataVue.valorNaCarteira = valor.toFixed(2).replace(".", ",");
+                // dataVue.iconePlano = await dataVue.retornaPlano();
+                
+            }
+        }
+        
+
+
+        /*Validações básicas adicionais*/
+        if (!dataVue.usuarioDadosPagamento.cartao) {
+            if(formVerificado) {
+                toastr.error("Selecione o tipo do seu cartão.", 'Cartão Inválido!');
+            }
+        }
+        if (!dataVue.usuarioDadosPagamento.valor || parseFloat(dataVue.usuarioDadosPagamento.valor).toFixed(2) == "0.00") {
+            $("#inputDinheiro").addClass("erroImportant");
+            if(formVerificado) {
+                toastr.error("Preencha a quantia de dinheiro a ser adicionada.", 'Campo Inválido!');
+            }
+        }
+        
+        
+        
+        
+    });
 
 
     /* Modal de Pagamentos */
-    app.$set(dataVue, "usuarioDadosPagamento", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
+    app.$set(dataVue, "usuarioDadosPagamento", {
         numeroCartao: "",
         nome: "",
         expiracao: "",
         CVC: "",
+        cartao: "",
+        valor: ""
     });
 });
 
@@ -391,5 +449,5 @@ function resetaOsDadosDoPerfilEdit() {
     
     dataVue.usuarioDadosEdit.descricao = dataVue.usuarioDados.descricao;
     dataVue.usuarioDadosEdit.profissao = dataVue.usuarioDados.profissao;
-    dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : null;
+    dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : "";
 }

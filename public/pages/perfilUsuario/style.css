@@ -133,20 +133,14 @@
 
     
     #carteiraIcon {
-        /* align-self: flex-start;
-        font-size: 1.3vw;
-        cursor: pointer;
-        margin-right: 10px;
-        margin-top: 5px;
-        color: #28a745;
-        transition: 0.2s; */
+        font-size: 1.7vw !important;
         position: absolute;
         right: 0;
     }
 
 
     #carteiraIcon:hover {
-        font-size: 1.5vw;
+        font-size: 1.9vw !important;
         margin-right: 9px;
         margin-top: 3px;
     }
@@ -706,6 +700,11 @@
     height: 15px;
     width: 15px;
     cursor: pointer;
+    border: 2px solid red !important;
+}
+
+.inputCartaoErro {
+     border: 2px solid red !important;
 }
 
 @media only screen and (max-width: 1575px) { 
@@ -723,6 +722,7 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 95%;
 }
 
 .marginCartoes {
@@ -732,7 +732,7 @@
 
 .wrapperInputDinheiro {
     display: flex;
-    margin-top: 35px;
+    margin-top: 30px;
     align-items: center;
     justify-content: center;
 }
@@ -749,13 +749,16 @@
     padding: 3px 0.7vw;
     width: 40%;
     font-size: 1.8vw;
-    
     color: #495057;  
-    border: 1px solid #ced4da;
+    border: 2px solid rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 1px #ced4da;
     border-radius: 0.25rem;
+    transition: 0.2s;
 }
 #inputDinheiro:focus {
     outline: none;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
+    border: 2px solid rgb(33, 136, 56);
 }
 
 #botaoAdicionarFundos {
@@ -770,7 +773,7 @@
     letter-spacing: 1px;
     font-size: 20px;
     transition: 0.2s;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 #botaoAdicionarFundos:focus {

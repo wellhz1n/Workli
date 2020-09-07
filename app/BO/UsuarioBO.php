@@ -77,10 +77,15 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
 
     if ($metodo == "SetDadoUsuario") {
         $dados = $_POST["dados"];
-        if(!isset($dados["secao"])) {
-            $dados["secao"] = false;
+        if(!isset($dados["sessao"])) {
+            $dados["sessao"] = false;
         }
-        $userBO->SetDadoUsuario($dados["ID"], $dados["coluna"], $dados["dado"], $dados["secao"]);
+        if(!isset($dados["tabela"])) {
+            $dados["tabela"] = "usuarios";
+        }
+
+
+        $userBO->SetDadoUsuario($dados["ID"], $dados["coluna"], $dados["dado"], $dados["sessao"], $dados["tabela"]);
     }
 }
 class UsuarioBO
@@ -357,15 +362,13 @@ class UsuarioBO
         echo json_encode($this->usuarioDAO->BuscaNumeroUsuarios());
     }
 
-    public function SetDadoUsuario($id, $coluna, $dado, $secao) {
+    public function SetDadoUsuario($id, $coluna, $dado, $sessao, $tabela) {
         try {
-            $this->usuarioDAO->SetDadoUsuario($id, $coluna, $dado);
-            function retornaVariavel($secao) {
-                
-            }
+            $this->usuarioDAO->SetDadoUsuario($id, $coluna, $dado, $tabela);
+            
             $arraySecEnum = EnumParaArray("SecoesEnum");
-            if($secao) {
-                CriaSecao($arraySecEnum[$secao], $dado);
+            if($sessao) {
+                CriaSecao($arraySecEnum[$sessao], $dado);
             }
             // echo BuscaSecaoValor(SecoesEnum::PLANO);
             echo 1;

@@ -21,7 +21,7 @@
                         <span class="iconePerfil dinheiro"></span>
                         <div class="textPerfilWrapper">
                             <div class="numeroCardPerfil">
-                                R$ 0,00
+                                R$ {{dataVue.valorNaCarteira}}
                             </div>
                             <div class="textoCardPerfil">Minha Carteira</div>
                         </div>
@@ -363,16 +363,16 @@
                 <wm-input 
                     entidade="usuarioDadosPagamento" 
                     id="inputNomeCartaoP" 
-                    campo="nomeCartao" 
+                    campo="nome" 
                     class_pai_wrapper="inputPagamento"
                     :obrigatorio="true"
                     placeholder="Seu Nome"
                 ></wm-input>
-                <div class="d-flex">
+                <div class="d-flex" style="width: 100%;">
                     <wm-input 
                         entidade="usuarioDadosPagamento" 
                         id="inputDataCartaoP" 
-                        campo="nomeCartao" 
+                        campo="expiracao" 
                         class_pai_wrapper="inputPagamento mr-2"
                         :obrigatorio="true"
                         placeholder="MM/AA"
@@ -380,7 +380,7 @@
                     <wm-input 
                         entidade="usuarioDadosPagamento" 
                         id="inputCVCCartaoP" 
-                        campo="numeroCartao" 
+                        campo="CVC" 
                         class_pai_wrapper="inputPagamento"
                         :obrigatorio="true"
                         placeholder="CVC"
@@ -425,12 +425,12 @@
                     <input 
                         id="inputDinheiro" 
                         type="number" 
-                        min="1" 
+                        min="0" 
                         max="10000" 
                         step="any" 
                         value="00.00"/>
                 </div>
-                <button id="botaoAdicionarFundos">ADICIONAR FUNDOS <i class="fas fa-wallet"></i></button>
+                <button id="botaoAdicionarFundos" @click="dataVue.adicionarFundos(dataVue.usuarioDadosPagamento.valor)">ADICIONAR FUNDOS <i class="fas fa-wallet"></i></button>
             </div>
         </div>
     </template>

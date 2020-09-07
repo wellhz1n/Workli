@@ -50,7 +50,7 @@ AFTER nome;
 
 
 ALTER TABLE funcionario avaliacao_media,
-ADD COLUMN tags TEXT
+ADD COLUMN tags TEXT DEFAULT ""
 AFTER avaliacao_media,
 ADD COLUMN profissao VARCHAR(50)
 AFTER avaliacao_media;
@@ -64,3 +64,8 @@ DROP TABLE servicos_funcionario;
 ALTER TABLE funcionario
 ADD COLUMN plano TINYINT DEFAULT 0
 AFTER tags;
+
+
+ALTER TABLE usuarios
+ADD COLUMN valor_carteira decimal(15,2) DEFAULT 0
+AFTER descricao;

@@ -225,6 +225,10 @@ a:hover {
     border: solid 1px #ff0000;
 }
 
+.erroImportant {
+    border: solid 1px #ff0000 !important;
+}
+
 #loading {
     display: flex;
     flex-direction: column;

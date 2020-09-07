@@ -173,19 +173,36 @@ class UsuarioDAO
         return $retorno->resultados[0];
     }
    
-    public function SetDadoUsuario($id, $coluna, $dado) {
-        $resultado = Update(
-            "UPDATE funcionario AS FUNC
-            INNER JOIN usuarios as US
-            ON FUNC.id_usuario = US.id
-            SET
-            FUNC.plano = ?
-            WHERE FUNC.id_usuario = ?",
-            [
-                $dado,
-                $id
-            ]
-        );
+    public function SetDadoUsuario($id, $coluna, $dado, $tabela) {
+        
+        if($tabela == "funcionario") {
+            $coluna = "FUNC.".$coluna;
+            $resultado = Update(
+                "UPDATE funcionario AS FUNC
+                INNER JOIN usuarios AS US
+                ON FUNC.id_usuario = US.id
+                SET
+                $coluna = ?
+                WHERE FUNC.id_usuario = ?",
+                [
+                    $dado,
+                    $id
+                ]
+            );
+        } else if($tabela == "usuarios") {
+            $coluna = "US.".$coluna;
+            $resultado = Update(
+                "UPDATE usuarios AS US
+                SET
+                $coluna = ?
+                WHERE US.id = ?",
+                [
+                    $dado,
+                    $id
+                ]
+            );
+        }
+        
     }
 }
 // $USR->example();
