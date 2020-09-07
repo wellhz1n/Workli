@@ -22,11 +22,13 @@ class Seletores
     {
         $nivelArr = EnumParaArray(SituacaoEnum::class);
         $nivelIconeArr = EnumParaArray(IconeSituacao::class);
+        $tituloArr = EnumParaArray(TituloSituacao::class);
+
         $resultado = array();
         foreach ($nivelArr as $key => $value) {
             $cl = new stdClass;
             $cl->id = $value;
-            $cl->nome = str_replace("_", " ", $key);
+            $cl->nome = isset($tituloArr[$key])? ucwords($tituloArr[$key]) :ucwords(strtolower(str_replace("_", " ", $key)));
             $cl->icone = $nivelIconeArr[$key];
             array_push($resultado, $cl);
         }

@@ -18,13 +18,14 @@
 .containerBox {
     background-image: url('../../src/img/background/background.png');
     border-radius: 12px;
-    width: 85%;
+    width: 95%;
     margin-top: 1%;
     display: flex;
     justify-content: center;
-    height: 30vh;
+    height: 24vh;
     flex-direction: column;
     padding: 5%;
+    margin-bottom: 2%;
 }
 
 
@@ -56,10 +57,10 @@
 
 .feed {
     width: 100%;
-    height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2%;
 }
 
 .imagemUsuario {
@@ -91,7 +92,7 @@
 .projetoItemContainer {
     display: flex;
     flex-direction: column;
-    min-height: 200px;
+    min-height: fit-content;
     width: 80%;
     margin-top: 20px;
     max-height: 100%;
