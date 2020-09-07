@@ -265,7 +265,7 @@ var WM_Input = Vue.component('wm-input', {
         },
         titulo: {
             type: String,
-            default: "Input"
+            default: ""
         },
         id: {
             type: String,
@@ -283,6 +283,10 @@ var WM_Input = Vue.component('wm-input', {
         disabled: {
             Function,
             default: () => { return () => { return false } }
+        },
+        placeholder: {
+            type: String,
+            default: ""
         }
     },
     computed: {},
@@ -297,7 +301,7 @@ var WM_Input = Vue.component('wm-input', {
     },
     template: `
   <div v-if="this.visivel(this)" :class="[class_pai_wrapper]">
-    <label style="font-size:20px" v-if="this.required" :for="id">{{titulo}} *</label>
+    <label style="font-size:20px" v-if="this.required && this.titulo" :for="id">{{titulo}} *</label>
     <label style="font-size:20px"  v-else :for="id">{{titulo}}</label>
     <input 
         type="text" 
@@ -307,6 +311,7 @@ var WM_Input = Vue.component('wm-input', {
         v-on:change="onchange($event.target.value)" 
         :disabled="disabled(this)"
         :class=" ['form-control','wminput',this.classe]" 
+        :placeholder="this.placeholder"
     />
  
  </div>

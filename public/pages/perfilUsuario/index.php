@@ -16,11 +16,21 @@
         </div>
         <div id="cardsDadosProposta">
             <div class="cardsDPWrapper">
-                <div class="cardDP">
-                    <span class="iconePerfil dinheiro"></span>
-                    <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil">R$ 0,00</div>
-                        <div class="textoCardPerfil">Minha Carteira</div>
+                <div class="cardDP pt-0 px-0">
+                    <div id="wrapperCarteira">
+                        <span class="iconePerfil dinheiro"></span>
+                        <div class="textPerfilWrapper">
+                            <div class="numeroCardPerfil">
+                                R$ 0,00
+                            </div>
+                            <div class="textoCardPerfil">Minha Carteira</div>
+                        </div>
+                    </div>
+                    <div 
+                        id="carteiraIcon" 
+                        @click="() => {dataVue.abremodalCarteira()}"
+                    >
+                        <i class="fas fa-plus"></i>
                     </div>
                 </div>
                 <div class="cardDP">
@@ -251,7 +261,9 @@
             <wm-card-plano
                 titulo="Membro Padrão"
                 icone="planoPadrao.svg"
-                :botao_situacao="2"
+                :botao_situacao="dataVue.situacaoBotao[0]"
+                :plano_number="0"
+                @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
                 preco="Gratuito"
             >
                 <template v-slot:descricao>
@@ -266,7 +278,7 @@
                 preco="25,00"
                 :plano_number="1"
                 @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
-                :botao_situacao="dataVue.situacaoBotao[0]"
+                :botao_situacao="dataVue.situacaoBotao[1]"
             >
                 <template v-slot:descricao>
                     <span>
@@ -281,7 +293,7 @@
                 preco="50,00"
                 :plano_number="2"
                 @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
-                :botao_situacao="dataVue.situacaoBotao[1]"
+                :botao_situacao="dataVue.situacaoBotao[2]"
             >
                 <template v-slot:descricao>
                     <span>
@@ -299,7 +311,7 @@
                 preco="80,00"
                 :plano_number="3"
                 @botao-clickado="(nivel) => {dataVue.darUpgradePlano(nivel)}"
-                :botao_situacao="dataVue.situacaoBotao[2]"
+                :botao_situacao="dataVue.situacaoBotao[3]"
             >
                 <template v-slot:descricao>
                     <span>
@@ -318,6 +330,117 @@
         <div></div> <!-- Apenas para deixar o footer vazio.-->
     </template>
 </wm-modal>
+
+
+
+<!-- ---------------------------- Modal de pagamento ---------------------------- -->
+
+<wm-modal 
+    id="modalCarteira"
+    :visivel="dataVue.modalVisivelCarteira" 
+    :callback="dataVue.callbackCarteira"
+    height="40%"
+    width="80%"
+>
+    <template v-slot:header>
+        <div class="tituloModalCarteira">
+            ADICIONAR FUNDOS     
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="bodyCarteiraModal">
+            <img src="src/img/icons/perfil/cartao.svg" id='cartaoSvgModal'/>
+            <div class="wrapperInputsPagamento">
+                <span id="tituloPagamentos">Digite os dados do seu cartão de crédito:</span>
+                <wm-input 
+                    entidade="usuarioDadosPagamento" 
+                    id="inputNumeroCartaoP" 
+                    campo="numeroCartao" 
+                    class_pai_wrapper="inputPagamento"
+                    :obrigatorio="true"
+                    placeholder="Número do Cartão"
+                ></wm-input>
+                <wm-input 
+                    entidade="usuarioDadosPagamento" 
+                    id="inputNomeCartaoP" 
+                    campo="nomeCartao" 
+                    class_pai_wrapper="inputPagamento"
+                    :obrigatorio="true"
+                    placeholder="Seu Nome"
+                ></wm-input>
+                <div class="d-flex">
+                    <wm-input 
+                        entidade="usuarioDadosPagamento" 
+                        id="inputDataCartaoP" 
+                        campo="nomeCartao" 
+                        class_pai_wrapper="inputPagamento mr-2"
+                        :obrigatorio="true"
+                        placeholder="MM/AA"
+                    ></wm-input>
+                    <wm-input 
+                        entidade="usuarioDadosPagamento" 
+                        id="inputCVCCartaoP" 
+                        campo="numeroCartao" 
+                        class_pai_wrapper="inputPagamento"
+                        :obrigatorio="true"
+                        placeholder="CVC"
+                    ></wm-input>
+                </div>
+                <div class="wrapperCartoes">
+                    <div class="inputRadioCartaoWrapper marginCartoes">
+                        <label for="visa">
+                            <img  class="cartaoImg" src="src/img/perfil/visa.png"/>
+                        </label>
+                        <input class="inputCartao" id="visa" type="radio" name="cartao"/>
+                    </div>
+                    <div class="inputRadioCartaoWrapper marginCartoes">
+                        <label for="mastercard">
+                            <img class="cartaoImg" src="src/img/perfil/mastercard.png"/>
+                        </label>
+                        <input class="inputCartao" id="mastercard" type="radio" name="cartao"/>
+                    </div>
+                    <div class="inputRadioCartaoWrapper marginCartoes">
+                        <label for="cartao1">
+                            <img class="cartaoImg" src="src/img/perfil/cartao1.png"/>
+                        </label>
+                        <input class="inputCartao" id="cartao1" type="radio" name="cartao"/>
+                    </div>
+                    <div class="inputRadioCartaoWrapper marginCartoes">
+                        <label for="cartao2">
+                            <img class="cartaoImg" src="src/img/perfil/cartao2.png"/>
+                        </label>
+                        <input class="inputCartao" id="cartao2" type="radio" name="cartao"/>
+                    </div>
+                    <div class="inputRadioCartaoWrapper">
+                        <label for="cartao3">
+                            <img class="cartaoImg" src="src/img/perfil/cartao3.png"/>
+                        </label>
+                        <input class="inputCartao" id="cartao3" type="radio" name="cartao"/>
+                    </div>
+                </div>
+                <div class="wrapperInputDinheiro">
+                    <label id="textoDinheiro" for="inputDinheiro">
+                    R$    
+                    </label>
+                    <input 
+                        id="inputDinheiro" 
+                        type="number" 
+                        min="1" 
+                        max="10000" 
+                        step="any" 
+                        value="00.00"/>
+                </div>
+                <button id="botaoAdicionarFundos">ADICIONAR FUNDOS <i class="fas fa-wallet"></i></button>
+            </div>
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div>
+    </template>
+</wm-modal>
+
+<!-- ---------------------------------------------------------------------------- -->
+
 
 
 
@@ -342,5 +465,5 @@
     :configs="dataVue.configuracoesCrop"
 />
 
-
+<!-- Modal de  -->
 <script type="" src="pages/perfilUsuario/script.js"></script>

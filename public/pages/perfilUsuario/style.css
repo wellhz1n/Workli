@@ -121,6 +121,7 @@
         height: 135px;
         display: flex;
         flex-direction: column;
+        position: relative;
     }
     .textPerfilWrapper {
         text-align: center;
@@ -129,6 +130,33 @@
         margin: 0;
         padding: 10px;
     }
+
+    
+    #carteiraIcon {
+        /* align-self: flex-start;
+        font-size: 1.3vw;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-top: 5px;
+        color: #28a745;
+        transition: 0.2s; */
+        position: absolute;
+        right: 0;
+    }
+
+
+    #carteiraIcon:hover {
+        font-size: 1.5vw;
+        margin-right: 9px;
+        margin-top: 3px;
+    }
+
+    #wrapperCarteira {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
+
 }
 @media only screen and (max-width: 1095px) { 
     .cardDP {
@@ -553,3 +581,206 @@
     max-height: 90%;
 }
 /*#endregion Parte Planos ----------------------------------------------------------*/
+
+/*#region Modal de Pagamentos*/
+.tituloModalCarteira {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+
+#modalCarteira #filhoModal {
+    min-width: 700px;
+    min-height: 550px;
+    overflow: hidden;
+}
+
+#modalCarteira .modalFooter {
+    border: none !important;
+}
+
+#carteiraIcon {
+    align-self: flex-start;
+    font-size: 1.3vw;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: #28a745;
+    transition: 0.2s;
+}
+
+
+#carteiraIcon:hover {
+    font-size: 1.5vw;
+    margin-right: 9px;
+    margin-top: 3px;
+}
+
+#wrapperCarteira {
+    padding-top: 10px;
+    padding-left: 20px;
+    display: flex;
+    flex: 1;
+}
+
+#cartaoSvgModal {
+    max-height: 90%;
+    max-width: 50%;
+    align-self: flex-end;
+}
+
+.bodyCarteiraModal {
+    display: flex;
+    height: 100%;
+}
+
+
+.inputPagamento {
+    width: 100%;
+}
+
+.inputPagamento label {
+    font-size: 20px !important;
+    color: #090f18;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.inputPagamento > input, .inputPagamento div.form-control {
+    cursor: text;
+}
+
+.inputPagamento div.form-control {
+    padding: 4px 12px 4px !important;
+}
+
+.inputPagamento .wminput:focus {
+    border: 0;
+    box-shadow: 0px 0px 0px 2px rgb(33, 136, 56) !important;
+}
+
+
+.wrapperInputsPagamento {
+    padding: 20px 5%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tituloPagamentos {
+    font-family: Poppins-Bold;
+    font-size: 19px;
+}
+
+@media only screen and (max-width: 1230px) { 
+    #tituloPagamentos {
+        font-size: 17px;
+    }
+}
+@media only screen and (max-width: 1120px) { 
+    #tituloPagamentos {
+        font-size: 15px;
+    }
+}
+
+.inputRadioCartaoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cartaoImg {
+    width: 56px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.inputCartao {
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1575px) { 
+    .cartaoImg {
+        width: 3.56vw;
+        height: 2.42vw;
+    }
+    .inputCartao {
+        height: 1vw;
+        width: 1vw;
+    }
+}
+
+.wrapperCartoes {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.marginCartoes {
+    margin-right: 10%;
+}
+
+
+.wrapperInputDinheiro {
+    display: flex;
+    margin-top: 35px;
+    align-items: center;
+    justify-content: center;
+}
+
+#textoDinheiro {
+    font-size: 1.7vw;
+    margin-right: 1vw;
+    margin-bottom: 0;
+    
+    color: #495057;
+}
+#inputDinheiro {
+    font-family: Poppins-Regular;
+    padding: 3px 0.7vw;
+    width: 40%;
+    font-size: 1.8vw;
+    
+    color: #495057;  
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+#inputDinheiro:focus {
+    outline: none;
+}
+
+#botaoAdicionarFundos {
+    height: 37px;
+    width: 85%;
+    border-radius: 10px;
+    border: none;
+    background-color: #325dd1;
+    font-family: Poppins-Bold;
+    color: white;
+    word-spacing: 5px;
+    letter-spacing: 1px;
+    font-size: 20px;
+    transition: 0.2s;
+    margin-top: 25px;
+}
+
+#botaoAdicionarFundos:focus {
+    outline: none;
+    border: 3px solid #204bc2;
+}
+
+#botaoAdicionarFundos:hover {
+    background-color: #446ddd;
+}
+
+
+/*#endregion*/

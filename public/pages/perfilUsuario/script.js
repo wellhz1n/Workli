@@ -263,14 +263,14 @@ $(document).ready(async () => {
 
 
     app.$set(dataVue, "iconePlano", "src/img/icons/perfil/planoPadrao.svg");
-    app.$set(dataVue, "situacaoBotao", [0, 0, 0]);
+    app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
         let planoN = Number.parseInt(await GetSessaoPHP("PLANO"));
         let membro = "Membro Padrão";
         switch (planoN) {
             case 0:
                 planoN = "src/img/icons/perfil/planoPadrao.svg";
-                dataVue.situacaoBotao = [0, 0, 0];
+                dataVue.situacaoBotao = [2, 0, 0, 0];
 
                 membro = "Membro Padrão";
                 $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 20% por serviço terminado, além de não possuir nenhum privilégio.`);
@@ -279,7 +279,7 @@ $(document).ready(async () => {
                 break;
             case 1:
                 planoN = "src/img/icons/perfil/planoPlus.svg";
-                dataVue.situacaoBotao = [1, 0, 0];
+                dataVue.situacaoBotao = [0, 1, 0, 0];
 
                 membro = "Membro Plus";
                 $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 15% por serviço terminado.`);
@@ -288,7 +288,7 @@ $(document).ready(async () => {
                 break;
             case 2:
                 planoN = "src/img/icons/perfil/planoPrime.svg";
-                dataVue.situacaoBotao = [0, 1, 0];
+                dataVue.situacaoBotao = [0, 0, 1, 0];
 
                 membro = "Membro Prime";
                 $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 12% por serviço terminado.`);
@@ -297,7 +297,7 @@ $(document).ready(async () => {
                 break;
             case 3:
                 planoN = "src/img/icons/perfil/planoMaster.svg";
-                dataVue.situacaoBotao = [0, 0, 1];
+                dataVue.situacaoBotao = [0, 0, 0, 1];
                 
                 membro = "Membro Master";
                 $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 8% por serviço terminado.`);
@@ -311,6 +311,43 @@ $(document).ready(async () => {
     });
 
     dataVue.iconePlano = await dataVue.retornaPlano();
+
+    /* Modal de Carteira*/
+    app.$set(dataVue, "modalVisivelCarteira", false);
+
+    app.$set(dataVue, "abremodalCarteira", async () => {
+        dataVue.modalVisivelCarteira = true;
+        setTimeout(() => {
+            $("#inputDinheiro").on("keyup", (e) => {
+                let valorInput = $("#inputDinheiro").val();
+                if(!isNaN(valorInput)) {
+                    if(valorInput > 10000) {
+                        $("#inputDinheiro").val(10000.00)
+                    }
+                }
+            });
+            $("#inputDinheiro").on("change", () => {
+                let valorInput = $("#inputDinheiro").val();
+                $("#inputDinheiro").val(parseFloat(valorInput).toFixed(2));
+            });
+        }, 100);
+        
+    });
+
+    app.$set(dataVue, "callbackCarteira", () => {
+        dataVue.modalVisivelCarteira = false;
+    });
+
+
+
+
+    /* Modal de Pagamentos */
+    app.$set(dataVue, "usuarioDadosPagamento", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
+        numeroCartao: "",
+        nome: "",
+        expiracao: "",
+        CVC: "",
+    });
 });
 
 
@@ -346,7 +383,8 @@ function atualizaOsDadosDoPerfil() {
 }
 function resetaOsDadosDoPerfilEdit() {
     
-    /* Atualiza os dados do modal de editar perfil com o que tem dentro do usuario Dados 
+    /* 
+    Atualiza os dados do modal de editar perfil com o que tem dentro do usuario Dados 
     (é mais rapido pois não puxa do banco, mas só serve quando descarta o modal) 
     */
     dataVue.usuarioDadosEdit.nome = dataVue.usuarioDados.nome;
