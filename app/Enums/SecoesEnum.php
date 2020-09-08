@@ -18,6 +18,7 @@ abstract class SecoesEnum
     const AVALIACAO_MEDIA = "AVALIACAOMEDIA";
     const PROFISSAO = "PROFISSAO";
     const PLANO = "PLANO";
+    const VALES_PATROCINIOS = "VALESPATROCINIOS";
     #endregion
 
     #endregion

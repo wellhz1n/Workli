@@ -107,36 +107,74 @@ $(document).ready(async () => {
 
     /* FUNÇÃO DE SALVAR */
     app.$set(dataVue, "enviaproposta", async () => {
-        BloquearTelaSemLoader();
-        dataVue.PropostaController.carregando = true;
-        let result = await WMExecutaAjax("PropostaBO", "SalvarProposta", { proposta: dataVue.Proposta })
-        if (result.error != undefined) {
-            toastr.error("Algo deu errado, tente novamente", "Ops");
-            dataVue.PropostaController.carregando = false;
-        } else if (result == true) {
-            dataVue.Projetos.lista.map(x => {
-                if(x.id == dataVue.selecionadoController.id)
-                    x.propostaFuncionario = 1
-                return x;
-            });
-            toastr.success("Proposta enviada com sucesso!", "Sucesso");
-            dataVue.PropostaController.carregando = false;
-            dataVue.PropostaController.mandou = true;
+
+        let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
+        let valorCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
+        
+        if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
+            valorCarteira -= 6;
+        } else if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+            valorCarteira -= 5;
+        } else if(dataVue.Proposta.Upgrades.upgrade2) {
+            valorCarteira -= 1;
         }
 
-        /* Desativa os inputs após clicar no botão*/
+        if((valesNaCarteira  && !dataVue.Proposta.Upgrades.upgrade2) || valorCarteira >= 0) {     
+            
+            BloquearTelaSemLoader();
+            dataVue.PropostaController.carregando = true;
+            
+            let result = await WMExecutaAjax("PropostaBO", "SalvarProposta", { proposta: dataVue.Proposta })
+            if (result.error != undefined) {
+                toastr.error("Algo deu errado, tente novamente", "Ops");
+                dataVue.PropostaController.carregando = false;
+            } else if (result == true) {   
+                if(valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+                    toastr.info("Upgrade concedido através de um vale patrocínio.", "Upgrades!");
+                }
 
-        //#region Variaveis para porcentagem
-        valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
-        valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
-        valorCliente = $(".inputProposta")[0].value;
+                if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
+                    toastr.info("R$ 6,00 foram deduzidos de sua carteira.", "Upgrades!");
+                } else if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+                    toastr.info("R$ 5,00 foram deduzidos de sua carteira.", "Upgrades!");
+                } else if(dataVue.Proposta.Upgrades.upgrade2) {
+                    toastr.info("R$ 1,00 foram deduzidos de sua carteira.", "Upgrades!");
+                }
+                let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
+                
+                let resultadoVales = AtualizaUsuarioColuna(usuarioId, "vales_patrocinios", --valesNaCarteira, "VALES_PATROCINIOS", "funcionario");
+                let resultadoCarteira = AtualizaUsuarioColuna(usuarioId, "valor_carteira", valorCarteira, "VALOR_CARTEIRA");
 
-        porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
-        //#endregion
-        $(".inputProposta").attr("disabled", true);
-        $(".upgradeCard").attr("background-color", "#f2f2f2");
+                dataVue.Projetos.lista.map(x => {
+                    if(x.id == dataVue.selecionadoController.id)
+                        x.propostaFuncionario = 1
+                    return x;
+                });
+                toastr.success("Proposta enviada com sucesso!", "Sucesso");
+                
+            }
 
-        DesbloquearTelaSemLoader();
+            dataVue.PropostaController.carregando = false;
+            dataVue.PropostaController.mandou = true;
+
+
+            /* Desativa os inputs após clicar no botão*/
+
+            //#region Variaveis para porcentagem
+            valorMax = dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "");
+            valorMin = dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");
+            valorCliente = $(".inputProposta")[0].value;
+
+            porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
+            //#endregion
+            $(".inputProposta").attr("disabled", true);
+            $(".upgradeCard").attr("background-color", "#f2f2f2");
+
+            DesbloquearTelaSemLoader();
+        } else {
+            toastr.error("Não é possível dar upgrade devido a falta de fundos na carteira.", "Falta de fundos!");
+        }
+        
     });
     app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
@@ -165,6 +203,7 @@ $(document).ready(async () => {
             dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
             dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
 
+            let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
             /* Algumas atualizacoes do modal*/
             setTimeout(() => {
                 if (($(".bodyDetalhes").first().height()) > 500) {
@@ -191,11 +230,12 @@ $(document).ready(async () => {
                 var i = 1;
                 porcentagemAtual = 50;
 
-
+                
                 /* PUXA O VALOR DINAMICO */
-                $('#precoMin')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[0];
-                $('#precoMax')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[1];
-
+                if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                    $('#precoMin')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[0];
+                    $('#precoMax')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[1];
+                }
 
 
                 $('#rangeSlider').wrap("<div class='range'></div>");
@@ -255,9 +295,9 @@ $(document).ready(async () => {
 
                     );
 
-                    // $("#taxaCardProposta")[0].innerHTML = "Taxa relativa ao <b>Plano Gratuito: " + taxaPorcentagem + "%</b>";
-
                     dataVue.Proposta.Valor = valorCliente;
+
+
                 });
 
                 $('#rangeSlider').on("input", function () {
@@ -270,7 +310,7 @@ $(document).ready(async () => {
                     taxaValor = (valorCliente / 100) * 15;
                     valorFuncionario = valorCliente - taxaValor;
 
-                    // $valorAlternante = (((valorCliente - dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "")) / ($valorTotal / 100)) / 100) * dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "");    
+                    
                     porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
                     var a = this.value / 1;
                     if (a == 0) {
@@ -329,8 +369,9 @@ $(document).ready(async () => {
                     $('#rangeSlider').addClass("hovered");
                 });
 
-                $(".valorDoSlider")[0].innerHTML += "<style></style>";
-
+                if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                    $(".valorDoSlider")[0].innerHTML += "<style></style>";
+                }
                 $("#rangeSlider").on({
                     mouseenter: () => {
                         $('#rangeSlider').addClass("hovered");
@@ -361,19 +402,24 @@ $(document).ready(async () => {
                 });
                 /* -------------------*/
 
-
-                console.log(dataVue.Proposta.IdServico)
                 
                 setTimeout(async () => {
                     if (dataVue.modalVisivelController == true) {  
                         let resultadoProposta = await WMExecutaAjax("PropostaBO", "RetornaValorPropostaMedia", { ID_SERVICO: dataVue.Proposta.IdServico });
-                        debugger
                         if(resultadoProposta[0].soma) {
                             resultadoProposta = String(Number.parseFloat(resultadoProposta[0].soma).toFixed(2)).replace(".", ",");
                         } else {
                             resultadoProposta = "0,00"
                         }
-                        document.getElementById("propostaMedia").innerText = `R$ ${resultadoProposta}`;
+                        if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                            document.getElementById("propostaMedia").innerText = `R$ ${resultadoProposta}`;
+                        }
+
+                        if(valesNaCarteira > 0) {
+                            $("#patrocinadoValor").text("Gratuito");
+                            $("#patrocinadoValor").addClass("text-success");
+                        }
+                        
                     }
                 }, 100);
             }, 1);

@@ -69,3 +69,7 @@ AFTER tags;
 ALTER TABLE usuarios
 ADD COLUMN valor_carteira decimal(15,2) DEFAULT 0
 AFTER descricao;
+
+ALTER TABLE funcionario
+ADD COLUMN vales_patrocinios INT DEFAULT 0
+AFTER tags;

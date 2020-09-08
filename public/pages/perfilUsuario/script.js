@@ -6,6 +6,8 @@ $(document).ready(async () => {
     await app.$set(dataVue, "Usuario", { imagem:img == ""? null : img, imgTemp: null });
     $("#Titulo").text("Editar Usuário");
 
+    let nivelUsuario = await GetSessaoPHP("NIVELUSUARIO");
+
 
     if(document.getElementById("tagsCPWrapper")) {
         function scrollHorizontally(e) {
@@ -36,7 +38,7 @@ $(document).ready(async () => {
     let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": usuarioId });
 
     /*STAR RATING*/
-    await app.$set(dataVue, "Rating", parseFloat(usuario.avaliacao_media));
+    await app.$set(dataVue, "Rating", !parseFloat(usuario.avaliacao_media) ? 0 : parseFloat(usuario.avaliacao_media));
     await app.$set(dataVue, "StarSize", 40);
 
     if(innerWidth < 1620) {
@@ -252,16 +254,24 @@ $(document).ready(async () => {
     app.$set(dataVue, "darUpgradePlano", async (nivel) => {
 
         let valorNaCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
+        valorNaCarteira = isNaN(valorNaCarteira) ? 0 : valorNaCarteira; 
         let valor = 0;
+
+        let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
+        valesNaCarteira = isNaN(valesNaCarteira) ? 0 : valesNaCarteira; 
+        let vales = 0;
+
         switch (nivel) {
             case 1:
                 valor = 25;
                 break;
             case 2:
                 valor = 50;
+                vales = 10;
                 break;
             case 3:
                 valor = 80;
+                vales = 20;
                 break;
             default:
                 break;
@@ -269,10 +279,11 @@ $(document).ready(async () => {
 
         if(valor <= valorNaCarteira) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-            
+
             let resultado = AtualizaUsuarioColuna(usuarioId, "plano", nivel, "PLANO", "funcionario");
 
             if(resultado) {
+                let resultadoVales = AtualizaUsuarioColuna(usuarioId, "vales_patrocinios", vales, "VALES_PATROCINIOS", "funcionario");
                 switch (nivel) {
                     case 0:
                         toastr.info("Seus planos foram cancelados.", 'Assinado!');
@@ -312,6 +323,8 @@ $(document).ready(async () => {
     app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
         let planoN = Number.parseInt(await GetSessaoPHP("PLANO"));
+        planoN = !planoN? 0 : planoN;
+        let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let membro = "Membro Padrão";
         switch (planoN) {
             case 0:
@@ -337,7 +350,7 @@ $(document).ready(async () => {
                 dataVue.situacaoBotao = [0, 0, 1, 0];
 
                 membro = "Membro Prime";
-                $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 12% por serviço terminado.`);
+                $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 12% por serviço terminado. Você também possui ${vales} vales patrocínio restantes.`);
                 document.getElementById("tituloMembroPlano").innerText = membro;
 
                 break;
@@ -346,7 +359,7 @@ $(document).ready(async () => {
                 dataVue.situacaoBotao = [0, 0, 0, 1];
                 
                 membro = "Membro Master";
-                $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 8% por serviço terminado.`);
+                $("#popoverPlano").attr("data-content", `Como ${membro}, você tem uma taxa de 8% por serviço terminado. Você também possui ${vales} vales patrocínio restantes.`);
                 document.getElementById("tituloMembroPlano").innerText = membro;
 
                 break;
@@ -355,8 +368,11 @@ $(document).ready(async () => {
         }
         return planoN;
     });
-
-    dataVue.iconePlano = await dataVue.retornaPlano();
+    
+    if(nivelUsuario == 1) {
+        dataVue.iconePlano = await dataVue.retornaPlano();
+    }
+    
 
     /* Modal de Carteira*/
     app.$set(dataVue, "modalVisivelCarteira", false);
@@ -396,12 +412,20 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "callbackCarteira", () => {
         dataVue.modalVisivelCarteira = false;
+        app.$set(dataVue, "usuarioDadosPagamento", {
+            numeroCartao: "",
+            nome: "",
+            expiracao: "",
+            CVC: "",
+            cartao: "",
+            valor: ""
+        });
     });
 
     app.$set(
         dataVue, 
         "valorNaCarteira", 
-        parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",") == "NaN" ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
+        isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
     );
 
     app.$set(dataVue, "adicionarFundos", async (valor) => {
@@ -409,10 +433,24 @@ $(document).ready(async () => {
         $("#inputDinheiro").removeClass("erroImportant");
         let formVerificado = WMVerificaForm()
 
+        /*Validações básicas adicionais*/
+        if (!dataVue.usuarioDadosPagamento.cartao) {
+            if(formVerificado) {
+                toastr.error("Selecione o tipo do seu cartão.", 'Cartão Inválido!');
+            }
+        }
+        if (!dataVue.usuarioDadosPagamento.valor || parseFloat(dataVue.usuarioDadosPagamento.valor).toFixed(2) == "0.00") {
+            $("#inputDinheiro").addClass("erroImportant");
+            if(formVerificado) {
+                toastr.error("Preencha a quantia de dinheiro a ser adicionada.", 'Campo Inválido!');
+            }
+        }
+
+
         if(formVerificado && dataVue.usuarioDadosPagamento.cartao && dataVue.usuarioDadosPagamento.valor) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
             let valorNaCarteira = await GetSessaoPHP("VALORCARTEIRA");
-            valorNaCarteira = isNaN(valorNaCarteira)? 0 : valorNaCarteira;
+            valorNaCarteira = isNaN(valorNaCarteira) || !valorNaCarteira ? 0 : valorNaCarteira;
 
             valor = parseFloat(valorNaCarteira) + parseFloat(valor);
 
@@ -429,18 +467,7 @@ $(document).ready(async () => {
         
 
 
-        /*Validações básicas adicionais*/
-        if (!dataVue.usuarioDadosPagamento.cartao) {
-            if(formVerificado) {
-                toastr.error("Selecione o tipo do seu cartão.", 'Cartão Inválido!');
-            }
-        }
-        if (!dataVue.usuarioDadosPagamento.valor || parseFloat(dataVue.usuarioDadosPagamento.valor).toFixed(2) == "0.00") {
-            $("#inputDinheiro").addClass("erroImportant");
-            if(formVerificado) {
-                toastr.error("Preencha a quantia de dinheiro a ser adicionada.", 'Campo Inválido!');
-            }
-        }
+        
         
         
         

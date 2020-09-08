@@ -206,6 +206,16 @@
     #paddingDetalhesProposta {
         padding: 10px 4%;
     }
+
+    .visualizarProposta {
+        width: 100%;
+        padding: 10px 4%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        margin: 5px 1% 0 1%;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+    }
     
     .wrapperOfWrapperSlider {
         display: flex;
