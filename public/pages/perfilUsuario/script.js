@@ -108,13 +108,12 @@ $(document).ready(async () => {
     })
 
     app.$set(dataVue, "callbackEP", (salvar) => {
+        
         if(JSON.stringify(dataVue.usuarioDados) != JSON.stringify(dataVue.usuarioDadosEdit)) {
             dataVue.abreModalConfirmacao();
         } else {
             dataVue.modalVisivelEditPerfil = false;
         }
-
-
 
         if(salvar && WMVerificaForm()) {
             dataVue.fechaModalConfirmacao(true, true);
@@ -173,7 +172,7 @@ $(document).ready(async () => {
     app.$set(dataVue, "usuarioDados", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
             nome: funcionario.nome,
             profissao: funcionario.profissao,
-            tags: funcionario.tags,
+            tags: funcionario.tags == null ? "" : funcionario.tags,
             descricao: funcionario.descricao
     });
 
@@ -434,18 +433,20 @@ $(document).ready(async () => {
         let formVerificado = WMVerificaForm()
 
         /*Validações básicas adicionais*/
-        if (!dataVue.usuarioDadosPagamento.cartao) {
-            if(formVerificado) {
-                toastr.error("Selecione o tipo do seu cartão.", 'Cartão Inválido!');
-            }
-        }
-        if (!dataVue.usuarioDadosPagamento.valor || parseFloat(dataVue.usuarioDadosPagamento.valor).toFixed(2) == "0.00") {
+
+        if(!dataVue.usuarioDadosPagamento.valor || parseFloat(dataVue.usuarioDadosPagamento.valor).toFixed(2) == "0.00") {
             $("#inputDinheiro").addClass("erroImportant");
             if(formVerificado) {
-                toastr.error("Preencha a quantia de dinheiro a ser adicionada.", 'Campo Inválido!');
+                if(!dataVue.usuarioDadosPagamento.cartao) {
+                    toastr.error("Preencha todos os campos.", 'Ops!');
+                } else {
+                    toastr.error("Preencha a quantia de dinheiro a ser adicionada.", 'Campo Inválido!');
+                }
             }
+            
+        } else if(!dataVue.usuarioDadosPagamento.cartao) {
+            toastr.error("Selecione o tipo do seu cartão.", 'Cartão Inválido!');
         }
-
 
         if(formVerificado && dataVue.usuarioDadosPagamento.cartao && dataVue.usuarioDadosPagamento.valor) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
@@ -504,11 +505,16 @@ function atualizaOsDadosDoPerfil() {
         $("#profCP").text(dataVue.usuarioDados.profissao)
     }
 
-    if(dataVue.usuarioDados.tags && document.getElementById("tagsCPWrapper")) {
+    if(document.getElementById("tagsCPWrapper")) {
         let tagsParaColocar = dataVue.usuarioDados.tags.split(",");
         let tagsParaColocar2 = "";
         tagsParaColocar.forEach(tag => {
-            tagsParaColocar2 += `<div class='tagCP'>${tag}</div>`;
+            if(tag == "") {
+
+            } else {
+                tagsParaColocar2 += `<div class='tagCP'>${tag}</div>`;
+            }
+            
         });
 
         document.getElementById("tagsCPWrapper").innerHTML = tagsParaColocar2;
