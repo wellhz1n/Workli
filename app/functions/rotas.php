@@ -26,7 +26,7 @@ function load()
     } else {
 
         $logado = Logado();
-        $home = (!$home) ? 'home' : $home;
+        $home = (!$home) ? 'perfilUsuario' : $home;
 
         if ($logado[0] == true && $logado[1] != null) {
             //AQUI VERIFICA O NIVEL DO USUARIO E PERMITE OS ACESSOS DAS PAGINAS PARA OS MESMOS
@@ -46,6 +46,10 @@ function load()
             //PROGRAMADOR
             if ($logado[1] == NivelUsuario::Programador) {
                 $page =  ReturnPage($home, ProgPagesEnum::class, ProgPagesEnum::Home);
+            }
+
+            if($logado[0] == true && strtolower($home) == strtolower("home")) {
+                $page = "pages/perfilUsuario/index.php";
             }
         } else if (
             strtolower($home) == strtolower("home") || strtolower($home) == strtolower('login') ||
