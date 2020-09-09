@@ -131,15 +131,14 @@ class ProjetoBO extends BOGeneric
         $dt = $dados[0];
         foreach ($dt as $key => $value) {
             $dt[$key]["imagem_usuario"] = ConvertBlobToBase64($value["imagem_usuario"]);
-            if ($dt[$key]["postado"] > 24) {
-                if (floor($dt[$key]["postado"] / 24) != 1)
-                    $dt[$key]["postado"] = "Há " . floor($dt[$key]["postado"] / 24) . " dias";
+            if ($dt[$key]["postado"] == 0)
+                $dt[$key]["postado"] = "Hoje";
+            else {
+                if ($dt[$key]["postado"] > 1 && $dt[$key]["postado"] != 0)
+                    $dt[$key]["postado"] = "Há " . $dt[$key]["postado"] . " dias";
                 else
                     $dt[$key]["postado"] = "Há 1 dia";
-            } else if ($dt[$key]["postado"] > 1)
-                $dt[$key]["postado"] = "Há " . $dt[$key]["postado"] . " horas";
-            else
-                $dt[$key]["postado"] = "Há  menos de uma hora";
+            }
         }
         $obj = new stdClass();
         $obj->lista = $dt;
