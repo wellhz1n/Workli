@@ -161,7 +161,7 @@
                 <?php
                 if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
                 ?>
-                  <a style="font-size: 14px" class="dropdown-item" href="">Minhas copetências</a>
+                  <a style="font-size: 14px" class="dropdown-item" href="">Minhas competências</a>
                 <?php } ?>
                 <a style="font-size: 14px" class="dropdown-item" href="">Configurações</a>
               </div>
@@ -177,7 +177,7 @@
                     <a style="font-size: 14px" class="dropdown-item " href="">Procurar Profissional</a>
                   </div>
                   <div class="col-5 m-0  mr-3 p-0" style=" margin-left: 20px !important;">
-                    <a style="font-size: 14px" class="dropdown-item " href="?page=chat"><i class="far fa-comments"></i>Chat</a>
+                    <a style="font-size: 14px" class="dropdown-item " href="?page=chat"><i class="far fa-comments"></i> Chat</a>
                   </div>
                   <div class="col-5 m-0  mr-3 p-0">
                     <a style="font-size: 14px" class="dropdown-item " href="?page=meusprojetos">Meus Projetos</a>

@@ -94,7 +94,6 @@
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
                         <div v-if="dataVue.selecionadoController.propostaFuncionario == 0">
                             <div class="cardQuadrado bodyProposta">
-                            <!-- <div v-if="dataVue.selecionadoController.propostaFuncionario == 0"> -->
                                 <div class="cardQuadradoHeader" id="paddingDetalhesProposta">
                                     <div class="cardQuadradoTitulo BHDetalhes">
                                         Detalhes da Proposta
@@ -138,7 +137,6 @@
                                                 <div class="upgradeCardHeader row">
                                                     <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
                                                         <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput1" @change="dataVue.Proposta.Upgrades.upgrade1 = $event.target.checked">
-                                                        <!-- dataVue.Proposta.upgrades.upgrade1 = $event.target.value == 'on'? true : false; -->
                                                         <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
                                                     </div>
                                                     <span class="tituloUpgradeHeader col-sm-6" id="patrocinado">PATROCINADO</span>
@@ -178,25 +176,15 @@
                                     <div v-else style="width: 100%; display: flex; justify-content: center;">
                                         <button :disabled="true" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer; background-color:rgb(57 193 51) !important;border-color:rgb(57 193 51) !important;"><span><i class="fas fa-check text-light"></i></span></button>
                                     </div>
-                                    <!-- <button class="botaoProposta" @click="">Mandar Proposta</button> -->
                                 </div>
                             </div>
                         </div>
                         <div v-else class="d-contents">
-                        
                             <div class="visualizarProposta">
                                 <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
                                     Visualizar Proposta
                                 </button>
                             </div>
-                            <!-- <div class="d-flex" style="margin-bottom: 10px;">
-
-                                <div style="width: 100%; display: flex; justify-content: center;">
-                                    <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
-                                        Visualizar Proposta
-                                    </button>
-                                </div>
-                            </div> -->
                         </div>
                     
                 </div>

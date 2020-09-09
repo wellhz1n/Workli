@@ -90,7 +90,33 @@
         </div>
     <?php }; ?>
     <div class="row cardsPerfilSuperior">
-        <div class="col-6 p-0 paddingCardInterno">
+        <div class="col-3 p-0 paddingCardInterno">
+            <div class="cardQuadrado cemXcem max-heighto d-flex flex-column">
+                <div>
+                    <div class="cardQuadradoHeader perfilCardHeader">
+                        <div class="cardQuadradoTitulo">
+                            Atalhos
+                        </div>
+                    </div>
+                </div>
+                <div class="cardQuadradoBody" id="atalhosWrapper">
+                    
+                    <a href="?page=buscaservicos" class="botaoAtalho mb-2"><i class="fas fa-search" aria-hidden="true"></i> Buscar Projetos</a>
+                    <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0) { ?>
+                        <a href="?page=criarservico" class="botaoAtalho mb-2"><i class="fas fa-pencil-alt" aria-hidden="true"></i> Publicar um Projeto </a>
+                        <a href="?page=meusprojetos" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Meus Projetos </a>
+                    <?php } else if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+                        <a href="" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Minhas Propostas </a>
+                    <?php } ?>
+                    <a href="?page=chat" class="botaoAtalho mb-2"><i class="far fa-comment-dots"></i> Chat</a>
+                </div>
+            </div>
+        </div>
+        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+        <div class="col-5 p-0 paddingCardInterno">
+        <?php } else {?>
+        <div class="col-7 p-0 paddingCardInterno">
+        <?php } ?>
             <div class="cardQuadrado cemXcem">
                 <div class="cardQuadradoHeader perfilCardHeader">
                     <div class="cardQuadradoTitulo">
@@ -122,8 +148,8 @@
             </div>
         </div>
         <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
-            <div class="col-4 p-0">
-                <div class="cardQuadrado cemXcem" id="statusCard">
+            <div class="col-3 p-0">
+                <div class="cardQuadrado cemXcem max-heighto" id="statusCard">
                     <div class="cardQuadradoHeader">
                         <div class="cardQuadradoTitulo">
                             Status da Conta
@@ -155,6 +181,17 @@
                 </div>
             </div>
         <?php }; ?>
+
+
+
+
+
+        
+
+
+
+
+
     </div>
 </div>
 
