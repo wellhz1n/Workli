@@ -2,10 +2,10 @@
 <div v-if="dataVue.carregando === undefined|| dataVue.carregando">
     <wm-loading />
 </div>
-<div v-else class="CONTAINER_M " >
+<div v-else class="CONTAINER_M ">
     <div class=" containerBox ">
         <!-- <wm-chart /> -->
-   
+
         <div style="display: flex;align-items: start;    z-index: 1;">
             <div :style="{'font-size': dataVue.UsuarioContexto.Nome.length > 30 ? '30px' :'40px'}" class="textoHeaderModal">{{dataVue.UsuarioContexto.Nome}}</div>
         </div>
@@ -18,6 +18,9 @@
             <wm-select class="col-md-4" v-bind="dataVue.seletorsituacao"></wm-select>
 
         </div>
+    </div>
+    <div>
+        <wm-paginacao :totaldepaginas="1" :paginaatual="1" v-on:changepagina="(a)=>{}" />
     </div>
 
     <div class=" feed ">

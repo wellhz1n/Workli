@@ -5,48 +5,11 @@ require_once("../functions/ImageUtils.php");
 require_once("../Enums/SecoesEnum.php");
 require_once("../functions/Session.php");
 require_once("../functions/Conexao.php");
-try {
+require_once("../Classes/BOGeneric.php");
 
-    if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
-        $metodo = $_POST['metodo'];
-        $ProjetoBO = new ProjetoBO();
-        if ($metodo == "SalvarProjeto") {
-            if (isset($_POST['Projeto'])) {
-                $projeto = $_POST['Projeto'];
-                $projeto = $ProjetoBO->CriaProjetoCampo($projeto);
-                $ProjetoBO->SalvarProjeto($projeto);
-            } else {
-                throw new Exception("Parametro Projeto Ausente");
-            }
-        }
-        if ($metodo == "BuscarProjetos") {
-            $C = empty($_POST["C"]) ? [] : $_POST["C"];
-            $Q = empty($_POST["Q"]) ? "" : $_POST["Q"];
-            $P = empty($_POST["P"]) ? 1 : $_POST["P"];
-            $ProjetoBO->BuscarProjeto($C, $Q, $P);
-        }
-        if ($metodo == "BuscaDependeciasModal") {
-            if (isset($_POST['id'])) {
-                $ProjetoBO->BuscaDependenciasProjetoModal($_POST['id']);
-            } else
-                throw new Exception("Parametro Projeto Ausente");
-        }
-        if ($metodo == "GETPROJETOSPORUSUARIOCONTEXTO") {
-            $saida = $ProjetoBO->GetProjetosPorUsuarioContexto();
-            echo json_encode($saida);
-        }
 
-        if ($metodo == "BuscaNumeroProjetos") {
-            $ProjetoBO->BuscaNumeroProjetos();
-        }
-    }
-} catch (Throwable $ex) {
-    $msg = new stdClass();
-    $msg->error = $ex->getMessage();
-    echo json_encode($msg);
-}
 
-class ProjetoBO
+class ProjetoBO extends BOGeneric
 {
     private $ProjetoDAO;
     private $Projeto;
@@ -160,4 +123,78 @@ class ProjetoBO
         return $this->ProjetoDAO->SetProjetoSituacao($idProjeto, $Situacao);
     }
     #endregion
+    #region MeusProjetos
+    public function BuscaMeusProjetos($q = null, $p = 1, $categoria = null, $situacao = null)
+    {
+
+        $dados = $this->ProjetoDAO->BuscaProjetosPorIdUsuario($this->GetUsuarioContexto(), $q, $p, $categoria, $situacao);
+        $dt = $dados[0];
+        foreach ($dt as $key => $value) {
+            $dt[$key]["imagem_usuario"] = ConvertBlobToBase64($value["imagem_usuario"]);
+            if ($dt[$key]["postado"] > 24) {
+                if (floor($dt[$key]["postado"] / 24) != 1)
+                    $dt[$key]["postado"] = "Há " . floor($dt[$key]["postado"] / 24) . " dias";
+                else
+                    $dt[$key]["postado"] = "Há 1 dia";
+            } else if ($dt[$key]["postado"] > 1)
+                $dt[$key]["postado"] = "Há " . $dt[$key]["postado"] . " horas";
+            else
+                $dt[$key]["postado"] = "Há  menos de uma hora";
+        }
+        $obj = new stdClass();
+        $obj->lista = $dt;
+        $obj->pagina = $dados[1];
+        $obj->paginaAtual = $p;
+        return $obj;
+    }
+    #endregion
+
+}
+
+try {
+
+    if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
+        $metodo = $_POST['metodo'];
+        $ProjetoBO = new ProjetoBO();
+        if ($metodo == "SalvarProjeto") {
+            if (isset($_POST['Projeto'])) {
+                $projeto = $_POST['Projeto'];
+                $projeto = $ProjetoBO->CriaProjetoCampo($projeto);
+                $ProjetoBO->SalvarProjeto($projeto);
+            } else {
+                throw new Exception("Parametro Projeto Ausente");
+            }
+        }
+        if ($metodo == "BuscarProjetos") {
+            $C = empty($_POST["C"]) ? [] : $_POST["C"];
+            $Q = empty($_POST["Q"]) ? "" : $_POST["Q"];
+            $P = empty($_POST["P"]) ? 1 : $_POST["P"];
+            $ProjetoBO->BuscarProjeto($C, $Q, $P);
+        }
+        if ($metodo == "BuscaDependeciasModal") {
+            if (isset($_POST['id'])) {
+                $ProjetoBO->BuscaDependenciasProjetoModal($_POST['id']);
+            } else
+                throw new Exception("Parametro Projeto Ausente");
+        }
+        if ($metodo == "GETPROJETOSPORUSUARIOCONTEXTO") {
+            $saida = $ProjetoBO->GetProjetosPorUsuarioContexto();
+            echo json_encode($saida);
+        }
+
+        if ($metodo == "BuscaNumeroProjetos") {
+            $ProjetoBO->BuscaNumeroProjetos();
+        }
+        if ($metodo == "BuscarMeusProjetos") {
+            $C = empty($_POST["CATEGORIAS"]) ? null : $_POST["CATEGORIAS"];
+            $S = empty($_POST["SITUACAO"]) ? null : $_POST["SITUACAO"];
+            $Q = empty($_POST["Q"]) ? null : $_POST["Q"];
+            $P = empty($_POST["P"]) ? 1 : $_POST["P"];
+            echo json_encode($ProjetoBO->BuscaMeusProjetos($Q, $P, $C, $S));
+        }
+    }
+} catch (Throwable $ex) {
+    $msg = new stdClass();
+    $msg->error = $ex->getMessage();
+    echo json_encode($msg);
 }
