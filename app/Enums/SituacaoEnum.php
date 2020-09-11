@@ -2,7 +2,7 @@
 
 abstract class SituacaoEnum{
     const Novo = 0;
-    const Aguardando_Funcionario_Iniciar = 2;
+    const Aguardando_Funcionario_Iniciar = 1;
     const Em_Andamento = 2;
     const Concluida = 4;
     const Cancelado = 3;

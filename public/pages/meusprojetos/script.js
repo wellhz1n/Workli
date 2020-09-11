@@ -68,6 +68,7 @@ $(document).ready(async () => {
     app.$set(dataVue, "seletorcategoria", CategoriaSeletor());
     app.$set(dataVue, "seletorsituacao", SituacaoSeletor());
     //#endregion 
+    //#region  Whatchers
     app.$watch("dataVue.meusprojetos", async function (a, o) {
         await BuscaMeusProjetos();
     }, { deep: true });
@@ -75,7 +76,34 @@ $(document).ready(async () => {
         if (a != o)
             await BuscaMeusProjetos();
     }, {});
-});
+    //#endregion
+    //#region AbreModal
+    app.$set(dataVue, "abremodal", async (propriedades) => {
+        try {
+
+            BloquearTela();
+            let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
+            if (Dependencias.length > 0) {
+                propriedades.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
+                propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
+                let lista = Dependencias.filter(item => item.principal != 1);
+                propriedades.Fotos = lista.map(x => { return x.imagem });
+                propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
+            }
+            DesbloquearTela();
+            dataVue.modalVisivelController = true;
+            dataVue.selecionadoController = propriedades;
+        }
+        catch(e){
+
+        }
+        finally{
+            DesbloquearTela();
+        }
+    });
+
+    //#endregion
+})
 async function BuscaMeusProjetos() {
     app.dataVue.ListaCarregando = true;
     var consultaObj = {};

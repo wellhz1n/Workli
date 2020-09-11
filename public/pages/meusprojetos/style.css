@@ -175,3 +175,137 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+ /*------------------------- HEADER MODAL -----------------------------*/
+    
+ .imgHeaderModal {
+    height: 440px;
+    max-width: 100%;
+    width: 100%;
+    object-fit: fill;
+    position: absolute;
+}
+
+.headerInterno {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 440px;
+}
+
+.degradeHeaderModal {
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background-color: #000000;
+}
+
+.blocoNome {
+    position: absolute;
+    width: 100%;
+    max-width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    flex-direction: column;
+    color: #191919;
+    font-size: 250%;
+    text-align: center;
+}
+
+.textoHeaderModal {
+    font-family: Arial;
+    color: white;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px #393939;
+}
+
+.iconeImagemNull {
+    font-size: 3.5em !important;
+    margin: 10px 0;
+}
+
+.tituloHM {
+    margin-top: 18px;
+    font-family: Poppins-Regular;
+}
+
+.imagemTamanhoUser {
+    width: 160px !important;
+    height: 160px !important;
+    background-color: #fff;
+}
+/*------------------ FIM HEADER MODAL -----------------------------*/
+/*------------------ BODY MODAL -----------------------------*/
+
+.reloginhoBH {
+    margin-right: 1%;
+}
+
+.wrapperBH2 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: right;
+}
+
+.BHDetalhes {
+    flex: 1;
+}
+
+.BHPreco {
+    color: #0e1724;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: Poppins-Bold !important;
+    color: green;
+}
+
+.BHPublicado {
+    color: #4d525b;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.bodyBody {
+    background-color: #eee;
+    padding: 10px 0;
+}
+
+.bodyDetalhes {
+    flex: 6;
+    min-height: 500px;
+    margin: 0 0.5% 0 1%;
+}
+
+.BDescricao {
+    word-break: break-word;
+}
+/* #region BOTÃO PROPOSTA*/
+    
+.botaoProposta {
+    background: #2d3436 !important;
+    border-color: #282d2e !important;
+    border-radius: 40px !important;
+    width: 100% !important;
+    transition: all .1s ease-in-out;
+}
+
+.botaoProposta.menor {
+}
+
+.botaoProposta:hover {
+    transform: scale(1.02);
+    background: #464f52;
+}
+
+.botaoProposta:focus {
+    transform: scale(1.05);
+    outline: none;
+}
+/* #endregion */

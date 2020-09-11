@@ -32,7 +32,7 @@
                 <trasition-group name="fadefast" style="display: contents;">
 
                     <!-- <wm-chart /> -->
-                    <wm-projeto-item v-for="item in dataVue.Lista" :key="parseInt(item.id)" :mostra_botao="true" texto_botao="Ver Detalhes" :titulo="item.nome" :publicado="item.postado" :propostas="item.propostas" :categoria="item.categoria" :identidade="item.id" :id="'Item'+item.id" :tamanhodoprojeto="parseInt(item.nivel_projeto)" :nivelprofissional="parseInt(item.nivel_profissional)" :descricao="item.descricao" :nome="item.nome_usuario" :img="item.imagem_usuario" :valor="item.valor" :id_usuario="item.id_usuario"></wm-projeto-item>
+                    <wm-projeto-item v-for="item in dataVue.Lista" :valor_proposta="item.valorproposta" :key="parseInt(item.id)" :mostra_botao="true" texto_botao="Ver Detalhes" :titulo="item.nome" :publicado="item.postado" :propostas="item.propostas" :categoria="item.categoria" :identidade="item.id" :id="'Item'+item.id" :tamanhodoprojeto="parseInt(item.nivel_projeto)" :nivelprofissional="parseInt(item.nivel_profissional)" :descricao="item.descricao" :nome="item.nome_usuario" :img="item.imagem_usuario" :valor="item.valor" :id_usuario="item.id_usuario" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
                 </trasition-group>
             </div>
             <div :key="2" v-else>
@@ -83,7 +83,7 @@
                                 Detalhes do Projeto
                             </div>
                             <div class="wrapperBH2">
-                                <div class="BHPreco">{{dataVue.selecionadoController.valor}}</div>
+                                <div class="BHPreco">{{dataVue.selecionadoController.valorproposta !== null?'R$'+ dataVue.selecionadoController.valorproposta :dataVue.selecionadoController.valor}}</div>
                                 <div class="BHPublicado"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>
                             </div>
                         </div>
@@ -93,8 +93,8 @@
 
                     </div>
                 </div>
-                <div class="d-contents">
-                    <div class="visualizarProposta">
+                <div class="d-contents" style="display:flex;width: 100%;justify-content: center;margin-top: 7px;">
+                    <div class="visualizarProposta" style="width: 60%;">
                         <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
                             Visualizar Proposta
                         </button>
