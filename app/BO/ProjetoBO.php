@@ -185,8 +185,8 @@ try {
             $ProjetoBO->BuscaNumeroProjetos();
         }
         if ($metodo == "BuscarMeusProjetos") {
-            $C = empty($_POST["CATEGORIAS"]) ? null : $_POST["CATEGORIAS"];
-            $S = empty($_POST["SITUACAO"]) ? null : $_POST["SITUACAO"];
+            $C = empty($_POST["C"]) ? null : $_POST["C"];
+            $S = empty($_POST["S"]) ? null : $_POST["S"];
             $Q = empty($_POST["Q"]) ? null : $_POST["Q"];
             $P = empty($_POST["P"]) ? 1 : $_POST["P"];
             echo json_encode($ProjetoBO->BuscaMeusProjetos($Q, $P, $C, $S));

@@ -15,11 +15,11 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .2s ease;
+  transition: opacity .2s ease !important;
 }
 .fade-enter,
 .fade-leave-to {
-  opacity: 0;
+  opacity: 0 !important;
 }
 .fader-enter-active,
 .fader-leave-active {

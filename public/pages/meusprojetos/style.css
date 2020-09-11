@@ -158,3 +158,20 @@
     box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
     background: #fff;
 }
+
+.fadefast-enter-active,
+.fadefast-leave-active {
+  transition: opacity .25s ease !important;
+}
+.fadefast-enter,
+.fadefast-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .2s ease !important;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

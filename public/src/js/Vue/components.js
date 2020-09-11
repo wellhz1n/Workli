@@ -550,6 +550,10 @@ var WM_Select = Vue.component('wm-select', {
             Function,
             required: true
         },
+        placeholder:{
+                type:String,
+                default:"Selecione..."
+        },
         icone: {
             Boolean
         },
@@ -579,6 +583,7 @@ var WM_Select = Vue.component('wm-select', {
                 :class="classe"
                 class="seletor"
                 label="nome"
+                :placeholder="placeholder"
                 :ref="id"
                 :clearable="limpavel"
                 :value="selecionado" 
@@ -1999,7 +2004,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 <p class="font_Poopins_SB"><strong>Publicado</strong>: {{this.datapublicado}}</p>
             </div>
             <div class="mx-2">
-                <p class="font_Poopins_SB"><strong>Propostas</strong>:{{this.datapropostas}}</p>
+                <p class="font_Poopins_SB"><strong>Propostas</strong>: {{this.datapropostas}}</p>
             </div>
         </div>
         <div class="mx-2 mr-4 projetoValor">
