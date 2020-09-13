@@ -239,12 +239,12 @@ if (Logado()[1] == '2')
       console.log(i.id)
       if (i.tipo == 2) {
         if (app.dataVue.UsuarioContexto.id_funcionario != "")
-          RediredionarComParametros('chat', [{
+          RedirecionarComParametros('chat', [{
             chave: 'id_chat',
             valor: i.id_chat
           }]);
         else {
-          RediredionarComParametros('chat', [{
+          RedirecionarComParametros('chat', [{
             chave: 'id_chat',
             valor: i.id_chat
           }, {

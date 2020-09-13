@@ -32,7 +32,7 @@
                 <trasition-group name="fadefast" style="display: contents;">
 
                     <!-- <wm-chart /> -->
-                    <wm-projeto-item v-for="item in dataVue.Lista" :valor_proposta="item.valorproposta" :key="parseInt(item.id)" :mostra_botao="true" texto_botao="Ver Detalhes" :titulo="item.nome" :publicado="item.postado" :propostas="item.propostas" :categoria="item.categoria" :identidade="item.id" :id="'Item'+item.id" :tamanhodoprojeto="parseInt(item.nivel_projeto)" :nivelprofissional="parseInt(item.nivel_profissional)" :descricao="item.descricao" :nome="item.nome_usuario" :img="item.imagem_usuario" :valor="item.valor" :id_usuario="item.id_usuario" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
+                    <wm-projeto-item v-for="item in dataVue.Lista" :situacao="item.situacao" :valor_proposta="item.valorproposta" :key="parseInt(item.id)" :mostra_botao="true" texto_botao="Ver Detalhes" :titulo="item.nome" :publicado="item.postado" :propostas="item.propostas" :categoria="item.categoria" :identidade="item.id" :id="'Item'+item.id" :tamanhodoprojeto="parseInt(item.nivel_projeto)" :nivelprofissional="parseInt(item.nivel_profissional)" :descricao="item.descricao" :nome="item.nome_usuario" :img="item.imagem_usuario" :valor="item.valor" :id_usuario="item.id_usuario" v-on:aberto-modal="v => dataVue.abremodal(v)"></wm-projeto-item>
                 </trasition-group>
             </div>
             <div :key="2" v-else>
@@ -42,7 +42,7 @@
                         <p>Não encontramos nenhum projeto, que tal criar um agora mesmo!</p>
                         <button class="botaoSalvarCardPlano" style="width: 43%;padding: 7px;" @click="(c)=>{
                             if( c.view.window.app.dataVue.meusprojetos.categoria != null)
-                            c.view.window.RediredionarComParametros('criarservico',[{chave:'C',valor: c.view.window.app.dataVue.meusprojetos.categoria}]);
+                            c.view.window.RedirecionarComParametros('criarservico',[{chave:'C',valor: c.view.window.app.dataVue.meusprojetos.categoria}]);
                             else
                             c.view.window.Rediredionar('criarservico');
                         }">
@@ -69,7 +69,8 @@
             <div class="blocoNome">
                 <div :style="{'font-size': dataVue.selecionadoController.nome.length > 30 ? '30px' :'40px' }" class="textoHeaderModal">{{dataVue.selecionadoController.nome}}</div>
                 <wm-user-img :img="dataVue.selecionadoController.imagem" class="imagemUsuario" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
-                <div :style="{'font-size': dataVue.selecionadoController.titulo.length > 80 ? '20px' : '40px' }" class="textoHeaderModal tituloHM">{{dataVue.selecionadoController.titulo}}</div>
+                <div :style="[{'font-size': dataVue.selecionadoController.titulo.length > 80 ? '20px' : '40px'},{'margin-top':'3%'}]" class="textoHeaderModal tituloHM">{{dataVue.selecionadoController.titulo}}</div>
+                <div class="BHPublicado" style="width: 100%;"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>
             </div>
         </div>
     </template>
@@ -80,26 +81,58 @@
                     <div class="cardQuadrado bodyDetalhes">
                         <div class="cardQuadradoHeader">
                             <div class="cardQuadradoTitulo BHDetalhes">
+                                <span v-show="dataVue.selecionadoController.situacao == 0" class="fa fa-project-diagram mx-2"></span>
+                                <span v-show="dataVue.selecionadoController.situacao  == 1" class="fa fa-clock mx-2"></span>
+                                <span v-show="dataVue.selecionadoController.situacao  == 2" class="fa fa-tasks mx-2"></span>
+                                <span v-show="dataVue.selecionadoController.situacao  == 3" class="fa fa-times mx-2"></span>
+                                <span v-show="dataVue.selecionadoController.situacao  == 4" class="fa fa-check-double mx-2"></span>
                                 Detalhes do Projeto
                             </div>
                             <div class="wrapperBH2">
                                 <div class="BHPreco">{{dataVue.selecionadoController.valorproposta !== null?'R$'+ dataVue.selecionadoController.valorproposta :dataVue.selecionadoController.valor}}</div>
-                                <div class="BHPublicado"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>
                             </div>
+                        </div>
+                        <div class="m-2 p1">
+                            <p class="m-0 font_Poopins_M tituloImagemViewer">Descrição do Projeto</p>
+                            <hr class="separadorTituloViewer">
                         </div>
                         <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
                         </div>
                         <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
+                        <div>
+                            <div class="m-2 p1">
+                                <p class="m-0 font_Poopins_M tituloImagemViewer">Propriedades do Projeto</p>
+                                <hr class="separadorTituloViewer">
+                            </div>
+                            <div style="padding: 10px 3.5%;">
+                                <p class="m-0 font_Poopins">Categoria: <strong>{{dataVue.selecionadoController.categoria}}</strong></p>
+                                <p class="m-0 font_Poopins">Tamanho do Projeto: <strong>{{dataVue.selecionadoController.tamanho}}</strong></p>
+                                <p class="m-0 font_Poopins">Nível de Profissional Desejado: <strong>{{dataVue.selecionadoController.profissional}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardQuadrado" style="flex: 4;">
+                        <div class="cardQuadradoHeader" style="justify-content: center !important;">
+                            <div class="cardQuadradoTitulo ">
+                                Ações Disponiveis
+                            </div>
+                        </div>
+                        <div class="m-1 p-1">
+                           
+                            <div class="d-flex w-100 justify-content-center">
+                                <div class="d-contents" style="display:flex;flex-direction: column; width: 90%;justify-content: center;align-items: center;margin-top: 7px;">
 
+                                    <a  v-if="dataVue.selecionadoController.situacao  == 0 && dataVue.selecionadoController.proposta > 0 " @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-eye" aria-hidden="true"></i> Visualizar Propostas</a>
+                                    <a  v-if="dataVue.selecionadoController.situacao  == 4"  href="" class="botaoAtalho mb-2"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
+                                    <a  v-if=" dataVue.selecionadoController.situacao  != 3 " href="" class="botaoAtalho mb-2"><i class="fas fa-comment-dots" aria-hidden="true"></i> Abrir Chat</a>
+                                    <a  v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" href="" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="d-contents" style="display:flex;width: 100%;justify-content: center;margin-top: 7px;">
-                    <div class="visualizarProposta" style="width: 60%;">
-                        <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
-                            Visualizar Proposta
-                        </button>
-                    </div>
-                </div>
+
 
             </div>
         </div>
