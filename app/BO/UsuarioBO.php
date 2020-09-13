@@ -67,8 +67,15 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     }
 
     if ($metodo == "GetBannerById") {
-        $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        // $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        $id = isset($_POST["idUsuario"]) ? $_POST["idUsuario"] : 0;
         $userBO->GetBannerById($id);
+    }
+
+    if ($metodo == "GetImagemUserById") {
+        // $id = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+        $id = isset($_POST["idUsuario"]) ? $_POST["idUsuario"] : 0;
+        $userBO->GetImagemUserById($id);
     }
 
     if ($metodo == "BuscaNumeroUsuarios") {
@@ -87,6 +94,7 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
 
         $userBO->SetDadoUsuario($dados["ID"], $dados["coluna"], $dados["dado"], $dados["sessao"], $dados["tabela"]);
     }
+
 }
 class UsuarioBO
 {
@@ -118,8 +126,23 @@ class UsuarioBO
     public function GetBannerById($id)
     {
         $saida = $this->usuarioDAO->GetImagemBannerbyId($id)->resultados;
-        $saida[0]["imagem_banner"] = ConvertBlobToBase64($saida[0]["imagem_banner"]);
-        echo json_encode($saida[0]);
+        if(isset($saida[0])) {
+            $saida[0]["imagem_banner"] = ConvertBlobToBase64($saida[0]["imagem_banner"]);
+            echo json_encode($saida[0]);
+        } else {
+            echo 1;
+        }        
+    }
+
+    public function GetImagemUserById($id)
+    {
+        $saida = $this->usuarioDAO->GetImagemUserById($id)->resultados;
+        if(isset($saida[0])) {
+            $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
+            echo json_encode($saida[0]["imagem"]);
+        } else {
+            echo 1;
+        }        
     }
 
     public function VerificaSeEmailExiste($email)
@@ -379,5 +402,5 @@ class UsuarioBO
             
         }
     }
- 
+
 }

@@ -5,7 +5,7 @@
             Não existe
         </h3>
         <p>
-            Por favor volte para a segurança!,Caso tenha alguma duvida entre em contato conosco.
+            Por favor volte para a segurança! Caso tenha alguma duvida entre em contato conosco.
         </p>
     </div>
     <div id='error404img'></div>

@@ -1,22 +1,29 @@
+
+
+<script type="" src="pages/perfilUsuario/script.js"></script>
+
+
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
 <div class="justify-content-center text-center m-0">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
-             <span id="bemVindo">Bem vindo, <br/><span id="bVNome"></span></span>
-             <wm-user-banner 
+            <span id="bemVindo"><div v-if="dataVue.editavel" class="d-contents">Bem vindo,</div><br/><span id="bVNome"></span></span>
+            <wm-user-banner 
                 @aberto-modal="v => dataVue.abremodal(v)" 
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                 :imgcropada="dataVue.imagemCropadaBanner" 
                 @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
                 height_banner="17.15vw"
+                :editavel="dataVue.editavel"
+                :id_usuario="dataVue.idGeral"
             />
 
    
         </div>
         <div id="cardsDadosProposta">
             <div class="cardsDPWrapper">
-                <div class="cardDP pt-0 px-0">
+                <div class="cardDP pt-0 px-0" v-if="dataVue.editavel">
                     <div id="wrapperCarteira">
                         <span class="iconePerfil dinheiro"></span>
                         <div class="textPerfilWrapper">
@@ -65,15 +72,16 @@
                 :img="dataVue.Usuario.imagem" 
                 :width="'14.2vw'" 
                 :height="'14.2vw'" 
-                :editavel="true"
+                :editavel="dataVue.editavel"
                 @aberto-modal="v => dataVue.abremodal(v)" 
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                 :imgcropada="dataVue.imagemCropadaUsuario"
                 @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
                 class_icone="iconeUsuarioTamanho"
+                :id_usuario="dataVue.idGeral"
             />
+            </div>
         </div>
-    </div>
 
     <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
         <div class='wrapperStarRating'>
@@ -90,7 +98,7 @@
         </div>
     <?php }; ?>
     <div class="row cardsPerfilSuperior">
-        <div class="col-3 p-0 paddingCardInterno">
+        <div class="col-3 p-0 paddingCardInterno" v-if="dataVue.editavel">
             <div class="cardQuadrado cemXcem max-heighto d-flex flex-column">
                 <div>
                     <div class="cardQuadradoHeader perfilCardHeader">
@@ -117,12 +125,12 @@
         <?php } else {?>
         <div class="col-7 p-0 paddingCardInterno">
         <?php } ?>
-            <div class="cardQuadrado cemXcem">
+            <div class="cardQuadrado cemXcem" id="perfilBox">
                 <div class="cardQuadradoHeader perfilCardHeader">
                     <div class="cardQuadradoTitulo">
                         Perfil
                     </div>
-                    <div id="botaoEditarPerfil">
+                    <div id="botaoEditarPerfil" v-if="dataVue.editavel">
                         <i class="fa fa-edit"></i>
                     </div>
                 </div>
@@ -501,6 +509,3 @@
     @fechar-modal="() => {dataVue.fechamodal()}"
     :configs="dataVue.configuracoesCrop"
 />
-
-<!-- Modal de  -->
-<script type="" src="pages/perfilUsuario/script.js"></script>

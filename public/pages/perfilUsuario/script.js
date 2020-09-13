@@ -1,12 +1,56 @@
+
+
 $(document).ready(async () => {
     
 
     await BloquearTela();
-    let img =  await GetSessaoPHP("FOTOUSUARIO");
-    await app.$set(dataVue, "Usuario", { imagem:img == ""? null : img, imgTemp: null });
-    $("#Titulo").text("Editar Usuário");
+    
+    
 
+    /*Id do usuário atual*/
+    let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
     let nivelUsuario = await GetSessaoPHP("NIVELUSUARIO");
+
+    /*Pega o Id do topo da tela*/
+    let idGet = "";
+    app.$set(dataVue, "editavel", true);
+    app.$set(dataVue, "nivelUsuario", 0);
+
+    app.$set(dataVue, "idGeral", "usuarioId")
+    
+    let img = "";
+    
+    
+    
+    setTimeout(async () => {
+        idGet = getURLParameter("id");
+        debugger
+        if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
+            dataVue.editavel = false
+            dataVue.idGeral = idGet;
+
+            img = await WMExecutaAjax("UsuarioBO", "GetImagemUserById", {"idUsuario" : dataVue.idGeral});
+            
+        } 
+        else if (isNaN(parseInt(idGet)) && idGet != "null") {
+            window.location.href = "?page=404Perfil";
+            
+        } 
+        else {
+
+            dataVue.idGeral = usuarioId;
+            img = await GetSessaoPHP("FOTOUSUARIO");
+            
+        }
+        await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
+    }, 0);
+    
+    
+    
+
+    
+    
+    $("#Titulo").text("Editar Usuário");
 
 
     if(document.getElementById("tagsCPWrapper")) {
@@ -28,13 +72,19 @@ $(document).ready(async () => {
     }
     //MODAL
 
+    app.$set(
+        dataVue, 
+        "valorNaCarteira", 
+        isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
+    );
+
+
     await DesbloquearTela();
 
     await retornaValorAvaliacao();
 
 
     /* Pega os dados do usuário do banco */    
-    let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
     let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": usuarioId });
 
     /*STAR RATING*/
@@ -421,11 +471,7 @@ $(document).ready(async () => {
         });
     });
 
-    app.$set(
-        dataVue, 
-        "valorNaCarteira", 
-        isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
-    );
+
 
     app.$set(dataVue, "adicionarFundos", async (valor) => {
 
@@ -466,13 +512,6 @@ $(document).ready(async () => {
             }
         }
         
-
-
-        
-        
-        
-        
-        
     });
 
 
@@ -485,6 +524,9 @@ $(document).ready(async () => {
         cartao: "",
         valor: ""
     });
+
+
+    
 });
 
 
@@ -523,6 +565,7 @@ function atualizaOsDadosDoPerfil() {
         document.getElementById("descricaoPerfil").innerHTML = dataVue.usuarioDados.descricao.replace(/(?:\r\n|\r|\n)/g, '<br>');
     }
 }
+
 function resetaOsDadosDoPerfilEdit() {
     
     /* 
@@ -535,3 +578,4 @@ function resetaOsDadosDoPerfilEdit() {
     dataVue.usuarioDadosEdit.profissao = dataVue.usuarioDados.profissao;
     dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : "";
 }
+

@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
-                        <div v-if="dataVue.selecionadoController.propostaFuncionario == 0">
+                        <div v-if="dataVue.selecionadoController.propostaFuncionario == 0" class="d-contents">
                             <div class="cardQuadrado bodyProposta">
                                 <div class="cardQuadradoHeader" id="paddingDetalhesProposta">
                                     <div class="cardQuadradoTitulo BHDetalhes">

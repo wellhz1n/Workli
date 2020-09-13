@@ -573,7 +573,7 @@ function DesbloquearTela() {
 
 function GetPageName() {
 
-    let p = window.location.href.split('?page=')[1]
+    let p = window.location.href.split('?page=')[1].split("&")[0];
     if (p == undefined)
         p = 'home';
     else if (p == 'admhome')
@@ -793,7 +793,6 @@ function GetDataAtual() {
 
 
 function MostraMensagem(Mensagem, TipoMensagem = ToastType.INFO, Tiulo = document.title) {
-    debugger
     switch (TipoMensagem) {
         case ToastType.INFO:
             toastr.info(Mensagem, Tiulo);
@@ -837,4 +836,11 @@ async function AtualizaUsuarioColuna(idUsuario, coluna, dado, sessao, tabela) {
     let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
 
     return resultado;
+}
+
+
+function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
 }

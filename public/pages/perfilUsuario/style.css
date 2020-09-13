@@ -227,6 +227,10 @@
 
     /*#region Linha de cima ------------------------------------------------------------------------------ */
 
+        #perfilBox {
+            min-height: 300px;
+        }
+
         .perfilCardHeader { 
             padding: 10px 15px 10px 5% !important; 
         }
@@ -235,6 +239,7 @@
             justify-content: center;
             margin: 35px 3% 40px 3%;
         }
+        
 
         @media only screen and (max-width: 1450px) { 
             .cardsPerfilSuperior {

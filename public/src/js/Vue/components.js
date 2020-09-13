@@ -684,7 +684,8 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         img: String,
         class_icone: String,
         class_imagem: String,
-        id: String
+        id: String,
+        id_usuario: String
 
     },
     data: function () {
@@ -815,34 +816,18 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         imgcropada: {
             type: String,
             default: ""
-        }
+        },
+        editavel: {
+            type: Boolean,
+            default: false
+        },
+        id_usuario: String
     },
     data: function () {
         return {
             imgData: null,
             imgCropadaData: ""
         }
-    },
-    mounted: async function () {
-        await BloquearTela()
-
-        await this.colocaBanner(true);
-
-        $('.wrapperBannerUsuario').on('click', () => {
-            var input = $(document.createElement("input"));
-            input.attr("type", "file");
-            input.attr("accept", "image/x-png,image/gif,image/jpeg");
-            // add onchange handler if you wish to get the file :)
-            input.trigger("click"); // opening dialog
-
-            $(input).on('change', async () => {
-                let imgBase = await LerImagem($(input)[0]);
-                app.dataVue.Usuario.imgTemp = imgBase;
-                this.abrirModal(app.dataVue.Usuario.imgTemp);
-            });
-
-        });
-        await DesbloquearTela();
     },
     async beforeMount() {
         await BloquearTela()
@@ -853,8 +838,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         async colocaBanner(bloqueia = false) {
             if (bloqueia)
                 BloquearTela()
-
-            let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById");
+            let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById", {"idUsuario" : this.id_usuario});
             if (retorno.imagem_banner) {
                 this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
             }
@@ -885,11 +869,30 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                 toastr.info(`Imagem Banner Não Atualizada:<br><strong>${retorno}</strong>`, 'Algo Deu Errado');
                 console.warn(`ERROR:::${retorno}`);
             }
+        },
+
+        async bannerClicado(editavel) {
+            if(editavel) {
+                var input = $(document.createElement("input"));
+                input.attr("type", "file");
+                input.attr("accept", "image/x-png,image/gif,image/jpeg");
+                // add onchange handler if you wish to get the file :)
+                input.trigger("click"); // opening dialog
+
+                $(input).on('change', async () => {
+                    let imgBase = await LerImagem($(input)[0]);
+                    app.dataVue.Usuario.imgTemp = imgBase;
+                    this.abrirModal(app.dataVue.Usuario.imgTemp);
+                });
+            }
         }
     },
+
     template: `
-    <div class="cemXcem wrapperBannerUsuario">
-        <div class="botaoEditarWrapperBU">
+    <div class="cemXcem" 
+    :class="this.editavel ? 'wrapperBannerUsuario' : ''"
+    @click="(e) => {bannerClicado(this.editavel)}">
+        <div class="botaoEditarWrapperBU" v-if="this.editavel">
             <div class="botaoEditarBU">
                 <i class="fas fa-pen" id="BUIcon" aria-hidden></i>
             </div>
@@ -944,7 +947,14 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
                 }
 
             }
+        },
+        id_usuario: {
+            immediate: true,
+            handler(v) {
+                this.colocaBanner();
+            }
         }
+
     }
     /* // <img :style="[{width: '100%', height: '100%']"
         //             :src="this.imgData"/>

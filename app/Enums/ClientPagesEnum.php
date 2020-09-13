@@ -4,7 +4,7 @@
 abstract class ClientPagesEnum
 {
 
-    const Home = "clienthome";
+    const Home = "perfilUsuario";
     const TipoDeServicoLista = "tiposervicolist";
     const CriarServico = "criarservico";
     const BUSCASERVICO = "buscaservicos";

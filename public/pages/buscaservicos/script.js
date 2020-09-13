@@ -17,7 +17,6 @@ $(document).ready(async () => {
             upgrade1: false,
             upgrade2: false
         },
-
     });
     let CategoriaParan = GetParam();
     app.$set(dataVue, "Categorias", await GetCategorias());
@@ -119,8 +118,7 @@ $(document).ready(async () => {
             valorCarteira -= 1;
         }
 
-        if((valesNaCarteira  && !dataVue.Proposta.Upgrades.upgrade2) || valorCarteira >= 0) {     
-            
+        if((!dataVue.Proposta.Upgrades.upgrade1 && !dataVue.Proposta.Upgrades.upgrade2) || (valesNaCarteira && !dataVue.Proposta.Upgrades.upgrade2) || valorCarteira >= 0) {     
             BloquearTelaSemLoader();
             dataVue.PropostaController.carregando = true;
             
