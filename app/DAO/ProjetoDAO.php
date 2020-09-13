@@ -188,4 +188,35 @@ class ProjetoDAO
         return $retorno->resultados[0];
     }
     #endregion
+    #region MeusProjetos
+    public function BuscaProjetosPorIdUsuario($idUsuario, $q = null, $p = 1, $categoria = null, $situacao = null)
+    {
+
+        $situacaoSql = $situacao != null ? "AND SITUACAO = {$situacao}" : null;
+        $categoriaSql = $categoria != null ? "AND ID_TIPO_SERVICO = {$categoria}" : null;
+
+        $paginas = Sql("
+        SELECT floor(count(id)/6) as PAGINAS FROM PROJETOS_VIEW 
+        WHERE ID_USUARIO = ?
+        AND NOME LIKE'%{$q}%'
+        {$situacaoSql}
+        {$categoriaSql}", [$idUsuario])->resultados[0]["PAGINAS"];
+        $p = $paginas == 1 ? 1 : $p;
+        $p = (json_decode($p) - 1) * 6;
+
+        $sql = "
+        SELECT * FROM PROJETOS_VIEW 
+        WHERE ID_USUARIO = ?
+        AND NOME LIKE'%{$q}%'
+        {$situacaoSql}
+        {$categoriaSql}
+        LIMIT 6
+        OFFSET {$p}";
+        $resultados = Sql($sql, [$idUsuario]);
+        foreach ($resultados->resultados as $key => $value) {
+            $resultados->resultados[$key]["descricao"] = nl2br($resultados->resultados[$key]["descricao"]);
+        }
+        return [$resultados->resultados, $paginas];
+    }
+    #endregion
 }

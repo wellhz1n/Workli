@@ -73,3 +73,62 @@ AFTER descricao;
 ALTER TABLE funcionario
 ADD COLUMN vales_patrocinios INT DEFAULT 0
 AFTER tags;
+-- Wellington.ramos em 08/09/2020 #22;
+create view Projetos_view as 
+  select
+    S.id,
+    S.nome,
+    S.descricao,
+    S.valor,
+    S.situacao,
+    S.id_usuario,
+    S.id_tipo_servico,
+    T.nome as categoria,
+    U.nome as nome_usuario,
+    IU.imagem as imagem_usuario,
+    S.nivel_projeto,
+    S.nivel_profissional,
+    S.data_cadastro,
+  	count(P.id) as propostas,
+    floor(cast(time_format(TIMEDIFF(current_timestamp, S.data_cadastro), '%H') as int) / 24) as postado
+  from
+      servico S
+    inner join tipo_servico as T on T.id = S.id_tipo_servico and T.ativo = 0 
+    left join proposta as P on P.idServico = S.id
+    left join usuarios as U on U.id = S.id_usuario
+    left join imagem_usuario as IU on IU.id_usuario = U.id
+  GROUP BY 1
+  order by S.data_cadastro desc
+ ;
+-- WELLINGTON.RAMOS em 11/09/2020 #22;
+alter view Projetos_view as 
+  select
+    S.id,
+    S.nome,
+    S.descricao,
+    S.valor,
+    S.situacao,
+    S.id_usuario,
+    S.id_tipo_servico,
+    T.nome as categoria,
+    U.nome as nome_usuario,
+    IU.imagem as imagem_usuario,
+    S.nivel_projeto,
+    S.nivel_profissional,
+    S.data_cadastro,
+  	count(P.id) as propostas,
+  	case p.situacao
+  	when 1 then p.valor
+  	when 2 then p.valor
+  	when 4 then p.valor
+  	when 0 then null
+  	end as valorproposta,
+    floor(cast(time_format(TIMEDIFF(current_timestamp, S.data_cadastro), '%H') as int) / 24) as postado
+  from
+      servico S
+    inner join tipo_servico as T on T.id = S.id_tipo_servico and T.ativo = 0 
+    left join proposta as P on P.idServico = S.id and p.situacao <> 3
+    left join usuarios as U on U.id = S.id_usuario
+    left join imagem_usuario as IU on IU.id_usuario = U.id
+  GROUP BY 1
+  order by S.data_cadastro desc;

@@ -550,6 +550,10 @@ var WM_Select = Vue.component('wm-select', {
             Function,
             required: true
         },
+        placeholder: {
+            type: String,
+            default: "Selecione..."
+        },
         icone: {
             Boolean
         },
@@ -579,6 +583,7 @@ var WM_Select = Vue.component('wm-select', {
                 :class="classe"
                 class="seletor"
                 label="nome"
+                :placeholder="placeholder"
                 :ref="id"
                 :clearable="limpavel"
                 :value="selecionado" 
@@ -1841,6 +1846,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         texto_botao: {
             type: String,
             default: 'Fazer Proposta'
+        },
+        valor_proposta: {
+            type: String,
+            default: null
         }
 
     },
@@ -1860,7 +1869,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             dataValor: '',
             dataid_ususario: -1,
             mostrarmais: false,
-            datatextoBotao: 'Fazer Proposta'
+            datatextoBotao: 'Fazer Proposta',
+            dataValorProposta: null
 
         }
     },
@@ -1962,6 +1972,13 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             handler(newval) {
                 this.datatextoBotao = newval;
             }
+        },
+        valor_proposta: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataValorProposta = newval;
+            }
         }
     },
     mounted() { },
@@ -1982,7 +1999,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 categoria: this.datacategoria,
                 tamanho: this.datatamanhodoprojeto,
                 valor: this.dataValor,
-                id_usuario: this.dataid_ususario
+                id_usuario: this.dataid_ususario,
+                valorproposta:this.dataValorProposta
             });
 
         }
@@ -2009,11 +2027,11 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 <p class="font_Poopins_SB"><strong>Publicado</strong>: {{this.datapublicado}}</p>
             </div>
             <div class="mx-2">
-                <p class="font_Poopins_SB"><strong>Propostas</strong>:{{this.datapropostas}}</p>
+                <p class="font_Poopins_SB"><strong>Propostas</strong>: {{this.datapropostas}}</p>
             </div>
         </div>
         <div class="mx-2 mr-4 projetoValor">
-            <p class="font_Poopins_B">{{this.dataValor}}</p>
+            <p class="font_Poopins_B">{{this.dataValorProposta == null?this.dataValor:'R$'+this.dataValorProposta}}</p>
         </div>
     </div>
     <div class="ItemContainerDesc">
@@ -3115,7 +3133,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
             dataSituacao: 0,
             datadata: '',
             dataIdCliente: 0,
-            dataIdServico:0
+            dataIdServico: 0
         }
     },
     watch: {
@@ -3243,15 +3261,15 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
                     {
                         IDPROPOSTA: idProposta, SITUACAO: this.dataSituacao,
                         TITULO: this.dataTitulo, IDCLIENTE: this.dataIdCliente,
-                        IDSERVICO:this.dataIdServico
+                        IDSERVICO: this.dataIdServico
                     });
-                    if(result !== undefined &&!result){
-                        MostraMensagem("Algo deu errado tente novamente mais tarde",ToastType.ERROR,"Propostas");
-                        return false;
-                    }
-                    this.dataSituacao = this.dataSituacao == 1?2:4;
-                    this.$emit("muda_situacao", {idProposta:idProposta})
+                if (result !== undefined && !result) {
+                    MostraMensagem("Algo deu errado tente novamente mais tarde", ToastType.ERROR, "Propostas");
+                    return false;
                 }
+                this.dataSituacao = this.dataSituacao == 1 ? 2 : 4;
+                this.$emit("muda_situacao", { idProposta: idProposta })
+            }
         }
     }
     ,

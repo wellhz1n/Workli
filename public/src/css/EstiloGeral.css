@@ -1315,31 +1315,31 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 .vs__selected {
-    color: var(--verde-padrao) !important;
+    color: #495057 !important;
 }
 
-.vs__search::placeholder,
+.vs__search::placeholder{
+    border: none;
+    color: rgba(0, 0, 0, 0.6) !important;
+   
+
+}
 .vs__dropdown-toggle,
 .vs__dropdown-menu {
-    background: #e9ffec;
     border: none;
-    color: var(--verde-padrao) !important;
-    text-transform: lowercase;
-    font-variant: small-caps;
+    color: #495057 !important;
+   
 }
 
 .vs__dropdown-option--highlight {
-    background-color: #29a73a6e;
-    color: white !important;
+    background-color: #b8b8b8;
 }
 
-.vs__dropdown-option:hover {
-    color: white !important;
-}
+
 
 .vs__dropdown-option {
     transition: all .05s ease-in-out;
-    color: var(--verde-padrao) !important;
+    color:#495057 !important;
 }
 
 .vs__open-indicator {

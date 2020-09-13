@@ -1,13 +1,19 @@
-$(document).ready(async() => {
+$(document).ready(async () => {
     app.$set(dataVue, "carregando", false);
+    app.$set(dataVue, "ListaCarregando", true);
+    app.$set(dataVue, "Lista", []);
+    app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });
+    app.$set(dataVue, "meusprojetos", { Q: null, categoria: null, situacao: null });
+    app.$set(dataVue, "modalVisivelController", false);
+    app.$set(dataVue, "callback", () => {
+        dataVue.modalVisivelController = false;
+    });
+    app.$set(dataVue, 'selecionadoController', null);
 
-    app.$set(dataVue, "meusprojetos", { categoria: "", situacao: "" });
 
 
-    // setTimeout(() => {
+    //#region Seletores
 
-    //     dataVue.carregando = false;
-    // }, 1000)
     var CategoriaSeletor = () => {
         return {
             id: 'Cachumba',
@@ -18,8 +24,9 @@ $(document).ready(async() => {
             campo: "categoria",
             limpavel: true,
             icone: false,
+            placeholder: "Selecione uma Categoria",
             obrigatorio: false,
-            ajax: async(ss) => {
+            ajax: async (ss) => {
                 return await new Promise(async resolve => {
 
                     var saida = await WMExecutaAjax("TipoServicoBO", "GetTipoServicoCategoria");
@@ -46,8 +53,9 @@ $(document).ready(async() => {
             campo: "situacao",
             limpavel: true,
             icone: true,
+            placeholder: "Selecione uma Situação",
             obrigatorio: false,
-            ajax: async(ss) => {
+            ajax: async (ss) => {
                 return await new Promise(async resolve => {
 
                     var saida = await WMExecutaAjax("Seletores", "GetSituacaoSeletor");
@@ -59,6 +67,59 @@ $(document).ready(async() => {
     };
     app.$set(dataVue, "seletorcategoria", CategoriaSeletor());
     app.$set(dataVue, "seletorsituacao", SituacaoSeletor());
+    //#endregion 
+    //#region  Whatchers
+    app.$watch("dataVue.meusprojetos", async function (a, o) {
+        await BuscaMeusProjetos();
+    }, { deep: true });
+    app.$watch("dataVue.PageController.pagina_Atual", async function (a, o) {
+        if (a != o)
+            await BuscaMeusProjetos();
+    }, {});
+    //#endregion
+    //#region AbreModal
+    app.$set(dataVue, "abremodal", async (propriedades) => {
+        try {
 
+            BloquearTela();
+            let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
+            if (Dependencias.length > 0) {
+                propriedades.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
+                propriedades.FotoPrincipal = propriedades.FotoPrincipal.length > 0 ? propriedades.FotoPrincipal[0].imagem : null;
+                let lista = Dependencias.filter(item => item.principal != 1);
+                propriedades.Fotos = lista.map(x => { return x.imagem });
+                propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
+            }
+            DesbloquearTela();
+            dataVue.modalVisivelController = true;
+            dataVue.selecionadoController = propriedades;
+        }
+        catch(e){
 
-});
+        }
+        finally{
+            DesbloquearTela();
+        }
+    });
+
+    //#endregion
+})
+async function BuscaMeusProjetos() {
+    app.dataVue.ListaCarregando = true;
+    var consultaObj = {};
+    if (app.dataVue.meusprojetos.Q != null)
+        consultaObj.Q = app.dataVue.meusprojetos.Q;
+    if (app.dataVue.meusprojetos.categoria != null)
+        consultaObj.C = app.dataVue.meusprojetos.categoria;
+    if (app.dataVue.meusprojetos.situacao != null)
+        consultaObj.S = app.dataVue.meusprojetos.situacao;
+
+    consultaObj.P = app.dataVue.PageController.pagina_Atual;
+
+    var resultado = await WMExecutaAjax("ProjetoBO", "BuscarMeusProjetos", consultaObj);
+    if (resultado.error === undefined) {
+        app.dataVue.Lista = resultado.lista;
+        app.dataVue.PageController.paginas = parseInt(resultado.pagina);
+    }
+    app.dataVue.ListaCarregando = false;
+};
