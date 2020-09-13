@@ -84,6 +84,7 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
 
     if ($metodo == "SetDadoUsuario") {
         $dados = $_POST["dados"];
+
         if(!isset($dados["sessao"])) {
             $dados["sessao"] = false;
         }
@@ -91,8 +92,12 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
             $dados["tabela"] = "usuarios";
         }
 
-
         $userBO->SetDadoUsuario($dados["ID"], $dados["coluna"], $dados["dado"], $dados["sessao"], $dados["tabela"]);
+    }
+
+    if ($metodo == "GetNivelUsuarioById") {
+        $id = isset($_POST["idUsuario"]) ? $_POST["idUsuario"] : 0;
+        $userBO->GetNivelUsuarioById($id);
     }
 
 }
@@ -144,6 +149,17 @@ class UsuarioBO
             echo 1;
         }        
     }
+
+    public function GetNivelUsuarioById($id)
+    {
+        $saida = $this->usuarioDAO->GetNivelUsuarioById($id)->resultados;
+        if(isset($saida[0])) {
+            echo json_encode($saida[0]["nivel_usuario"]);
+        } else {
+            echo 1;
+        }        
+    }
+
 
     public function VerificaSeEmailExiste($email)
     {

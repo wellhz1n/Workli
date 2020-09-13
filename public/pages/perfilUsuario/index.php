@@ -82,8 +82,7 @@
             />
             </div>
         </div>
-
-    <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+    <div v-if="dataVue.nivelUsuario == 1" class="d-contents">
         <div class='wrapperStarRating'>
             <star-rating 
                     v-model='dataVue.Rating'
@@ -96,7 +95,7 @@
                     :padding='5'
             ></star-rating>
         </div>
-    <?php }; ?>
+    </div>
     <div class="row cardsPerfilSuperior">
         <div class="col-3 p-0 paddingCardInterno" v-if="dataVue.editavel">
             <div class="cardQuadrado cemXcem max-heighto d-flex flex-column">
@@ -167,23 +166,29 @@
                         <img id="iconeStatus" :src="dataVue.iconePlano"></img>
                         <div id="membroStatus">
                             <span id="tituloMembroPlano"></span>
-                            <a 
-                                id="popoverPlano"
-                                class="linkPopover" 
-                                tabindex="0" 
-                                role="button" 
-                                data-trigger="focus" 
-                                data-toggle="popover" 
-                                data-placement="top" 
-                                data-content="Como Membro Básico, você tem uma taxa de 15% por serviço terminado, além de não possuir nenhum privilégio."
-                            >
-                                <span class="iconeInterrogacaoWrapper">
-                                    <i class="fa fa-question-circle" class="iconeInterrogacao" aria-hidden="true"></i>
-                                </span>
-                            </a>
+
+                            <div v-if="dataVue.editavel" class="d-contents">
+                                <a 
+                                    id="popoverPlano"
+                                    class="linkPopover" 
+                                    tabindex="0" 
+                                    role="button" 
+                                    data-trigger="focus" 
+                                    data-toggle="popover" 
+                                    data-placement="top" 
+                                    data-content="Como Membro Básico, você tem uma taxa de 15% por serviço terminado, além de não possuir nenhum privilégio."
+                                >
+                                    
+                                    <span class="iconeInterrogacaoWrapper">
+                                        <i class="fa fa-question-circle" class="iconeInterrogacao" aria-hidden="true"></i>
+                                    </span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="wrapperUpgradeButton">
-                            <button id="upgrade" @click="() => {dataVue.abremodalPlanos()}">UPGRADE</button>
+                        <div v-if="dataVue.editavel" class="d-contents">
+                            <div class="wrapperUpgradeButton">
+                                <button id="upgrade" @click="() => {dataVue.abremodalPlanos()}">UPGRADE</button>
+                            </div>
                         </div>
                     </div>
                 </div>

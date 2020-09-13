@@ -9,7 +9,7 @@ $(document).ready(async () => {
 
     /*Id do usuário atual*/
     let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-    let nivelUsuario = await GetSessaoPHP("NIVELUSUARIO");
+    let nivelUsuarioAtual = await GetSessaoPHP("NIVELUSUARIO");
 
     /*Pega o Id do topo da tela*/
     let idGet = "";
@@ -24,21 +24,21 @@ $(document).ready(async () => {
     
     setTimeout(async () => {
         idGet = getURLParameter("id");
-        debugger
         if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
             dataVue.editavel = false
             dataVue.idGeral = idGet;
-
+            dataVue.nivelUsuario = await WMExecutaAjax("UsuarioBO", "GetNivelUsuarioById", {"idUsuario" : dataVue.idGeral});;
+            debugger
             img = await WMExecutaAjax("UsuarioBO", "GetImagemUserById", {"idUsuario" : dataVue.idGeral});
             
         } 
         else if (isNaN(parseInt(idGet)) && idGet != "null") {
             window.location.href = "?page=404Perfil";
-            
         } 
         else {
-
             dataVue.idGeral = usuarioId;
+            dataVue.nivelUsuario = nivelUsuarioAtual;
+
             img = await GetSessaoPHP("FOTOUSUARIO");
             
         }
@@ -85,7 +85,7 @@ $(document).ready(async () => {
 
 
     /* Pega os dados do usuário do banco */    
-    let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": usuarioId });
+    let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": dataVue.idGeral });
 
     /*STAR RATING*/
     await app.$set(dataVue, "Rating", !parseFloat(usuario.avaliacao_media) ? 0 : parseFloat(usuario.avaliacao_media));
@@ -218,7 +218,7 @@ $(document).ready(async () => {
     });
 
 
-    let funcionario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdDataEdit", {ID: usuarioId});
+    let funcionario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdDataEdit", {ID: dataVue.idGeral});
     app.$set(dataVue, "usuarioDados", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */
             nome: funcionario.nome,
             profissao: funcionario.profissao,
@@ -418,7 +418,7 @@ $(document).ready(async () => {
         return planoN;
     });
     
-    if(nivelUsuario == 1) {
+    if(dataVue.nivelUsuario == 1) {
         dataVue.iconePlano = await dataVue.retornaPlano();
     }
     

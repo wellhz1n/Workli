@@ -173,6 +173,13 @@ class UsuarioDAO
                         WHERE u.id = ? ", [$id]);
         return $retorno;
     }
+    public function GetNivelUsuarioById($id)
+    {
+        $retorno = Sql("SELECT us.nivel_usuario FROM usuarios as us
+                        WHERE us.id = ? ", [$id]);
+        return $retorno;
+    }
+
     public function BuscaNumeroUsuarios()
     {
         $retorno = Sql("SELECT COUNT(id) FROM usuarios");
