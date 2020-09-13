@@ -5,6 +5,7 @@ $(document).ready(async () => {
     app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });
     app.$set(dataVue, "meusprojetos", { Q: null, categoria: null, situacao: null });
     app.$set(dataVue, "modalVisivelController", false);
+    app.$set(dataVue, "BTClick", BTClick);
     app.$set(dataVue, "callback", () => {
         dataVue.modalVisivelController = false;
     });
@@ -90,19 +91,22 @@ $(document).ready(async () => {
                 propriedades.Fotos = lista.map(x => { return x.imagem });
                 propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
             }
-            DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
-        }
-        catch(e){
+            await setTimeout(() => { $('[data-toggle="tooltip"]').tooltip(); });
 
         }
-        finally{
+        catch (e) {
+
+        }
+        finally {
             DesbloquearTela();
         }
     });
 
     //#endregion
+    $('[data-toggle="tooltip"]').tooltip();
+
 })
 async function BuscaMeusProjetos() {
     app.dataVue.ListaCarregando = true;
@@ -123,3 +127,10 @@ async function BuscaMeusProjetos() {
     }
     app.dataVue.ListaCarregando = false;
 };
+function BTClick(evento, Botao) {
+    debugger
+    if (Botao == "CHAT") {
+        if (app.dataVue.selecionadoController.situacao == 0)
+            evento.view.RedirecionarComParametros('chat', [{ chave: 'P', valor: app.dataVue.selecionadoController.id }]);
+    }
+}

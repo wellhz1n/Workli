@@ -81,11 +81,11 @@
                     <div class="cardQuadrado bodyDetalhes">
                         <div class="cardQuadradoHeader">
                             <div class="cardQuadradoTitulo BHDetalhes">
-                                <span v-show="dataVue.selecionadoController.situacao == 0" class="fa fa-project-diagram mx-2"></span>
-                                <span v-show="dataVue.selecionadoController.situacao  == 1" class="fa fa-clock mx-2"></span>
-                                <span v-show="dataVue.selecionadoController.situacao  == 2" class="fa fa-tasks mx-2"></span>
-                                <span v-show="dataVue.selecionadoController.situacao  == 3" class="fa fa-times mx-2"></span>
-                                <span v-show="dataVue.selecionadoController.situacao  == 4" class="fa fa-check-double mx-2"></span>
+                                <span data-toggle="tooltip" title="Novo" v-show="dataVue.selecionadoController.situacao == 0" class="fa fa-project-diagram mx-2"></span>
+                                <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" v-show="dataVue.selecionadoController.situacao  == 1" class="fa fa-clock mx-2"></span>
+                                <span data-toggle="tooltip" title="Em Andamento" v-show="dataVue.selecionadoController.situacao  == 2" class="fa fa-tasks mx-2"></span>
+                                <span data-toggle="tooltip" title="Cancelado" v-show="dataVue.selecionadoController.situacao  == 3" class="fa fa-times mx-2"></span>
+                                <span data-toggle="tooltip" title="Concluido" v-show="dataVue.selecionadoController.situacao  == 4" class="fa fa-check-double mx-2"></span>
                                 Detalhes do Projeto
                             </div>
                             <div class="wrapperBH2">
@@ -114,19 +114,25 @@
                     <div class="cardQuadrado" style="flex: 4;">
                         <div class="cardQuadradoHeader" style="justify-content: center !important;">
                             <div class="cardQuadradoTitulo ">
-                                Ações Disponiveis
+                                Ações Disponíveis
                             </div>
                         </div>
                         <div class="m-1 p-1">
-                           
+
                             <div class="d-flex w-100 justify-content-center">
-                                <div class="d-contents" style="display:flex;flex-direction: column; width: 90%;justify-content: center;align-items: center;margin-top: 7px;">
+                                <div v-if="dataVue.selecionadoController.situacao != 3" class="d-contents" style="display:flex;flex-direction: column; width: 90%;justify-content: center;align-items: center;margin-top: 7px;">
 
-                                    <a  v-if="dataVue.selecionadoController.situacao  == 0 && dataVue.selecionadoController.proposta > 0 " @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-eye" aria-hidden="true"></i> Visualizar Propostas</a>
-                                    <a  v-if="dataVue.selecionadoController.situacao  == 4"  href="" class="botaoAtalho mb-2"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
-                                    <a  v-if=" dataVue.selecionadoController.situacao  != 3 " href="" class="botaoAtalho mb-2"><i class="fas fa-comment-dots" aria-hidden="true"></i> Abrir Chat</a>
-                                    <a  v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" href="" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
+                                    <a v-if="dataVue.selecionadoController.situacao  == 0 && dataVue.selecionadoController.proposta > 0 " @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-eye" aria-hidden="true"></i> Visualizar Propostas</a>
+                                    <a v-if="dataVue.selecionadoController.situacao  == 4" href="" class="botaoAtalho mb-2"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
+                                    <a v-if=" dataVue.selecionadoController.situacao  != 3 " @click="(event)=>{dataVue.BTClick(event,'CHAT')}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-comment-dots" aria-hidden="true"></i> Abrir Chat</a>
+                                    <a v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" href="" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
 
+                                </div>
+                                <div v-else-if="dataVue.selecionadoController.situacao  == 3 " style="width: 90%;display: flex;flex-direction: column;align-items: center;justify-content: center;margin-left: 8%;padding: 1px;margin-top: 30%;">
+                                    <img style="height: 16vh;" src="src/img/svg/undraw_empty_xct9.svg" />
+                                    <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+                                        <p>Projeto Cancelado, sem ações disponíveis</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

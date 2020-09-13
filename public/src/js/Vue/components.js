@@ -1993,7 +1993,9 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             }
         }
     },
-    mounted() { },
+    mounted() { 
+        setTimeout(()=>{$('[data-toggle="tooltip"]').tooltip();},500);
+    },
     methods: {
         mostrar() {
             this.mostrarmais = !this.mostrarmais;
@@ -2027,11 +2029,11 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
         <div style="display:flex;align-items:baseline;">
         <div v-if="this.dataSituacao !== null">
-          <span v-show="this.dataSituacao == 0" class="fa fa-project-diagram mx-2"></span>
-          <span  v-show="this.dataSituacao == 1" class="fa fa-clock mx-2"></span>
-          <span  v-show="this.dataSituacao == 2" class="fa fa-tasks mx-2"></span>
-          <span  v-show="this.dataSituacao == 3" class="fa fa-times mx-2"></span>
-          <span  v-show="this.dataSituacao == 4" class="fa fa-check-double mx-2"></span>
+          <span  data-toggle="tooltip" title="Novo" v-show="this.dataSituacao == 0" class="fa fa-project-diagram mx-2"></span>
+          <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" v-show="this.dataSituacao == 1" class="fa fa-clock mx-2"></span>
+          <span data-toggle="tooltip" title="Em Andamento" v-show="this.dataSituacao == 2" class="fa fa-tasks mx-2"></span>
+          <span data-toggle="tooltip" title="Cancelado" v-show="this.dataSituacao == 3" class="fa fa-times mx-2"></span>
+          <span data-toggle="tooltip" title="Concluido"  v-show="this.dataSituacao == 4" class="fa fa-check-double mx-2"></span>
         </div>
         <div  v-if="mostra_botao"  class="p-2justify-content-center align-items-center">
             <button 
@@ -3242,7 +3244,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
         }
     },
     mounted() {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     },
     computed: {
         urlSituacao: {
