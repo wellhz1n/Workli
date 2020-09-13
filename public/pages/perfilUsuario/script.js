@@ -20,6 +20,8 @@ $(document).ready(async () => {
     
     let img = "";
     
+    let planoN = "";
+    
     
     
     setTimeout(async () => {
@@ -28,8 +30,8 @@ $(document).ready(async () => {
             dataVue.editavel = false
             dataVue.idGeral = idGet;
             dataVue.nivelUsuario = await WMExecutaAjax("UsuarioBO", "GetNivelUsuarioById", {"idUsuario" : dataVue.idGeral});;
-            debugger
             img = await WMExecutaAjax("UsuarioBO", "GetImagemUserById", {"idUsuario" : dataVue.idGeral});
+            planoN = parseInt(await WMExecutaAjax("UsuarioBO", "GetPlanoById", {"idUsuario" : dataVue.idGeral}));
             
         } 
         else if (isNaN(parseInt(idGet)) && idGet != "null") {
@@ -40,6 +42,7 @@ $(document).ready(async () => {
             dataVue.nivelUsuario = nivelUsuarioAtual;
 
             img = await GetSessaoPHP("FOTOUSUARIO");
+            planoN = parseInt(await GetSessaoPHP("PLANO"));
             
         }
         await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
@@ -371,7 +374,7 @@ $(document).ready(async () => {
     app.$set(dataVue, "iconePlano", "src/img/icons/perfil/planoPadrao.svg");
     app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
-        let planoN = Number.parseInt(await GetSessaoPHP("PLANO"));
+        console.log(planoN)
         planoN = !planoN? 0 : planoN;
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let membro = "Membro Padrão";

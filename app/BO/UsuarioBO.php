@@ -100,6 +100,11 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->GetNivelUsuarioById($id);
     }
 
+    if ($metodo == "GetPlanoById") {
+        $id = isset($_POST["idUsuario"]) ? $_POST["idUsuario"] : 0;
+        $userBO->GetPlanoById($id);
+    }
+
 }
 class UsuarioBO
 {
@@ -160,6 +165,15 @@ class UsuarioBO
         }        
     }
 
+    public function GetPlanoById($id)
+    {
+        $saida = $this->usuarioDAO->GetPlanoById($id)->resultados;
+        if(isset($saida[0])) {
+            echo json_encode($saida[0]["plano"]);
+        } else {
+            echo 1;
+        }        
+    }
 
     public function VerificaSeEmailExiste($email)
     {

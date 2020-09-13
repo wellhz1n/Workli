@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
+        <div v-if="dataVue.nivelUsuario == 1" class="d-contents">
             <div class="col-3 p-0">
                 <div class="cardQuadrado cemXcem max-heighto" id="statusCard">
                     <div class="cardQuadradoHeader">
@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-        <?php }; ?>
+        </div>
 
 
 
