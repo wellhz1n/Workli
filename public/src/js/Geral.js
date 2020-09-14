@@ -451,7 +451,7 @@ async function Logar(email, senha, mostramsg = true) {
             saida = JSON.parse(saida[0]);
         } catch (e) {
             if (saida[0] == true) {
-                Rediredionar('home')
+                GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => {RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: id}]);})
                 return true;
             }
 
@@ -462,7 +462,7 @@ async function Logar(email, senha, mostramsg = true) {
             return false;
         }
         if (saida == true) {
-            Rediredionar('home')
+            GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => {RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: id}]);})
             return true;
         }
 

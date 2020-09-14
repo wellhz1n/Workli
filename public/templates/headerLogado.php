@@ -21,7 +21,7 @@
         case "0":
       ?>
           <li class="nav-item ">
-            <a class="nav-link" id='home' href="?page=home">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" style="cursor: pointer;" id='home' @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
@@ -36,7 +36,7 @@
         case "1":
         ?>
           <li class="nav-item ">
-            <a class="nav-link" id="home" href="?page=funchome">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" style="cursor: pointer;" id="home" @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
@@ -52,7 +52,7 @@
         case "2":
         ?>
           <li class="nav-item ">
-            <a class="nav-link" id='home' href="?page=admhome">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" id='home' style="cursor: pointer;" @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id='admpaineldecontrole' href="?page=admpaineldecontrole">Painel De Controle</a>
@@ -155,7 +155,7 @@
             <div class="dropdown-divider"></div>
             <div class="row">
               <div class="col-5 mr-3  ">
-                <a style="font-size: 14px" class="dropdown-item" id="MenuPerfil" href="?page=perfilUsuario">Meu perfil</a>
+                <a style="font-size: 14px" class="dropdown-item" id="MenuPerfil" style="cursor: pointer;"  @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}" >Meu perfil</a>
               </div>
               <div class="col-5 text-wrap">
                 <?php
