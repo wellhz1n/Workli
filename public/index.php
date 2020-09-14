@@ -140,7 +140,7 @@ header('Content-Type: text/html; charset=utf-8');
                 Rediredionar(page);
             },
             RedirectComParan(page, paran = []) {
-                RediredionarComParametros(page, paran);
+                RedirecionarComParametros(page, paran);
             },
             async GetUsuarioDeContexto() {
                 return {

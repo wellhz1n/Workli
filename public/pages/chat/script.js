@@ -35,6 +35,12 @@ $(document).ready(async() => {
                     await ProjetoClick(item)
             });
         }
+        if(Parametros[0].P !== undefined){
+            await dataVue.ListaDeProjetos.map(async(item) => {
+                if (item.id_servico == Parametros[0].P)
+                    await ProjetoClick(item)
+            });
+        }
     }
     //#endregion
     dataVue.Carregando = false

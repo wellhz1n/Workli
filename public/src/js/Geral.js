@@ -405,7 +405,7 @@ function Rediredionar(pagina) {
 }
 
 // OS PARANS RECEBEM UM OBJETO COM CHAVE E VALOR
-function RediredionarComParametros(pagina, paramn = []) {
+function RedirecionarComParametros(pagina, paramn = []) {
     let url = location.origin + location.pathname + `?page=${pagina}`;
     paramn.forEach(p => {
         url = url + `&${p.chave}=${p.valor}`

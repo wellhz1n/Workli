@@ -279,6 +279,7 @@
 
 .bodyDetalhes {
     flex: 6;
+    /* width:100%; */
     min-height: 500px;
     margin: 0 0.5% 0 1%;
 }
@@ -307,5 +308,35 @@
 .botaoProposta:focus {
     transform: scale(1.05);
     outline: none;
+}
+
+
+
+.botaoAtalho {
+    width: 90%;
+    height: fit-content;
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    /* background-color: #3ab83a; */
+    background-color: #424842;
+    font-family: Poppins-Bold;
+    color: white;
+    word-spacing: 5px;
+    letter-spacing: 1px;
+    font-size: 17px;
+    transition: 0.2s;
+    padding: 5px 9%;
+}
+
+.botaoAtalho:focus {
+    outline: none;
+    /* border: 3px solid #319731; */
+    border: 3px solid #363a36;
+}
+
+.botaoAtalho:hover {
+    /* background-color: #50c550; */
+    background-color: #525a52;
+    color: white;
 }
 /* #endregion */

@@ -1,19 +1,30 @@
 $(document).ready(async () => {
+    BloquearTela()
+
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
     await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
     //#endregion
-
+    var Paramns = GetParam();
+    if (Paramns.length > 0) {
+        if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })) {
+            app.dataVue.Tabs.Propostas = true;
+            app.dataVue.Tabs.Notificacao = false;
+        }
+    }
 
     document.addEventListener("BuscaNotificacao", async () => {
         await BuscaListaNotificacoes();
         await BuscaPropostas();
     });
 
+
+
+
     app.dataVue.TabNCarregando = false;
 
-
-
+    DesbloquearTela();
+    
 
 });
 

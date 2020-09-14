@@ -843,7 +843,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         async colocaBanner(bloqueia = false) {
             if (bloqueia)
                 BloquearTela()
-            let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById", {"idUsuario" : this.id_usuario});
+            let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById", { "idUsuario": this.id_usuario });
             if (retorno.imagem_banner) {
                 this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
             }
@@ -877,7 +877,7 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         },
 
         async bannerClicado(editavel) {
-            if(editavel) {
+            if (editavel) {
                 var input = $(document.createElement("input"));
                 input.attr("type", "file");
                 input.attr("accept", "image/x-png,image/gif,image/jpeg");
@@ -1288,7 +1288,7 @@ var WMTIPOSERVICOITEM = Vue.component('tiposervicoItem', {
     },
     methods: {
         redirecionar: (id) => {
-            RediredionarComParametros("buscaservicos", [{ chave: "C", valor: id }]);
+            RedirecionarComParametros("buscaservicos", [{ chave: "C", valor: id }]);
         }
     }
 });
@@ -1850,6 +1850,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         valor_proposta: {
             type: String,
             default: null
+        },
+        situacao: {
+            type: [String, Number],
+            default: null
         }
 
     },
@@ -1870,7 +1874,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             dataid_ususario: -1,
             mostrarmais: false,
             datatextoBotao: 'Fazer Proposta',
-            dataValorProposta: null
+            dataValorProposta: null,
+            dataSituacao: null
 
         }
     },
@@ -1979,9 +1984,18 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             handler(newval) {
                 this.dataValorProposta = newval;
             }
+        },
+        situacao: {
+            immediate: true,
+            deep: true,
+            handler(newVal) {
+                this.dataSituacao = newVal;
+            }
         }
     },
-    mounted() { },
+    mounted() { 
+        setTimeout(()=>{$('[data-toggle="tooltip"]').tooltip();},500);
+    },
     methods: {
         mostrar() {
             this.mostrarmais = !this.mostrarmais;
@@ -2000,7 +2014,9 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 tamanho: this.datatamanhodoprojeto,
                 valor: this.dataValor,
                 id_usuario: this.dataid_ususario,
-                valorproposta:this.dataValorProposta
+                valorproposta: this.dataValorProposta,
+                situacao:this.dataSituacao,
+                profissional:this.datanivelprofissional
             });
 
         }
@@ -2011,6 +2027,14 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         <div class=" p-2">
             <h3 class="font_Poopins_B">{{this.datatitulo}}</h3>
         </div>
+        <div style="display:flex;align-items:baseline;">
+        <div v-if="this.dataSituacao !== null">
+          <span  data-toggle="tooltip" title="Novo" v-show="this.dataSituacao == 0" class="fa fa-project-diagram mx-2"></span>
+          <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" v-show="this.dataSituacao == 1" class="fa fa-clock mx-2"></span>
+          <span data-toggle="tooltip" title="Em Andamento" v-show="this.dataSituacao == 2" class="fa fa-tasks mx-2"></span>
+          <span data-toggle="tooltip" title="Cancelado" v-show="this.dataSituacao == 3" class="fa fa-times mx-2"></span>
+          <span data-toggle="tooltip" title="Concluido"  v-show="this.dataSituacao == 4" class="fa fa-check-double mx-2"></span>
+        </div>
         <div  v-if="mostra_botao"  class="p-2justify-content-center align-items-center">
             <button 
                 class="btn btn-secondary m-0 font_Poopins_SB"
@@ -2020,6 +2044,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 
             </button>
         </div>
+        </div>
+        
     </div>
     <div class="projetoHeader2">
         <div class="d-flex flex-row justify-content-space-between">
@@ -3218,7 +3244,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
         }
     },
     mounted() {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
     },
     computed: {
         urlSituacao: {
