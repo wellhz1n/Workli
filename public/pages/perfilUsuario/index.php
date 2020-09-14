@@ -129,8 +129,10 @@
                     <div class="cardQuadradoTitulo">
                         Perfil
                     </div>
-                    <div id="botaoEditarPerfil" v-if="dataVue.editavel">
-                        <i class="fa fa-edit"></i>
+                    <div v-if="dataVue.editavel" class="d-contents">
+                        <div id="botaoEditarPerfil">
+                            <i class="fa fa-edit"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="cardQuadradoBody">

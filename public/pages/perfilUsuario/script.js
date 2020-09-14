@@ -22,11 +22,13 @@ $(document).ready(async () => {
     
     let planoN = "";
     
-    
+    await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
     
     setTimeout(async () => {
         idGet = getURLParameter("id");
-        if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
+        if(idGet == "null") {
+            window.location.href = `?page=perfilUsuario&id=${usuarioId}`;
+        } else if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
             dataVue.editavel = false
             dataVue.idGeral = idGet;
             dataVue.nivelUsuario = await WMExecutaAjax("UsuarioBO", "GetNivelUsuarioById", {"idUsuario" : dataVue.idGeral});;
@@ -36,8 +38,8 @@ $(document).ready(async () => {
         } 
         else if (isNaN(parseInt(idGet)) && idGet != "null") {
             window.location.href = "?page=404Perfil";
-        } 
-        else {
+        } else {
+            
             dataVue.idGeral = usuarioId;
             dataVue.nivelUsuario = nivelUsuarioAtual;
 
@@ -46,7 +48,7 @@ $(document).ready(async () => {
             
         }
         await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
-    }, 0);
+    }, 1);
     
     
     
@@ -156,8 +158,8 @@ $(document).ready(async () => {
         
     }
 
-    $("#botaoEditarPerfil").on("click", () => {
-        abrirFecharModalEP();
+    $("#botaoEditarPerfil").on("click", async () => {
+        await abrirFecharModalEP();
     })
 
     app.$set(dataVue, "callbackEP", (salvar) => {
