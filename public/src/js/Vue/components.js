@@ -686,6 +686,10 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             type: String,
             default: ""
         },
+        verperfil: {
+            type: Boolean,
+            default: () => true
+        },
         img: String,
         class_icone: String,
         class_imagem: String,
@@ -738,10 +742,13 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                     this.abrirModal(app.dataVue.Usuario.imgTemp);
                 });
             }
+        },
+        Redirecionar(){
+            this.$emit("redireciona_usuario");
         }
     },
     template: `
-    <div>
+    <div @click="this.Redirecionar">
         <div v-show="this.imgData == null || this.imgData == '' " 
             :class="this.editavel ? 'wmUserImageWrapper' : ''"
             @click="this.pegarImagem">
@@ -1993,13 +2000,18 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             }
         }
     },
-    mounted() { 
-        setTimeout(()=>{$('[data-toggle="tooltip"]').tooltip();},500);
+    mounted() {
+        setTimeout(() => { $('[data-toggle="tooltip"]').tooltip(); }, 500);
     },
     methods: {
         mostrar() {
             this.mostrarmais = !this.mostrarmais;
 
+        },
+        RedirecionarPerfil(){
+                 if(this.dataid_ususario != this.$root.dataVue.UsuarioContexto.id ){
+                    this.$root.RedirecionaPerfil(this.dataid_ususario);
+                 }
         },
         abrirModal() {
             this.$emit("aberto-modal", {
@@ -2015,8 +2027,8 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
                 valor: this.dataValor,
                 id_usuario: this.dataid_ususario,
                 valorproposta: this.dataValorProposta,
-                situacao:this.dataSituacao,
-                profissional:this.datanivelprofissional
+                situacao: this.dataSituacao,
+                profissional: this.datanivelprofissional
             });
 
         }
@@ -2075,7 +2087,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
     </div>
     <div class="projetoFoter">
-        <div class=" d-flex flex-row justify-content-center  align-items-center p-2">
+        <div @click="this.RedirecionarPerfil" style="cursor:pointer;" class=" d-flex flex-row justify-content-center  align-items-center p-2">
             <img v-if="this.dataimg != null" class="fotoperfilprojeto" :src="this.dataimg"/>
             <i v-else style="color: #343a40; background: #fff; border-radius:100%; border: solid #fff 4px; font-size: 45px !important;" class=" fas fa-user-circle"></i>
             <p class="mx-2 mt-3 font_Poopins_M">{{this.datanome}}</p>
@@ -2517,6 +2529,9 @@ WMCHAT = Vue.component('wm-chat', {
                 }, 1);
                 this.$emit('novamensagem', mensagem);
             }
+        },
+        RedirecionaPerfil(){
+            this.$root.RedirecionaPerfil(this.idusuariodestinatariodata)
         }
     },
     async beforeMount() {
@@ -2614,7 +2629,7 @@ WMCHAT = Vue.component('wm-chat', {
     </div>
 
     <div class="textoCliente" v-else-if="item.tipo == 'msg'">
-        <wm-user-img :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+        <wm-user-img style="cursor:pointer;" @redireciona_usuario="RedirecionaPerfil"  :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
                 <p class="m-0">{{item.msg}}</p>            
             <div class="tempoTC">
@@ -3077,6 +3092,9 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
         },
         Aprovar(vue) {
             this.$emit("aprovar", this.$data);
+        },
+        RedirecionarPerfil(){
+            this.$emit("redireciona_usuario");
         }
     },
     template: `
@@ -3087,9 +3105,9 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
         <p class="font_Poopins" style="font-size: 12px;">{{this.dataDescricao}}</p>
         <span style="background-color: #ec9a29;" class="badge badge-pill">{{this.dataCategoria}}</span>
         <div style="display: flex; align-items: center; height: 60px; ">
-            <wm-user-img :img="this.dataImagemFuncionario" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+            <wm-user-img style="cursor:pointer"  @redireciona_usuario="this.RedirecionarPerfil" :img="this.dataImagemFuncionario" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
             <div class="d-flex">
-                <p class="p-0 m-0 ml-1">{{this.dataNome}}</p>
+                <p style="cursor:pointer" @click="this.RedirecionarPerfil" class="p-0 m-0 ml-1">{{this.dataNome}}</p>
                 <span class="mx-1"><i style="color: #ec9a29;font-size: 13px;" class="fas fa-star"></i><span style="font-size:12px ;">{{this.dataAvaliacao}}</span></span>
             </div>
         </div>
@@ -3296,6 +3314,9 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
                 this.dataSituacao = this.dataSituacao == 1 ? 2 : 4;
                 this.$emit("muda_situacao", { idProposta: idProposta })
             }
+        },
+        RedirecionarPerfil(){
+            this.$emit("redireciona_usuario");
         }
     }
     ,
@@ -3307,9 +3328,9 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
         <p class="font_Poopins" style="font-size: 12px;">{{this.dataDescricao}}</p>
         <span style="background-color: #ec9a29;" class="badge badge-pill">{{this.dataCategoria}}</span>
         <div style="display: flex; align-items: center; height: 60px; ">
-            <wm-user-img :img="this.dataImagemCliente" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
+            <wm-user-img style="cursor:pointer"  @redireciona_usuario="this.RedirecionarPerfil"  :img="this.dataImagemCliente" class="imagemProposta" class_icone="iconeImagemNull" class_imagem="imagemTamanhoUser"></wm-user-img>
             <div class="d-flex">
-                <p class="p-0 m-0 ml-1">{{this.dataNome}}</p>
+                <label for="itemImagem" style="cursor:pointer"  @click="this.RedirecionarPerfil" class="p-0 m-0 ml-1">{{this.dataNome}}</label>
             </div>
         </div>
     </div>

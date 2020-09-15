@@ -86,7 +86,7 @@ $(document).ready(async () => {
 
 
 
-    
+
 });
 
 //Funcoes de grid
@@ -405,12 +405,15 @@ function Rediredionar(pagina) {
 }
 
 // OS PARANS RECEBEM UM OBJETO COM CHAVE E VALOR
-function RedirecionarComParametros(pagina, paramn = []) {
+function RedirecionarComParametros(pagina, paramn = [], abreOutraAba = false) {
     let url = location.origin + location.pathname + `?page=${pagina}`;
     paramn.forEach(p => {
         url = url + `&${p.chave}=${p.valor}`
     });
-    window.location.href = url;
+    if (!abreOutraAba)
+        window.location.href = url;
+    else
+        window.open(url,"_blank");
 }
 
 function GetParam() {
@@ -451,7 +454,7 @@ async function Logar(email, senha, mostramsg = true) {
             saida = JSON.parse(saida[0]);
         } catch (e) {
             if (saida[0] == true) {
-                GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => {RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: id}]);})
+                GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => { RedirecionarComParametros('perfilUsuario', [{ chave: 'id', valor: id }]); })
                 return true;
             }
 
@@ -462,7 +465,7 @@ async function Logar(email, senha, mostramsg = true) {
             return false;
         }
         if (saida == true) {
-            GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => {RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: id}]);})
+            GetSessaoPHP("IDUSUARIOCONTEXTO").then((id) => { RedirecionarComParametros('perfilUsuario', [{ chave: 'id', valor: id }]); })
             return true;
         }
 
@@ -815,25 +818,25 @@ function MostraMensagem(Mensagem, TipoMensagem = ToastType.INFO, Tiulo = documen
 
     }
 }
-$.urlParam = function(name){
+$.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null) {
-       return null;
+    if (results == null) {
+        return null;
     }
     return decodeURI(results[1]) || 0;
 }
 
 async function AtualizaUsuarioColuna(idUsuario, coluna, dado, sessao, tabela) {
-    
-    let objectToSend = {ID: idUsuario, coluna: coluna, dado: dado}
-    if(sessao) {
+
+    let objectToSend = { ID: idUsuario, coluna: coluna, dado: dado }
+    if (sessao) {
         objectToSend["sessao"] = sessao;
     }
-    if(tabela) {
+    if (tabela) {
         objectToSend["tabela"] = tabela;
     }
 
-    let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", {dados: objectToSend});
+    let resultado = await WMExecutaAjax("UsuarioBO", "SetDadoUsuario", { dados: objectToSend });
 
     return resultado;
 }
@@ -841,6 +844,6 @@ async function AtualizaUsuarioColuna(idUsuario, coluna, dado, sessao, tabela) {
 
 function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
     return decodeURI(
-        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
     );
 }

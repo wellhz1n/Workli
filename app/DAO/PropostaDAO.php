@@ -60,6 +60,7 @@ class PropostaDAO
          TS.nome as categoria,
          F.avaliacao_media,
          IU.imagem,
+         UF.id AS id_usuario,
            case P.upgrades
                              when 0 then 0
                              when 3 then 1
