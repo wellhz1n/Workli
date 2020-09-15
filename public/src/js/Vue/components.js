@@ -1509,7 +1509,8 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
             projeto: Projeto(),
             carregando: false,
             buscandoDados: false,
-            concluiu: false
+            concluiu: false,
+            imagem: [ "selecao.svg", "detalhes.svg", "orcamento.svg"]
         }
     },
     async beforeMount() {
@@ -1699,7 +1700,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                     <button  :disabled="true" class="btn w-75 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer"><div class="activity_in"></div> </button>
                 </div>
                 <div v-else>
-                 <button  class="btn btn-success text-light" :disabled="BloqueiaBotao" @click="ProximaPage" style="cursor: pointer"> {{ page < 2?"Proximo":"Concluir"}}</button>
+                 <button class="btn btn-success text-light" :disabled="BloqueiaBotao" @click="ProximaPage" style="cursor: pointer"> {{ page < 2?"Próximo":"Concluir"}}</button>
                 </div>
     
                 </div>
@@ -1708,7 +1709,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
         </div>
         <div class="col-4 p-0 d-flex flex-column justify-content-center  ladoEsquerdo" style="height: 500px;word-break: break-word;">
             <h3 class="mt-2 p-1 pl-4" style="width: 100%;font-size:26px">{{page == 0 ? "Descrição do Tipo Serviço":"Resumo do Projeto"}}</h3>
-            <div class="descContainer align-self-start p-3 pl-4" style="height: 280px;overflow-y: auto; width: 100%">
+            <div class="descContainer align-self-start p-3 pl-4" style="overflow-y: auto; width: 100%">
             <div v-if="page == 0">
             <p >{{
                 projeto.Categoria != null ?
@@ -1733,7 +1734,8 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                     </p>
             </div>
             </div>
-            <img style=" height: 40%;width: 60%;margin-right: 80px" class="mb-4 align-self-end p-2" src="src/img/projeto/imgbase.png" />
+            <div class='restApp'></div>
+            <img class="imgCriarProjeto" :src="'src/img/svg/' + imagem[page]" />
            </div>
         </div>
     </div>

@@ -857,5 +857,3 @@ function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
     );
 }
-
-

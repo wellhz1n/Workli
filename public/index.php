@@ -167,7 +167,16 @@ header('Content-Type: text/html; charset=utf-8');
         watch: {
             'dataVue': function(val) {}
 
-        }
+        },
+        // computed: {
+        //     'url_perfil': {
+        //         get(perfilUrl) {
+        //            return GetSessaoPHP("IDUSUARIOCONTEXTO").then((e) => { return "?page=perfilUsuario&id=" + e;});
+                   
+        //         }
+        //     }
+        // }
+        
     });
 
 

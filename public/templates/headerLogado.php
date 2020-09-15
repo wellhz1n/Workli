@@ -2,7 +2,7 @@
 // @session_start();
 ?>
 <nav class="navbar navbar-expand-lg NavbarGreen">
-  <a class="navbar-brand" href="">
+  <a class="navbar-brand" style="cursor: pointer;" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">
     <img style="height: 90px;width: 130px;" src="../Logo/Logo1.png" />
 
   </a>
@@ -20,29 +20,29 @@
           #region Cliente
         case "0":
       ?>
-          <li class="nav-item ">
-            <a class="nav-link" style="cursor: pointer;" id='home' @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" style="cursor: pointer;" id='home' :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Serviços</a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Serviços</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Perguntas Frequentes</a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" >Buscar Funcionários</a>
           </li>
         <?php
           break;
           // user FUNCIONARIO
-          #region Funcionario
+          #region Funcionario 
         case "1":
         ?>
-          <li class="nav-item ">
-            <a class="nav-link" style="cursor: pointer;" id="home" @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" style="cursor: pointer;" id="home" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Serviços</a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Serviços</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">Linha do Tempo</a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" >Buscar Funcionários</a>
           </li>
         <?php
           break;
@@ -51,18 +51,18 @@
           #region ADM
         case "2":
         ?>
-          <li class="nav-item ">
-            <a class="nav-link" id='home' style="cursor: pointer;" @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" id='home' style="cursor: pointer;" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item tituloHeaderLogado">
             <a class="nav-link" id='admpaineldecontrole' href="?page=admpaineldecontrole">Painel De Controle</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item tituloHeaderLogado">
             <a class="nav-link" id='admcadastros' href="?page=admcadastros">Cadastros</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="#">Analize</a>
+          <li class="nav-item  tituloHeaderLogado">
+            <a class="nav-link" href="#">Analise</a>
           </li>
         <?php
           break;
@@ -160,7 +160,7 @@
                   class="dropdown-item" 
                   id="MenuPerfil" 
                   style="cursor: pointer;"  
-                  @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}" 
+                  :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id"
                 >
                   Meu perfil
                 </a>
@@ -183,8 +183,8 @@
                 ?>
                   <a 
                     style="font-size: 14px; cursor: pointer;" 
-                    class="dropdown-item" 
-                    @click="(event)=>{event.view.RedirecionarComParametros('perfilUsuario',[{chave: 'id', valor: dataVue.UsuarioContexto.id}, {chave:'edit',valor:'1'}])}"
+                    class="dropdown-item"
+                    :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'"
                   >
                     Minhas competências
                   </a>
@@ -261,7 +261,6 @@ if (Logado()[1] == '2')
     app.$set(dataVue, 'DropLista', []);
     app.$set(dataVue, 'NotificacaoNumero', 0);
     app.$set(dataVue, "ClickFuncao", (e, i = item) => {
-      console.log(i.id)
       if (i.tipo == 2) {
         if (app.dataVue.UsuarioContexto.id_funcionario != "")
           RedirecionarComParametros('chat', [{

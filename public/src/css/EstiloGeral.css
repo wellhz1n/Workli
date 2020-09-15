@@ -1719,3 +1719,15 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 /*#endregion Card de Plano --------------------------------------------*/
+
+/*#region Criar Projeto --------------------------------------------*/
+
+.imgCriarProjeto {
+    max-width: 60%;
+    max-height: 60%;
+    width: 500px;
+    align-self: center;
+    justify-self: flex-end;
+    margin: 10px 0 15px 0;
+}
+/*#endregion Criar Projeto --------------------------------------------*/
