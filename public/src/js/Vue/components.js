@@ -2952,7 +2952,7 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
         :visivel="this.modalVisivel" 
         :callback="() => {this.modalVisivel = false}" 
         ref="fecharRef"
-        heightModal="91.2%"
+        height="fit-content"
         @fechar-modal-inside="fecharModal"
     >
         <template v-slot:header>
@@ -2969,15 +2969,16 @@ var WMCROPMODAL = Vue.component('wm-crop-modal', {
                     :stencil-component="configs.redondo"
                     @change="change"
                 ></cropper>
-                <div id="botaoSalvarWrapper">
-                    <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
-                        Salvar <i class="fa fa-check" aria-hidden="true"></i>
-                    </button>
-                </div>
+                <div class='restApp'></div>
+                
             </div>
         </template>
         <template v-slot:footer>
-            <div></div> <!-- Apenas para deixar o footer vazio.-->
+            <div id="botaoSalvarWrapper">
+                <button id="botaoSalvarModalCrop" @click="emitirImagemCropada">
+                    Salvar <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </div>
         </template>
     </wm-modal>
     `
