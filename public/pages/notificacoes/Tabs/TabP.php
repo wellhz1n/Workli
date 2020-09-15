@@ -42,7 +42,7 @@
                         <wm-loading></wm-loading>
                     </div>
                     <div v-else-if="!dataVue.PropostasCarregando && dataVue.Propostas.listaN.length > 0 ">
-                        <wm-proposta v-for="p in dataVue.Propostas.listaN" :key="p.id" :titulo="p.Titulo" :descricao="p.descricao" :avaliacao="Math.floor(p.avaliacao_media)" :nome="p.funcionario" :imagem_funcionario="p.imagem" :categoria="p.categoria" :valor="p.valor" :brilha="p.destacado == 1?true:false" v-on:cancelar="(item)=>{ dataVue.CancelaProposta(p.id)}" v-on:aprovar="(item)=>{dataVue.AprovaProposta(p.id)}"></wm-proposta>
+                        <wm-proposta  v-for="p in dataVue.Propostas.listaN" @redireciona_usuario="RedirecionaPerfil(p.id_usuario)" :key="p.id" :titulo="p.Titulo" :descricao="p.descricao" :avaliacao="Math.floor(p.avaliacao_media)" :nome="p.funcionario" :imagem_funcionario="p.imagem" :categoria="p.categoria" :valor="p.valor" :brilha="p.destacado == 1?true:false" v-on:cancelar="(item)=>{ dataVue.CancelaProposta(p.id)}" v-on:aprovar="(item)=>{dataVue.AprovaProposta(p.id)}"></wm-proposta>
                     </div>
 
                 </div>
@@ -106,7 +106,7 @@
                                 <wm-loading></wm-loading>
                             </div>
                             <div :key="2" v-else-if="dataVue.PropostaFuncionario !== undefined &&  dataVue.PropostaFuncionario.length > 0">
-                                <wm-proposta-funcionario class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)" :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :idcliente="item.IDCLIENTE" @muda_situacao="({idProposta})=>{
+                                <wm-proposta-funcionario  class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)"  @redireciona_usuario="RedirecionaPerfil(item.IDCLIENTE)"  :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :idcliente="item.IDCLIENTE" @muda_situacao="({idProposta})=>{
                                     if(dataVue.PropostaFuncionario.length == 1 && dataVue.PropostaFuncionario.filter(a=>{return a.ID == idProposta}).length == 1){
                                         dataVue.PropostaFuncionario =[];
                                          dataVue.TabPFuncionarioPossuiAprovada = false 
