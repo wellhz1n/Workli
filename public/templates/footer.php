@@ -23,12 +23,13 @@ $config = json_decode($config, true);
 </div>
 <script>
     //#region FOOTER
-    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
-        $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+
+    $(document).ready(async () => {
+        
     });
-    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
-        $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-    });
+
+        
+    
 
     //#endregion
 </script>

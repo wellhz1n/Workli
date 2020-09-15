@@ -24,7 +24,7 @@
             <a class="nav-link" style="cursor: pointer;" id='home' @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
+            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">Perguntas Frequentes</a>
@@ -39,7 +39,7 @@
             <a class="nav-link" style="cursor: pointer;" id="home" @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="tiposervicolist" href="?page=tiposervicolist">Serviços</a>
+            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">Linha do Tempo</a>
@@ -155,15 +155,40 @@
             <div class="dropdown-divider"></div>
             <div class="row">
               <div class="col-5 mr-3  ">
-                <a style="font-size: 14px" class="dropdown-item" id="MenuPerfil" style="cursor: pointer;"  @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}" >Meu perfil</a>
+                <a 
+                  style="font-size: 14px" 
+                  class="dropdown-item" 
+                  id="MenuPerfil" 
+                  style="cursor: pointer;"  
+                  @click="(e) => {e.view.RedirecionarComParametros('perfilUsuario', [{chave: 'id', valor: dataVue.UsuarioContexto.id}])}" 
+                >
+                  Meu perfil
+                </a>
+                <?php
+                if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
+                ?>
+                  <a 
+                    style="font-size: 14px" 
+                    class="dropdown-item"
+                    @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" 
+                    style="cursor: pointer"
+                  >
+                    Minhas Propostas
+                  </a>
+                <?php } ?>  
               </div>
               <div class="col-5 text-wrap">
                 <?php
                 if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
                 ?>
-                  <a style="font-size: 14px" class="dropdown-item" href="">Minhas competências</a>
+                  <a 
+                    style="font-size: 14px; cursor: pointer;" 
+                    class="dropdown-item" 
+                    @click="(event)=>{event.view.RedirecionarComParametros('perfilUsuario',[{chave: 'id', valor: dataVue.UsuarioContexto.id}, {chave:'edit',valor:'1'}])}"
+                  >
+                    Minhas competências
+                  </a>
                 <?php } ?>
-                <a style="font-size: 14px" class="dropdown-item" href="">Configurações</a>
               </div>
             </div>
             <?php

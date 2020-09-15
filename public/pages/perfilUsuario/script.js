@@ -162,6 +162,20 @@ $(document).ready(async () => {
         await abrirFecharModalEP();
     })
 
+    setTimeout(async () => {
+        if(getURLParameter("edit") != "null") {
+            await abrirFecharModalEP();  
+            setTimeout( () => {
+                $($("#tagsInput input")[0]).on("focus", ()=>{
+                    $($("#tagsInput .form-control")[0]).addClass("shadowInputTags");
+                });  
+                
+                $($("#tagsInput input")[0]).focus();
+            }, 1)
+                
+        }
+    }, 100);
+
     app.$set(dataVue, "callbackEP", (salvar) => {
         
         if(JSON.stringify(dataVue.usuarioDados) != JSON.stringify(dataVue.usuarioDadosEdit)) {
@@ -376,7 +390,6 @@ $(document).ready(async () => {
     app.$set(dataVue, "iconePlano", "src/img/icons/perfil/planoPadrao.svg");
     app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
-        console.log(planoN)
         planoN = !planoN? 0 : planoN;
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let membro = "Membro Padrão";

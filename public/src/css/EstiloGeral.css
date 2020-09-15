@@ -900,7 +900,10 @@ textarea::-webkit-scrollbar-thumb:hover {
     background: transparent;
     position: absolute;
     margin-left: 10px;
+    position: fixed;
+    z-index: 1;
 }
+
 
 .btnCloseModal:focus {
     outline: none;
