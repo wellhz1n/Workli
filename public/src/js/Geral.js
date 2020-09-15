@@ -84,7 +84,18 @@ $(document).ready(async () => {
     //     //#endregion
 
 
+    
+    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
+        if($("#numeroFooterServices")[0] != undefined) {    
+            $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+        }
+    });
 
+    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
+        if($("#numeroFooterUsers")[0] != undefined) {    
+            $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+        }
+    });
 
     
 });
@@ -714,6 +725,8 @@ async function onSignIn(googleUser) {
             }
         })
     }
+
+
 }
 
 function signOut() {
@@ -844,3 +857,5 @@ function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
     );
 }
+
+

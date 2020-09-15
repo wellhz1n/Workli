@@ -113,7 +113,7 @@
                         <a href="?page=criarservico" class="botaoAtalho mb-2"><i class="fas fa-pencil-alt" aria-hidden="true"></i> Publicar um Projeto </a>
                         <a href="?page=meusprojetos" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Meus Projetos </a>
                     <?php } else if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
-                        <a  @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" style="color: white !important; cursor: pointer !important;" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Minhas Propostas </a>
+                        <a @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" style="color: white !important; cursor: pointer !important;" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Minhas Propostas </a>
                     <?php } ?>
                     <a href="?page=chat" class="botaoAtalho mb-2"><i class="far fa-comment-dots"></i> Chat</a>
                 </div>
