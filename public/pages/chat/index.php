@@ -55,7 +55,7 @@
             <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
                     <div  class="col-12 p-0 m-0 " id="HeaderCHAT">
                         <div class="col-12 categories_box  HeaderTamanho d-flex flex-column justify-content-center align-items-center ">
-                            <div class="headerChat" :style="[{'justify-content':  dataVue.ChatSelecionado == null?'unset !important':'space-between !important' }]">
+                            <div class="headerChat" :style="[{'justify-content': dataVue.UsuarioContexto.NIVEL_USUARIO != 0 || dataVue.ChatSelecionado == null?'unset !important':'space-between !important' }]">
                                 <span @click="dataVue.BackButton()" class="col-3" ><div v-if="dataVue.ConversaSelecionada != null" ><i class="fas fa-arrow-left"></i></div></span>
                                 <p  class="col-6 font_Poopins_SB" v-html="dataVue.HeaderTitulo"></p>
                                 <a v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && dataVue.ChatSelecionado != null " @click="RedirectComParan('meusprojetos',[{chave:'P',valor:dataVue.ChatSelecionado.id_servico}],true)" style="cursor: pointer;" class="col-3 btn btn-success text-white">Abrir Projeto</a>
