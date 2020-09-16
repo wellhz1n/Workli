@@ -150,6 +150,24 @@ class ProjetoBO extends BOGeneric
     {
         return $this->ProjetoDAO->CancelaProjeto($id);
     }
+    public function GetProjetoPorIDModal($id)
+    {
+        $saida =  $this->ProjetoDAO->GetProjetoByIdComView($id, $this->GetUsuarioContexto());
+        if ($saida != null) {
+
+            $saida["imagem_usuario"] = ConvertBlobToBase64($saida["imagem_usuario"]);
+            if ($saida["postado"] == 0)
+                $saida["postado"] = "Hoje";
+            else {
+                if ($saida["postado"] > 1 &&  $saida["postado"] != 0)
+                    $saida["postado"] = "Há " . $saida["postado"] . " dias";
+                else
+                    $saida["postado"]["postado"] = "Há 1 dia";
+            }
+            return $saida;
+        } else
+            throw new Exception("Projeto não encontrado");
+    }
     #endregion
 
 }
@@ -199,6 +217,13 @@ try {
             $ID = empty($_POST["ID"]) ? null : $_POST["ID"];
             if ($ID !== null)
                 echo json_encode($ProjetoBO->Cancela($ID));
+            else
+                throw new Exception("O Metodo " . $metodo . " Precisa de Uma Propriedade [ID]");
+        }
+        if ($metodo == "BuscaProjetoPorIdModal") {
+            $ID = empty($_POST["ID"]) ? null : $_POST["ID"];
+            if ($ID !== null)
+                echo json_encode($ProjetoBO->GetProjetoPorIDModal($ID));
             else
                 throw new Exception("O Metodo " . $metodo . " Precisa de Uma Propriedade [ID]");
         }

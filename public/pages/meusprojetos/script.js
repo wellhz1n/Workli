@@ -1,4 +1,8 @@
 $(document).ready(async () => {
+
+
+
+    //#region DATAVUE
     app.$set(dataVue, "carregando", false);
     app.$set(dataVue, "ListaCarregando", true);
     app.$set(dataVue, "Lista", []);
@@ -11,7 +15,54 @@ $(document).ready(async () => {
     });
     app.$set(dataVue, 'selecionadoController', null);
 
+    var Paramns = GetParam();
+    if (Paramns.length > 0) {
+        if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })) {
+            try {
 
+                BloquearTela();
+                let idProjeto = Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })[0].P;
+                var buscaProjeto = await WMExecutaAjax("ProjetoBO", "BuscaProjetoPorIdModal", { ID: idProjeto });
+                if (buscaProjeto.error == undefined) {
+
+                    let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: buscaProjeto.id });
+                    if (Dependencias.length > 0) {
+                        buscaProjeto.FotoPrincipal = Dependencias.filter(item => item.principal == 1);
+                        buscaProjeto.FotoPrincipal = buscaProjeto.FotoPrincipal.length > 0 ? buscaProjeto.FotoPrincipal[0].imagem : null;
+                        let lista = Dependencias.filter(item => item.principal != 1);
+                        buscaProjeto.Fotos = lista.map(x => { return x.imagem });
+                        buscaProjeto.Fotos = [buscaProjeto.FotoPrincipal, ...buscaProjeto.Fotos];
+                    }
+                    //Renomear Uns parametros e tals;
+                    buscaProjeto.titulo = buscaProjeto.nome;
+                    buscaProjeto.nome = buscaProjeto.nome_usuario
+                    buscaProjeto.valor = Valores[buscaProjeto.valor];
+                    buscaProjeto.profissional = NivelFuncionario[buscaProjeto.nivel_profissional];
+                    buscaProjeto.tamanho = NivelProjeto[buscaProjeto.nivel_projeto];
+                    buscaProjeto.imagem = buscaProjeto.imagem_usuario;
+                    buscaProjeto.publicado = buscaProjeto.postado;
+                    buscaProjeto.proposta = buscaProjeto.propostas;
+
+                    //Limpar para o Objeto ficar igual ao do click do botão
+                    buscaProjeto.nivel_profissional = undefined;
+                    buscaProjeto.nivel_projeto = undefined;
+                    buscaProjeto.imagem_usuario = undefined;
+                    buscaProjeto.postado = undefined;
+                    buscaProjeto.propostas = undefined;
+                    //Abre o Modal
+                    app.dataVue.selecionadoController = buscaProjeto;
+                    app.dataVue.modalVisivelController = true;
+                    await setTimeout(() => { $('[data-toggle="tooltip"]').tooltip(); });
+                }
+                else
+                    MostraMensagem(buscaProjeto.error, ToastType.ERROR, "Erro ao Abrir Projeto");
+            }
+            finally {
+
+                DesbloquearTela();
+            }
+        }
+    }
 
     //#region Seletores
 
@@ -105,6 +156,8 @@ $(document).ready(async () => {
     });
 
     //#endregion
+    //#endregion
+
     $('[data-toggle="tooltip"]').tooltip();
 
 })

@@ -222,5 +222,10 @@ class ProjetoDAO
         $sql = "update servico set situacao = 3 where id = ?";
         return Update($sql,[$idProjeto]);
     }
+    public function GetProjetoByIdComView($id,$idUsuario){
+        $sql = "SELECT * FROM PROJETOS_VIEW WHERE ID = ? AND id_usuario = ?";
+        $resultados = Sql($sql,[$id,$idUsuario]);
+        return count($resultados->resultados)  == 1?$resultados->resultados[0]:null;
+    }
     #endregion
 }
