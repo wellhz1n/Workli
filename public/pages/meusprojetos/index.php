@@ -81,11 +81,21 @@
                     <div class="cardQuadrado bodyDetalhes">
                         <div class="cardQuadradoHeader">
                             <div class="cardQuadradoTitulo BHDetalhes">
-                                <span data-toggle="tooltip" title="Novo" v-show="dataVue.selecionadoController.situacao == 0" class="fa fa-project-diagram mx-2"></span>
-                                <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" v-show="dataVue.selecionadoController.situacao  == 1" class="fa fa-clock mx-2"></span>
-                                <span data-toggle="tooltip" title="Em Andamento" v-show="dataVue.selecionadoController.situacao  == 2" class="fa fa-tasks mx-2"></span>
-                                <span data-toggle="tooltip" title="Cancelado" v-show="dataVue.selecionadoController.situacao  == 3" class="fa fa-times mx-2"></span>
-                                <span data-toggle="tooltip" title="Concluido" v-show="dataVue.selecionadoController.situacao  == 4" class="fa fa-check-double mx-2"></span>
+                                <div style="display: contents;" v-show="dataVue.selecionadoController.situacao == 0">
+                                    <span data-toggle="tooltip" title="Novo" class="fa fa-project-diagram mx-2"></span>
+                                </div>
+                                <div style="display: contents;" v-show="dataVue.selecionadoController.situacao == 1">
+                                    <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" class="fa fa-clock mx-2"></span>
+                                </div>
+                                <div style="display: contents;" v-show="dataVue.selecionadoController.situacao == 2">
+                                    <span data-toggle="tooltip" title="Em Andamento" class="fa fa-tasks mx-2"></span>
+                                </div>
+                                <div style="display: contents;" v-show="dataVue.selecionadoController.situacao == 3">
+                                    <span data-toggle="tooltip" title="Cancelado" class="fa fa-times mx-2"></span>
+                                </div>
+                                <div style="display: contents;" v-show="dataVue.selecionadoController.situacao == 4">
+                                    <span data-toggle="tooltip" title="Concluido" class="fa fa-check-double mx-2"></span>
+                                </div>
                                 Detalhes do Projeto
                             </div>
                             <div class="wrapperBH2">
@@ -125,7 +135,7 @@
                                     <a v-if="dataVue.selecionadoController.situacao  == 0 && dataVue.selecionadoController.proposta > 0 " @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-eye" aria-hidden="true"></i> Visualizar Propostas</a>
                                     <a v-if="dataVue.selecionadoController.situacao  == 4" href="" class="botaoAtalho mb-2"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
                                     <a v-if=" dataVue.selecionadoController.situacao  != 3 " @click="(event)=>{dataVue.BTClick(event,'CHAT')}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-comment-dots" aria-hidden="true"></i> Abrir Chat</a>
-                                    <a v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" href="" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
+                                    <a v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" @click="(event)=>{dataVue.BTClick(event,'CANCELA')}" style="color: white !important;cursor: pointer !important;" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
 
                                 </div>
                                 <div v-else-if="dataVue.selecionadoController.situacao  == 3 " style="width: 90%;display: flex;flex-direction: column;align-items: center;justify-content: center;margin-left: 8%;padding: 1px;margin-top: 30%;">

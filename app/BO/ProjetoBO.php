@@ -146,6 +146,10 @@ class ProjetoBO extends BOGeneric
         $obj->paginaAtual = $p;
         return $obj;
     }
+    public function Cancela($id)
+    {
+        return $this->ProjetoDAO->CancelaProjeto($id);
+    }
     #endregion
 
 }
@@ -190,6 +194,13 @@ try {
             $Q = empty($_POST["Q"]) ? null : $_POST["Q"];
             $P = empty($_POST["P"]) ? 1 : $_POST["P"];
             echo json_encode($ProjetoBO->BuscaMeusProjetos($Q, $P, $C, $S));
+        }
+        if ($metodo == "CANCELA") {
+            $ID = empty($_POST["ID"]) ? null : $_POST["ID"];
+            if ($ID !== null)
+                echo json_encode($ProjetoBO->Cancela($ID));
+            else
+                throw new Exception("O Metodo " . $metodo . " Precisa de Uma Propriedade [ID]");
         }
     }
 } catch (Throwable $ex) {

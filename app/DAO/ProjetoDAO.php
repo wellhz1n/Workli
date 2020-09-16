@@ -218,5 +218,9 @@ class ProjetoDAO
         }
         return [$resultados->resultados, $paginas];
     }
+    public function CancelaProjeto($idProjeto){
+        $sql = "update servico set situacao = 3 where id = ?";
+        return Update($sql,[$idProjeto]);
+    }
     #endregion
 }

@@ -133,4 +133,21 @@ function BTClick(evento, Botao) {
         if (app.dataVue.selecionadoController.situacao == 0)
             evento.view.RedirecionarComParametros('chat', [{ chave: 'P', valor: app.dataVue.selecionadoController.id }]);
     }
+    if (Botao == "CANCELA") {
+        BloquearTela();
+        WMExecutaAjax("ProjetoBO", "CANCELA", { ID: app.dataVue.selecionadoController.id }).then(resultado => {
+            if (resultado.error !== undefined)
+                throw resultado.error;
+            if (resultado == true) {
+                app.dataVue.selecionadoController.situacao = 3;
+                app.dataVue.Lista.filter(p => p.id == app.dataVue.selecionadoController.id)[0].situacao = 3;
+            }
+
+        }).catch(Err => {
+            console.warn("Erro ao Cancelar Projeto: \n" + Err);
+            MostraMensagem("Algo deu errado, tente novamente mais tarde.", ToastType.ERROR, "Cancelar Projeto");
+        }).then((saida) => {
+            DesbloquearTela();
+        });
+    }
 }
