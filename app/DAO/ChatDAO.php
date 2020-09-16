@@ -91,7 +91,7 @@ class ChatDAO
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from chat_mensagens  CM 
             inner join chat  CH on CH.id_chat = CM.id_chat
-            inner join servico SV on SV.id = CH.id_servico 
+            inner join servico SV on SV.id = CH.id_servico AND SV.situacao <> 3
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
             left join imagem_usuario IU on IU.id_usuario = U.id  
@@ -116,7 +116,7 @@ class ChatDAO
             inner join usuarios U on U.id =  SV.id_usuario
             left join imagem_usuario IU on IU.id_usuario = U.id
             left join chat CH on CH.id_servico = SV.id
-            where SV.id_usuario = ?
+            where SV.id_usuario = ?  AND SV.situacao <> 3
             order by postado
             ",[$id_usuario]);
         foreach ($sql->resultados as $key => $value) {

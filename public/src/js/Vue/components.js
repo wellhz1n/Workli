@@ -743,7 +743,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 });
             }
         },
-        Redirecionar(){
+        Redirecionar() {
             this.$emit("redireciona_usuario");
         }
     },
@@ -1517,7 +1517,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
             carregando: false,
             buscandoDados: false,
             concluiu: false,
-            imagem: [ "selecao.svg", "detalhes.svg", "orcamento.svg"]
+            imagem: ["selecao.svg", "detalhes.svg", "orcamento.svg"]
         }
     },
     async beforeMount() {
@@ -2010,10 +2010,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             this.mostrarmais = !this.mostrarmais;
 
         },
-        RedirecionarPerfil(){
-                 if(this.dataid_ususario != this.$root.dataVue.UsuarioContexto.id ){
-                    this.$root.RedirecionaPerfil(this.dataid_ususario);
-                 }
+        RedirecionarPerfil() {
+            if (this.dataid_ususario != this.$root.dataVue.UsuarioContexto.id) {
+                this.$root.RedirecionaPerfil(this.dataid_ususario);
+            }
         },
         abrirModal() {
             this.$emit("aberto-modal", {
@@ -2043,11 +2043,22 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
         <div style="display:flex;align-items:baseline;">
         <div v-if="this.dataSituacao !== null">
-          <span  data-toggle="tooltip" title="Novo" v-show="this.dataSituacao == 0" class="fa fa-project-diagram mx-2"></span>
-          <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar" v-show="this.dataSituacao == 1" class="fa fa-clock mx-2"></span>
-          <span data-toggle="tooltip" title="Em Andamento" v-show="this.dataSituacao == 2" class="fa fa-tasks mx-2"></span>
-          <span data-toggle="tooltip" title="Cancelado" v-show="this.dataSituacao == 3" class="fa fa-times mx-2"></span>
-          <span data-toggle="tooltip" title="Concluido"  v-show="this.dataSituacao == 4" class="fa fa-check-double mx-2"></span>
+        <div class="d-contents"   v-show="this.dataSituacao == 0">
+          <span  data-toggle="tooltip" title="Novo" class="fa fa-project-diagram mx-2"></span>
+        </div>
+        <div class="d-contents"   v-show="this.dataSituacao == 1">
+          <span data-toggle="tooltip" title="Aguardando Funcionário Iniciar"  class="fa fa-clock mx-2"></span>
+        </div>
+        <div class="d-contents"   v-show="this.dataSituacao == 2">
+          <span data-toggle="tooltip" title="Em Andamento" class="fa fa-tasks mx-2"></span>
+        </div>
+        <div class="d-contents"   v-show="this.dataSituacao == 3">
+          <span data-toggle="tooltip" title="Cancelado"  class="fa fa-times mx-2"></span>
+        </div>
+        <div class="d-contents"   v-show="this.dataSituacao == 4">
+          <span data-toggle="tooltip" title="Concluido"   class="fa fa-check-double mx-2"></span>
+        </div>
+
         </div>
         <div  v-if="mostra_botao"  class="p-2justify-content-center align-items-center">
             <button 
@@ -2532,7 +2543,7 @@ WMCHAT = Vue.component('wm-chat', {
                 this.$emit('novamensagem', mensagem);
             }
         },
-        RedirecionaPerfil(){
+        RedirecionaPerfil() {
             this.$root.RedirecionaPerfil(this.idusuariodestinatariodata)
         }
     },
@@ -3096,7 +3107,7 @@ var WM_PROPOSTA = Vue.component('wm-proposta', {
         Aprovar(vue) {
             this.$emit("aprovar", this.$data);
         },
-        RedirecionarPerfil(){
+        RedirecionarPerfil() {
             this.$emit("redireciona_usuario");
         }
     },
@@ -3318,7 +3329,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
                 this.$emit("muda_situacao", { idProposta: idProposta })
             }
         },
-        RedirecionarPerfil(){
+        RedirecionarPerfil() {
             this.$emit("redireciona_usuario");
         }
     }
