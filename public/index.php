@@ -61,6 +61,7 @@ header('Content-Type: text/html; charset=utf-8');
 
     <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script> <!-- css star rating -->
     <script src="https://unpkg.com/vue-advanced-cropper@0.16.7/dist/index.umd.js"></script> <!-- CROP IMAGE -->
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-vue@2.2.0/dist/autocomplete.min.js"></script>
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> <!-- Google Sans -->

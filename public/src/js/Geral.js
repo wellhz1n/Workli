@@ -73,29 +73,22 @@ $(document).ready(async () => {
 
 
 
-    //     //#region FOOTER
-    //     WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result=>{
-    //         $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
-    //     });
-    //   WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result=>{
-    //       $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-    //   });
+    //#region FOOTER
 
-    //     //#endregion
-
-
+    setTimeout(() => {
+        WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
+            if($("#numeroFooterServices")[0] != undefined) {    
+                $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
+            }
+        });
     
-    WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
-        if($("#numeroFooterServices")[0] != undefined) {    
-            $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
-        }
-    });
-
-    WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
-        if($("#numeroFooterUsers")[0] != undefined) {    
-            $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
-        }
-    });
+        WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
+            if($("#numeroFooterUsers")[0] != undefined) {    
+                $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
+            }
+        });
+    }, 50);
+    //#endregion
 
 
 });

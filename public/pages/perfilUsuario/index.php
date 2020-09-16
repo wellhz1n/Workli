@@ -196,17 +196,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-        
-
-
-
-
-
     </div>
 </div>
 
@@ -244,7 +233,7 @@
                     ></wm-input>
                     <div class="inputPerfil" id="tagsInput">
                         <label>Adicionar competências</label>
-                        <tags-input v-model="dataVue.usuarioDadosEdit.tags" label-style="success" delete-key="['46', '8']">
+                        <tags-input v-model="dataVue.usuarioDadosEdit.tags" label-style="success" delete-key="['46', '8']" placeholder="Competência">
                             <div class="tags-input"
                                 slot-scope="{tag, removeTag, inputEventHandlers, inputBindings }"
                             >
@@ -258,17 +247,14 @@
                                     >&times;
                                     </button>
                                 </span>
-
                                 <input
                                     class="tags-input-text"  
                                     placeholder="Adicionar Tag..."
                                     v-on="inputEventHandlers"
                                     v-bind="inputBindings"
                                 >
-                                
                             </div>
                         </tags-input>
-                        
                     </div>
                 <?php }; ?>
                 <wm-textarea
@@ -492,12 +478,6 @@
 </wm-modal>
 
 <!-- ---------------------------------------------------------------------------- -->
-
-
-
-
-
-
 
 
 
