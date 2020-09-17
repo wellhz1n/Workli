@@ -236,6 +236,26 @@
 .iconPCLick:hover{
   color: #e6d979 !important;
 }
+
+/* #region ModalConfirmar*/
+
+#filhoModal {
+  max-width: 700px !important;
+  max-height: 300px !important;
+}
+
+#footerModalConfirmacao {
+  padding: 10px 2% 10px 10% !important;
+  display: flex;
+  justify-content: flex-end !important;
+  width: 100%;
+}
+
+/* #endregion ModalConfirmar*/
+
+
+
+
 @media (max-width:800px) {
   .wrapperMensagemVazia{
       flex-direction: column;

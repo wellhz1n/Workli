@@ -1749,3 +1749,15 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin: 10px 0 15px 0;
 }
 /*#endregion Criar Projeto --------------------------------------------*/
+
+
+/* #region ModalConfirmar*/
+.botaoC{
+    margin-left: 12px;
+}
+.botaoS{
+    margin-left: 12px;
+}
+
+
+/* #endregion ModalConfirmar*/

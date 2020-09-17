@@ -12,7 +12,7 @@
                     <div v-if="dataVue.ListaDeProjetos == undefined">
                         <wm-loading></wm-loading>
                     </div>
-                    <div  v-else-if="dataVue.ListaDeProjetos.length > 0 ">
+                    <div v-else-if="dataVue.ListaDeProjetos.length > 0 ">
 
                         <div :class="['ItemProjetoChat',item == dataVue.ChatSelecionado?'selecionado': null]" @click="dataVue.ChatClick(item,$event)" v-for="item in dataVue.ListaDeProjetos">
                             <div class="ImageContainerChatItem">
@@ -49,40 +49,39 @@
         <div v-if="dataVue.Carregando" class="col">
             <wm-loading></wm-loading>
         </div>
-
-            <div v-else-if="!dataVue.Carregando" style="height: 89vh" class="col-12 m-0 p-0 " @click="dataVue.menuLateral = false" id="CHAT">
+        <div v-else-if="!dataVue.Carregando" style="height: 89vh" class="col-12 m-0 p-0 " @click="dataVue.menuLateral = false" id="CHAT">
             <div>
-            <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
-                    <div  class="col-12 p-0 m-0 " id="HeaderCHAT">
+                <div class="categories_box h-100  d-flex flex-column justify-content-center align-items-center ">
+                    <div class="col-12 p-0 m-0 " id="HeaderCHAT">
                         <div class="col-12 categories_box  HeaderTamanho d-flex flex-column justify-content-center align-items-center ">
                             <div class="headerChat" :style="[{'justify-content': dataVue.UsuarioContexto.NIVEL_USUARIO != 0 || dataVue.ChatSelecionado == null?'unset !important':'space-between !important' }]">
-                                <span @click="dataVue.BackButton()" class="col-3" ><div v-if="dataVue.ConversaSelecionada != null" ><i class="fas fa-arrow-left"></i></div></span>
-                                <p  class="col-6 font_Poopins_SB" v-html="dataVue.HeaderTitulo"></p>
+                                <span @click="dataVue.BackButton()" class="col-3">
+                                    <div v-if="dataVue.ConversaSelecionada != null"><i class="fas fa-arrow-left"></i></div>
+                                </span>
+                                <p class="col-6 font_Poopins_SB" v-html="dataVue.HeaderTitulo"></p>
                                 <a v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && dataVue.ChatSelecionado != null " @click="RedirectComParan('meusprojetos',[{chave:'P',valor:dataVue.ChatSelecionado.id_servico}],true)" style="cursor: pointer;" class="col-3 btn btn-success text-white">Abrir Projeto</a>
                             </div>
                         </div>
                     </div>
-            </div>   
-                    <div class="col-12 m-0 p-0">
+                </div>
+                <div class="col-12 m-0 p-0">
                     <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && !dataVue.MostraChat" class="ListaDeChats">
                         <div class="itemConversas" @click="dataVue.ConversaClick(i)" v-for="i in dataVue.ListaDeConversas">
                             <wm-user-img :img="i.imagem" class="imagemUsuario" style="margin-bottom: -10px;" class_icone="iconeImagemNull" class_imagem="imagemU1"></wm-user-img>
                             <p class="font_Poopins_SB">{{i.nome}}</p>
                         </div>
                     </div>
-                    <div  v-else class="col-12 m-0 p-0">
+                    <div v-else class="col-12 m-0 p-0">
                         <div style="height: 80vh !important" class="categories_box  d-flex flex-column justify-content-center align-items-center ">
-                            <div v-if="dataVue.MostraChat" class="col-12 mt-1 p-0" >
-                            <wm-chat heigth="60vh" :userpropostaimage=" dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.imagem:dataVue.ChatSelecionado.imagem_usuario"
-                            :mensagens="dataVue.Mensagens" 
-                            :idusuariodestinatario="JSON.parse(dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.id:dataVue.ChatSelecionado.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                            <div v-if="dataVue.MostraChat" class="col-12 mt-1 p-0">
+                                <wm-chat heigth="60vh" :userpropostaimage=" dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.imagem:dataVue.ChatSelecionado.imagem_usuario" :mensagens="dataVue.Mensagens" :idusuariodestinatario="JSON.parse(dataVue.UsuarioContexto.NIVEL_USUARIO == 0?dataVue.ConversaSelecionada.id:dataVue.ChatSelecionado.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
                             </div>
-                            </div>
+                        </div>
                     </div>
-                    </div>
-
                 </div>
+
             </div>
+        </div>
     </div>
 </div>
 

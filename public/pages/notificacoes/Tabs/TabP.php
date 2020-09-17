@@ -50,6 +50,21 @@
         </div>
     </div>
 
+    <wm-modal-botoes-generico
+    id="modalConfirmacao"
+    :visivel="dataVue.modalVisivelControllerConfirmacao" 
+    @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
+    text_botao_salvar="Aprovar"
+    >
+        <template v-slot:titulo>
+            Deseja Aprovar a Proposta?
+        </template>
+        <template v-slot:descricao>
+                <p>Após aprovar a proposta será deduzido da sua carteiro o valor de <strong>R$:{{[...dataVue.Propostas.listaN,...dataVue.Propostas.listaP].filter(x=> x.id == dataVue.idPropostaSelecionada)[0].valor}}</strong> </p>
+        </template>
+    </wm-modal-botoes-generico>
+
+
 </div>
 <!-- FIM Cliente -->
 
