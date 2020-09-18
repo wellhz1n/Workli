@@ -3604,7 +3604,87 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
             </div>
         </div>
     `
+});
+//#endregion card usuário
+
+//#region modalComBotoesGenerico
+var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
+    props: {
+        visivel: Boolean,
+        id: String,
+        text_botao_cancelar:{
+            type:String,
+            default:"Cancelar"
+        },
+        text_botao_salvar:{
+            type:String,
+            default:"Salvar"
+        },
+    },
+    data() {
+        return {
+            modalVisivel: false,
+            dataTextBtCancelar:"Cancelar",
+            dataTextBtSalvar:"Salvar"
+        }
+    },
+    watch: {
+        visivel: {
+            immediate: true,
+            deep: true,
+            handler(visivelE) {
+                this.modalVisivel = visivelE;
+            }
+        },
+        text_botao_cancelar:{
+            immediate: true,
+            deep: true,
+            handler(nvalue) {
+                this.dataTextBtCancelar = nvalue;
+            }
+        },
+        text_botao_salvar:{
+            immediate: true,
+            deep: true,
+            handler(nvalue) {
+                this.dataTextBtSalvar = nvalue;
+            }
+        }
+    },
+    methods: {
+        fecharModal(resposta) {
+            this.$emit("fechar-modal", resposta); //Emite para fechar o modal
+        }
+    },
+    template: `
+        <wm-modal 
+            id="modalConfirmacao"
+            :visivel="this.modalVisivel" 
+            :callback="() => {this.modalVisivel = false}" 
+            @fechar-modal-inside="(e) => {fecharModal(!e);}"
+            :x_visivel="false"
+        >
+            <template v-slot:header>
+                <div id="tituloModalConfirmacao">
+                <slot name="titulo">
+                </slot>
+                </div>
+            </template>
+            <template v-slot:body>
+                <div id="bodyModalConfirmacao">
+                  <slot name="descricao">
+                  </slot>
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div id="footerModalConfirmacao">
+                    <button type="button" class="btn btn-secondary botaoC" @click="() => {fecharModal(false);}">{{dataTextBtCancelar}}</button>
+                    <button type="button" class="btn btn-success botaoS"  @click="() => {fecharModal(true);}">{{dataTextBtSalvar}}</button>
+                </div>
+            </template>
+        </wm-modal>
+    `
 
 });
 
-//#endregion card de usuário
+//#endregion modalComBotoesGenerico

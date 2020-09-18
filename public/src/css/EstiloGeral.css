@@ -1933,3 +1933,14 @@ textarea::-webkit-scrollbar-thumb:hover {
 
 
 /*#endregion Card de Usuário*/
+
+/* #region ModalConfirmar*/
+.botaoC{
+    margin-left: 12px;
+}
+.botaoS{
+    margin-left: 12px;
+}
+
+
+/* #endregion ModalConfirmar*/
