@@ -3510,41 +3510,45 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
     watch: {
         dados_usuario: {
             immediate: true,
-            deep: true,
             handler(valorNovo) {
-                for(elemento in valorNovo) {
-                    valorNovo[elemento] = valorNovo[elemento] == null && valorNovo[elemento] == undefined ? "" : valorNovo[elemento];
+                this.dados_usuario_data = valorNovo;
+                for(elemento in this.dados_usuario_data) {
+                    this.dados_usuario_data[elemento] = this.dados_usuario_data[elemento] == null && this.dados_usuario_data[elemento] == undefined ? "" : this.dados_usuario_data[elemento];
                     if(elemento == "plano") {
-                        switch (valorNovo[elemento]) {
+                        switch (this.dados_usuario_data[elemento]) {
                             case "0":
-                                valorNovo[elemento] = "src/img/icons/perfil/planoPadrao.svg";
+                                this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPadrao.svg";
                                 break;
                             case "1": 
-                                valorNovo[elemento] = "src/img/icons/perfil/planoPlus.svg";
+                                this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPlus.svg";
                                 break;
                             case "2": 
-                                valorNovo[elemento] = "src/img/icons/perfil/planoPrime.svg";
+                                this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPrime.svg";
                                 break;
                             case "3": 
-                                valorNovo[elemento] = "src/img/icons/perfil/planoMaster.svg";
+                                this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoMaster.svg";
                                 break;
                             default:
                                 break;
                         }
                     }
                     if(elemento == "tags") {
-                        valorNovo[elemento] = valorNovo[elemento].split(",");
-                        if(valorNovo[elemento] != "") {
+                        this.dados_usuario_data[elemento] = this.dados_usuario_data[elemento].split(",");
+                        if(this.dados_usuario_data[elemento] != "") {
                             this.tags_aparecer = true;
                         }
                         let tagsParaColocar = "";
-                        valorNovo[elemento].map(tag => {
+                        this.dados_usuario_data[elemento].map(tag => {
                             if(tag == "") {
                             } else {
                                 tagsParaColocar += `<div class='tagCU'>${tag}</div>`;
                             }
                         });
-                        valorNovo[elemento] = tagsParaColocar;
+                        this.dados_usuario_data[elemento] = tagsParaColocar;
+                    }
+
+                    if(elemento == "avaliacao_media") {
+                        this.dados_usuario_data[elemento] = parseFloat(this.dados_usuario_data[elemento]);
                     }
                 }
             }
@@ -3552,7 +3556,8 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
     },
     data: () => {
         return {
-            tags_aparecer: false
+            tags_aparecer: false,
+            dados_usuario_data: {}
         }
     },
     methods: {
@@ -3562,22 +3567,22 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
             <div class="parteDadosUsuario">
                 <div class="parteSuperiorCU">
                     <div class="parteDadosPrincipais">
-                        <wm-user-img :img="this.dados_usuario.imagem" class="iconeCardUsuario" class_icone="iconeTamanhoU"></wm-user-img>
+                        <wm-user-img :img="this.dados_usuario_data.imagem" class="iconeCardUsuario" class_icone="iconeTamanhoU"></wm-user-img>
                         <div class="informacoesPrincipais">
                             <div class="nomeUWrapper">
-                                <div class="nomeUsuario">{{this.dados_usuario.nome}}</div>
-                                <div class="d-contents" v-if="this.dados_usuario.nivel_usuario == '1'">
-                                    <img class="iconeUsuarioCard" :src="this.dados_usuario.plano"></img>
+                                <div class="nomeUsuario">{{this.dados_usuario_data.nome}}</div>
+                                <div class="d-contents" v-if="this.dados_usuario_data.nivel_usuario == '1'">
+                                    <img class="iconeUsuarioCard" :src="this.dados_usuario_data.plano"></img>
                                 </div>
                             </div>
                             <div class="profAvaliacaoWrapper">
-                                <div class="d-contents" v-if="this.dados_usuario.profissao">
-                                    <div class="profissaoTexto">{{this.dados_usuario.profissao}}</div>
+                                <div class="d-contents" v-if="this.dados_usuario_data.profissao">
+                                    <div class="profissaoTexto">{{this.dados_usuario_data.profissao}}</div>
                                     <span class="profBolinha">•</span>
                                 </div>
-                                <div class="avaliacaoUsuario">
+                                <div class="avaliacaoUsuario" v-if="this.dados_usuario_data.nivel_usuario == '1'">
                                     <star-rating 
-                                        v-model="this.dados_usuario.avaliacao_media"
+                                        v-model="this.dados_usuario_data.avaliacao_media"
                                         :increment='0.5'
                                         :star-size='18'
                                         :fixed-points='1'
@@ -3595,9 +3600,9 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                     </div>
                 </div>
                 <div class="parteInferiorCU">
-                    <div class="descricaoUsuario" v-html="this.dados_usuario.descricao">
+                    <div class="descricaoUsuario" v-html="this.dados_usuario_data.descricao">
                     </div>
-                    <div class="tagsCUWrapper" v-if="this.tags_aparecer"  v-html="this.dados_usuario.tags">
+                    <div class="tagsCUWrapper" v-if="this.tags_aparecer"  v-html="this.dados_usuario_data.tags">
                         
                     </div>
                 </div>

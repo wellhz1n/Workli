@@ -124,6 +124,7 @@ $(document).ready(async () => {
     app.$watch("dataVue.meusprojetos", async function (a, o) {
         await BuscaMeusProjetos();
     }, { deep: true });
+    
     app.$watch("dataVue.PageController.pagina_Atual", async function (a, o) {
         if (a != o)
             await BuscaMeusProjetos();

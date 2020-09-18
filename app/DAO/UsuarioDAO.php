@@ -23,22 +23,30 @@ class UsuarioDAO
     }
     public function CadastraUsuario($usuario)
     {
-        $resultado = Insert(
-            "insert into usuarios(nome, email, cpf, senha, nivel_usuario)
-                          values(?,?,?,?,?)",
-            [
-                $usuario['nome'], $usuario['email'], $usuario['cpf'], $usuario['senha'],
-                $usuario['nivel']
-            ]
-        );
-        if ($usuario["nivel"] == "1") {
-            $id = Sql("select id from usuarios where cpf = ?", [$usuario['cpf']]);
-            if (count($id->resultados) > 0) {
-                $id = $id->resultados[0]['id'];
-                $resultado = Insert(
-                    "insert into funcionario (id_usuario) values(?)",
-                    [$id]
-                );
+        $cpfExistente = Sql("SELECT cpf FROM usuarios WHERE cpf = ?" , [$usuario['cpf']]);
+        $emailExistente = Sql("SELECT email FROM usuarios WHERE email = ?", [$usuario['email']]);
+        if($cpfExistente->resultados) {
+            $resultado = "Este cpf já está cadastrado.";
+        } else if($emailExistente->resultados) {
+            $resultado = "Este email já está cadastrado.";
+        } else {
+            $resultado = Insert(
+                "INSERT INTO usuarios (nome, email, cpf, senha, nivel_usuario)
+                VALUES (?,?,?,?,?)",
+                [
+                    $usuario['nome'], $usuario['email'], $usuario['cpf'], $usuario['senha'],
+                    $usuario['nivel']
+                ]
+            );
+            if ($usuario["nivel"] == "1") {
+                $id = Sql("SELECT id FROM usuarios WHERE cpf = ?", [$usuario['cpf']]);
+                if (count($id->resultados) > 0) {
+                    $id = $id->resultados[0]['id'];
+                    $resultado = Insert(
+                        "INSERT INTO funcionario (id_usuario, avaliacao_media) VALUES(?, ?)",
+                        [$id, $usuario['avaliacaoMedia']]
+                    );
+                }
             }
         }
         return $resultado;
@@ -226,6 +234,8 @@ class UsuarioDAO
 
     public function BuscaUsuarios($q = "", $pg = 1)
     {
+        $exc = "where id != " . BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
+    
         $like = $q != "" ? "AND nome LIKE '%$q%'" : null;
         $paginas = Sql("
             SELECT CEIL(COUNT(id)/10) AS paginas FROM Usuarios_view
@@ -250,7 +260,7 @@ class UsuarioDAO
                imagem,
                count(id) as usuariosC
                from (
-              		SELECT * FROM Usuarios_view limit 10 offset {$pg}
+              		SELECT * FROM Usuarios_view {$exc} limit 10 offset {$pg}
                ) as us
               group by 2
               order by id;

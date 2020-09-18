@@ -62,16 +62,16 @@
                 <input id="inputBuscaUsuario" type="text" placeholder="Procurar por usuários"/>
             </div>
             <div class="paginacaoUsuarios">
-                <wm-paginacao :totaldepaginas="3" :paginaatual="1" />
+                <wm-paginacao :totaldepaginas="dataVue.usuarios.pagina" :paginaatual="1" @changepagina="(e) => {dataVue.trocarPagina(e);}" />
             </div>
         </div>
         <div id="usuariosListaWrapper">
             <wm-loading v-if="dataVue.Carregando" style="margin-top: 15%;"></wm-loading>
             <div v-else class="d-contents"> 
-                <div v-if="dataVue.usuarios.lista.length < 1">
+                <div v-if="dataVue.usuarios != undefined && dataVue.usuarios.lista.length < 1">
                     <wm-error mensagem="Nenhum usuário encontrado." /> 
                 </div> 
-                <div v-else> 
+                <div v-else-if="dataVue.usuarios != undefined"> 
                     <wm-card-usuario :dados_usuario="item" v-for="item in dataVue.usuarios.lista"> </wm-card-usuario>
                 </div>
                 
