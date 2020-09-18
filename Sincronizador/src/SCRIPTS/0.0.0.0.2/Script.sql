@@ -132,3 +132,23 @@ alter view Projetos_view as
     left join imagem_usuario as IU on IU.id_usuario = U.id
   GROUP BY 1
   order by S.data_cadastro desc;
+
+
+
+  -- MATEUS.ARRUDA em 17/09/2020 #29;
+  CREATE VIEW Usuarios_view AS 
+  SELECT
+    us.id,
+    us.nome,
+    us.descricao,
+    us.nivel_usuario,
+    func.avaliacao_media,
+    func.plano,
+    func.profissao,
+    func.tags,
+    img_us.imagem
+  FROM
+    usuarios AS us
+    LEFT JOIN funcionario AS func ON func.id_usuario = us.id 
+    LEFT JOIN imagem_usuario AS img_us ON img_us.id_usuario = us.id
+  WHERE us.nivel_usuario <> 2;

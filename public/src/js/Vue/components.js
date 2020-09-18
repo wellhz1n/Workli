@@ -765,7 +765,6 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                         font-size: 15em;"
                     :class="[
                         margem_imagem,
-                        class_icone,
                         'fas fa-user-circle',
                         class_icone ? class_icone : '',
                         'iconeUsuario'
@@ -2060,7 +2059,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
         </div>
 
         </div>
-        <div  v-if="mostra_botao"  class="p-2justify-content-center align-items-center">
+        <div  v-if="mostra_botao"  class="p-2 justify-content-center align-items-center">
             <button 
                 class="btn btn-secondary m-0 font_Poopins_SB"
                 @click="abrirModal"
@@ -3495,7 +3494,118 @@ var WMCARDPLANO = Vue.component('wm-card-plano', {
 
 });
 
-//#endregion modal de confirmação
+//#endregion modal card do planos 
+
+
+
+
+
+
+//#region card de usuário
+var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
+    props: {
+        dados_usuario: {}
+    },
+
+    watch: {
+        dados_usuario: {
+            immediate: true,
+            deep: true,
+            handler(valorNovo) {
+                for(elemento in valorNovo) {
+                    valorNovo[elemento] = valorNovo[elemento] == null && valorNovo[elemento] == undefined ? "" : valorNovo[elemento];
+                    if(elemento == "plano") {
+                        switch (valorNovo[elemento]) {
+                            case "0":
+                                valorNovo[elemento] = "src/img/icons/perfil/planoPadrao.svg";
+                                break;
+                            case "1": 
+                                valorNovo[elemento] = "src/img/icons/perfil/planoPlus.svg";
+                                break;
+                            case "2": 
+                                valorNovo[elemento] = "src/img/icons/perfil/planoPrime.svg";
+                                break;
+                            case "3": 
+                                valorNovo[elemento] = "src/img/icons/perfil/planoMaster.svg";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if(elemento == "tags") {
+                        valorNovo[elemento] = valorNovo[elemento].split(",");
+                        if(valorNovo[elemento] != "") {
+                            this.tags_aparecer = true;
+                        }
+                        let tagsParaColocar = "";
+                        valorNovo[elemento].map(tag => {
+                            if(tag == "") {
+                            } else {
+                                tagsParaColocar += `<div class='tagCU'>${tag}</div>`;
+                            }
+                        });
+                        valorNovo[elemento] = tagsParaColocar;
+                    }
+                }
+            }
+        },
+    },
+    data: () => {
+        return {
+            tags_aparecer: false
+        }
+    },
+    methods: {
+    },
+    template: `
+        <div class="cardQuadrado cardUsuario row">
+            <div class="parteDadosUsuario">
+                <div class="parteSuperiorCU">
+                    <div class="parteDadosPrincipais">
+                        <wm-user-img :img="this.dados_usuario.imagem" class="iconeCardUsuario" class_icone="iconeTamanhoU"></wm-user-img>
+                        <div class="informacoesPrincipais">
+                            <div class="nomeUWrapper">
+                                <div class="nomeUsuario">{{this.dados_usuario.nome}}</div>
+                                <div class="d-contents" v-if="this.dados_usuario.nivel_usuario == '1'">
+                                    <img class="iconeUsuarioCard" :src="this.dados_usuario.plano"></img>
+                                </div>
+                            </div>
+                            <div class="profAvaliacaoWrapper">
+                                <div class="d-contents" v-if="this.dados_usuario.profissao">
+                                    <div class="profissaoTexto">{{this.dados_usuario.profissao}}</div>
+                                    <span class="profBolinha">•</span>
+                                </div>
+                                <div class="avaliacaoUsuario">
+                                    <star-rating 
+                                        v-model="this.dados_usuario.avaliacao_media"
+                                        :increment='0.5'
+                                        :star-size='18'
+                                        :fixed-points='1'
+                                        text-class='textoEstrelasUsuario'
+                                        :round-start-rating='true'
+                                        :padding='5'
+                                        :read-only='true'
+                                    ></star-rating>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="botaoCUWrapper">
+                        <button class="btn btn-success">Contratar funcionário</button>
+                    </div>
+                </div>
+                <div class="parteInferiorCU">
+                    <div class="descricaoUsuario" v-html="this.dados_usuario.descricao">
+                    </div>
+                    <div class="tagsCUWrapper" v-if="this.tags_aparecer"  v-html="this.dados_usuario.tags">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+});
+//#endregion card usuário
 
 //#region modalComBotoesGenerico
 var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
@@ -3577,4 +3687,4 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
 
 });
 
-//#endregion modal de confirmação
+//#endregion modalComBotoesGenerico

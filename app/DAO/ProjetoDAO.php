@@ -107,13 +107,12 @@ class ProjetoDAO
 
         $sqlcategoria = count($categoria) > 0 ? " and s.id_tipo_servico in(" . join(",", $categoria) . ")" : null;
         $like = $q != "" ? "  and s.nome like'%$q%'" : null;
-        $likep = $q != "" ? " and s.nome like'%$q%'" : null;
         $paginas = Sql("
-        select  ceil(count(s.id)/6) as paginas from servico s
-        inner join tipo_servico  ts on ts.id = s.id_tipo_servico  and ts.ATIVO = 0
-        where s.situacao = 0
-        {$sqlcategoria}
-        {$likep}
+            select  ceil(count(s.id)/6) as paginas from servico s
+            inner join tipo_servico  ts on ts.id = s.id_tipo_servico  and ts.ATIVO = 0
+            where s.situacao = 0
+            {$sqlcategoria}
+            {$like}
         ");
         if (count($paginas->resultados) > 0) {
             if (json_decode($paginas->resultados[0]['paginas']) == 1)

@@ -104,6 +104,7 @@ $(document).ready(() => {
 
 
     $("#BTN_Register").on('click', () => {
+        debugger
         let form = SerialiazaGrupoForm($("#formRegistrar")); /* Manda os dados para logar */
         form[0].map(x => {
             _User[x.name] = x.value

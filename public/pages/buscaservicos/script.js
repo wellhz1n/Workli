@@ -28,6 +28,7 @@ $(document).ready(async () => {
     app.$watch("dataVue.FiltroProjeto", async function (a, o) {
         //Guambiarra que da Orgulho pro pai
         var aObj = { C, P, Q } = JSON.parse(JSON.stringify(a));
+        
         if (o != undefined && (aObj.C.join() != UltimoFiltro.C.join() || aObj.P != UltimoFiltro.P || aObj.Q != UltimoFiltro.Q)) {
             if (UltimoFiltro.Q == "" && aObj.Q.length >= 1) {
                 dataVue.FiltroProjeto.P = 1;
@@ -84,7 +85,6 @@ $(document).ready(async () => {
         dataVue.Carregando = true;
         let result = await WMExecutaAjax("ProjetoBO", "BuscarProjetos", { C, Q, P });
         dataVue.Carregando = false;
-
         return {
             lista: result.lista,
             pagina: result.pagina == 0 ? 1 : result.pagina,

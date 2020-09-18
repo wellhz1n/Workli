@@ -105,6 +105,12 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->GetPlanoById($id);
     }
 
+    if ($metodo == "BuscarUsuarios") {
+        $Q = empty($_POST["Q"]) ? "" : $_POST["Q"];
+        $P = empty($_POST["P"]) ? 1 : $_POST["P"];
+        $userBO->BuscarUsuarios($Q, $P);
+    }
+
 }
 class UsuarioBO
 {
@@ -432,5 +438,20 @@ class UsuarioBO
             
         }
     }
+
+
+    public function BuscarUsuarios( $Q = "", $P = 1 )
+    {
+        $dados = $this->usuarioDAO->BuscaUsuarios($Q, $P);
+        $dt = $dados[0];
+        foreach ($dt as $key => $value) {
+            $dt[$key]["imagem"] = ConvertBlobToBase64($value["imagem"]);
+        }
+        $obj = new stdClass();
+        $obj->lista = $dt;
+        $obj->paginas = $dados[1];
+        echo json_encode($obj);
+    }
+
 
 }
