@@ -54,8 +54,7 @@
     id="modalConfirmacao"
     :visivel="dataVue.modalVisivelControllerConfirmacao" 
     @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
-    text_botao_salvar="Aprovar"
-    >
+    text_botao_salvar="Aprovar">
         <template v-slot:titulo>
             Deseja Aprovar a Proposta?
         </template>
