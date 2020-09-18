@@ -222,5 +222,44 @@ class UsuarioDAO
         }
         
     }
+
+
+    public function BuscaUsuarios($q = "", $pg = 1)
+    {
+        $like = $q != "" ? "AND nome LIKE '%$q%'" : null;
+        $paginas = Sql("
+            SELECT CEIL(COUNT(id)/10) AS paginas FROM Usuarios_view
+            {$like}
+        ");
+        if (count($paginas->resultados) > 0) {
+            if (json_decode($paginas->resultados[0]['paginas']) == 1)
+                $pg = 1;
+        }
+        
+        $pg = (json_decode($pg) - 1) * 10;
+        $retorno = Sql("
+        select
+               id,
+               nome,
+               descricao,
+               nivel_usuario,
+               avaliacao_media,
+               plano,
+               profissao,
+               tags,
+               imagem,
+               count(id) as usuariosC
+               from (
+              		SELECT * FROM Usuarios_view limit 10 offset {$pg}
+               ) as us
+              group by 2
+              order by id;
+        ");
+        foreach ($retorno->resultados as $key => $value) {
+            $retorno->resultados[$key]["descricao"] = nl2br($retorno->resultados[$key]["descricao"]);
+        }
+        return [$retorno->resultados, $paginas->resultados[0]["paginas"]];
+    }
+
 }
 // $USR->example();
