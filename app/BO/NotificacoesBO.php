@@ -2,9 +2,9 @@
 
 @require_once("../Classes/Notificacao.php");
 @require_once("../Enums/SecoesEnum.php");
-@require_once("../DAO/NotificacoesDAO.php");
 @require_once("../functions/Conexao.php");
 @require_once("../functions/Session.php");
+@require_once("../DAO/NotificacoesDAO.php");
 
 try {
 

@@ -85,10 +85,10 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "SetDadoUsuario") {
         $dados = $_POST["dados"];
 
-        if(!isset($dados["sessao"])) {
+        if (!isset($dados["sessao"])) {
             $dados["sessao"] = false;
         }
-        if(!isset($dados["tabela"])) {
+        if (!isset($dados["tabela"])) {
             $dados["tabela"] = "usuarios";
         }
 
@@ -133,7 +133,7 @@ class UsuarioBO
         echo json_encode($saida[0]);
     }
 
-    public function GetFuncionarioByIdDataEdit($id) 
+    public function GetFuncionarioByIdDataEdit($id)
     {
         $saida = $this->usuarioDAO->GetFuncionarioDataEdit($id)->resultados;
         echo json_encode($saida[0]);
@@ -142,43 +142,43 @@ class UsuarioBO
     public function GetBannerById($id)
     {
         $saida = $this->usuarioDAO->GetImagemBannerbyId($id)->resultados;
-        if(isset($saida[0])) {
+        if (isset($saida[0])) {
             $saida[0]["imagem_banner"] = ConvertBlobToBase64($saida[0]["imagem_banner"]);
             echo json_encode($saida[0]);
         } else {
             echo 1;
-        }        
+        }
     }
 
     public function GetImagemUserById($id)
     {
         $saida = $this->usuarioDAO->GetImagemUserById($id)->resultados;
-        if(isset($saida[0])) {
+        if (isset($saida[0])) {
             $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
             echo json_encode($saida[0]["imagem"]);
         } else {
             echo 1;
-        }        
+        }
     }
 
     public function GetNivelUsuarioById($id)
     {
         $saida = $this->usuarioDAO->GetNivelUsuarioById($id)->resultados;
-        if(isset($saida[0])) {
+        if (isset($saida[0])) {
             echo json_encode($saida[0]["nivel_usuario"]);
         } else {
             echo 1;
-        }        
+        }
     }
 
     public function GetPlanoById($id)
     {
         $saida = $this->usuarioDAO->GetPlanoById($id)->resultados;
-        if(isset($saida[0])) {
+        if (isset($saida[0])) {
             echo json_encode($saida[0]["plano"]);
         } else {
             echo 1;
-        }        
+        }
     }
 
     public function VerificaSeEmailExiste($email)
@@ -330,7 +330,7 @@ class UsuarioBO
 
             $usuarioDados["nome"] = trim($usuarioDados["nome"]); //Tira os espaços do começo e fim
 
-            if($usuarioDados["nome"] == "" || $usuarioDados["nome"] == null) {
+            if ($usuarioDados["nome"] == "" || $usuarioDados["nome"] == null) {
                 // throw new Exception("O campo de \"Nome\" é obrigatório.");
                 // Verifica form já faz isso
             }
@@ -360,9 +360,8 @@ class UsuarioBO
 
             CriaSecao(SecoesEnum::NOME, $usuarioDados["nome"]);
             CriaSecao(SecoesEnum::PROFISSAO, $usuarioDados["profissao"]);
-            
-            echo $Insert;
 
+            echo $Insert;
         } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
@@ -421,12 +420,13 @@ class UsuarioBO
         echo json_encode($this->usuarioDAO->BuscaNumeroUsuarios());
     }
 
-    public function SetDadoUsuario($id, $coluna, $dado, $sessao, $tabela) {
+    public function SetDadoUsuario($id, $coluna, $dado, $sessao, $tabela)
+    {
         try {
             $this->usuarioDAO->SetDadoUsuario($id, $coluna, $dado, $tabela);
-            
+
             $arraySecEnum = EnumParaArray("SecoesEnum");
-            if($sessao) {
+            if ($sessao) {
                 CriaSecao($arraySecEnum[$sessao], $dado);
             }
             // echo BuscaSecaoValor(SecoesEnum::PLANO);
@@ -435,12 +435,11 @@ class UsuarioBO
             $msg = new stdClass();
             $msg->error = $th->getMessage();
             echo json_encode($msg->error);
-            
         }
     }
 
 
-    public function BuscarUsuarios( $Q = "", $P = 1 )
+    public function BuscarUsuarios($Q = "", $P = 1)
     {
         $dados = $this->usuarioDAO->BuscaUsuarios($Q, $P);
         $dt = $dados[0];
@@ -452,6 +451,5 @@ class UsuarioBO
         $obj->paginas = $dados[1];
         echo json_encode($obj);
     }
-
-
+ 
 }

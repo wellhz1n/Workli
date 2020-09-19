@@ -261,5 +261,8 @@ class UsuarioDAO
         return [$retorno->resultados, $paginas->resultados[0]["paginas"]];
     }
 
+
+
+
 }
 // $USR->example();
