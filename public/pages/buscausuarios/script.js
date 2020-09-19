@@ -20,24 +20,18 @@ $(document).ready(async () => {
     }, 1)
     app.$set(dataVue, "Carregando", true);
 
-    async function getUsuarios( Q = "", P = 1 ) {
-        dataVue.Carregando = true;
-        let result = await WMExecutaAjax("UsuarioBO", "BuscarUsuarios", { Q, P });
-        dataVue.Carregando = false;
-        return {
-            lista: result.lista,
-            pagina: result.paginas == 0 ? 1 : result.paginas
-        }
-
-    };
-
     app.$set(dataVue, "usuarios", {lista: {}, pagina: 1});
-
+    app.$set(dataVue, "paginaAtual", 1)
     dataVue.usuarios = await getUsuarios(
             "",
-            1
+            dataVue.paginaAtual
     );
-    debugger
+    
+    app.$watch("dataVue.paginaAtual", async function (a, o) {
+        if (a != o)
+            dataVue.usuarios = await getUsuarios("" , a);
+    });
+    
     // if(document.getElementsByClassName("tagsCUWrapper")) {
     //     function scrollHorizontally(e) {
     //         e = window.event || e;
@@ -55,4 +49,21 @@ $(document).ready(async () => {
     //         document.getElementsByClassName("tagsCUWrapper").attachEvent("onmousewheel", scrollHorizontally);
     //     }
     // }
+
+
+    async function getUsuarios( Q = "", P = 1 ) {
+        dataVue.Carregando = true;
+        let result = await WMExecutaAjax("UsuarioBO", "BuscarUsuarios", { Q, P });
+        dataVue.Carregando = false;
+        return {
+            lista: result.lista,
+            pagina: result.paginas == 0 ? 1 : result.paginas
+        }
+
+    };
+
+    app.$set(dataVue, "trocarPagina", async (pagina) => { 
+            dataVue.paginaAtual = pagina;
+        }
+    )
 });

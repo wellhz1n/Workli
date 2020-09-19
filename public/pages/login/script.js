@@ -103,24 +103,7 @@ $(document).ready(() => {
     });
 
 
-    $("#BTN_Register").on('click', () => {
-        debugger
-        let form = SerialiazaGrupoForm($("#formRegistrar")); /* Manda os dados para logar */
-        form[0].map(x => {
-            _User[x.name] = x.value
-        });
-        $.ajax({
-            url: '../app/BO/UsuarioBO.php',
-            data: { metodo: 'CadastraUsuario', Usuario: JSON.stringify(_User) },
-            type: 'post',
-        }).then((output) => {
-            if (output == true) {
-                Logar(_User.email, _User.senha);
-            } else
-                toastr.warning(output, 'Ops');
-            console.log(output)
-        })
-    });
+    
 
     /* Faz a animação do registro de ir pro lado*/
 
@@ -148,6 +131,27 @@ $(document).ready(() => {
     /* Atualiza o visual da class OU */
     $(".textoOu").css("padding", "0 24px 0 24px")
 
+});
+
+$(document).ready(async () => {
+    $("#BTN_Register").on('click', async () => {
+        let form = SerialiazaGrupoForm($("#formRegistrar")); /* Manda os dados para logar */
+        // debugger
+        _User = {};
+        form[0].map(x => {
+            _User[x.name] = x.value
+        });
+        _User = JSON.stringify(_User);
+        let resultado = await WMExecutaAjax("UsuarioBO", "CadastraUsuario", { Usuario: _User });
+        if(resultado != 1 && resultado) {
+            toastr.warning(resultado, 'Ops');
+        } else if(resultado == 1) {
+            _User = JSON.parse(_User);
+            toastr.success("O seu cadastro foi realizado com sucesso.", "Cadastro Concluído!");
+            await Logar(_User["email"], _User["senha"]);
+            
+        }
+    });
 });
 
 function alternaLadoImagem() {

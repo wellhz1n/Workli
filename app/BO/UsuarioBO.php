@@ -21,7 +21,7 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->DeleteUsuario($id);
     }
     if ($metodo == "CadastraUsuario") {
-        $_usr = $_POST['Usuario'];
+        $_usr = json_decode($_POST['Usuario'], true);
         $userBO->CadastraUsuario($_usr);
     }
     if ($metodo == "RegistraUsuarioGoogle") {
@@ -236,7 +236,7 @@ class UsuarioBO
     public function CadastraUsuario($usuario)
     {
         try {
-            $usuario = json_decode($usuario, true);
+            // $usuario = json_decode($usuario, true);
             foreach ($usuario as $key => $valor) {
                 if ($valor == "" && $key != "id") {
                     throw new Exception("Preencha o campo " . ucwords($key)); //ucwords capitaliza as palavras
@@ -264,6 +264,7 @@ class UsuarioBO
             $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
 
             echo $Insert;
+            // echo $usuario['nome'] . " ; " . $usuario['email'] . " ; " . $usuario['cpf'] . " ; " . $usuario['senha'] . " ; " . $usuario['nivel'];
         } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
