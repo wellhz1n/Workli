@@ -10,6 +10,7 @@ require_once("../functions/ImageUtils.php");
 require_once("../BO/NotificacoesBO.php");
 require_once("../Classes/BOGeneric.php");
 require_once("../DAO/ProjetoDAO.php");
+require_once("../BO/CarteiraBO.php");
 
 
 #endregion
@@ -18,7 +19,7 @@ require_once("../DAO/ProjetoDAO.php");
 class PropostaBO extends BOGeneric
 {
     private $PropostaDAO;
-    private $Proposta;
+    private Proposta $Proposta;
 
     function __construct()
     {
@@ -85,9 +86,14 @@ class PropostaBO extends BOGeneric
         foreach ($idsParaRecusar as $key => $value) {
             $this->RecusarProposta($value["id"]);
         }
+        @$this->Proposta = GetByIdGeneric('proposta', Proposta::class, $idProposta);
+        $CarteiraBo = new CarteiraBO();
+        $Valor = $CarteiraBo->DeduzirCarteira($this->Proposta->Valor);
+        if (explode("|", $Valor)[0] == "ERROR") {
+            return $Valor;
+        }
         $Prop = $this->PropostaDAO->AprovarProposta($idProposta);
         if ($Prop) {
-            $this->Proposta = GetByIdGeneric('proposta', Proposta::class, $idProposta);
             $_ProjetoDAO =  new ProjetoDAO();
             $Titulo = $_ProjetoDAO->GetTituloProjetoPorId($this->Proposta->IdServico);
             $_NotificacaoBO = new NotificacoesBO();
@@ -107,6 +113,7 @@ class PropostaBO extends BOGeneric
     function MudaSituacaoPropostaFuncionario($idproposta, $situacao, $titulo, $idcliente, $idservico)
     {
         $sucesso = true;
+        @$this->Proposta = GetByIdGeneric('proposta', Proposta::class, $idproposta);
         switch ($situacao) {
             case 1:
             case "1":
@@ -126,6 +133,9 @@ class PropostaBO extends BOGeneric
                 break;
             case 2:
             case "2":
+                //TODO CALCULAR AS TAXAS
+                $CarteiraBo = new CarteiraBO();
+                $Valor = $CarteiraBo->DepositarCarteira($this->Proposta->Valor);
                 $sucesso = $this->PropostaDAO->SetSituacaoPropostaPorId($idproposta, 4);
                 $_NotificacaoBO = new NotificacoesBO();
                 $_NotificacaoBO->NovaNotificacao(

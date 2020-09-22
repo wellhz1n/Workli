@@ -15,6 +15,7 @@ function Login($email, $senha)
                         u.senha,
                         u.cpf,
                         u.nivel_usuario,
+                        u.valor_carteira,
                         im.imagem,
                         func.plano,
                         func.id as id_func
@@ -31,6 +32,7 @@ function Login($email, $senha)
             CriaSecao(SecoesEnum::NIVEL_USUARIO, $saida->resultados[0]['nivel_usuario']);
             CriaSecao(SecoesEnum::EMAIL, $saida->resultados[0]['email']);
             CriaSecao(SecoesEnum::CPF, $saida->resultados[0]['cpf']);
+            CriaSecao(SecoesEnum::VALOR_CARTEIRA,$saida->resultados[0]["valor_carteira"]);
             CriaSecao(SecoesEnum::IDUSUARIOCONTEXTO, $saida->resultados[0]['id']);
             CriaSecao(SecoesEnum::FOTO_USUARIO, ConvertBlobToBase64($saida->resultados[0]['imagem']));
             CriaSecao(SecoesEnum::IDFUNCIONARIOCONTEXTO, $saida->resultados[0]['id_func']);
