@@ -11,6 +11,7 @@ require_once("../BO/NotificacoesBO.php");
 require_once("../Classes/BOGeneric.php");
 require_once("../DAO/ProjetoDAO.php");
 require_once("../BO/CarteiraBO.php");
+require_once("../Enums/PlanosEnum.php");
 
 
 #endregion
@@ -134,8 +135,27 @@ class PropostaBO extends BOGeneric
             case 2:
             case "2":
                 //TODO CALCULAR AS TAXAS
+                $v = json_decode($this->Proposta->Valor);
+
+                $Plano = json_decode(BuscaSecaoValor(SecoesEnum::PLANO));
+
+                switch ($Plano) {
+                    case PlanosEnum::PADRAO:
+                        $v  = $v - (($v * PorcentagemPlanosEnum::PADRAO) / 100);
+                        break;
+                    case PlanosEnum::PLUS:
+                        $v  = $v - (($v * PorcentagemPlanosEnum::PLUS) / 100);
+                        break;
+                    case PlanosEnum::PRIME:
+                        $v  = $v - (($v * PorcentagemPlanosEnum::PRIME) / 100);
+                        break;
+                    case PlanosEnum::MASTER:
+                        $v  = $v - (($v * PorcentagemPlanosEnum::MASTER) / 100);
+                        break;
+                }
+
                 $CarteiraBo = new CarteiraBO();
-                $Valor = $CarteiraBo->DepositarCarteira($this->Proposta->Valor);
+                $Valor = $CarteiraBo->DepositarCarteira($v);
                 $sucesso = $this->PropostaDAO->SetSituacaoPropostaPorId($idproposta, 4);
                 $_NotificacaoBO = new NotificacoesBO();
                 $_NotificacaoBO->NovaNotificacao(
@@ -156,8 +176,23 @@ class PropostaBO extends BOGeneric
     {
         $pagina = json_decode($pagina);
         $resultado =  $this->PropostaDAO->BuscaPropostaFuncionarioTab($this->GetIdFuncionarioCOntexto(), $filtros, $pagina);
+        $Plano = json_decode(BuscaSecaoValor(SecoesEnum::PLANO));
         foreach ($resultado[1] as $key => $value) {
             $resultado[1][$key]["IMAGEM"] = ConvertBlobToBase64($value["IMAGEM"]);
+            switch ($Plano) {
+                case PlanosEnum::PADRAO:
+                    $resultado[1][$key]["VALOR"]  = $resultado[1][$key]["VALOR"]  - ($resultado[1][$key]["VALOR"]  * PorcentagemPlanosEnum::PADRAO) / 100;
+                    break;
+                case PlanosEnum::PLUS:
+                    $resultado[1][$key]["VALOR"]   = $resultado[1][$key]["VALOR"]  - ($resultado[1][$key]["VALOR"]  * PorcentagemPlanosEnum::PLUS) / 100;
+                    break;
+                case PlanosEnum::PRIME:
+                    $resultado[1][$key]["VALOR"]   = $resultado[1][$key]["VALOR"]  - ($resultado[1][$key]["VALOR"]  * PorcentagemPlanosEnum::PRIME) / 100;
+                    break;
+                case PlanosEnum::MASTER:
+                    $resultado[1][$key]["VALOR"]  = $resultado[1][$key]["VALOR"]  - ($resultado[1][$key]["VALOR"] * PorcentagemPlanosEnum::MASTER) / 100;
+                    break;
+            }
         }
         $obj = new stdClass();
         $obj->paginas = $resultado[0];

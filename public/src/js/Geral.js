@@ -77,13 +77,13 @@ $(document).ready(async () => {
 
     setTimeout(() => {
         WMExecutaAjax("ProjetoBO", "BuscaNumeroProjetos").then(result => {
-            if($("#numeroFooterServices")[0] != undefined) {    
+            if ($("#numeroFooterServices")[0] != undefined) {
                 $("#numeroFooterServices")[0].innerText = result["COUNT(id)"];
             }
         });
-    
+
         WMExecutaAjax("UsuarioBO", "BuscaNumeroUsuarios").then(result => {
-            if($("#numeroFooterUsers")[0] != undefined) {    
+            if ($("#numeroFooterUsers")[0] != undefined) {
                 $("#numeroFooterUsers")[0].innerText = result["COUNT(id)"];
             }
         });
@@ -417,7 +417,7 @@ function RedirecionarComParametros(pagina, paramn = [], abreOutraAba = false) {
     if (!abreOutraAba)
         window.location.href = url;
     else
-        window.open(url,"_blank");
+        window.open(url, "_blank");
 }
 
 function GetParam() {
@@ -487,9 +487,9 @@ function WMExecutaAjax(BO, metodo, dados = {}, ConvertJSON = true, MostraMensage
     dataProp.forEach(dt => {
         temp_data[dt] = dados[dt];
     });
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-        await $.ajax({
+        $.ajax({
             url: `../app/BO/${BO}.php`,
             data: temp_data,
             type: 'post',
@@ -597,11 +597,14 @@ function GetPageName() {
 }
 
 
-async function GetSessaoPHP(sessao, ConvertJSON = false) {
-    let valor = await WMExecutaAjax('SecoesBO', "GetSecoes", { 'sessao': sessao }, ConvertJSON).then(saida => {
-        return saida;
-    });
-    return valor;
+function GetSessaoPHP(sessao, ConvertJSON = false) {
+    return new Promise(result => {
+
+        let valor = WMExecutaAjax('SecoesBO', "GetSecoes", { 'sessao': sessao }, ConvertJSON).then(saida => {
+            return saida;
+        });
+        result(valor);
+    })
 }
 async function SetSessaoPHP(sessao, valor) {
     await WMExecutaAjax('SecoesBO', "SetSecoes", { 'sessao': sessao, 'valor': valor });
