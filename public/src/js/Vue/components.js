@@ -2626,7 +2626,7 @@ WMCHAT = Vue.component('wm-chat', {
     <div id="bodyChatChat" :style="{height:dataHeigth}">
     <div v-for="item in this.dataMensagens">
     <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>
-    <div v-if="item.tipo == 'msg' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
+    <div v-if="item.tipo == 'msg' && item.automatica != 1 && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
         <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTF" >
         <p class="m-0">{{item.msg}}</p>            
@@ -2640,7 +2640,7 @@ WMCHAT = Vue.component('wm-chat', {
         </div>
     </div>
 
-    <div class="textoCliente" v-else-if="item.tipo == 'msg'">
+    <div class="textoCliente" v-else-if="item.tipo == 'msg' && item.automatica != 1">
         <wm-user-img style="cursor:pointer;" @redireciona_usuario="RedirecionaPerfil"  :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         <div class="textoTC">
                 <p class="m-0">{{item.msg}}</p>            
@@ -2652,8 +2652,34 @@ WMCHAT = Vue.component('wm-chat', {
            
         </div>
     </div>
+
+    <div v-else-if="item.tipo == 'msg' && item.automatica == '1' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
+         <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
+        <div class="textoTF" style="background-color:#ffa809;color:white" >
+        <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>               
+        <div class="tempoTF">
+        <div class="TTICON">
+        <p class="m-0"  style="color:white">{{item.time.slice(0,5)}}</p> 
+        <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
+        <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
+        </div>
+        </div>
+        </div>
     </div>
 
+    <div class="textoCliente"  v-else-if="item.tipo == 'msg' && item.automatica == '1' ">
+    <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
+    <div class="textoTC" style="background-color:#ffa809;color:white">
+            <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>            
+        <div class="tempoTC">
+        <div class="TTICON">
+        <p class="m-0" style="color:white">{{item.time.slice(0,5)}}</p> 
+        </div>
+        </div>
+       
+    </div>
+    </div>
+</div>
     <div id="ancora">
 
     </div>
@@ -3512,34 +3538,34 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
             immediate: true,
             handler(valorNovo) {
                 this.dados_usuario_data = valorNovo;
-                for(elemento in this.dados_usuario_data) {
+                for (elemento in this.dados_usuario_data) {
                     this.dados_usuario_data[elemento] = this.dados_usuario_data[elemento] == null && this.dados_usuario_data[elemento] == undefined ? "" : this.dados_usuario_data[elemento];
-                    if(elemento == "plano") {
+                    if (elemento == "plano") {
                         switch (this.dados_usuario_data[elemento]) {
                             case "0":
                                 this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPadrao.svg";
                                 break;
-                            case "1": 
+                            case "1":
                                 this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPlus.svg";
                                 break;
-                            case "2": 
+                            case "2":
                                 this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoPrime.svg";
                                 break;
-                            case "3": 
+                            case "3":
                                 this.dados_usuario_data[elemento] = "src/img/icons/perfil/planoMaster.svg";
                                 break;
                             default:
                                 break;
                         }
                     }
-                    if(elemento == "tags") {
+                    if (elemento == "tags") {
                         this.dados_usuario_data[elemento] = this.dados_usuario_data[elemento].split(",");
-                        if(this.dados_usuario_data[elemento] != "") {
+                        if (this.dados_usuario_data[elemento] != "") {
                             this.tags_aparecer = true;
                         }
                         let tagsParaColocar = "";
                         this.dados_usuario_data[elemento].map(tag => {
-                            if(tag == "") {
+                            if (tag == "") {
                             } else {
                                 tagsParaColocar += `<div class='tagCU'>${tag}</div>`;
                             }
@@ -3547,7 +3573,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                         this.dados_usuario_data[elemento] = tagsParaColocar;
                     }
 
-                    if(elemento == "avaliacao_media") {
+                    if (elemento == "avaliacao_media") {
                         this.dados_usuario_data[elemento] = parseFloat(this.dados_usuario_data[elemento]);
                     }
                 }
@@ -3622,20 +3648,20 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
     props: {
         visivel: Boolean,
         id: String,
-        text_botao_cancelar:{
-            type:String,
-            default:"Cancelar"
+        text_botao_cancelar: {
+            type: String,
+            default: "Cancelar"
         },
-        text_botao_salvar:{
-            type:String,
-            default:"Salvar"
+        text_botao_salvar: {
+            type: String,
+            default: "Salvar"
         },
     },
     data() {
         return {
             modalVisivel: false,
-            dataTextBtCancelar:"Cancelar",
-            dataTextBtSalvar:"Salvar"
+            dataTextBtCancelar: "Cancelar",
+            dataTextBtSalvar: "Salvar"
         }
     },
     watch: {
@@ -3646,14 +3672,14 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
                 this.modalVisivel = visivelE;
             }
         },
-        text_botao_cancelar:{
+        text_botao_cancelar: {
             immediate: true,
             deep: true,
             handler(nvalue) {
                 this.dataTextBtCancelar = nvalue;
             }
         },
-        text_botao_salvar:{
+        text_botao_salvar: {
             immediate: true,
             deep: true,
             handler(nvalue) {

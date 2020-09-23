@@ -164,7 +164,7 @@ const TipoNotificacao = {
 const NotificacaoEntidade =
     function (_id = -1, _descricao = "", _titulo = "", _id_projeto = null, _id_chat = null,
         _id_usuario = null, _id_usuario_criacao = null, _date = GetDataAtual(),
-        _time = new Date().toLocaleTimeString(), _visto = 0, _tipo = TipoNotificacao.DEFAULT) {
+        _time = new Date().toLocaleTimeString(), _visto = 0, _tipo = TipoNotificacao.DEFAULT, _automatica = 0) {
         return {
             id: _id,
             descricao: _descricao,
@@ -176,7 +176,8 @@ const NotificacaoEntidade =
             data: _date,
             tipe: _time,
             visto: _visto,
-            tipo: _tipo
+            tipo: _tipo,
+            automatica: _automatica
         }
     }
 

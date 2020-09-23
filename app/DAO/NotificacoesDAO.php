@@ -53,7 +53,7 @@ class NotificacoesDAO
                     0 as destacado
             from  chat_mensagens CM
             inner join usuarios U on U.id = CM.id_usuario_remetente
-            where CM.id_usuario_destinatario = ? and CM.visualizado = 0
+            where CM.id_usuario_destinatario = ? and CM.visualizado = 0 and CM.automatica = 0
             ),
             NProposta as(
                 select distinct
@@ -166,7 +166,7 @@ class NotificacoesDAO
                     0 as destacado
             from  chat_mensagens CM
             inner join usuarios U on U.id = CM.id_usuario_remetente
-            where CM.id_usuario_destinatario = ? and CM.visualizado = 0
+            where CM.id_usuario_destinatario = ? and CM.visualizado = 0 and CM.automatica = 0
             )
             {$apenasChat}
            {$mostraChat}
