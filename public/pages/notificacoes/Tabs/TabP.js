@@ -46,11 +46,18 @@ $(document).ready(async () => {
 
             if (e) {
                 await BloquearTela();
+
                 $AProvou = await WMExecutaAjax("PropostaBO", "APROVARPROPOSTA", { IDPROPOSTA: dataVue.idPropostaSelecionada });
-                await BuscaPropostas();
-                MostraMensagem("Proposta aprovada com sucesso.", ToastType.SUCCESS, "Sucesso");
-                if (app.dataVue.Propostas.listaP.length == 0 && app.dataVue.Propostas.listaN.length == 0 && app.dataVue.TabPFiltro.Projeto != null)
-                    app.$refs.SeletorFiltra.$refs.ProjetosSeletor.clearSelection();
+                debugger
+                if ($AProvou != true && $AProvou.split('|').length > 1) {
+                    MostraMensagem($AProvou.split('|')[1], ToastType.INFO, "Saldo Insuficiente");
+                }
+                else {
+                    await BuscaPropostas();
+                    MostraMensagem("Proposta aprovada com sucesso.", ToastType.SUCCESS, "Sucesso");
+                    if (app.dataVue.Propostas.listaP.length == 0 && app.dataVue.Propostas.listaN.length == 0 && app.dataVue.TabPFiltro.Projeto != null)
+                        app.$refs.SeletorFiltra.$refs.ProjetosSeletor.clearSelection();
+                }
                 await DesbloquearTela();
             }
             dataVue.idPropostaSelecionada = null;

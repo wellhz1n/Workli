@@ -24,11 +24,11 @@ $(document).ready(async () => {
         carregando: false,
         mandou: false
     });
-
+    app.$set(dataVue, "Plano", 0);
     app.$watch("dataVue.FiltroProjeto", async function (a, o) {
         //Guambiarra que da Orgulho pro pai
         var aObj = { C, P, Q } = JSON.parse(JSON.stringify(a));
-        
+
         if (o != undefined && (aObj.C.join() != UltimoFiltro.C.join() || aObj.P != UltimoFiltro.P || aObj.Q != UltimoFiltro.Q)) {
             if (UltimoFiltro.Q == "" && aObj.Q.length >= 1) {
                 dataVue.FiltroProjeto.P = 1;
@@ -52,7 +52,6 @@ $(document).ready(async () => {
     app.$set(dataVue, "Projetos", await getProjetos(dataVue.FiltroProjeto.C,
         dataVue.FiltroProjeto.Q,
         dataVue.FiltroProjeto.P));
-
     DesbloquearTela();
 
 
@@ -109,47 +108,47 @@ $(document).ready(async () => {
 
         let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let valorCarteira = parseFloat(await GetSessaoPHP("VALORCARTEIRA"));
-        
-        if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
+
+        if (!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
             valorCarteira -= 6;
-        } else if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+        } else if (!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
             valorCarteira -= 5;
-        } else if(dataVue.Proposta.Upgrades.upgrade2) {
+        } else if (dataVue.Proposta.Upgrades.upgrade2) {
             valorCarteira -= 1;
         }
 
-        if((!dataVue.Proposta.Upgrades.upgrade1 && !dataVue.Proposta.Upgrades.upgrade2) || (valesNaCarteira && !dataVue.Proposta.Upgrades.upgrade2) || valorCarteira >= 0) {     
+        if ((!dataVue.Proposta.Upgrades.upgrade1 && !dataVue.Proposta.Upgrades.upgrade2) || (valesNaCarteira && !dataVue.Proposta.Upgrades.upgrade2) || valorCarteira >= 0) {
             BloquearTelaSemLoader();
             dataVue.PropostaController.carregando = true;
-            
+
             let result = await WMExecutaAjax("PropostaBO", "SalvarProposta", { proposta: dataVue.Proposta })
             if (result.error != undefined) {
                 toastr.error("Algo deu errado, tente novamente", "Ops");
                 dataVue.PropostaController.carregando = false;
-            } else if (result == true) {   
-                if(valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+            } else if (result == true) {
+                if (valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
                     toastr.info("Upgrade concedido através de um vale patrocínio.", "Upgrades!");
                 }
 
-                if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
+                if (!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1 && dataVue.Proposta.Upgrades.upgrade2) {
                     toastr.info("R$ 6,00 foram deduzidos de sua carteira.", "Upgrades!");
-                } else if(!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
+                } else if (!valesNaCarteira && dataVue.Proposta.Upgrades.upgrade1) {
                     toastr.info("R$ 5,00 foram deduzidos de sua carteira.", "Upgrades!");
-                } else if(dataVue.Proposta.Upgrades.upgrade2) {
+                } else if (dataVue.Proposta.Upgrades.upgrade2) {
                     toastr.info("R$ 1,00 foram deduzidos de sua carteira.", "Upgrades!");
                 }
                 let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-                
+
                 let resultadoVales = AtualizaUsuarioColuna(usuarioId, "vales_patrocinios", --valesNaCarteira, "VALES_PATROCINIOS", "funcionario");
                 let resultadoCarteira = AtualizaUsuarioColuna(usuarioId, "valor_carteira", valorCarteira, "VALOR_CARTEIRA");
 
                 dataVue.Projetos.lista.map(x => {
-                    if(x.id == dataVue.selecionadoController.id)
+                    if (x.id == dataVue.selecionadoController.id)
                         x.propostaFuncionario = 1
                     return x;
                 });
                 toastr.success("Proposta enviada com sucesso!", "Sucesso");
-                
+
             }
 
             dataVue.PropostaController.carregando = false;
@@ -172,7 +171,7 @@ $(document).ready(async () => {
         } else {
             toastr.error("Não é possível dar upgrade devido a falta de fundos na carteira.", "Falta de fundos!");
         }
-        
+
     });
     app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
@@ -195,8 +194,8 @@ $(document).ready(async () => {
             DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
-            if(dataVue.UsuarioContexto.NIVEL_USUARIO == 1)
-            dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x=>{return dataVue.selecionadoController.id == x.id})[0].propostaFuncionario;
+            if (dataVue.UsuarioContexto.NIVEL_USUARIO == 1)
+                dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x => { return dataVue.selecionadoController.id == x.id })[0].propostaFuncionario;
             dataVue.Proposta.IdServico = dataVue.selecionadoController.id;
             dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
             dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
@@ -228,9 +227,9 @@ $(document).ready(async () => {
                 var i = 1;
                 porcentagemAtual = 50;
 
-                
+
                 /* PUXA O VALOR DINAMICO */
-                if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                if (dataVue.selecionadoController.propostaFuncionario == 0) {
                     $('#precoMin')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[0];
                     $('#precoMax')[0].innerText = dataVue.selecionadoController.valor.split(" - ")[1];
                 }
@@ -243,29 +242,49 @@ $(document).ready(async () => {
                     valorCliente = (dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") * 1 + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") * 1) / 2;
                     taxaPorcentagem = 15;
 
-                    
+
                     /* Seta a taxa (o retornaPlano seta também daquele cardzinho verde)*/
-                    taxaPorcentagem = dataVue.retornaPlano();
-                    switch (taxaPorcentagem) {
-                        case 0:
-                            taxaPorcentagem = 20;
-                            break;
-                        case 1:
-                            taxaPorcentagem = 15;
-                            break;
-                        case 2:
-                            taxaPorcentagem = 10;
-                            break;
-                        case 3:
-                            taxaPorcentagem = 5;
-                            break;
-                        default:
-                            break;
-                    }
+                    dataVue.retornaPlano().then(p => {
+                        taxaPorcentagem = p;
+                        switch (taxaPorcentagem) {
+                            case 0:
+                                taxaPorcentagem = 20;
+                                break;
+                            case 1:
+                                taxaPorcentagem = 15;
+                                break;
+                            case 2:
+                                taxaPorcentagem = 12;
+                                break;
+                            case 3:
+                                taxaPorcentagem = 8;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        taxaValor = (valorCliente / 100) * taxaPorcentagem;
+                        valorFuncionario = valorCliente - taxaValor;
+
+                      
+                        /* Atualiza o popover dentro da bolinha de interrogação*/
+                        $("#linkPopover").attr("data-content", (
+                            "Você receberá: R$ " +
+                            (Math.round(valorCliente * 100) / 100).toFixed(2) +
+                            " - R$ " +
+                            (Math.round(taxaValor * 100) / 100).toFixed(2) +
+                            " = R$ " +
+                            ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
+                            ""
+                        ).split(".").join(",")
+
+                        );
+
+                    });
 
 
-                    taxaValor = (valorCliente / 100) * 15;
-                    valorFuncionario = valorCliente - taxaValor;
+                    // taxaValor = (valorCliente / 100) * taxaPorcentagem;
+                    // valorFuncionario = valorCliente - taxaValor;
 
                     var n = this.getElementsByTagName('input')[0].value / 1;
                     this.id = 'range' + i;
@@ -278,20 +297,20 @@ $(document).ready(async () => {
                     this.innerHTML = "<input type='range' id='rangeSlider' class='inputProposta' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
 
-                    $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
+                    // $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
 
-                    /* Atualiza o popover dentro da bolinha de interrogação*/
-                    $("#linkPopover").attr("data-content", (
-                        "Você receberá: R$ " +
-                        (Math.round(valorCliente * 100) / 100).toFixed(2) +
-                        " - R$ " +
-                        (Math.round(taxaValor * 100) / 100).toFixed(2) +
-                        " = R$ " +
-                        ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
-                        ""
-                    ).split(".").join(",")
+                    // /* Atualiza o popover dentro da bolinha de interrogação*/
+                    // $("#linkPopover").attr("data-content", (
+                    //     "Você receberá: R$ " +
+                    //     (Math.round(valorCliente * 100) / 100).toFixed(2) +
+                    //     " - R$ " +
+                    //     (Math.round(taxaValor * 100) / 100).toFixed(2) +
+                    //     " = R$ " +
+                    //     ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
+                    //     ""
+                    // ).split(".").join(",")
 
-                    );
+                    // );
 
                     dataVue.Proposta.Valor = valorCliente;
 
@@ -304,11 +323,10 @@ $(document).ready(async () => {
                     valorTotal = valorMax - valorMin;
 
                     valorCliente = event.target.value;
-                    taxaPorcentagem = 15;
-                    taxaValor = (valorCliente / 100) * 15;
+                    taxaValor = (valorCliente / 100) * taxaPorcentagem;
                     valorFuncionario = valorCliente - taxaValor;
 
-                    
+
                     porcentagemAtual = ((valorCliente - valorMin) * 100) / (valorMax - valorMin);
                     var a = this.value / 1;
                     if (a == 0) {
@@ -367,7 +385,7 @@ $(document).ready(async () => {
                     $('#rangeSlider').addClass("hovered");
                 });
 
-                if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                if (dataVue.selecionadoController.propostaFuncionario == 0) {
                     $(".valorDoSlider")[0].innerHTML += "<style></style>";
                 }
                 $("#rangeSlider").on({
@@ -400,24 +418,24 @@ $(document).ready(async () => {
                 });
                 /* -------------------*/
 
-                
+
                 setTimeout(async () => {
-                    if (dataVue.modalVisivelController == true) {  
+                    if (dataVue.modalVisivelController == true) {
                         let resultadoProposta = await WMExecutaAjax("PropostaBO", "RetornaValorPropostaMedia", { ID_SERVICO: dataVue.Proposta.IdServico });
-                        if(resultadoProposta[0].soma) {
+                        if (resultadoProposta[0].soma) {
                             resultadoProposta = String(Number.parseFloat(resultadoProposta[0].soma).toFixed(2)).replace(".", ",");
                         } else {
                             resultadoProposta = "0,00"
                         }
-                        if(dataVue.selecionadoController.propostaFuncionario == 0) {
+                        if (dataVue.selecionadoController.propostaFuncionario == 0) {
                             document.getElementById("propostaMedia").innerText = `R$ ${resultadoProposta}`;
                         }
 
-                        if(valesNaCarteira > 0) {
+                        if (valesNaCarteira > 0) {
                             $("#patrocinadoValor").text("Gratuito");
                             $("#patrocinadoValor").addClass("text-success");
                         }
-                        
+
                     }
                 }, 100);
             }, 1);
@@ -426,8 +444,8 @@ $(document).ready(async () => {
                 $("#rangeSlider").attr("max", dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", ""));
             }, 10);
 
-            
-            
+
+
 
 
         } catch (error) {
@@ -480,30 +498,37 @@ $(document).ready(async () => {
 
 
     //#region Porcentagem do plano
-    app.$set(dataVue, "retornaPlano", async () => {
-        let planoN = Number.parseInt(await GetSessaoPHP("PLANO"));
-        let membro = "Padrão";
-        switch (planoN) {
-            case 0:
-                membro = "Padrão";
-                document.getElementById("taxaModal").innerText = `Plano ${membro}: 20%`;
-                break;
-            case 1:
-                membro = "Plus";
-                document.getElementById("taxaModal").innerText = `Plano ${membro}: 15%`;
-                break;
-            case 2:
-                membro = "Prime";
-                document.getElementById("taxaModal").innerText = `Plano ${membro}: 12%`;
-                break;
-            case 3:
-                membro = "Master";
-                document.getElementById("taxaModal").innerText = `Plano ${membro}: 8%`;
-                break;
-            default:
-                break;
-        }
-        return planoN;
+    app.$set(dataVue, "retornaPlano", () => {
+        return new Promise((result) => {
+            GetSessaoPHP("PLANO").then(planoN => {
+                debugger
+                planoN = Number.parseInt(planoN);
+                let membro = "Padrão";
+                switch (planoN) {
+                    case 0:
+                        membro = "Padrão";
+                        document.getElementById("taxaModal").innerText = `Plano ${membro}: 20%`;
+                        break;
+                    case 1:
+                        membro = "Plus";
+                        document.getElementById("taxaModal").innerText = `Plano ${membro}: 15%`;
+                        break;
+                    case 2:
+                        membro = "Prime";
+                        document.getElementById("taxaModal").innerText = `Plano ${membro}: 12%`;
+                        break;
+                    case 3:
+                        membro = "Master";
+                        document.getElementById("taxaModal").innerText = `Plano ${membro}: 8%`;
+                        break;
+                    default:
+                        break;
+                }
+                result(planoN);
+            });
+        });
+
+
     });
     //#endregion
 
