@@ -1759,6 +1759,11 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin-top: 5px;
     background: white;
     display: flex;
+    color: #212529;
+}
+
+.cardUsuario:hover {
+    color: #212529;
 }
 
 
