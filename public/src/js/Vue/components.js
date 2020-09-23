@@ -3563,7 +3563,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
     methods: {
     },
     template: `
-        <div class="cardQuadrado cardUsuario row">
+        <a class="cardQuadrado cardUsuario row" :href="'?page=perfilUsuario&id=' + this.dados_usuario_data.id">
             <div class="parteDadosUsuario">
                 <div class="parteSuperiorCU">
                     <div class="parteDadosPrincipais">
@@ -3596,7 +3596,12 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                         </div>
                     </div>
                     <div class="botaoCUWrapper">
-                        <button class="btn btn-success">Contratar funcionário</button>
+                        <div class="d-contents" v-if="this.dados_usuario_data.nivel_usuario == '1'">
+                            <button class="btn btn-success">Contratar funcionário</button>
+                        </div>
+                        <div class="d-contents" v-else>
+                            <button class="btn btn-success">Visualizar usuário</button>
+                        </div>
                     </div>
                 </div>
                 <div class="parteInferiorCU">
@@ -3607,7 +3612,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     `
 });
 //#endregion card usuário

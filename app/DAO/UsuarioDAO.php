@@ -272,7 +272,7 @@ class UsuarioDAO
         
         
         $paginas = Sql("
-            SELECT CEIL(COUNT(id)/10) AS paginas FROM Usuarios_view
+            SELECT CEIL(COUNT(id)/5) AS paginas FROM Usuarios_view
             {$exc}
             
         ");
@@ -281,7 +281,7 @@ class UsuarioDAO
                 $pg = 1;
         }
         
-        $pg = (json_decode($pg) - 1) * 10;
+        $pg = (json_decode($pg) - 1) * 5;
 
         $retorno = Sql("
             SELECT  id,
@@ -295,7 +295,7 @@ class UsuarioDAO
                     imagem,
                     COUNT(id) AS usuariosC
                     FROM ( 
-                        SELECT * FROM Usuarios_view {$exc} {$groupby} LIMIT 10 OFFSET {$pg}
+                        SELECT * FROM Usuarios_view {$exc} {$groupby} LIMIT 5 OFFSET {$pg}
                     ) AS us
                     GROUP BY 1 ${groupby};
         ");

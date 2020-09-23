@@ -27,7 +27,7 @@
             <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Serviços</a>
           </li>
           <li class="nav-item tituloHeaderLogado">
-            <a class="nav-link" href="?page=buscausuarios">Buscar Funcionários</a>
+            <a class="nav-link" href="?page=buscausuarios">Buscar Usuários</a>
           </li>
         <?php
           break;
@@ -42,7 +42,7 @@
             <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Serviços</a>
           </li>
           <li class="nav-item tituloHeaderLogado">
-            <a class="nav-link" href="?page=buscausuarios">Buscar Funcionários</a>
+            <a class="nav-link" href="?page=buscausuarios">Buscar Usuários</a>
           </li>
         <?php
           break;
