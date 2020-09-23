@@ -152,3 +152,6 @@ alter view Projetos_view as
     LEFT JOIN funcionario AS func ON func.id_usuario = us.id 
     LEFT JOIN imagem_usuario AS img_us ON img_us.id_usuario = us.id
   WHERE us.nivel_usuario <> 2;
+
+  -- WELLINGTON.RAMOS em 22/09/2020 #36;
+  ALTER TABLE CHAT_MENSAGENS ADD COLUMN AUTOMATICA INT(1) DEFAULT 0;
