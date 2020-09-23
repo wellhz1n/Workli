@@ -27,10 +27,13 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="stylesheet" type="text/css" href="src/js/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="src/css/starRating/star-rating.min.css" />
     <link href="src/js/Vue/componentesExternos/vue-tags/dist/vue-tags-input.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-vue/dist/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
     <!-- Importações internas -->
     <link rel="stylesheet" href="src/css/EstiloGeral.css">
     <link rel="stylesheet" href="templates/css/template.css">
 
+    
 
     <!-- Scripts externos  -->
     <script type="" src="src/js/Google/platform.js"></script>
@@ -62,6 +65,7 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script> <!-- css star rating -->
     <script src="https://unpkg.com/vue-advanced-cropper@0.16.7/dist/index.umd.js"></script> <!-- CROP IMAGE -->
     <script src="https://unpkg.com/@trevoreyre/autocomplete-vue@2.2.0/dist/autocomplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/dist/vue-slider-component.umd.min.js"></script>
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> <!-- Google Sans -->
@@ -107,6 +111,7 @@ header('Content-Type: text/html; charset=utf-8');
         delimiters: ["{{", "}}"],
         mixins: [Mixin],
         components: {
+            'vueSlider': window[ 'vue-slider-component' ],
             // 'select2': Select2,
             // 'star-rating': VueStarRating.default,
             // 'tags-input':  VueTagsInput

@@ -106,9 +106,14 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     }
 
     if ($metodo == "BuscarUsuarios") {
-        $Q = empty($_POST["Q"]) ? "" : $_POST["Q"];
         $P = empty($_POST["P"]) ? 1 : $_POST["P"];
-        $userBO->BuscarUsuarios($Q, $P);
+        $filtro = empty($_POST["filtro"]) ? "" : $_POST["filtro"];
+        $userBO->BuscarUsuarios($P, $filtro);
+    }
+
+    if ($metodo == "BuscarProfissoes") {
+        $query = empty($_POST["queryProf"]) ? "" : $_POST["queryProf"];
+        $userBO->BuscarProfissoes($query);
     }
 
 }
@@ -440,9 +445,9 @@ class UsuarioBO
     }
 
 
-    public function BuscarUsuarios($Q = "", $P = 1)
+    public function BuscarUsuarios( $P = 1, $filtro)
     {
-        $dados = $this->usuarioDAO->BuscaUsuarios($Q, $P);
+        $dados = $this->usuarioDAO->BuscaUsuarios($P, $filtro);
         $dt = $dados[0];
         foreach ($dt as $key => $value) {
             $dt[$key]["imagem"] = ConvertBlobToBase64($value["imagem"]);
@@ -452,5 +457,16 @@ class UsuarioBO
         $obj->paginas = $dados[1];
         echo json_encode($obj);
     }
- 
+
+    public function BuscarProfissoes($query)
+    {
+        $dados = $this->usuarioDAO->BuscaProfissoes($query);
+        $profissoes = [];
+
+        foreach ($dados[0] as $key => $value) {
+            array_push($profissoes, $value["profissao"]); 
+        }
+        echo json_encode($profissoes);
+    }
+
 }

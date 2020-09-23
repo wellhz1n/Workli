@@ -34,7 +34,7 @@
 .wrapperFiltro {
     margin: 20px 0 0 4%;
     align-self: flex-start;
-    width: 100%;
+    width: 92%;
 }
 
 .tituloInputFiltro, .wrapperFiltro label {
@@ -47,43 +47,62 @@
 
 .wrapperFiltro input, .wrapperFiltro .form-control {
     padding: 4px 12px 4px !important;
-    width: 91%;
+    width: 100% !important;
     margin-bottom: 3px;
 }
-
+.wrapperFiltro .wminput:focus {
+    border: 2px 2px 0 2px solid rgb(33, 136, 56);
+}
 
 .shadowInputTags {
-    box-shadow: 0px 0px 0px 1px rgb(33, 136, 56);
-    border: 1px solid rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px 2px rgb(33, 136, 56);
 }
 
 .tagIndividual {
     font-size: 30px !important;
 }
 
-.wrapperFiltro .wminput:focus {
-    border: 0;
-    box-shadow: 0px 0px 0px 2px rgb(33, 136, 56);
+#tagsInput input {
+    padding: 0 !important;
 }
 
 .wrapperFiltro > .row > .col-8 {
     padding: 0 !important;
+    width: 96%;
 }
 
 
-.inputProfissao input {
+#inputProfissao {
     border-radius: 0.25rem;
-    border: 1px solid #ced4da;
-    padding: 5px 2%;
-    transition: 0.1s;
+    border: 1px solid #ced4da !important;
+    transition: 0.1s !important;
+    background-color: white;
+    width: 100%;
+    margin: 0 !important;
 }
 
-.inputProfissao input:focus {
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, 0);
+#inputProfissao:focus + ul{
+    box-shadow: 0px 2px 0px rgb(33, 136, 56), 
+    -2px 0px 0px rgb(33, 136, 56), 2px 0px 0px rgb(33, 136, 56);
+    padding: 0;
+} 
+#inputProfissao:focus {
+    outline: none !important;
+    border: none;
     box-shadow: 0px 0px 0px 2px rgb(33, 136, 56);
 }
 
+/* Estilos diferentes para quando houver a lista. */
+.inputProfissaoListaVisivel {
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+    box-shadow: 0px -2px 0px rgb(33, 136, 56), 
+    -2px 0px 0px rgb(33, 136, 56), 2px 0px 0px rgb(33, 136, 56);
+}
+
+
+.autocomplete-input {
+    background-image: none !important;
+}
 .avaliacaoTexto {
     align-self: flex-start;
     margin-left: 4%;
@@ -100,6 +119,10 @@
     font-weight: 700;
     user-select: none;
 }
+
+.sliderFiltroUsuarios {
+    margin-top: 10px;
+}
 /*#endregion Filtro de Usuários*/
 
 
@@ -113,7 +136,6 @@
 }
 
 .buscaUsuarios {
-    width: 68.5%;
     padding: 8px 12px 8px !important;
     background: white;
     border-radius: 30px;
@@ -121,6 +143,8 @@
     align-items: center;
     font-size: 22px;
     margin-right: 3%;
+    flex: 1;
+    min-width: 30%;
 }
 
 .iconSearch {
@@ -139,7 +163,7 @@
 }
 
 .paginacaoUsuarios {
-    width: 28.5%;
+    width: fit-content;
 }
 
 .paginacaoUsuarios .paginacao {
