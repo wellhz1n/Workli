@@ -283,8 +283,8 @@ $(document).ready(async () => {
                     });
 
 
-                    // taxaValor = (valorCliente / 100) * taxaPorcentagem;
-                    // valorFuncionario = valorCliente - taxaValor;
+                    taxaValor = (valorCliente / 100) * taxaPorcentagem;
+                    valorFuncionario = valorCliente - taxaValor;
 
                     var n = this.getElementsByTagName('input')[0].value / 1;
                     this.id = 'range' + i;
@@ -297,20 +297,20 @@ $(document).ready(async () => {
                     this.innerHTML = "<input type='range' id='rangeSlider' class='inputProposta' min='" + dataVue.selecionadoController.valor.split(" - ")[0].replace("R$", "") + "' max='" + dataVue.selecionadoController.valor.split(" - ")[1].replace("R$", "") + "'><style>#" + this.id + " #rangeSlider::-webkit-slider-runnable-track {background:linear-gradient(to right, #62de57 0%, #059c06 " + n / 2 + "%, #62de57 " + n + "%, #515151 " + n + "%);}</style>";
                     i++
 
-                    // $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
+                    $("#valorAtualSlider")[0].innerHTML = "R$ " + valorCliente + ",00&nbsp;";
 
-                    // /* Atualiza o popover dentro da bolinha de interrogação*/
-                    // $("#linkPopover").attr("data-content", (
-                    //     "Você receberá: R$ " +
-                    //     (Math.round(valorCliente * 100) / 100).toFixed(2) +
-                    //     " - R$ " +
-                    //     (Math.round(taxaValor * 100) / 100).toFixed(2) +
-                    //     " = R$ " +
-                    //     ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
-                    //     ""
-                    // ).split(".").join(",")
+                    /* Atualiza o popover dentro da bolinha de interrogação*/
+                    $("#linkPopover").attr("data-content", (
+                        "Você receberá: R$ " +
+                        (Math.round(valorCliente * 100) / 100).toFixed(2) +
+                        " - R$ " +
+                        (Math.round(taxaValor * 100) / 100).toFixed(2) +
+                        " = R$ " +
+                        ((Math.round(valorFuncionario) * 100) / 100).toFixed(2) +
+                        ""
+                    ).split(".").join(",")
 
-                    // );
+                    );
 
                     dataVue.Proposta.Valor = valorCliente;
 
