@@ -140,9 +140,10 @@
                         <div id="nomeCP">
                         </div>
                         <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
-                            <div class="cemXcem profissaoWrapper">
+                            <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados.profissao">
                                 <span class="profCPBolinha">•</span>
                                 <div id="profCP"> 
+                                    {{dataVue.usuarioDados.profissao}}
                                 </div>
                             </div>
                         <?php }; ?>

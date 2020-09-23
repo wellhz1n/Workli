@@ -347,9 +347,8 @@ $(document).ready(async () => {
 
         if(valor <= valorNaCarteira) {
             let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
-
-            let resultado = AtualizaUsuarioColuna(usuarioId, "plano", nivel, "PLANO", "funcionario");
-
+            let resultado = await AtualizaUsuarioColuna(usuarioId, "plano", nivel, "PLANO", "funcionario");
+            
             if(resultado) {
                 let resultadoVales = AtualizaUsuarioColuna(usuarioId, "vales_patrocinios", vales, "VALES_PATROCINIOS", "funcionario");
                 switch (nivel) {
@@ -375,6 +374,7 @@ $(document).ready(async () => {
                 dataVue.valorNaCarteira = valor.toFixed(2).replace(".", ",");
 
                 dataVue.callbackPlanos();
+                
                 dataVue.iconePlano = await dataVue.retornaPlano();
             }
 
@@ -390,12 +390,16 @@ $(document).ready(async () => {
     app.$set(dataVue, "iconePlano", "src/img/icons/perfil/planoPadrao.svg");
     app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
-        planoN = !planoN? 0 : planoN;
+        let planoNLet = parseInt(await GetSessaoPHP("PLANO"));
+        planoNLet = !planoNLet? 0 : planoNLet;
+
+        console.log(planoNLet);
+
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let membro = "Membro Padrão";
-        switch (planoN) {
+        switch (planoNLet) {
             case 0:
-                planoN = "src/img/icons/perfil/planoPadrao.svg";
+                planoNLet = "src/img/icons/perfil/planoPadrao.svg";
                 dataVue.situacaoBotao = [2, 0, 0, 0];
 
                 membro = "Membro Padrão";
@@ -404,7 +408,7 @@ $(document).ready(async () => {
 
                 break;
             case 1:
-                planoN = "src/img/icons/perfil/planoPlus.svg";
+                planoNLet = "src/img/icons/perfil/planoPlus.svg";
                 dataVue.situacaoBotao = [0, 1, 0, 0];
 
                 membro = "Membro Plus";
@@ -413,7 +417,7 @@ $(document).ready(async () => {
 
                 break;
             case 2:
-                planoN = "src/img/icons/perfil/planoPrime.svg";
+                planoNLet = "src/img/icons/perfil/planoPrime.svg";
                 dataVue.situacaoBotao = [0, 0, 1, 0];
 
                 membro = "Membro Prime";
@@ -422,7 +426,7 @@ $(document).ready(async () => {
 
                 break;
             case 3:
-                planoN = "src/img/icons/perfil/planoMaster.svg";
+                planoNLet = "src/img/icons/perfil/planoMaster.svg";
                 dataVue.situacaoBotao = [0, 0, 0, 1];
                 
                 membro = "Membro Master";
@@ -433,7 +437,7 @@ $(document).ready(async () => {
             default:
                 break;
         }
-        return planoN;
+        return planoNLet;
     });
     
     if(dataVue.nivelUsuario == 1) {
