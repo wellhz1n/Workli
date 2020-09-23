@@ -232,14 +232,49 @@ class UsuarioDAO
     }
 
 
-    public function BuscaUsuarios($q = "", $pg = 1)
+    public function BuscaUsuarios( $pg = 1, $filtro)
     {
-        $exc = "where id != " . BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-    
-        $like = $q != "" ? "AND nome LIKE '%$q%'" : null;
+
+        $groupby = "ORDER BY nome";
+
+        $exc = "WHERE id != " . BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO) . " AND nivel_usuario != 2";
+
+        $tagsFiltroArray = explode(",", $filtro["tags"]);
+        if($filtro["tags"]) {
+            $exc .= " AND ";
+            foreach ($tagsFiltroArray as $key => $value) {
+                if($key != 0) {
+                    $exc .= " OR ";
+                }
+                $exc .= "tags LIKE '%{$value}%'";
+            }
+        }
+
+        $exc .= $filtro["avaliacao"] != 0 ? " AND avaliacao_media >= " . ($filtro["avaliacao"]) : "";
+
+        if($filtro["tipo_usuario"] == 1) {
+            $exc .= " AND nivel_usuario = 0";
+        } else if($filtro["tipo_usuario"] == 2) {
+            $exc .= " AND nivel_usuario = 1";
+            $groupby = "ORDER BY avaliacao_media desc";
+
+            
+            $profissao = $filtro["profissao"];
+            if($profissao) {
+                $exc .= " AND profissao LIKE '%$profissao%'";
+            }
+                
+        }
+
+        $queryBusca = $filtro["queryBusca"];
+        $exc .= " AND nome LIKE '%$queryBusca%'";
+
+        
+        
         $paginas = Sql("
             SELECT CEIL(COUNT(id)/10) AS paginas FROM Usuarios_view
-            {$like}
+            {$exc}
+            
         ");
         if (count($paginas->resultados) > 0) {
             if (json_decode($paginas->resultados[0]['paginas']) == 1)
@@ -247,29 +282,40 @@ class UsuarioDAO
         }
         
         $pg = (json_decode($pg) - 1) * 10;
+
         $retorno = Sql("
-        select
-               id,
-               nome,
-               descricao,
-               nivel_usuario,
-               avaliacao_media,
-               plano,
-               profissao,
-               tags,
-               imagem,
-               count(id) as usuariosC
-               from (
-              		SELECT * FROM Usuarios_view {$exc} limit 10 offset {$pg}
-               ) as us
-              group by 2
-              order by id;
+            SELECT  id,
+                    nome,
+                    descricao,
+                    nivel_usuario,
+                    avaliacao_media,
+                    plano,
+                    profissao,
+                    tags,
+                    imagem,
+                    COUNT(id) AS usuariosC
+                    FROM ( 
+                        SELECT * FROM Usuarios_view {$exc} {$groupby} LIMIT 10 OFFSET {$pg}
+                    ) AS us
+                    GROUP BY 1 ${groupby};
         ");
         foreach ($retorno->resultados as $key => $value) {
             $retorno->resultados[$key]["descricao"] = nl2br($retorno->resultados[$key]["descricao"]);
         }
         return [$retorno->resultados, $paginas->resultados[0]["paginas"]];
     }
+
+
+    public function BuscaProfissoes($query)
+    {
+
+        $like = " AND profissao LIKE '%$query%'";
+        $retorno = Sql("
+            SELECT profissao FROM funcionario WHERE profissao != '' {$like} GROUP BY profissao;
+        ");
+        return [$retorno->resultados];
+    }
+
 
 }
 // $USR->example();
