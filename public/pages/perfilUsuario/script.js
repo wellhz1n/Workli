@@ -296,12 +296,19 @@ $(document).ready(async () => {
     app.$set(dataVue, "fechaModalConfirmacao", async (confirmacao, salvar) => {
         // O parametro de confirmação é pra confirmar se é pra fechar mesmo, se só quiser fechar só colocar como true.
         dataVue.modalVisivelControllerConfirmacao = false;
+        dataVue.atribuirProjetoConfirmacao = "";
         if(confirmacao) {
-            dataVue.modalVisivelEditPerfil = false;
-            if(!salvar) {
-                resetaOsDadosDoPerfilEdit()
+            if(dataVue.modalVisivelEditPerfil) {
+                dataVue.modalVisivelEditPerfil = false;
+                if(!salvar) {
+                    resetaOsDadosDoPerfilEdit()
+                }
+            } else if(dataVue.modalVisivelAtribuirP) {
+                dataVue.modalVisivelEditPerfil = false;
+                if(!salvar) {
+                    mandaOsDadosAtribuirProjeto();
+                }
             }
-        } else {
         }
     });
 
@@ -392,8 +399,6 @@ $(document).ready(async () => {
     app.$set(dataVue, "retornaPlano", async () => {
         let planoNLet = parseInt(await GetSessaoPHP("PLANO"));
         planoNLet = !planoNLet? 0 : planoNLet;
-
-        console.log(planoNLet);
 
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         let membro = "Membro Padrão";
@@ -548,7 +553,41 @@ $(document).ready(async () => {
     });
 
 
-    
+    /*Modal de Contratar */
+    app.$set(dataVue, "modalVisivelContratar", false);
+
+    app.$set(dataVue, "abremodalContratar", async () => {
+        dataVue.modalVisivelContratar = true;
+    });
+
+    app.$set(dataVue, "callbackContratar", () => {
+        dataVue.modalVisivelContratar = false;
+    });
+
+
+    app.$set(dataVue, "meusProjetos", {});
+
+    /*Modal de Atribuir Projeto */
+    app.$set(dataVue, "modalVisivelAtribuirP", false);
+
+    app.$set(dataVue, "abremodalAtribuirP", async () => {
+        dataVue.modalVisivelAtribuirP = true;
+        let result = await WMExecutaAjax("ProjetoBO", "BuscaMeusProjetosReduzido");
+        dataVue.meusProjetos = result.lista;
+    });
+
+    app.$set(dataVue, "callbackAtribuirP", () => {
+        dataVue.modalVisivelAtribuirP = false;
+    });
+
+
+    app.$set(dataVue, "atribuirProjetoConfirmacao", "");
+
+    app.$set(dataVue, "mandarPropostaUsuario", (id) => {
+        dataVue.atribuirProjetoConfirmacao = "Confirmar";
+        dataVue.modalVisivelControllerConfirmacao = true;
+
+    })
 });
 
 
@@ -599,5 +638,11 @@ function resetaOsDadosDoPerfilEdit() {
     dataVue.usuarioDadosEdit.descricao = dataVue.usuarioDados.descricao;
     dataVue.usuarioDadosEdit.profissao = dataVue.usuarioDados.profissao;
     dataVue.usuarioDadosEdit.tags = dataVue.usuarioDados.tags ? dataVue.usuarioDados.tags : "";
+}
+
+
+function mandaOsDadosAtribuirProjeto () {
+    dataVue.callbackAtribuirP();
+    dataVue.callbackContratar();
 }
 

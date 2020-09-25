@@ -122,6 +122,7 @@ class ProjetoBO extends BOGeneric
     {
         return $this->ProjetoDAO->SetProjetoSituacao($idProjeto, $Situacao);
     }
+
     #endregion
     #region MeusProjetos
     public function BuscaMeusProjetos($q = null, $p = 1, $categoria = null, $situacao = null)
@@ -167,6 +168,26 @@ class ProjetoBO extends BOGeneric
             return $saida;
         } else
             throw new Exception("Projeto não encontrado");
+    }
+
+
+    public function BuscaMeusProjetosReduzido()
+    {
+
+        $dados = $this->ProjetoDAO->BuscaMeusProjetosReduzido($this->GetUsuarioContexto());
+        foreach ($dados as $key => $value) {
+            if ($dados[$key]["postado"] == 0)
+                $dados[$key]["postado"] = "Hoje";
+            else {
+                if ($dados[$key]["postado"] > 1 && $dados[$key]["postado"] != 0)
+                    $dados[$key]["postado"] = "Há " . $dados[$key]["postado"] . " dias";
+                else
+                    $dados[$key]["postado"] = "Há 1 dia";
+            }
+        }
+        $obj = new stdClass();
+        $obj->lista = $dados;
+        return $obj;
     }
     #endregion
 
@@ -226,6 +247,10 @@ try {
                 echo json_encode($ProjetoBO->GetProjetoPorIDModal($ID));
             else
                 throw new Exception("O Metodo " . $metodo . " Precisa de Uma Propriedade [ID]");
+        }
+
+        if ($metodo == "BuscaMeusProjetosReduzido") {
+            echo json_encode($ProjetoBO->BuscaMeusProjetosReduzido());
         }
     }
 } catch (Throwable $ex) {

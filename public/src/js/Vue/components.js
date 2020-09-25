@@ -3724,3 +3724,60 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
 });
 
 //#endregion modalComBotoesGenerico
+
+
+
+
+
+
+
+
+//#region card de atribuir projeto
+var WMCARDATRIBUIRPROJETO = Vue.component('wm-card-atribuir-projeto', {
+    props: {
+        dados_usuario: {}
+    },
+
+    data: () => {
+        return {
+            nivelProjeto: "",
+            faixaDePreco: ""
+        }
+    },
+    async beforeMount() {
+        this.BuscaArrays();
+    },
+
+    methods: {
+        BuscaArrays() {
+            this.nivelProjeto = NivelProjeto[this.dados_usuario["nivel_projeto"]].toUpperCase();
+            this.faixaDePreco = Valores[this.dados_usuario["valor"]].toUpperCase();
+        },
+        mandarDados() {
+            this.$emit("card-selecionado", this.dados_usuario["id"])
+        }
+    },
+
+    template: `
+    <div class="meuProjetoCard" @click="mandarDados">
+        <div class="informacoesDireitaPC">
+            <div class="nomeTamanhoWrapperPC">
+                <div class="projetoCardNome">
+                    {{this.dados_usuario["nome"]}}
+                </div>
+                <div class="projetoCardBolinha">•</div>
+                <div class="projetoCardTamanho">{{this.nivelProjeto}}</div>
+            </div>
+            <div class="projetoCardDinheiro">
+                {{this.faixaDePreco}}
+            </div>
+        </div>
+        <div class="d-flex flex-column">
+            <div class="projetoCardTempo">
+                <i class="fas fa-clock"></i> <span class="tempoPC">{{this.dados_usuario["postado"]}}</span>
+            </div>
+        </div>
+    </div>
+    `
+});
+//#endregion card de atribuir projeto

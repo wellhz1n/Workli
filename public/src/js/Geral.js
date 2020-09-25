@@ -784,7 +784,6 @@ function ChatSeparatorGenerator(msgs = []) {
             else if (msgs[index].date == ontem)
                 separadorText = "Ontem"
             else {
-
                 let mes = new Date(msgs[index].date + " " + msgs[index].time).getMonth() + 1;
                 separadorText = `${new Date(msgs[index].date + " " + msgs[index].time).getDate()}/${mes < 10 ? '0' + mes : mes}`
             }
