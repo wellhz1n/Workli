@@ -2511,6 +2511,10 @@ WMCHAT = Vue.component('wm-chat', {
         heigth: {
             type: String,
             default: ''
+        },
+        exibemandar:{
+            type:Boolean,
+            default:true
         }
     },
     data() {
@@ -2523,7 +2527,8 @@ WMCHAT = Vue.component('wm-chat', {
             carregando: true,
             primeiraVez: true,
             idusuariodestinatariodata: -1,
-            dataHeigth: ''
+            dataHeigth: '',
+            dataExibeMandar:true
         }
     },
     methods: {
@@ -2620,6 +2625,12 @@ WMCHAT = Vue.component('wm-chat', {
                 this.dataHeigth = nv;
             }
         },
+        exibemandar:{
+            immediate:true,
+            handler(nv){
+                this.dataExibeMandar = nv;
+            }
+        }
     },
     template: `
     <transition name="fade" mode="out-in">
@@ -2691,7 +2702,7 @@ WMCHAT = Vue.component('wm-chat', {
 </div>
     </transition>
 <transition name="fade" mode="out-in">
-    <div class="bodyChatEnviar">
+    <div v-if="this.dataExibeMandar" class="bodyChatEnviar">
         <div class="wrapperImagemBC">
             <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
         </div>

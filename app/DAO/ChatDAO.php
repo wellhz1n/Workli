@@ -113,6 +113,8 @@ class ChatDAO
             U.id as id_usuario,
             U.nome,
             IU.imagem as imagem_usuario,
+            SV.situacao as situacao_servico,
+            P.situacao as situacao_proposta,
             (select count(MCH.id_chat_mensagens) from chat_mensagens MCH where MCH.id_chat = CH.id_chat and 
             (MCH.id_usuario_remetente = ? or MCH.id_usuario_destinatario = ?) ) as MSG,
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
@@ -122,6 +124,7 @@ class ChatDAO
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
             left join imagem_usuario IU on IU.id_usuario = U.id  
+            left join proposta P on P.idServico = SV.id 
             where CM.id_usuario_remetente = ?
             order by MSG DESC,postado
             ", [$id_usuario, $id_usuario, $id_usuario]);
@@ -137,6 +140,7 @@ class ChatDAO
             U.nome,
             CH.id_chat,
             IU.imagem as imagem_usuario,
+            SV.situacao as situacao_servico,
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from servico SV 
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
@@ -164,11 +168,15 @@ class ChatDAO
     public function GetListaDeContatosConversa($id_chat, $id_usuario)
     {
         $sql = Sql(
-            "
-        select distinct  u.id,u.nome,im.imagem from chat_mensagens cm 
+            "select distinct  u.id,u.nome,im.imagem,P.situacao as situacao_proposta from 
+        chat_mensagens cm 
         inner join usuarios u on u.id  = cm.id_usuario_remetente 
+       
         left join imagem_usuario im  on im.id_usuario  = u.id 
-        where cm.id_chat  = ? and cm.id_usuario_destinatario = ?",
+        inner join chat C on C.id_chat = cm.id_chat
+        left join proposta P on P.idServico = C.id_servico and P.idCliente = u.id
+      where cm.id_chat  = ? and cm.id_usuario_destinatario = ?
+        ",
             [$id_chat, $id_usuario]
         );
         return $sql->resultados;

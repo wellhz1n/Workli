@@ -171,11 +171,14 @@
 }
 
 .selecionado {
-    opacity: 0.7;
-    filter: hue-rotate(282deg);
-    box-shadow: 0px 0px 10px 3px var( --verde-padrao);
+    box-shadow: 1px 2px 11px 5px #00ffffd9;
 }
 
+.ItemProjetoChat.selecionado .ImagemItemProjeto {
+    transform: scale(1.2, 1.2);
+    filter: grayscale(0.5);
+    filter: brightness(0.5);
+}
 .scroolChatProjeto::-webkit-scrollbar {
     width: 12px;
     cursor: pointer;
