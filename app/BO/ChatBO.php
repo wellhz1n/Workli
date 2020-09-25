@@ -108,6 +108,10 @@ class ChatBO
     {
         return $this->ChatDAO->NovoChat($id_chat, $id_servico);
     }
+    public function GetChatPorIdServicoSingle($idServico){
+        $id =  $this->ChatDAO->GetChatPorServicoSimgle($idServico);
+        return $id == null? $id: json_decode($id);
+    }
     #endregion
     #region TelaChat
     public function BuscaServicos()

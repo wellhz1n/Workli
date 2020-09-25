@@ -2521,6 +2521,7 @@ WMCHAT = Vue.component('wm-chat', {
             MensagemDigitada: null,
             idUsusarioContexto: null,
             carregando: true,
+            primeiraVez: true,
             idusuariodestinatariodata: -1,
             dataHeigth: ''
         }
@@ -2535,8 +2536,8 @@ WMCHAT = Vue.component('wm-chat', {
                 this.dataMensagens = ChatSeparatorGenerator([...Array.from(this.dataMensagens), mensagem]);
                 this.MensagemDigitada = null;
                 setTimeout(() => {
-                    let scro = document.getElementById('bodyChatChat')
-                    scro.scrollTop = scro.scrollHeight - scro.clientHeight;
+                    var container = this.$el.querySelector("#bodyChatChat");
+                    container.scrollTop = container.scrollHeight;
 
                 }, 1);
                 this.$emit('novamensagem', mensagem);
@@ -2547,19 +2548,14 @@ WMCHAT = Vue.component('wm-chat', {
         }
     },
     async beforeMount() {
+        this.carregando = true;
         this.idUsusarioContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
         this.imagemUsuario = await GetSessaoPHP(SESSOESPHP.FOTO_USUARIO);
-        this.carregando = false;
-        await setTimeout(() => {
-            let scro = document.getElementById('bodyChatChat')
-            scro.scrollHeight + 78;
-            scro.scrollTop = scro.scrollHeight;
 
-        }, .1);
     },
     mounted() {
-
-
+        var container = this.$el.querySelector("#bodyChatChat");
+        container.scrollTop = container.scrollHeight;
     },
     watch: {
         mensagens: {
@@ -2567,6 +2563,7 @@ WMCHAT = Vue.component('wm-chat', {
             deep: true,
             handler(nv, ov) {
                 if (nv != undefined || nv != null) {
+                    this.carregando = this.primeiraVez
                     let visualizou = false;
                     nv.map((item, index) => {
                         if (ov != undefined && ov.length == 0)
@@ -2584,19 +2581,22 @@ WMCHAT = Vue.component('wm-chat', {
                         setTimeout(() => {
                             if (ov != undefined || ov != null) {
                                 if (nv.length != ov.length) {
+                                    if (!this.carregando) {
+                                        var container = this.$el.querySelector("#bodyChatChat");
+                                        container.scrollTop = container.scrollHeight;
 
-                                    let scro = document.getElementById('bodyChatChat')
-                                    scro.scrollHeight + 78;
-                                    scro.scrollTop = scro.scrollHeight;
+                                    }
                                 }
                             }
                             return
 
-                        }, .1);
+                        }, 600);
                     }
                 } else
                     this.dataMensagens = [];
 
+                this.primeiraVez = false;
+                this.carregando = false;
             }
         },
         userpropostaimage: {
@@ -2619,12 +2619,15 @@ WMCHAT = Vue.component('wm-chat', {
             handler(nv) {
                 this.dataHeigth = nv;
             }
-        }
+        },
     },
     template: `
-    <div v-if="!carregando" style="width: 100%;" >
-    <div id="bodyChatChat" :style="{height:dataHeigth}">
-    <div v-for="item in this.dataMensagens">
+    <transition name="fade" mode="out-in">
+    <div :key="0" v-if="!this.carregando" style="width: 100%;" >
+    <transition name="fade" mode="out-in">
+    <div :key="0" id="bodyChatChat" :style="{height:dataHeigth}">
+    <transition-group name="fade" mode="out-in">
+    <div :key="item.msg" v-for="item in this.dataMensagens">
     <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>
     <div v-if="item.tipo == 'msg' && item.automatica != 1 && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
         <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
@@ -2680,10 +2683,14 @@ WMCHAT = Vue.component('wm-chat', {
     </div>
     </div>
 </div>
-    <div id="ancora">
+</transition-group>
 
-    </div>
+<div id="ancora">
+
 </div>
+</div>
+    </transition>
+<transition name="fade" mode="out-in">
     <div class="bodyChatEnviar">
         <div class="wrapperImagemBC">
             <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
@@ -2695,12 +2702,14 @@ WMCHAT = Vue.component('wm-chat', {
             </div>
             </div>
     </div>
+    </transition>
 
 </div>
 </div>
-<div v-else>
+<div :key="1" v-else style="margin-top: 25%;">
     <wm-loading></wm-loading>
 </div>
+</transition>
     `
 });
 

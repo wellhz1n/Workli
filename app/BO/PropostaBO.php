@@ -12,6 +12,9 @@ require_once("../Classes/BOGeneric.php");
 require_once("../DAO/ProjetoDAO.php");
 require_once("../BO/CarteiraBO.php");
 require_once("../Enums/PlanosEnum.php");
+require_once("../BO/ChatBO.php");
+require_once("../Classes/ChatMensagem.php");
+
 
 
 #endregion
@@ -32,6 +35,15 @@ class PropostaBO extends BOGeneric
         if ($proposta->Id == -1) {
             $proposta->Id = GetNextID('proposta');
         }
+        $ChatBO = new ChatBO();
+        $MSG = new ChatMensagem();
+        $idchat = $ChatBO->GetChatPorIdServicoSingle($proposta->IdServico);
+        $MSG->id_chat = $idchat != null?$idchat:-1;
+        $MSG->automatica = 1;
+        $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
+        $MSG->id_usuario_destinatario = $proposta->IdCliente;
+        $MSG->msg = "Proposta Enviada";
+        $ChatBO->NovaMensagem($MSG,$proposta->IdServico);
         $this->PropostaDAO->Salvar($proposta);
         return true;
     }
@@ -128,6 +140,15 @@ class PropostaBO extends BOGeneric
                     TipoNotificacaoEnum::
                     DEFAULT
                 );
+                $ChatBO = new ChatBO();
+                $MSG = new ChatMensagem();
+                $idchat = $ChatBO->GetChatPorIdServicoSingle($idservico);
+                $MSG->id_chat = $idchat != null?$idchat:-1;
+                $MSG->automatica = 1;
+                $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
+                $MSG->id_usuario_destinatario = $idcliente;
+                $MSG->msg = "Projeto Em Andamento";
+                $ChatBO->NovaMensagem($MSG,$idservico);
                 $_ProjetoDAO =  new ProjetoDAO();
                 $_ProjetoDAO->SetProjetoSituacao($idservico, 2);
 
@@ -165,6 +186,15 @@ class PropostaBO extends BOGeneric
                     $this->GetUsuarioContexto(),
                     TipoNotificacaoEnum::SUCCESS
                 );
+                $ChatBO = new ChatBO();
+                $MSG = new ChatMensagem();
+                $idchat = $ChatBO->GetChatPorIdServicoSingle($idservico);
+                $MSG->id_chat = $idchat != null?$idchat:-1;
+                $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
+                $MSG->id_usuario_destinatario = $idcliente;
+                $MSG->automatica = 1;
+                $MSG->msg = "Projeto Concluido";
+                $ChatBO->NovaMensagem($MSG,$idservico);
                 $_ProjetoDAO =  new ProjetoDAO();
                 $_ProjetoDAO->SetProjetoSituacao($idservico, 4);
                 break;
