@@ -14,6 +14,11 @@ class ChatDAO
         $saida = Sql("select * from chat where id_servico = ?", [$id_servico]);
         return $saida->resultados;
     }
+
+    public function GetChatPorServicoSimgle($idServico){
+        $saida = Sql("select id_chat from chat where id_servico = ?", [$idServico]);
+        return count($saida->resultados) != 0 ? $saida->resultados[0]["id_chat"]: null ;
+    }
     #endregion
     #region CHAT_MENSAGENS CRUD
     public function NovaMensagem(ChatMensagem $NMensagem)

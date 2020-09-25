@@ -1136,7 +1136,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     border-top-left-radius: 30px 100%;
     border-bottom-right-radius: 30px 100%;
     border-top-right-radius: 30px 100%;
-    padding: 5px 2% 5px 5%;
+    padding: 5px 2% 5px 1%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1178,6 +1178,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin: 10px 2% 5px;
     overflow-y: scroll;
     overflow-anchor: none;
+    scroll-behavior: smooth;
 }
 
 

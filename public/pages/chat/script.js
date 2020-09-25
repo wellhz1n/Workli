@@ -1,4 +1,4 @@
-$(document).ready(async() => {
+$(document).ready(async () => {
     //REDIRECIONAR PARA CLIENTE
     //RediredionarComParametros('chat',[{chave:'id_chat',valor:3},{chave:'id',valor:7}])
     //PARA FUNCIONARIO NESCESSITA ID_CHAT E ID DO FUNCIONARIO
@@ -30,13 +30,13 @@ $(document).ready(async() => {
 
     if (Parametros.length > 0) {
         if (Parametros[0].id_chat != undefined) {
-            await dataVue.ListaDeProjetos.map(async(item) => {
+            await dataVue.ListaDeProjetos.map(async (item) => {
                 if (item.id_chat == Parametros[0].id_chat)
                     await ProjetoClick(item)
             });
         }
-        if(Parametros[0].P !== undefined){
-            await dataVue.ListaDeProjetos.map(async(item) => {
+        if (Parametros[0].P !== undefined) {
+            await dataVue.ListaDeProjetos.map(async (item) => {
                 if (item.id_servico == Parametros[0].P)
                     await ProjetoClick(item)
             });
@@ -61,7 +61,7 @@ $(document).ready(async() => {
         dataVue.MostraChat = true;
         dataVue.menuLateral = false;
         dataVue.HeaderTitulo = 'Conversa com: <p class="m-0 p-0 ml-1" style="font-size:17px"><b style="color:red">' + dataVue.ConversaSelecionada.nome + '</b></p>';
-        ChatTimeInterval = setInterval(async() => {
+        ChatTimeInterval = setInterval(async () => {
             await BuscaMensagem(dataVue.ConversaSelecionada.id);
         }, 1500);
     }
@@ -82,15 +82,15 @@ $(document).ready(async() => {
             await BuscaMensagem(dataVue.ChatSelecionado.id_usuario);
             dataVue.MostraChat = true;
             dataVue.menuLateral = false;
-            ChatTimeInterval = setInterval(async() => {
+            ChatTimeInterval = setInterval(async () => {
                 await BuscaMensagem(dataVue.ChatSelecionado.id_usuario);
             }, 1500);
         } else if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0) {
-            dataVue.HeaderTitulo = "Selecione Uma Conversa";
             dataVue.ListaDeConversas = await WMExecutaAjax("ChatBO", "GetListaContatos", {
                 ID_CHAT: dataVue.ChatSelecionado.id_chat == null ?
                     -1 : dataVue.ChatSelecionado.id_chat
             });
+            BackButton();
             dataVue.menuLateral = false;
             if (Parametros.length > 0) {
                 if (Parametros[1].id != undefined) {
