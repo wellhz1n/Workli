@@ -1941,12 +1941,87 @@ textarea::-webkit-scrollbar-thumb:hover {
 /*#endregion Card de Usuário*/
 
 /* #region ModalConfirmar*/
-.botaoC{
-    margin-left: 12px;
-}
 .botaoS{
     margin-left: 12px;
 }
 
-
 /* #endregion ModalConfirmar*/
+
+
+
+
+/*#region Modal de Atribuir Projeto --------- */
+
+.tituloModalAtribuirP {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins-Bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: rgb(8, 8, 24);
+    margin: 15px 0;
+}
+
+.modalAtribuirBody {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 2% 15px;
+}
+
+.meuProjetoCard {
+    border-radius: 10px;
+    background: url("../../src/img/background/backgroundB2.png");  
+    color: white;
+    padding: 10px 4%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.projetoCardDinheiro {
+    color: #08ab08;
+    font-family: Poppins-Bold;
+}
+
+.projetoCardNome {
+    font-family: Poppins-Bold;
+}
+
+.projetoCardTempo {
+    margin-top: 2px;
+    color: #e2e2e2;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.projetoCardBolinha {
+    color: #e2e2e2;
+    margin: 0 1%;
+}
+
+.projetoCardTamanho {
+    font-size: 13px;
+    font-family: Poppins-Bold;
+}
+
+.nomeTamanhoWrapperPC {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.informacoesDireitaPC {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.tempoPC {
+    margin-left: 10%;
+}
+/*#endregion --------------------------------*/

@@ -217,14 +217,27 @@ class ProjetoDAO
         }
         return [$resultados->resultados, $paginas];
     }
+
+
     public function CancelaProjeto($idProjeto){
         $sql = "update servico set situacao = 3 where id = ?";
         return Update($sql,[$idProjeto]);
     }
+
+    
     public function GetProjetoByIdComView($id,$idUsuario){
         $sql = "SELECT * FROM PROJETOS_VIEW WHERE ID = ? AND id_usuario = ?";
         $resultados = Sql($sql,[$id,$idUsuario]);
         return count($resultados->resultados)  == 1?$resultados->resultados[0]:null;
+    }
+
+    public function BuscaMeusProjetosReduzido($idUsuario)
+    {
+        $sql = "
+        SELECT id, nome, valor, nivel_projeto, postado FROM PROJETOS_VIEW 
+        WHERE ID_USUARIO = ? AND situacao = 0";
+        $resultados = Sql($sql, [$idUsuario]);
+        return $resultados->resultados;
     }
     #endregion
 }

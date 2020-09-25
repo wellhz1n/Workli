@@ -68,20 +68,22 @@
     </div>
     <div class="row justify-content-center text-center">
         <div id="imgcontainer">
-            <wm-user-img 
-                :img="dataVue.Usuario.imagem" 
-                :width="'14.2vw'" 
-                :height="'14.2vw'" 
-                :editavel="dataVue.editavel"
-                @aberto-modal="v => dataVue.abremodal(v)" 
-                @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
-                :imgcropada="dataVue.imagemCropadaUsuario"
-                @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
-                class_icone="iconeUsuarioTamanho"
-                :id_usuario="dataVue.idGeral"
-            />
+            <div v-if="dataVue.Usuario" class="d-contents">
+                <wm-user-img 
+                    :img="dataVue.Usuario.imagem" 
+                    :width="'14.2vw'" 
+                    :height="'14.2vw'" 
+                    :editavel="dataVue.editavel"
+                    @aberto-modal="v => dataVue.abremodal(v)" 
+                    @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
+                    :imgcropada="dataVue.imagemCropadaUsuario"
+                    @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
+                    class_icone="iconeUsuarioTamanho"
+                    :id_usuario="dataVue.idGeral"
+                />
             </div>
         </div>
+    </div>
     <div v-if="dataVue.nivelUsuario == 1" class="d-contents">
         <div class='wrapperStarRating'>
             <star-rating 
@@ -158,7 +160,7 @@
             </div>
         </div>
         <div v-if="dataVue.nivelUsuario == 1" class="d-contents">
-            <div class="col-3 p-0">
+            <div class="col-3 p-0 paddingCardInterno">
                 <div class="cardQuadrado cemXcem max-heighto" id="statusCard">
                     <div class="cardQuadradoHeader">
                         <div class="cardQuadradoTitulo">
@@ -190,9 +192,25 @@
                         </div>
                         <div v-if="dataVue.editavel" class="d-contents">
                             <div class="wrapperUpgradeButton">
-                                <button id="upgrade" @click="() => {dataVue.abremodalPlanos()}">UPGRADE</button>
+                                <button class="botaoContratar mb-2" @click="() => {dataVue.abremodalPlanos()}"><i class="fas fa-pencil-alt"></i> Upgrade</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="dataVue.nivelUsuario == 1 && !dataVue.editavel" class="d-contents">
+            <div class="col-2 p-0">
+                <div class="cardQuadrado cemXcem max-heighto cardContratar">
+                    <div class="cardQuadradoHeader">
+                        <div class="cardQuadradoTitulo">
+                            Contratar
+                        </div>
+                    </div>
+                    <div class="cardQuadradoBody cardContratarBody">
+                        <div class="tituloContratar">Mande um projeto para este funcionário analisar.</div>
+                        <button class="botaoContratar mb-2" @click="() => {dataVue.abremodalContratar()}"><i class="fas fa-pencil-alt"></i> Contratar</button>
                     </div>
                 </div>
             </div>
@@ -379,7 +397,7 @@
     :visivel="dataVue.modalVisivelCarteira" 
     :callback="dataVue.callbackCarteira"
     height="40%"
-    width="80%"
+    width="40%"
 >
     <template v-slot:header>
         <div class="tituloModalCarteira">
@@ -480,14 +498,87 @@
 
 <!-- ---------------------------------------------------------------------------- -->
 
+<!-- Modal de Contratar Funcionário ------------------------------------------------------ -->
+
+<wm-modal 
+    id="modalContratar"
+    :visivel="dataVue.modalVisivelContratar" 
+    :callback="dataVue.callbackContratar"
+    height="30%"
+    width="50%"
+>
+    <template v-slot:header>
+        <div class="tituloModalContratar">
+            CONTRATAR FUNCIONÁRIO
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="contratarModalBody">
+            <button class="botaoContratar botaoContratarModal mb-4" @click="() => {dataVue.abremodalAtribuirP()}"><i class="fas fa-arrow-up"></i> Atribuir Projeto Existente</button>
+            <button class="botaoContratar botaoContratarModal mb-4"><i class="fas fa-plus"></i> Criar Novo Projeto</button>
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div>
+    </template>
+</wm-modal>
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+
+<!-- Modal de Atribuir Projeto --------------------------------------------------------- -->
+
+<wm-modal 
+    id="modalAtribuirProjeto"
+    :visivel="dataVue.modalVisivelAtribuirP" 
+    :callback="dataVue.callbackAtribuirP"
+    height="60%"
+    width="60%"
+>
+    <template v-slot:header>
+        <div class="tituloModalAtribuirP">
+            SELECIONE O PROJETO PARA MANDAR
+        </div>
+    </template>
+    <template v-slot:body>
+        <div class="modalAtribuirBody">
+            <div v-if="dataVue.meusProjetos == {} && dataVue.meusProjetos == undefined" class="d-contents">
+                <wm-error mensagem="Nenhum projeto encontrado. Crie um na aba de criar projetos." /> 
+            </div> 
+            <div v-else class="d-contents">
+                <wm-card-atribuir-projeto 
+                    :dados_usuario="item" 
+                    v-for="item in dataVue.meusProjetos"
+                    @card-selecionado="(id) => {dataVue.mandarPropostaUsuario(id)}"
+                ></wm-card-atribuir-projeto>
+            </div>
+        </div>
+    </template>
+    <template v-slot:footer>
+        <div></div>
+    </template>
+</wm-modal>
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+
+
 
 
 <!-- Modal de Confirmação -->
-<wm-modal-confirmacao
+<wm-modal-botoes-generico
     id="modalConfirmacao"
     :visivel="dataVue.modalVisivelControllerConfirmacao" 
     @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
-></wm-modal-confirmacao>
+    :text_botao_salvar="dataVue.atribuirProjetoConfirmacao"
+>
+    <template v-if="dataVue.atribuirProjetoConfirmacao != ''" v-slot:titulo>
+        ENVIAR PROJETO    
+    </template>
+    <template v-if="dataVue.atribuirProjetoConfirmacao != ''" v-slot:descricao>
+                    Você deseja enviar este projeto para o funcionário?
+    </template>
+</wm-modal-botoes-generico>
 
 <!-- Modal de Crop -->
 <wm-crop-modal 
@@ -497,3 +588,6 @@
     @fechar-modal="() => {dataVue.fechamodal()}"
     :configs="dataVue.configuracoesCrop"
 />
+
+
+
