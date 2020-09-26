@@ -47,11 +47,30 @@ $(document).ready(async () => {
     dataVue.menuLateral = Parametros.length > 0 ? false : true;
     DesbloquearTela();
 
-    function BackButton() {
+    document.addEventListener("BuscaNotificacao", async (e, d) => {
+        dataVue.ListaDeProjetos = await WMExecutaAjax("ChatBO", "BuscaServicosChat");
+        if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && dataVue.ChatSelecionado != null)
+            dataVue.ListaDeConversas = await WMExecutaAjax("ChatBO", "GetListaContatos", {
+                ID_CHAT: dataVue.ChatSelecionado.id_chat == null ?
+                    -1 : dataVue.ChatSelecionado.id_chat
+            });
+    })
+
+
+
+
+
+    async function BackButton() {
         dataVue.MostraChat = false;
         dataVue.ConversaSelecionada = null;
         dataVue.Mensagens = [];
         dataVue.HeaderTitulo = "Selecione Uma Conversa";
+        dataVue.ListaDeProjetos = await WMExecutaAjax("ChatBO", "BuscaServicosChat");
+        if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0 && dataVue.ChatSelecionado != null)
+            dataVue.ListaDeConversas = await WMExecutaAjax("ChatBO", "GetListaContatos", {
+                ID_CHAT: dataVue.ChatSelecionado.id_chat == null ?
+                    -1 : dataVue.ChatSelecionado.id_chat
+            });
         clearInterval(ChatTimeInterval);
     }
     async function ConversaClick(item) {
@@ -64,15 +83,19 @@ $(document).ready(async () => {
         ChatTimeInterval = setInterval(async () => {
             await BuscaMensagem(dataVue.ConversaSelecionada.id);
         }, 1500);
+        setTimeout(async () => {
+            dataVue.ListaDeProjetos = await WMExecutaAjax("ChatBO", "BuscaServicosChat");
+        }, 1000);
     }
     async function ProjetoClick(item, e) {
-        if (item == dataVue.ChatSelecionado && e != undefined) {
+        if (dataVue.ChatSelecionado != null && item.id_chat == dataVue.ChatSelecionado.id_chat && e != undefined) {
             clearInterval(ChatTimeInterval);
             dataVue.MostraChat = false;
             dataVue.ChatSelecionado = null;
             dataVue.ListaDeConversas = [];
             ChatTimeInterval = null;
             dataVue.HeaderTitulo = "Selecione Um Projeto";
+            dataVue.ListaDeProjetos = await WMExecutaAjax("ChatBO", "BuscaServicosChat");
             return;
         }
         dataVue.ChatSelecionado = item;
@@ -85,12 +108,15 @@ $(document).ready(async () => {
             ChatTimeInterval = setInterval(async () => {
                 await BuscaMensagem(dataVue.ChatSelecionado.id_usuario);
             }, 1500);
+            setTimeout(async () => {
+                dataVue.ListaDeProjetos = await WMExecutaAjax("ChatBO", "BuscaServicosChat");
+            }, 1500);
         } else if (dataVue.UsuarioContexto.NIVEL_USUARIO == 0) {
             dataVue.ListaDeConversas = await WMExecutaAjax("ChatBO", "GetListaContatos", {
                 ID_CHAT: dataVue.ChatSelecionado.id_chat == null ?
                     -1 : dataVue.ChatSelecionado.id_chat
             });
-            BackButton();
+            await BackButton();
             dataVue.menuLateral = false;
             if (Parametros.length > 0) {
                 if (Parametros[1].id != undefined) {
@@ -114,6 +140,7 @@ $(document).ready(async () => {
                 return x;
             });
         }
+
     }
     async function NovaMensagem(mensagem = MensagemEntidade()) {
         try {

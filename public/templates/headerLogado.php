@@ -155,37 +155,22 @@
             <div class="dropdown-divider"></div>
             <div class="row">
               <div class="col-5 mr-3  ">
-                <a 
-                  style="font-size: 14px" 
-                  class="dropdown-item" 
-                  id="MenuPerfil" 
-                  style="cursor: pointer;"  
-                  :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id"
-                >
+                <a style="font-size: 14px" class="dropdown-item" id="MenuPerfil" style="cursor: pointer;" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">
                   Meu perfil
                 </a>
                 <?php
                 if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
                 ?>
-                  <a 
-                    style="font-size: 14px" 
-                    class="dropdown-item"
-                    @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" 
-                    style="cursor: pointer"
-                  >
+                  <a style="font-size: 14px" class="dropdown-item" @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" style="cursor: pointer">
                     Minhas Propostas
                   </a>
-                <?php } ?>  
+                <?php } ?>
               </div>
               <div class="col-5 text-wrap">
                 <?php
                 if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
                 ?>
-                  <a 
-                    style="font-size: 14px; cursor: pointer;" 
-                    class="dropdown-item"
-                    :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'"
-                  >
+                  <a style="font-size: 14px; cursor: pointer;" class="dropdown-item" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'">
                     Minhas competências
                   </a>
                 <?php } ?>
@@ -251,10 +236,9 @@
 if (Logado()[1] == '2')
   require('admSideBar.php');
 ?>
-<script  type="application/javascript">
+<script type="application/javascript">
   $(document).ready(async () => {
     var NotificacaoInterval = null
-    var Evento = new CustomEvent("BuscaNotificacao");
     //#region Vue
     app.$set(dataVue, 'DropOpen', false);
     app.$set(dataVue, 'DropCarregando', false);
@@ -336,6 +320,7 @@ if (Logado()[1] == '2')
           $($(".notifyredBall")[0]).html(num > 9 ? `9<sup>+</sup>` : num);
           $($(".notifyredBall")[0]).removeAttr('hidden');
           if (num != valorAnterior) {
+            var Evento = new CustomEvent("BuscaNotificacao", {});
             document.dispatchEvent(Evento);
             app.dataVue.NotificacaoNumero = num;
             valorAnterior = num;
@@ -351,6 +336,6 @@ if (Logado()[1] == '2')
 
 
 
-    
+
   });
 </script>
