@@ -277,6 +277,19 @@ if (Logado()[1] == '2')
           }])
         }
 
+      } else if (i.tipo == "6") {
+
+        let parametrosSeparados = {};
+
+        for (const key of i.parametros.split(";")) {
+          let chaveSeparada = key.split("=");
+          parametrosSeparados[key.split("=")[0]] = chaveSeparada[1];
+        }
+        
+        RedirecionarComParametros(parametrosSeparados["page"], [{
+            chave: 'id_projeto',
+            valor: parametrosSeparados.idProjeto
+        }]);
       }
 
     })
@@ -294,7 +307,6 @@ if (Logado()[1] == '2')
       WMExecutaAjax("NotificacoesBO", "BuscaNotificacoesFormatado", {}, true, true).then(Resultado => {
         if (Resultado.error == undefined) {
           app.dataVue.DropLista = Resultado;
-
         }
         app.dataVue.DropCarregando = false;
 

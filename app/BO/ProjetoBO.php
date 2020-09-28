@@ -6,7 +6,8 @@ require_once("../Enums/SecoesEnum.php");
 require_once("../functions/Session.php");
 require_once("../functions/Conexao.php");
 require_once("../Classes/BOGeneric.php");
-
+require_once("../BO/NotificacoesBO.php");
+require_once("../Enums/TipoNotificacaoEnum.php");
 
 
 class ProjetoBO extends BOGeneric
@@ -189,6 +190,26 @@ class ProjetoBO extends BOGeneric
         $obj->lista = $dados;
         return $obj;
     }
+
+    public function MandaMensagemFunc($informacoes)
+    {
+        
+        $_NotificacaoBO = new NotificacoesBO();
+
+        $_NotificacaoBO->NovaNotificacao(
+            "O cliente <strong style='color: yellow;'>{$informacoes['nomeCliente']}</strong> requisitou seus serviços.",
+            "Clique para acessar o projeto <strong style='color: yellow; opacity: 1;'>{$informacoes['projetoTitulo']}</strong>.",
+            $informacoes["idFuncionario"],
+            $this->GetUsuarioContexto(),
+            TipoNotificacaoEnum::PROPOSTA_RECEBIDA,
+            null,
+            null,
+            "page=buscaservicos;idProjeto=" . $informacoes["idProjeto"]
+
+        );
+
+        return true;
+    }
     #endregion
 
 }
@@ -251,6 +272,15 @@ try {
 
         if ($metodo == "BuscaMeusProjetosReduzido") {
             echo json_encode($ProjetoBO->BuscaMeusProjetosReduzido());
+        }
+
+        if ($metodo == "MandaMensagemFunc") {
+            if (isset($_POST['informacoes'])) {
+                $informacoes = $_POST['informacoes'];
+                echo json_encode($ProjetoBO->MandaMensagemFunc($informacoes));
+            } else {
+                throw new Exception("Informações necessárias.");
+            }
         }
     }
 } catch (Throwable $ex) {

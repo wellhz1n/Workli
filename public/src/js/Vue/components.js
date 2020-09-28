@@ -2854,6 +2854,7 @@ WMNotify = Vue.component('wm-notify', {
                     icone: ['fas']
                 };
                 switch (contexto.dataTipo) {
+                    
                     case TipoNotificacao.ERROR:
                         classeBase.classe.push('Red1');
                         classeBase.icone.push("fa-times");
@@ -2874,6 +2875,11 @@ WMNotify = Vue.component('wm-notify', {
                         classeBase.classe.push('Yellow1');
                         classeBase.icone.push("fa-exclamation-triangle");
                         break;
+                    case TipoNotificacao.PROPOSTA_RECEBIDA:
+                        classeBase.classe.push('Blue2');
+                        classeBase.classe.push(' propostaRecebida');
+                        classeBase.icone.push("fa-file-signature");
+                        break;
                     default:
                         classeBase.icone.push("fa-info");
                         break;
@@ -2886,29 +2892,32 @@ WMNotify = Vue.component('wm-notify', {
     },
     template: `
             <div :class="NotificacaoClasse.classe">
-                    <div class="ItemNotificacaoIcone">
+                <div class="ItemNotificacaoIcone">
                     <span v-show="this.dataTipo == 0">
-                     <i class="fas fa-info"></i>
-                     </span>
-                     <span v-show="this.dataTipo == 1">
-                     <i class="fas fa-comment-dollar"></i>
-                     </span>
-                     <span v-show="this.dataTipo == 2">
-                     <i class="fas fa-comments"></i>
-                     </span>
-                     <span v-show="this.dataTipo == 3">
-                     <i class="fas fa-exclamation-triangle"></i>
-                     </span>
-                     <span v-show="this.dataTipo == 4">
-                     <i class="fas fa-times"></i>
-                     </span>
-                     <span v-show="this.dataTipo == 5">
-                     <i class="fas fa-check"></i>
-                     </span>
-                    </div>
-                    <div class="DadosNotificacao">
+                        <i class="fas fa-info"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 1">
+                        <i class="fas fa-comment-dollar"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 2">
+                        <i class="fas fa-comments"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 3">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 4">
+                        <i class="fas fa-times"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 5">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span v-show="this.dataTipo == 6">
+                        <i class="fas fa-file-signature"></i>
+                    </span>
+                </div>
+                <div class="DadosNotificacao">
                     <div class="TituloNotificacao ">
-                        <p class="m-0 font_Poopins_B">{{this.dataTitulo}}</p>
+                        <p class="m-0 font_Poopins_B" v-html="this.dataTitulo"></p>
                     </div>
                     <div class="DadosSubtitulo" v-if="this.dataSubtitulo.titulo != '' && this.dataSubtitulo.descricao != '' ">
                         <p class="m-0 font_Poopins_SB" >{{this.dataSubtitulo.titulo}}</p>
@@ -2920,7 +2929,7 @@ WMNotify = Vue.component('wm-notify', {
                     <div class="hora">
                         <p class="m-0 font_Poopins_B"><i class="far fa-clock"></i>{{this.dataHora}}</p>
                     </div>
-                    </div>
+                </div>
             </div>
     `
 });
@@ -3763,7 +3772,7 @@ var WMCARDATRIBUIRPROJETO = Vue.component('wm-card-atribuir-projeto', {
             this.faixaDePreco = Valores[this.dados_usuario["valor"]].toUpperCase();
         },
         mandarDados() {
-            this.$emit("card-selecionado", this.dados_usuario["id"])
+            this.$emit("card-selecionado", [this.dados_usuario["id"], this.dados_usuario["nome"]])
         }
     },
 

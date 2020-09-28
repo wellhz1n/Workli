@@ -31,6 +31,7 @@ class NotificacoesDAO
                     N.id_usuario_criacao as id_usuario_criacao,
                     N.data_hora as data_hora,
                     N.visto as visto,
+                    N.parametros as parametros,
                     0 as patrocinado,
                     0 as destacado
             from notificacoes N where N.id_usuario = ? {$visto}
@@ -49,6 +50,7 @@ class NotificacoesDAO
                     CM.id_usuario_remetente as id_usuario_criacao,
                     CM.data_hora as data_hora,
                     CM.visualizado as visto,
+                    0 as parametros,
                     0 as patrocinado,
                     0 as destacado
             from  chat_mensagens CM
@@ -68,6 +70,7 @@ class NotificacoesDAO
                 UC.id as id_usuario,
                 U.id as id_usuario_criacao,
                 P.data_criacao  as data_hora,
+                0 as parametros,
                 case P.situacao 
                 when 0 then 0
                 else 1 
@@ -169,7 +172,7 @@ class NotificacoesDAO
             where CM.id_usuario_destinatario = ? and CM.visualizado = 0 and CM.automatica = 0
             )
             {$apenasChat}
-           {$mostraChat}
+            {$mostraChat}
             order by data_hora desc;
         ";
         $result = Sql($sql, [$idUsuario, $idUsuario]);
@@ -210,8 +213,8 @@ class NotificacoesDAO
             $notificacao->id = GetNextID("notificacoes");
             $saida = Insert(
                 "insert into 
-           notificacoes(id,titulo,descricao,id_projeto,id_chat,id_usuario,id_usuario_criacao,tipo)
-           values(?,?,?,?,?,?,?,?)",
+           notificacoes(id, titulo, descricao, id_projeto, id_chat, id_usuario, id_usuario_criacao, tipo, parametros)
+           values(?,?,?,?,?,?,?,?,?)",
                 [
                     $notificacao->id,
                     $notificacao->titulo,
@@ -220,13 +223,14 @@ class NotificacoesDAO
                     $notificacao->id_chat,
                     $notificacao->id_usuario,
                     $notificacao->id_usuario_criacao,
-                    $notificacao->tipo
+                    $notificacao->tipo,
+                    $notificacao->parametros
                 ]
             );
         } else {
             $saida = Update(" Update notificacoes
                                 titulo = ?,
-                                descricacao = ?,
+                                descricao = ?,
                                 tipo = ?
                                 where id = ?", [
                 $notificacao->titulo,

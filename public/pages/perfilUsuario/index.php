@@ -141,14 +141,12 @@
                     <div class="nomeEProfCP">
                         <div id="nomeCP">
                         </div>
-                        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
-                            <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados.profissao">
-                                <span class="profCPBolinha">•</span>
-                                <div id="profCP"> 
-                                    {{dataVue.usuarioDados.profissao}}
-                                </div>
+                        <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != ''">
+                            <span class="profCPBolinha">•</span>
+                            <div id="profCP"> 
+                                {{dataVue.usuarioDados.profissao}}
                             </div>
-                        <?php }; ?>
+                        </div>
                     </div>
                     <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
                         <div id="tagsCPWrapper">
@@ -549,7 +547,7 @@
                 <wm-card-atribuir-projeto 
                     :dados_usuario="item" 
                     v-for="item in dataVue.meusProjetos"
-                    @card-selecionado="(id) => {dataVue.mandarPropostaUsuario(id)}"
+                    @card-selecionado="(info) => {dataVue.mandarPropostaUsuario(info[0], info[1])}"
                 ></wm-card-atribuir-projeto>
             </div>
         </div>

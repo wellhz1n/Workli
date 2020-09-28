@@ -91,6 +91,7 @@ class NotificacoesBO
             } else
                 array_push($novoArr, $resultado[$key]);
         }
+        
         $this->NotificacoesDAO->UpdateVistoVariasNotificacoes($arrayVisualizar);
         CriaSecao(SecoesEnum::NOTIFICACOES, json_encode($novoArr));
         return $novoArr;
@@ -138,9 +139,9 @@ class NotificacoesBO
         $obj->lista = $novoArr;
         return $obj;
     }
-    public function NovaNotificacao($titulo, $descricao, $idUsuario, $idUsuarioCriacao, $tipo, $idProjeto = null, $idChat = null)
+    public function NovaNotificacao($titulo, $descricao, $idUsuario, $idUsuarioCriacao, $tipo, $idProjeto = null, $idChat = null, $parametros = "")
     {
-        $Notificacao = new Notificacao(-1, $descricao, $titulo, $idProjeto, $idChat, $idUsuario, $idUsuarioCriacao, null, $tipo);
+        $Notificacao = new Notificacao(-1, $descricao, $titulo, $idProjeto, $idChat, $idUsuario, $idUsuarioCriacao, null, $tipo, $parametros);
         return $this->NotificacoesDAO->SalvarAtualizarNotificacao($Notificacao);
     }
 }

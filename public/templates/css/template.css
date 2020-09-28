@@ -263,9 +263,6 @@
   color: white;
 }
 
-.TituloNotificacao {
-}
-
 .descricaoNotificacao {
   font-size: 12px;
   opacity: 0.8;
@@ -273,6 +270,10 @@
 
 .Blue1 {
   background: #0f8b8d !important;
+}
+
+.Blue2 {
+  background: #2861a7 !important
 }
 
 .Yellow1 {
@@ -290,6 +291,11 @@
 .Green {
   background: #28a745 !important;
 }
+
+.propostaRecebida .TituloNotificacao{
+  font-size: 14px;
+}
+
 .hora {
   padding-right: 10px;
   font-size: 12px;

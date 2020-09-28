@@ -12,7 +12,7 @@ $config = json_decode($config, true);
         </div>
 
         <div class="copyright px-5">
-            © 2020 Workli todos os direitos reservados
+            © 2020 Conserta Serviços Tercerizados todos os direitos reservados
         </div>
         <div class="linhaFooterWrapper">
             <div class="linhaFooter">

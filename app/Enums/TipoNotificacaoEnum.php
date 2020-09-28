@@ -7,4 +7,5 @@ abstract class TipoNotificacaoEnum
     const ALERT = 3;
     const ERROR = 4;
     const SUCCESS = 5;
+    const PROPOSTA_RECEBIDA = 6;
 }

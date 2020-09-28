@@ -155,3 +155,8 @@ alter view Projetos_view as
 
   -- WELLINGTON.RAMOS em 22/09/2020 #36;
   ALTER TABLE CHAT_MENSAGENS ADD COLUMN AUTOMATICA INT(1) DEFAULT 0;
+
+
+  -- MATEUS.ARRUDA em 25/09/2020 #29;
+  ALTER TABLE notificacoes 
+  ADD parametros VARCHAR(80);

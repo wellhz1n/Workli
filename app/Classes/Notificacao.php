@@ -14,6 +14,7 @@ class Notificacao
     public $id_usuario_criacao;
     public $data_hora;
     public $tipo = TipoNotificacaoEnum::DEFAULT;
+    public $parametros;
     public $visto;
 
     public function __construct(
@@ -27,6 +28,7 @@ class Notificacao
         $data_hora = null,
         $tipo = TipoNotificacaoEnum::
         DEFAULT,
+        $parametros = "",
         $visto = 0
     ) {
 
@@ -39,6 +41,7 @@ class Notificacao
         $this->id_usuario_criacao = $id_usuario_criacao;
         $this->data_hora = $data_hora;
         $this->tipo = $tipo;
+        $this->parametros = $parametros;
         $this->visto = $visto;
     }
 }

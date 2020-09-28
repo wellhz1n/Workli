@@ -582,11 +582,13 @@ $(document).ready(async () => {
 
 
     app.$set(dataVue, "atribuirProjetoConfirmacao", "");
-
-    app.$set(dataVue, "mandarPropostaUsuario", (id) => {
+    app.$set(dataVue, "idMeuProjeto", 0);
+    app.$set(dataVue, "tituloMeuProjeto", "");
+    app.$set(dataVue, "mandarPropostaUsuario", (id, titulo) => {
+        dataVue.tituloMeuProjeto = titulo;
+        dataVue.idMeuProjeto = id;
         dataVue.atribuirProjetoConfirmacao = "Confirmar";
         dataVue.modalVisivelControllerConfirmacao = true;
-
     })
 });
 
@@ -641,8 +643,18 @@ function resetaOsDadosDoPerfilEdit() {
 }
 
 
-function mandaOsDadosAtribuirProjeto () {
+async function mandaOsDadosAtribuirProjeto () {
     dataVue.callbackAtribuirP();
     dataVue.callbackContratar();
+    let idGet = getURLParameter("id");
+    var result = await WMExecutaAjax("ProjetoBO", "MandaMensagemFunc",
+    {
+        informacoes: {
+            idProjeto: dataVue.idMeuProjeto,
+            idFuncionario: idGet, 
+            nomeCliente: dataVue.UsuarioContexto.Nome,
+            projetoTitulo: dataVue.tituloMeuProjeto
+        }
+    });
 }
 
