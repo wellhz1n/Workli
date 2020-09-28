@@ -15,9 +15,10 @@ class ChatDAO
         return $saida->resultados;
     }
 
-    public function GetChatPorServicoSimgle($idServico){
+    public function GetChatPorServicoSimgle($idServico)
+    {
         $saida = Sql("select id_chat from chat where id_servico = ?", [$idServico]);
-        return count($saida->resultados) != 0 ? $saida->resultados[0]["id_chat"]: null ;
+        return count($saida->resultados) != 0 ? $saida->resultados[0]["id_chat"] : null;
     }
     #endregion
     #region CHAT_MENSAGENS CRUD
@@ -113,18 +114,32 @@ class ChatDAO
             U.id as id_usuario,
             U.nome,
             IU.imagem as imagem_usuario,
+            SV.situacao as situacao_servico,
+            P.situacao as situacao_proposta,
             (select count(MCH.id_chat_mensagens) from chat_mensagens MCH where MCH.id_chat = CH.id_chat and 
             (MCH.id_usuario_remetente = ? or MCH.id_usuario_destinatario = ?) ) as MSG,
-            cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
+            cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado,
+            NMSG.MSGN
             from chat_mensagens  CM 
             inner join chat  CH on CH.id_chat = CM.id_chat
             inner join servico SV on SV.id = CH.id_servico AND SV.situacao <> 3
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
             inner join usuarios U on U.id =  SV.id_usuario
+            inner join funcionario F on F.id_usuario = ?
             left join imagem_usuario IU on IU.id_usuario = U.id  
+            left join proposta P on P.idServico = SV.id and P.idCliente = U.id and P.idFuncionario = F.id
+            left join  (SELECT  M.id_chat,
+            id_usuario_destinatario,
+           ID_USUARIO_REMETENTE,
+          CASE
+            WHEN COUNT(*) > 0 THEN TRUE
+            ELSE FALSE
+            END AS MSGN
+         FROM (SELECT DISTINCT ID_USUARIO_REMETENTE,id_chat,id_usuario_destinatario FROM CHAT_MENSAGENS WHERE 
+        VISUALIZADO <> 1) AS M group by 1) as NMSG on NMSG.id_chat = CH.id_chat and NMSG.ID_USUARIO_REMETENTE = U.id
             where CM.id_usuario_remetente = ?
             order by MSG DESC,postado
-            ", [$id_usuario, $id_usuario, $id_usuario]);
+            ", [$id_usuario, $id_usuario, $id_usuario, $id_usuario]);
         return $sql->resultados;
     }
     public function GetServicosComChatCliente($id_usuario)
@@ -137,6 +152,7 @@ class ChatDAO
             U.nome,
             CH.id_chat,
             IU.imagem as imagem_usuario,
+            SV.situacao as situacao_servico,
             cast(time_format(TIMEDIFF(current_timestamp,SV.data_cadastro),'%H') as int) as postado
             from servico SV 
             left join foto_servico FSV on FSV.id_servico = SV.id and FSV.principal = 1
@@ -149,6 +165,9 @@ class ChatDAO
         foreach ($sql->resultados as $key => $value) {
             $ms = $this->GetContagemDeContatos($value["id_chat"], $id_usuario);
             $sql->resultados[$key]["MSG"] = $ms;
+
+            $ms = $this->GetMensagensNovasPorIdChatANDIdUsuario($value["id_chat"], $id_usuario);
+            $sql->resultados[$key]["MSGN"] = $ms;
         }
         return $sql->resultados;
     }
@@ -161,15 +180,42 @@ class ChatDAO
         ", [$id_chat, $id_usuario]);
         return count($sql->resultados) > 0 ? $sql->resultados[0]["MSG"] : 0;
     }
+    private function GetMensagensNovasPorIdChatANDIdUsuario($id_chat, $id_usuario)
+    {
+        $sql = Sql("   SELECT  
+                         CASE
+                         WHEN COUNT(*) > 0 THEN TRUE
+                          ELSE FALSE
+                         END AS MSGN
+                        FROM (SELECT DISTINCT ID_USUARIO_REMETENTE FROM CHAT_MENSAGENS WHERE 
+                         ID_CHAT =?  AND 
+                         ID_USUARIO_DESTINATARIO  = ? AND VISUALIZADO <> 1) AS M;
+                 ", [$id_chat, $id_usuario]);
+        return count($sql->resultados) > 0 ? $sql->resultados[0]["MSGN"] : 0;
+    }
     public function GetListaDeContatosConversa($id_chat, $id_usuario)
     {
         $sql = Sql(
             "
-        select distinct  u.id,u.nome,im.imagem from chat_mensagens cm 
-        inner join usuarios u on u.id  = cm.id_usuario_remetente 
-        left join imagem_usuario im  on im.id_usuario  = u.id 
-        where cm.id_chat  = ? and cm.id_usuario_destinatario = ?",
-            [$id_chat, $id_usuario]
+      select distinct  u.id,u.nome,im.imagem,P.situacao as situacao_proposta,NMSG.MSGN  from 
+      chat_mensagens cm 
+      inner join usuarios u on u.id  = cm.id_usuario_remetente 
+      left join imagem_usuario im  on im.id_usuario  = u.id 
+      inner join funcionario F on F.id_usuario = u.id
+      inner join chat C on C.id_chat = cm.id_chat
+      left join proposta P on P.idServico = C.id_servico and P.idCliente = ? and P.idFuncionario = u.id 
+      left join  (SELECT  M.id_chat,
+                             id_usuario_destinatario,
+                            ID_USUARIO_REMETENTE,
+                         CASE
+                             WHEN COUNT(*) > 0 THEN TRUE
+                             ELSE FALSE
+                             END AS MSGN
+                     FROM (SELECT DISTINCT ID_USUARIO_REMETENTE,id_chat,id_usuario_destinatario FROM CHAT_MENSAGENS WHERE 
+       VISUALIZADO <> 1) AS M group by 1) as NMSG on NMSG.id_chat = C.id_chat and NMSG.ID_USUARIO_REMETENTE = u.id
+    where cm.id_chat  = ? and cm.id_usuario_destinatario = ?
+        ",
+            [$id_usuario, $id_chat, $id_usuario]
         );
         return $sql->resultados;
     }
