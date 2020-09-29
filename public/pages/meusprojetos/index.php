@@ -102,22 +102,24 @@
                                 <div class="BHPreco">{{dataVue.selecionadoController.valorproposta !== null?'R$'+ dataVue.selecionadoController.valorproposta :dataVue.selecionadoController.valor}}</div>
                             </div>
                         </div>
-                        <div class="m-2 p1">
-                            <p class="m-0 font_Poopins_M tituloImagemViewer">Descrição do Projeto</p>
-                            <hr class="separadorTituloViewer">
-                        </div>
-                        <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
-                        </div>
-                        <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
-                        <div>
-                            <div class="m-2 p1">
-                                <p class="m-0 font_Poopins_M tituloImagemViewer">Propriedades do Projeto</p>
+                        <div class="p-1 ml-2">
+                            <div class="m-2 p-1">
+                                <p class="m-0 font_Poopins_M tituloImagemViewer">Descrição do Projeto</p>
                                 <hr class="separadorTituloViewer">
                             </div>
-                            <div style="padding: 10px 3.5%;">
-                                <p class="m-0 font_Poopins">Categoria: <strong>{{dataVue.selecionadoController.categoria}}</strong></p>
-                                <p class="m-0 font_Poopins">Tamanho do Projeto: <strong>{{dataVue.selecionadoController.tamanho}}</strong></p>
-                                <p class="m-0 font_Poopins">Nível de Profissional Desejado: <strong>{{dataVue.selecionadoController.profissional}}</strong></p>
+                            <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
+                            </div>
+                            <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
+                            <div>
+                                <div class="m-2 p1">
+                                    <p class="m-0 font_Poopins_M tituloImagemViewer">Propriedades do Projeto</p>
+                                    <hr class="separadorTituloViewer">
+                                </div>
+                                <div style="padding: 10px 3.5%;">
+                                    <p class="m-0 font_Poopins">Categoria: <strong>{{dataVue.selecionadoController.categoria}}</strong></p>
+                                    <p class="m-0 font_Poopins">Tamanho do Projeto: <strong>{{dataVue.selecionadoController.tamanho}}</strong></p>
+                                    <p class="m-0 font_Poopins">Nível de Profissional Desejado: <strong>{{dataVue.selecionadoController.profissional}}</strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
