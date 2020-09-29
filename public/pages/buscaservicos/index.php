@@ -95,12 +95,12 @@
                                     padding-right: 7px;
                                     width: 100%;
                                     flex-direction: row;
-                                    flex:1">
+                                    ">
                             <p :style="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1?'margin-left: auto;':''" class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
                             <a onclick="window.open('?page=chat&id_chat=' + dataVue.selecionadoController.id_chat ,'_blank')" class="aicon" v-if="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1" style="margin-left: auto;
                             cursor: pointer;"><i class="fas fa-external-link-alt"></i></a>
                         </div>
-                        <wm-chat heigth="360px" :userpropostaimage="dataVue.selecionadoController.imagem" :mensagens="dataVue.selecionadoController.msg" :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                        <wm-chat heigth="360px" style="display: flex;flex-direction: column;flex: 1;" :userpropostaimage="dataVue.selecionadoController.imagem" :mensagens="dataVue.selecionadoController.msg" :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
                     </div>
                 </div>
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
@@ -193,7 +193,7 @@
                     </div>
                     <div v-else class="d-contents">
                         <div class="visualizarProposta">
-                            <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
+                            <button @click="()=>{RedirectComParan('notificacoes',[{chave:'P',valor:true}])}" class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
                                 Visualizar Proposta
                             </button>
                         </div>
