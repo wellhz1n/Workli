@@ -4,6 +4,7 @@ $(document).ready(async () => {
 
     //#region DATAVUE
     app.$set(dataVue, "carregando", false);
+    app.$set(dataVue, "AvaliacaoModalController", false);
     app.$set(dataVue, "ListaCarregando", true);
     app.$set(dataVue, "Lista", []);
     app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });

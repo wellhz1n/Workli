@@ -2141,6 +2141,8 @@ WmModal = Vue.component('wm-modal', {
         return {
             dataVisible: false,
             dataCallback: () => { },
+            dataHeight : '95%',
+            dataWidth:'80%'
         }
     },
     watch: {
@@ -2156,6 +2158,20 @@ WmModal = Vue.component('wm-modal', {
             deep: true,
             handler(newval) {
                 this.dataCallback = newval;
+            }
+        },
+        height: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataHeight = newval;
+            }
+        },
+        width: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataWidth = newval;
             }
         }
 
@@ -2178,7 +2194,7 @@ WmModal = Vue.component('wm-modal', {
     template: `
     <transition name="modal-fade">
         <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal">
-            <div id="filhoModal" :style="[{'height': height + ' !important'},{'width': width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
+            <div id="filhoModal" :style="[{'height': dataHeight + ' !important'},{'width': dataWidth + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
                 <div class="modalHeader">
                     <slot name="header">
                         Título Header
@@ -3693,12 +3709,21 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
             type: String,
             default: "Salvar"
         },
+        height: {
+            type: String,
+            default: "95%"
+        },
+        width: {
+            type: String,
+            default: "80%"
+        }
     },
     data() {
         return {
             modalVisivel: false,
             dataTextBtCancelar: "Cancelar",
-            dataTextBtSalvar: "Salvar"
+            dataTextBtSalvar: "Salvar",
+         
         }
     },
     watch: {
@@ -3736,6 +3761,9 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
             :callback="() => {this.modalVisivel = false}" 
             @fechar-modal-inside="(e) => {fecharModal(!e);}"
             :x_visivel="false"
+            :height="this.heigth"
+            :width="this.width"
+    
         >
             <template v-slot:header>
                 <div id="tituloModalConfirmacao">
