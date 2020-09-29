@@ -2445,7 +2445,7 @@ WM_IMAGEVIEWER = Vue.component('wm-image-viewer', {
     },
     template: `
     <div v-if="this.dataimgs.length > 0" class="p-1 m-2">
-    <p class="tituloImagemViewer">Imagens</p>
+    <p class="tituloImagemViewer m-0 p-0">Imagens</p>
     <hr class="separadorTituloViewer"/>
     <div class="row mx-2">
         <div @click="AbreModal(item)" v-for="item in this.dataimgs" class="mr-2 imgViewerContainer">

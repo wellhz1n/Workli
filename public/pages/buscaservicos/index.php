@@ -18,12 +18,7 @@
         <div style="height: fit-content;margin-bottom: 2%;" class="col-10  ">
             <div class="row justify-content-center ">
                 <div class="p-3 col-9">
-                    <input 
-                        placeholder="Pequise um Projeto" 
-                        type="text"
-                        class="form-control" 
-                        @input="dataVue.FiltroProjeto.Q = $event.target.value;" 
-                    />
+                    <input placeholder="Pequise um Projeto" type="text" class="form-control" @input="dataVue.FiltroProjeto.Q = $event.target.value;" />
                 </div>
             </div>
             <div class="col-6 my-0">
@@ -71,10 +66,26 @@
                                 <div class="BHPublicado"><i class="fas fa-clock reloginhoBH"></i> {{dataVue.selecionadoController.publicado}}</div>
                             </div>
                         </div>
-                        <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
+                        <div class="p-1 ml-2">
+                            <div class="m-2 p-1">
+                                <p class="m-0 font_Poopins_M tituloImagemViewer">Descrição do Projeto</p>
+                                <hr class="separadorTituloViewer">
+                            </div>
+                            <div class="cardQuadradoBody BDescricao" v-html="dataVue.selecionadoController.descricao">
+                            </div>
+                            <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
+                            <div>
+                                <div class="m-2 p1">
+                                    <p class="m-0 font_Poopins_M tituloImagemViewer">Propriedades do Projeto</p>
+                                    <hr class="separadorTituloViewer">
+                                </div>
+                                <div style="padding: 10px 3.5%;margin-bottom: 3%;">
+                                    <p class="m-0 font_Poopins">Categoria: <strong>{{dataVue.selecionadoController.categoria}}</strong></p>
+                                    <p class="m-0 font_Poopins">Tamanho do Projeto: <strong>{{dataVue.selecionadoController.tamanho}}</strong></p>
+                                    <p class="m-0 font_Poopins">Nível de Profissional Desejado: <strong>{{dataVue.selecionadoController.profissional}}</strong></p>
+                                </div>
+                            </div>
                         </div>
-                        <wm-image-viewer style="z-index: 3;" :imgs="dataVue.selecionadoController.Fotos"></wm-image-viewer>
-
                     </div>
                     <div v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1" class="cardQuadrado bodyChat align-items-center">
                         <div style="display: flex;
@@ -83,7 +94,8 @@
                                     justify-content: center;
                                     padding-right: 7px;
                                     width: 100%;
-                                    flex-direction: row;">
+                                    flex-direction: row;
+                                    flex:1">
                             <p :style="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1?'margin-left: auto;':''" class="font_Poopins_SB mt-1 p-1 mb-0" style="color: #1A692B;">Chat</p>
                             <a onclick="window.open('?page=chat&id_chat=' + dataVue.selecionadoController.id_chat ,'_blank')" class="aicon" v-if="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1" style="margin-left: auto;
                             cursor: pointer;"><i class="fas fa-external-link-alt"></i></a>
@@ -92,101 +104,101 @@
                     </div>
                 </div>
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
-                        <div v-if="dataVue.selecionadoController.propostaFuncionario == 0" class="d-contents">
-                            <div class="cardQuadrado bodyProposta">
-                                <div class="cardQuadradoHeader" id="paddingDetalhesProposta">
-                                    <div class="cardQuadradoTitulo BHDetalhes">
-                                        Detalhes da Proposta
-                                    </div>
+                    <div v-if="dataVue.selecionadoController.propostaFuncionario == 0" class="d-contents">
+                        <div class="cardQuadrado bodyProposta">
+                            <div class="cardQuadradoHeader" id="paddingDetalhesProposta">
+                                <div class="cardQuadradoTitulo BHDetalhes">
+                                    Detalhes da Proposta
                                 </div>
-                                <div class="d-flex" style="margin-bottom: 10px;">
-                                    <div class="propostaPrimeiraParte">
-                                        <div class="wrapperOfWrapperSlider">
-                                            <div class="wrapperValorDoSlider">
-                                                <div class="textoVS">Sua Oferta &nbsp;</div>
-                                            </div>
-                                            <div class="wrapperSlider">
-                                                <div id="precoMin" class="precoSlider">$200</div>
-                                                <input type="range" id="rangeSlider" class="inputProposta" />
-                                                <div id="precoMax" class="precoSlider">$1000</div>
-                                            </div>
-                                            <div class="wrapperValorDoSlider">
-                                                <div class="valorDoSlider">
-                                                    <span id="valorAtualSlider"></span>
-                                                    <a id="linkPopover" tabindex="0" role="button" data-trigger="focus" data-toggle="popover" data-content="Você receberá: R$ 500,00 - R$ 50,00 = R$ 450,00">
-                                                        <span id="valorDetalhe">
-                                                            <i class="fa fa-question-circle" id="valorDetalheInterrogacao" class="animacaoInterrogacao" aria-hidden="true"></i>
-                                                        </span>
-                                                    </a>
-                                                </div>
+                            </div>
+                            <div class="d-flex" style="margin-bottom: 10px;">
+                                <div class="propostaPrimeiraParte">
+                                    <div class="wrapperOfWrapperSlider">
+                                        <div class="wrapperValorDoSlider">
+                                            <div class="textoVS">Sua Oferta &nbsp;</div>
+                                        </div>
+                                        <div class="wrapperSlider">
+                                            <div id="precoMin" class="precoSlider">$200</div>
+                                            <input type="range" id="rangeSlider" class="inputProposta" />
+                                            <div id="precoMax" class="precoSlider">$1000</div>
+                                        </div>
+                                        <div class="wrapperValorDoSlider">
+                                            <div class="valorDoSlider">
+                                                <span id="valorAtualSlider"></span>
+                                                <a id="linkPopover" tabindex="0" role="button" data-trigger="focus" data-toggle="popover" data-content="Você receberá: R$ 500,00 - R$ 50,00 = R$ 450,00">
+                                                    <span id="valorDetalhe">
+                                                        <i class="fa fa-question-circle" id="valorDetalheInterrogacao" class="animacaoInterrogacao" aria-hidden="true"></i>
+                                                    </span>
+                                                </a>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="descricaoDaProposta">
-                                            <div class="textoVS textoDP">Descreva sua proposta</div>
-                                            <textarea id="descricaoDaPropostaInput" name="descricaoDaPropostaInput" rows="5" cols="33" maxlength="5000" placeholder="Escreva aqui os detalhes da sua proposta..." class="inputProposta">
+                                    <div class="descricaoDaProposta">
+                                        <div class="textoVS textoDP">Descreva sua proposta</div>
+                                        <textarea id="descricaoDaPropostaInput" name="descricaoDaPropostaInput" rows="5" cols="33" maxlength="5000" placeholder="Escreva aqui os detalhes da sua proposta..." class="inputProposta">
                                         </textarea>
-                                        </div>
-                                    </div>
-                                    <div class="propostaSegundaParte">
-                                        <div class="innerWrapperSegundaParte">
-                                            <div class="cardProposta">Taxa relativa ao <b id="taxaModal">Plano Padrão: 20%</b></div>
-                                            <div class="cardProposta">Valor médio das propostas: <b id='propostaMedia'>R$ 0,00</b></div>
-                                            <div class="dataChatDiv"><span class="dataChatDivTexto">Upgrades</span></div>
-                                            <label class="upgradeCard" for="upgradeCardInput1">
-                                                <div class="upgradeCardHeader row">
-                                                    <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                        <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput1" @change="dataVue.Proposta.Upgrades.upgrade1 = $event.target.checked">
-                                                        <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
-                                                    </div>
-                                                    <span class="tituloUpgradeHeader col-sm-6" id="patrocinado">PATROCINADO</span>
-                                                    <span id="patrocinadoValor" class="valorUpgradeHeader col-sm-4">R$ 5,00</span>
-                                                </div>
-                                                <div class="textoUpgradeCard">
-                                                    Destaque-se dos outros funcionários sendo fixado no topo da tela de propostas do cliente.
-                                                </div>
-                                            </label>
-                                            <label class="upgradeCard" for="upgradeCardInput2" id="upgradeCardBaixo">
-                                                <div class="upgradeCardHeader row">
-                                                    <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
-                                                        <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput2" @change="dataVue.Proposta.Upgrades.upgrade2 = $event.target.checked">
-                                                        <label class="labelInputUpgrade" for="upgradeCardInput2"></label>
-                                                    </div>
-                                                    <span class="tituloUpgradeHeader col-sm-6" id="destacado">DESTACADO</span>
-                                                    <span class="valorUpgradeHeader col-sm-4">R$ 1,00</span>
-                                                </div>
-                                                <div class="textoUpgradeCard">
-                                                    Faça a sua proposta ser destacada em amarelo para o cliente, aumentando as chances de ser escolhida.
-                                                </div>
-                                            </label>
-
-                                        </div>
-
                                     </div>
                                 </div>
-                                <div class="terceiraParteProposta" style="padding: 1%; width: 100%; display: flex; justify-content: center;">
-                                    <div v-if="dataVue.PropostaController.carregando" style="width: 100%; display: flex; justify-content: center;">
-                                        <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
-                                            <div style="border-top-color: rgb(57 193 51) !important;" class="activity_in"></div>
-                                        </button>
+                                <div class="propostaSegundaParte">
+                                    <div class="innerWrapperSegundaParte">
+                                        <div class="cardProposta">Taxa relativa ao <b id="taxaModal">Plano Padrão: 20%</b></div>
+                                        <div class="cardProposta">Valor médio das propostas: <b id='propostaMedia'>R$ 0,00</b></div>
+                                        <div class="dataChatDiv"><span class="dataChatDivTexto">Upgrades</span></div>
+                                        <label class="upgradeCard" for="upgradeCardInput1">
+                                            <div class="upgradeCardHeader row">
+                                                <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
+                                                    <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput1" @change="dataVue.Proposta.Upgrades.upgrade1 = $event.target.checked">
+                                                    <label class="labelInputUpgrade" for="upgradeCardInput1"></label>
+                                                </div>
+                                                <span class="tituloUpgradeHeader col-sm-6" id="patrocinado">PATROCINADO</span>
+                                                <span id="patrocinadoValor" class="valorUpgradeHeader col-sm-4">R$ 5,00</span>
+                                            </div>
+                                            <div class="textoUpgradeCard">
+                                                Destaque-se dos outros funcionários sendo fixado no topo da tela de propostas do cliente.
+                                            </div>
+                                        </label>
+                                        <label class="upgradeCard" for="upgradeCardInput2" id="upgradeCardBaixo">
+                                            <div class="upgradeCardHeader row">
+                                                <div class="d-flex flex-column justify-content-center align-items-center col-sm-2">
+                                                    <input class="inputUpgrade inputProposta" type="checkbox" id="upgradeCardInput2" @change="dataVue.Proposta.Upgrades.upgrade2 = $event.target.checked">
+                                                    <label class="labelInputUpgrade" for="upgradeCardInput2"></label>
+                                                </div>
+                                                <span class="tituloUpgradeHeader col-sm-6" id="destacado">DESTACADO</span>
+                                                <span class="valorUpgradeHeader col-sm-4">R$ 1,00</span>
+                                            </div>
+                                            <div class="textoUpgradeCard">
+                                                Faça a sua proposta ser destacada em amarelo para o cliente, aumentando as chances de ser escolhida.
+                                            </div>
+                                        </label>
+
                                     </div>
-                                    <div v-else-if="!dataVue.PropostaController.carregando && !dataVue.PropostaController.mandou" style="width: 100%; display: flex; justify-content: center;">
-                                        <button :disabled="dataVue.Proposta.Descricao.length == 0" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" @click="dataVue.enviaproposta" style="cursor: pointer">Mandar Proposta</button>
-                                    </div>
-                                    <div v-else style="width: 100%; display: flex; justify-content: center;">
-                                        <button :disabled="true" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer; background-color:rgb(57 193 51) !important;border-color:rgb(57 193 51) !important;"><span><i class="fas fa-check text-light"></i></span></button>
-                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="terceiraParteProposta" style="padding: 1%; width: 100%; display: flex; justify-content: center;">
+                                <div v-if="dataVue.PropostaController.carregando" style="width: 100%; display: flex; justify-content: center;">
+                                    <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
+                                        <div style="border-top-color: rgb(57 193 51) !important;" class="activity_in"></div>
+                                    </button>
+                                </div>
+                                <div v-else-if="!dataVue.PropostaController.carregando && !dataVue.PropostaController.mandou" style="width: 100%; display: flex; justify-content: center;">
+                                    <button :disabled="dataVue.Proposta.Descricao.length == 0" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" @click="dataVue.enviaproposta" style="cursor: pointer">Mandar Proposta</button>
+                                </div>
+                                <div v-else style="width: 100%; display: flex; justify-content: center;">
+                                    <button :disabled="true" class="btn botaoProposta w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer; background-color:rgb(57 193 51) !important;border-color:rgb(57 193 51) !important;"><span><i class="fas fa-check text-light"></i></span></button>
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="d-contents">
-                            <div class="visualizarProposta">
-                                <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
-                                    Visualizar Proposta
-                                </button>
-                            </div>
+                    </div>
+                    <div v-else class="d-contents">
+                        <div class="visualizarProposta">
+                            <button class="btn botaoProposta menor w-100 d-flex text-center justify-content-center btn-success text-light" style="cursor: pointer">
+                                Visualizar Proposta
+                            </button>
                         </div>
-                    
+                    </div>
+
                 </div>
             </div>
         </div>
