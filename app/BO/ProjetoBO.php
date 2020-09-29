@@ -210,6 +210,28 @@ class ProjetoBO extends BOGeneric
 
         return true;
     }
+
+
+    public function BuscaProjetoPorIdBuscaServico($id)
+    {
+        $saida = $this->ProjetoDAO->BuscaProjetoPorIdBuscaServico($id);
+        $saida = $saida[0];
+        if ($saida != null) {
+
+            $saida["imagem_usuario"] = ConvertBlobToBase64($saida["imagem_usuario"]);
+            if ($saida["postado"] == 0)
+                $saida["postado"] = "Hoje";
+            else {
+                if ($saida["postado"] > 1 &&  $saida["postado"] != 0)
+                    $saida["postado"] = "Há " . $saida["postado"] . " dias";
+                else
+                    $saida["postado"]["postado"] = "Há 1 dia";
+            }
+            return $saida;
+        } else
+            throw new Exception("Projeto não encontrado");
+    }
+
     #endregion
 
 }
@@ -278,6 +300,15 @@ try {
             if (isset($_POST['informacoes'])) {
                 $informacoes = $_POST['informacoes'];
                 echo json_encode($ProjetoBO->MandaMensagemFunc($informacoes));
+            } else {
+                throw new Exception("Informações necessárias.");
+            }
+        }
+
+        if ($metodo == "BuscaProjetoPorIdBuscaServico") {
+            if (isset($_POST['ID'])) {
+                $id = $_POST['ID'];
+                echo json_encode($ProjetoBO->BuscaProjetoPorIdBuscaServico($id));
             } else {
                 throw new Exception("Informações necessárias.");
             }

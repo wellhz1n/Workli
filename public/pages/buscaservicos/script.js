@@ -4,7 +4,6 @@ $(document).ready(async () => {
     var usrContexto = await GetSessaoPHP(SESSOESPHP.IDUSUARIOCONTEXTO);
     BloquearTela();
     await app.$set(dataVue, "FiltroProjeto", { C: Array(), Q: "", P: 1 });
-
     app.$set(dataVue, "Carregando", true);
     /* ENTIDADE DA PROPOSTA */
     app.$set(dataVue, "Proposta", {
@@ -194,8 +193,10 @@ $(document).ready(async () => {
             DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
+
             if (dataVue.UsuarioContexto.NIVEL_USUARIO == 1)
                 dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x => { return dataVue.selecionadoController.id == x.id })[0].propostaFuncionario;
+
             dataVue.Proposta.IdServico = dataVue.selecionadoController.id;
             dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
             dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
@@ -445,11 +446,10 @@ $(document).ready(async () => {
             }, 10);
 
 
-
-
+            
 
         } catch (error) {
-            console.warn("ERROR++++++=====+++++ " + error.message);
+            console.warn("ERROR++++++=====+++++" + error.message);
             toastr.error("Algo Deu Errado!<br>tente novamente mais tarde.", "Ops");
         } finally {
             DesbloquearTela();
@@ -501,7 +501,6 @@ $(document).ready(async () => {
     app.$set(dataVue, "retornaPlano", () => {
         return new Promise((result) => {
             GetSessaoPHP("PLANO").then(planoN => {
-                debugger
                 planoN = Number.parseInt(planoN);
                 let membro = "Padrão";
                 switch (planoN) {
@@ -530,6 +529,35 @@ $(document).ready(async () => {
 
 
     });
+
+
+    let idProjetoGet = "";
+    idProjetoGet = getURLParameter("id_projeto");
+    if(idProjetoGet != "null" && idProjetoGet) {
+        let result = await WMExecutaAjax("ProjetoBO", "BuscaProjetoPorIdBuscaServico", {ID: idProjetoGet});
+
+        //Renomear uns parametros e tals;
+        result.titulo = result.nome;
+        result.nome = result.nome_usuario
+        result.valor = Valores[result.valor];
+        result.profissional = NivelFuncionario[result.nivel_profissional];
+        result.tamanho = NivelProjeto[result.nivel_projeto];
+        result.imagem = result.imagem_usuario;
+        result.publicado = result.postado;
+        result.proposta = result.propostas;
+
+        //Limpar para o objeto ficar igual ao do click do botão
+        
+        delete result.nome_usuario;
+        delete result.nivel_profissional;
+        delete result.nivel_projeto;
+        delete result.imagem_usuario;
+        delete result.postado;
+        delete result.propostas;
+
+        dataVue.abremodal(result);  
+
+    }
     //#endregion
 
 });
