@@ -656,5 +656,8 @@ async function mandaOsDadosAtribuirProjeto () {
             projetoTitulo: dataVue.tituloMeuProjeto
         }
     });
+    if(result) {
+        MostraMensagem(`O funcionário <strong>${dataVue.usuarioDados.nome}</strong> irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
+    }
 }
 

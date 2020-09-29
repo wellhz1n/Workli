@@ -239,5 +239,19 @@ class ProjetoDAO
         $resultados = Sql($sql, [$idUsuario]);
         return $resultados->resultados;
     }
+
+    public function BuscaProjetoPorIdBuscaServico($idUsuario)
+    {
+
+        $sql = "
+        SELECT * FROM PROJETOS_VIEW 
+        WHERE id = ?";
+        $resultados = Sql($sql, [$idUsuario]);
+
+        $resultados->resultados[0]["descricao"] = nl2br($resultados->resultados[0]["descricao"]);
+
+        return [$resultados->resultados[0]];
+    }
+
     #endregion
 }
