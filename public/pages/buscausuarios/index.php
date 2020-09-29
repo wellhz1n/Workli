@@ -67,6 +67,9 @@
             <div class="d-contents" v-if="dataVue.usuarioFiltro != undefined">
                 <star-rating 
                         v-model='dataVue.usuarioFiltro.avaliacao'
+                        :glow="4"
+                        glow-color="#ff000000aa"
+                        :clearable="true"
                         :increment='0.5'
                         :star-size='25'
                         :fixed-points='1'

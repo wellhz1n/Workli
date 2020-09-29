@@ -292,6 +292,12 @@
   background: #28a745 !important;
 }
 
+.StarColor{
+  background:#FCF951 !important;
+}
+.StarColorText{
+  color: #422057 !important;
+}
 .propostaRecebida .TituloNotificacao{
   font-size: 14px;
 }

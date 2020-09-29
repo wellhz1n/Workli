@@ -161,4 +161,29 @@
     </template>
     <!-- Ainda vou melhorar o estilo desse modal -->
 </wm-modal>
+
+<!-- MODAL AVALIACAO -->
+<wm-modal-botoes-generico text_botao_salvar="Avaliar" :visivel="true">
+    <template v-slot:titulo>
+        Avaliação do Projeto
+    </template>
+    <template v-slot:descricao>
+        <div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <wm-user-img :img="null" :width="'10vw'" :height="'10vw'" class_icone="iconeUsuarioTamanho" :id_usuario="3"></wm-user-img>
+                <p style="font-weight: bolder;font-size: 34px;" class="font_Poopins_B">Roberto</p>
+            </div>
+
+            <div class="d-flex flex-row-reverse">
+                <star-rating :glow="4" :star-size="55" glow-color="#ff000000aa" :clearable="true" :increment='0.5' :star-size='25' :fixed-points='1' :round-start-rating='true' :padding='5' text-class="texto"></star-rating>
+                <button type="button" class="btn btn-secondary botaoC" style=" margin-top: 10px;
+                                margin-right: 18px;
+                                padding: 0px 16px;
+                                line-height: 1px;" @click="() => {}"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </template>
+</wm-modal-botoes-generico>
+
+<!-- FIM MODAL -->
 <script src="pages/meusprojetos/script.js"></script>
