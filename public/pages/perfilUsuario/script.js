@@ -163,7 +163,8 @@ $(document).ready(async () => {
     })
 
     setTimeout(async () => {
-        if(getURLParameter("edit") != "null") {
+        let edit = getURLParameter("edit");
+        if(edit != "null" && edit == 1) {
             await abrirFecharModalEP();  
             setTimeout( () => {
                 $($("#tagsInput input")[0]).on("focus", ()=>{
@@ -174,7 +175,7 @@ $(document).ready(async () => {
             }, 1)
                 
         }
-    }, 100);
+    }, 10);
 
     app.$set(dataVue, "callbackEP", (salvar) => {
         
@@ -290,13 +291,15 @@ $(document).ready(async () => {
     app.$set(dataVue, "modalVisivelControllerConfirmacao", false);
 
     app.$set(dataVue, "abreModalConfirmacao", async () => {
+        dataVue.botaoSalvarConfirmacao = "Descartar";
+        dataVue.tituloModalConfirmacao = "Descartar alterações";
+        dataVue.textoModalConfirmacao = "Você tem certeza que deseja descartar as alterações?";
         dataVue.modalVisivelControllerConfirmacao = true;
     });
 
     app.$set(dataVue, "fechaModalConfirmacao", async (confirmacao, salvar) => {
         // O parametro de confirmação é pra confirmar se é pra fechar mesmo, se só quiser fechar só colocar como true.
         dataVue.modalVisivelControllerConfirmacao = false;
-        dataVue.atribuirProjetoConfirmacao = "";
         if(confirmacao) {
             if(dataVue.modalVisivelEditPerfil) {
                 dataVue.modalVisivelEditPerfil = false;
@@ -538,6 +541,7 @@ $(document).ready(async () => {
                 
             }
         }
+
         
     });
 
@@ -572,7 +576,7 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "abremodalAtribuirP", async () => {
         dataVue.modalVisivelAtribuirP = true;
-        let result = await WMExecutaAjax("ProjetoBO", "BuscaMeusProjetosReduzido");
+        let result = await WMExecutaAjax("ProjetoBO", "BuscaMeusProjetosAtribuirP", {id_destinatario: dataVue.idGeral});
         dataVue.meusProjetos = result.lista;
     });
 
@@ -581,15 +585,28 @@ $(document).ready(async () => {
     });
 
 
-    app.$set(dataVue, "atribuirProjetoConfirmacao", "");
+    app.$set(dataVue, "botaoSalvarConfirmacao", "");
     app.$set(dataVue, "idMeuProjeto", 0);
     app.$set(dataVue, "tituloMeuProjeto", "");
     app.$set(dataVue, "mandarPropostaUsuario", (id, titulo) => {
         dataVue.tituloMeuProjeto = titulo;
         dataVue.idMeuProjeto = id;
-        dataVue.atribuirProjetoConfirmacao = "Confirmar";
+        dataVue.botaoSalvarConfirmacao = "Confirmar";
+        dataVue.tituloModalConfirmacao = "ENVIAR PROJETO";
+        dataVue.textoModalConfirmacao = "Você deseja enviar este projeto para o funcionário?";
         dataVue.modalVisivelControllerConfirmacao = true;
     })
+
+    setTimeout(async () => {
+        let edit = getURLParameter("edit");
+        if(edit != "null" && edit == 2 && dataVue.UsuarioContexto.NIVEL_USUARIO == "0") {
+            dataVue.abremodalContratar();                     
+        }
+    }, 1);
+    
+    app.$set(dataVue, "tituloModalConfirmacao", "Descartar alterações");
+    app.$set(dataVue, "textoModalConfirmacao", "Você tem certeza que deseja descartar as alterações?");
+
 });
 
 

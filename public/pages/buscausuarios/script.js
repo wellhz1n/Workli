@@ -103,6 +103,12 @@ $(document).ready(async () => {
         dataVue.Carregando = true;
         let result = await WMExecutaAjax("UsuarioBO", "BuscarUsuarios", {P, filtro });
         dataVue.Carregando = false;
+
+        let nivel_usuario_contexto = await GetSessaoPHP("NIVELUSUARIO");
+
+        result.lista.forEach(element => {
+            element.nivel_usuario_contexto = nivel_usuario_contexto;
+        });
         return {
             lista: result.lista,
             pagina: result.paginas == 0 ? 1 : result.paginas

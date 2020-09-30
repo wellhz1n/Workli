@@ -170,7 +170,7 @@
                 <?php
                 if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == "1") {
                 ?>
-                  <a style="font-size: 14px; cursor: pointer;" class="dropdown-item" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'">
+                  <a style="font-size: 14px; cursor: pointer; width: fit-content;" class="dropdown-item" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'">
                     Minhas competências
                   </a>
                 <?php } ?>

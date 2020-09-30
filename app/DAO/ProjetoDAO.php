@@ -231,11 +231,32 @@ class ProjetoDAO
         return count($resultados->resultados)  == 1?$resultados->resultados[0]:null;
     }
 
-    public function BuscaMeusProjetosReduzido($idUsuario)
+    public function BuscaMeusProjetosAtribuirP($idUsuario, $idDestinatario)
     {
+        $incNotificacao = "";
+        if($idDestinatario) {
+            $incNotificacao = "AND id_usuario = ${idDestinatario}";
+        }
+        $parametrosNotificacao = Sql("SELECT parametros FROM notificacoes WHERE tipo = 6 AND id_usuario_criacao = ${idUsuario} ${incNotificacao}");
+
+        $idProjetos = [];
+        for ($i=0; $i < count($parametrosNotificacao->resultados); $i++) { 
+
+            $parametros = explode(";", $parametrosNotificacao->resultados[$i]["parametros"]);
+            foreach ($parametros  as $key => $value) {
+                $parametros[$key] = explode("=", $value);
+                if($parametros[$key][0] == "idProjeto") {
+                    array_push($idProjetos, $parametros[$key][1]);
+                }
+            }
+
+        }
+        $idProjetos = implode(", ", $idProjetos);
+        $excIds = "AND id NOT IN(${idProjetos})";
+
         $sql = "
         SELECT id, nome, valor, nivel_projeto, postado FROM PROJETOS_VIEW 
-        WHERE ID_USUARIO = ? AND situacao = 0";
+        WHERE ID_USUARIO = ? AND situacao = 0 $excIds";
         $resultados = Sql($sql, [$idUsuario]);
         return $resultados->resultados;
     }

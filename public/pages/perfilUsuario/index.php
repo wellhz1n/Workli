@@ -1,6 +1,4 @@
-
-
-<script type="" src="pages/perfilUsuario/script.js"></script>
+    <script type="" src="pages/perfilUsuario/script.js"></script>
 
 
 <!-- LINKS INTERNOS -->
@@ -141,7 +139,7 @@
                     <div class="nomeEProfCP">
                         <div id="nomeCP">
                         </div>
-                        <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != ''">
+                        <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.profissao != undefined">
                             <span class="profCPBolinha">•</span>
                             <div id="profCP"> 
                                 {{dataVue.usuarioDados.profissao}}
@@ -198,6 +196,7 @@
             </div>
         </div>
 
+        <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0) { ?>
         <div v-if="dataVue.nivelUsuario == 1 && !dataVue.editavel" class="d-contents">
             <div class="col-2 p-0">
                 <div class="cardQuadrado cemXcem max-heighto cardContratar">
@@ -213,6 +212,7 @@
                 </div>
             </div>
         </div>
+        <?php }; ?>
     </div>
 </div>
 
@@ -568,13 +568,13 @@
     id="modalConfirmacao"
     :visivel="dataVue.modalVisivelControllerConfirmacao" 
     @fechar-modal="(confirmacao) => {dataVue.fechaModalConfirmacao(confirmacao)}"
-    :text_botao_salvar="dataVue.atribuirProjetoConfirmacao"
+    :text_botao_salvar="dataVue.botaoSalvarConfirmacao"
 >
     <template v-if="dataVue.atribuirProjetoConfirmacao != ''" v-slot:titulo>
-        ENVIAR PROJETO    
+        {{dataVue.tituloModalConfirmacao}}
     </template>
     <template v-if="dataVue.atribuirProjetoConfirmacao != ''" v-slot:descricao>
-                    Você deseja enviar este projeto para o funcionário?
+        {{dataVue.textoModalConfirmacao}}
     </template>
 </wm-modal-botoes-generico>
 

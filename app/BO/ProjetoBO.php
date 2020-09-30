@@ -172,10 +172,10 @@ class ProjetoBO extends BOGeneric
     }
 
 
-    public function BuscaMeusProjetosReduzido()
+    public function BuscaMeusProjetosAtribuirP($idDestinatario)
     {
 
-        $dados = $this->ProjetoDAO->BuscaMeusProjetosReduzido($this->GetUsuarioContexto());
+        $dados = $this->ProjetoDAO->BuscaMeusProjetosAtribuirP($this->GetUsuarioContexto(), $idDestinatario);
         foreach ($dados as $key => $value) {
             if ($dados[$key]["postado"] == 0)
                 $dados[$key]["postado"] = "Hoje";
@@ -292,8 +292,9 @@ try {
                 throw new Exception("O Metodo " . $metodo . " Precisa de Uma Propriedade [ID]");
         }
 
-        if ($metodo == "BuscaMeusProjetosReduzido") {
-            echo json_encode($ProjetoBO->BuscaMeusProjetosReduzido());
+        if ($metodo == "BuscaMeusProjetosAtribuirP") {
+            $idDestinatario = empty($_POST["id_destinatario"]) ? null : $_POST["id_destinatario"];
+            echo json_encode($ProjetoBO->BuscaMeusProjetosAtribuirP($idDestinatario));
         }
 
         if ($metodo == "MandaMensagemFunc") {
