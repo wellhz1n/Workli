@@ -3637,6 +3637,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
         return {
             tags_aparecer: false,
             dados_usuario_data: {}
+
         }
     },
     methods: {
@@ -3675,8 +3676,8 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                         </div>
                     </div>
                     <div class="botaoCUWrapper">
-                        <div class="d-contents" v-if="this.dados_usuario_data.nivel_usuario == '1'">
-                            <button class="btn btn-success">Contratar funcionário</button>
+                        <div class="d-contents" v-if="this.dados_usuario_data.nivel_usuario == '1' && this.dados_usuario_data.nivel_usuario_contexto == 0">
+                            <a class="btn btn-success" :href="'?page=perfilUsuario&id=' + this.dados_usuario_data.id + '&edit=2'">Contratar funcionário</a>
                         </div>
                         <div class="d-contents" v-else>
                             <button class="btn btn-success">Visualizar usuário</button>
