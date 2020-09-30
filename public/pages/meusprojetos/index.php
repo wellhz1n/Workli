@@ -170,16 +170,16 @@
     <template v-slot:descricao>
         <div>
             <div class="d-flex flex-column justify-content-center align-items-center">
-                <wm-user-img :img="null" :width="'10vw'" :height="'10vw'" class_icone="iconeUsuarioTamanho" :id_usuario="3"></wm-user-img>
-                <p style="font-weight: bolder;font-size: 34px;" class="font_Poopins_B">Roberto</p>
+                <wm-user-img :img=" dataVue.AvaliacaoController.funcionarioEntidade.imagem" :width="'10vw'" :height="'10vw'" class_icone="iconeUsuarioTamanho" :id_usuario=" dataVue.AvaliacaoController.funcionarioEntidade.id"></wm-user-img>
+                <p style="font-weight: bolder;font-size: 34px;" class="font_Poopins_B">{{ dataVue.AvaliacaoController.funcionarioEntidade.nome}}</p>
             </div>
 
             <div class="d-flex flex-row-reverse">
-                <star-rating :glow="4" :star-size="55" glow-color="#ff000000aa" :clearable="true" :increment='0.5' :star-size='25' :fixed-points='1' :round-start-rating='true' :padding='5' text-class="texto"></star-rating>
+                <star-rating v-model="dataVue.AvaliacaoController.avaliacao" :glow="4" :star-size="55" glow-color="#ff000000aa" :clearable="true" :increment='0.5' :star-size='25' :fixed-points='1' :round-start-rating='true' :padding='5' text-class="texto"></star-rating>
                 <button type="button" class="btn btn-secondary botaoC" style=" margin-top: 10px;
                                 margin-right: 18px;
                                 padding: 0px 16px;
-                                line-height: 1px;" @click="() => {}"><i class="fas fa-times"></i></button>
+                                line-height: 1px;" @click="() => {dataVue.AvaliacaoController.avaliacao = 0}"><i class="fas fa-times"></i></button>
             </div>
         </div>
     </template>
