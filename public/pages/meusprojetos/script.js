@@ -4,6 +4,7 @@ $(document).ready(async () => {
 
     //#region DATAVUE
     app.$set(dataVue, "carregando", false);
+    app.$set(dataVue, "AvaliacaoModalController", false);
     app.$set(dataVue, "ListaCarregando", true);
     app.$set(dataVue, "Lista", []);
     app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });
@@ -17,7 +18,7 @@ $(document).ready(async () => {
 
     var Paramns = GetParam();
     if (Paramns.length > 0) {
-        if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })) {
+        if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' }).length > 0) {
             try {
 
                 BloquearTela();
@@ -56,6 +57,11 @@ $(document).ready(async () => {
                 }
                 else
                     MostraMensagem(buscaProjeto.error, ToastType.ERROR, "Erro ao Abrir Projeto");
+
+
+                if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'A' }).length > 0) {
+                    dataVue.AvaliacaoModalController = true;
+                }
             }
             finally {
 
@@ -124,7 +130,7 @@ $(document).ready(async () => {
     app.$watch("dataVue.meusprojetos", async function (a, o) {
         await BuscaMeusProjetos();
     }, { deep: true });
-    
+
     app.$watch("dataVue.PageController.pagina_Atual", async function (a, o) {
         if (a != o)
             await BuscaMeusProjetos();

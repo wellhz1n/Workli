@@ -160,7 +160,8 @@ const TipoNotificacao = {
     ALERT: 3,
     ERROR: 4,
     SUCCESS: 5,
-    PROPOSTA_RECEBIDA: 6
+    PROPOSTA_RECEBIDA: 6,
+    AVALIAR_PROJETO: 7
 }
 const NotificacaoEntidade =
     function (_id = -1, _descricao = "", _titulo = "", _id_projeto = null, _id_chat = null,

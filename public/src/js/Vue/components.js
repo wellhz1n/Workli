@@ -1821,7 +1821,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             type: String
         },
         propostas: {
-            type: Number
+            type: [String, Number]
         },
         descricao: {
             type: String
@@ -1830,10 +1830,10 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             type: String
         },
         tamanhodoprojeto: {
-            type: String
+            type: [String, Number]
         },
         nivelprofissional: {
-            type: String
+            type: [String, Number]
         },
         img: {
             type: String
@@ -1856,7 +1856,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
             default: 'Fazer Proposta'
         },
         valor_proposta: {
-            type: String,
+            type: [String, Number],
             default: null
         },
         situacao: {
@@ -2141,6 +2141,8 @@ WmModal = Vue.component('wm-modal', {
         return {
             dataVisible: false,
             dataCallback: () => { },
+            dataHeight : '95%',
+            dataWidth:'80%'
         }
     },
     watch: {
@@ -2156,6 +2158,20 @@ WmModal = Vue.component('wm-modal', {
             deep: true,
             handler(newval) {
                 this.dataCallback = newval;
+            }
+        },
+        height: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataHeight = newval;
+            }
+        },
+        width: {
+            immediate: true,
+            deep: true,
+            handler(newval) {
+                this.dataWidth = newval;
             }
         }
 
@@ -2178,7 +2194,7 @@ WmModal = Vue.component('wm-modal', {
     template: `
     <transition name="modal-fade">
         <div :id="id" class="modalBackdrop" v-if="this.dataVisible" @click="fecharModal">
-            <div id="filhoModal" :style="[{'height': height + ' !important'},{'width': width + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
+            <div id="filhoModal" :style="[{'height': dataHeight + ' !important'},{'width': dataWidth + ' !important'}]" :class="['modalVue',this.dataVisible?'modal-slide':'']">
                 <div class="modalHeader">
                     <slot name="header">
                         Título Header
@@ -2512,9 +2528,9 @@ WMCHAT = Vue.component('wm-chat', {
             type: String,
             default: ''
         },
-        exibemandar:{
-            type:Boolean,
-            default:true
+        exibemandar: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -2528,7 +2544,7 @@ WMCHAT = Vue.component('wm-chat', {
             primeiraVez: true,
             idusuariodestinatariodata: -1,
             dataHeigth: '',
-            dataExibeMandar:true
+            dataExibeMandar: true
         }
     },
     methods: {
@@ -2625,9 +2641,9 @@ WMCHAT = Vue.component('wm-chat', {
                 this.dataHeigth = nv;
             }
         },
-        exibemandar:{
-            immediate:true,
-            handler(nv){
+        exibemandar: {
+            immediate: true,
+            handler(nv) {
                 this.dataExibeMandar = nv;
             }
         }
@@ -2865,7 +2881,7 @@ WMNotify = Vue.component('wm-notify', {
                     icone: ['fas']
                 };
                 switch (contexto.dataTipo) {
-                    
+
                     case TipoNotificacao.ERROR:
                         classeBase.classe.push('Red1');
                         classeBase.icone.push("fa-times");
@@ -2891,6 +2907,11 @@ WMNotify = Vue.component('wm-notify', {
                         classeBase.classe.push(' propostaRecebida');
                         classeBase.icone.push("fa-file-signature");
                         break;
+                    case TipoNotificacao.AVALIAR_PROJETO:
+                        classeBase.classe.push('StarColor');
+                        classeBase.classe.push('StarColorText');
+                        classeBase.icone.push("fa-star");
+                        break;
                     default:
                         classeBase.icone.push("fa-info");
                         break;
@@ -2903,7 +2924,7 @@ WMNotify = Vue.component('wm-notify', {
     },
     template: `
             <div :class="NotificacaoClasse.classe">
-                <div class="ItemNotificacaoIcone">
+                <div class="ItemNotificacaoIcone" :style="{color:this.dataTipo == 7?'#422057 !important':'white'}">
                     <span v-show="this.dataTipo == 0">
                         <i class="fas fa-info"></i>
                     </span>
@@ -2925,8 +2946,11 @@ WMNotify = Vue.component('wm-notify', {
                     <span v-show="this.dataTipo == 6">
                         <i class="fas fa-file-signature"></i>
                     </span>
+                    <span v-show="this.dataTipo == 7">
+                    <i class="fas fa-star"></i>
+                </span>
                 </div>
-                <div class="DadosNotificacao">
+                <div class="DadosNotificacao"  :style="{color:this.dataTipo == 7?'#422057 !important':'white'}">
                     <div class="TituloNotificacao ">
                         <p class="m-0 font_Poopins_B" v-html="this.dataTitulo"></p>
                     </div>
@@ -3686,12 +3710,21 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
             type: String,
             default: "Salvar"
         },
+        height: {
+            type: String,
+            default: "95%"
+        },
+        width: {
+            type: String,
+            default: "80%"
+        }
     },
     data() {
         return {
             modalVisivel: false,
             dataTextBtCancelar: "Cancelar",
-            dataTextBtSalvar: "Salvar"
+            dataTextBtSalvar: "Salvar",
+         
         }
     },
     watch: {
@@ -3729,6 +3762,9 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
             :callback="() => {this.modalVisivel = false}" 
             @fechar-modal-inside="(e) => {fecharModal(!e);}"
             :x_visivel="false"
+            :height="this.heigth"
+            :width="this.width"
+    
         >
             <template v-slot:header>
                 <div id="tituloModalConfirmacao">
