@@ -269,12 +269,49 @@ if (Logado()[1] == '2')
           let chaveSeparada = key.split("=");
           parametrosSeparados[key.split("=")[0]] = chaveSeparada[1];
         }
-        
+
         RedirecionarComParametros(parametrosSeparados["page"], [{
-            chave: 'id_projeto',
-            valor: parametrosSeparados.idProjeto
+          chave: 'id_projeto',
+          valor: parametrosSeparados.idProjeto
         }]);
+      } else if (i.tipo == "7") {
+        let listaParametros = [];
+        i.parametros.split(';').map(a => {
+          var list = a.split("=");
+          let obj = {};
+          Object.defineProperty(obj, list[0], {
+            value: list[1]
+          });
+          listaParametros.push(obj);
+
+        });
+        let paramFormatado = listaParametros.filter(a => {
+          return Object.getOwnPropertyNames(a)[0] != "page"
+        }).map(p => {
+          obj = {
+            chave: null,
+            valor: null
+          }
+          obj.chave = Object.getOwnPropertyNames(p)[0];
+          obj.valor = p[Object.getOwnPropertyNames(p)[0]];
+          return obj
+        });
+        RedirecionarComParametros(listaParametros.filter(a => {
+          return Object.getOwnPropertyNames(a)[0] == "page"
+        })[0].page, paramFormatado);
       }
+      //   let parametrosSeparados = {};
+
+      //   for (const key of i.parametros.split(";")) {
+      //     let chaveSeparada = key.split("=");
+      //     parametrosSeparados[key.split("=")[0]] = chaveSeparada[1];
+      //   }
+
+      //   RedirecionarComParametros(parametrosSeparados["page"], [{
+      //     chave: 'id_projeto',
+      //     valor: parametrosSeparados.idProjeto
+      //   }]);
+      // }
 
     })
     //#endregion

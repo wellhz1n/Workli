@@ -38,12 +38,12 @@ class PropostaBO extends BOGeneric
         $ChatBO = new ChatBO();
         $MSG = new ChatMensagem();
         $idchat = $ChatBO->GetChatPorIdServicoSingle($proposta->IdServico);
-        $MSG->id_chat = $idchat != null?$idchat:-1;
+        $MSG->id_chat = $idchat != null ? $idchat : -1;
         $MSG->automatica = 1;
         $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
         $MSG->id_usuario_destinatario = $proposta->IdCliente;
         $MSG->msg = "Proposta Enviada";
-        $ChatBO->NovaMensagem($MSG,$proposta->IdServico);
+        $ChatBO->NovaMensagem($MSG, $proposta->IdServico);
         $this->PropostaDAO->Salvar($proposta);
         return true;
     }
@@ -143,12 +143,12 @@ class PropostaBO extends BOGeneric
                 $ChatBO = new ChatBO();
                 $MSG = new ChatMensagem();
                 $idchat = $ChatBO->GetChatPorIdServicoSingle($idservico);
-                $MSG->id_chat = $idchat != null?$idchat:-1;
+                $MSG->id_chat = $idchat != null ? $idchat : -1;
                 $MSG->automatica = 1;
                 $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
                 $MSG->id_usuario_destinatario = $idcliente;
                 $MSG->msg = "Projeto Em Andamento";
-                $ChatBO->NovaMensagem($MSG,$idservico);
+                $ChatBO->NovaMensagem($MSG, $idservico);
                 $_ProjetoDAO =  new ProjetoDAO();
                 $_ProjetoDAO->SetProjetoSituacao($idservico, 2);
 
@@ -186,15 +186,26 @@ class PropostaBO extends BOGeneric
                     $this->GetUsuarioContexto(),
                     TipoNotificacaoEnum::SUCCESS
                 );
+                usleep(1);
+                $_NotificacaoBO->NovaNotificacao(
+                    "Avalie o Funcionario",
+                    "Avalie o funcionário que realizou  o Projeto: <strong style='color: red;'>{$titulo}</strong>.",
+                    $idcliente,
+                    $this->GetUsuarioContexto(),
+                    TipoNotificacaoEnum::AVALIAR_PROJETO,
+                    null,
+                    null,
+                    "page=meusprojetos;P={$idservico};A=true"
+                );
                 $ChatBO = new ChatBO();
                 $MSG = new ChatMensagem();
                 $idchat = $ChatBO->GetChatPorIdServicoSingle($idservico);
-                $MSG->id_chat = $idchat != null?$idchat:-1;
+                $MSG->id_chat = $idchat != null ? $idchat : -1;
                 $MSG->id_usuario_remetente = $this->GetUsuarioContexto();
                 $MSG->id_usuario_destinatario = $idcliente;
                 $MSG->automatica = 1;
                 $MSG->msg = "Projeto Concluido";
-                $ChatBO->NovaMensagem($MSG,$idservico);
+                $ChatBO->NovaMensagem($MSG, $idservico);
                 $_ProjetoDAO =  new ProjetoDAO();
                 $_ProjetoDAO->SetProjetoSituacao($idservico, 4);
                 break;
