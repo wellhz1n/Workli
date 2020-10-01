@@ -1588,6 +1588,16 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                 if (result.split('|')[0] == "OK") {
                     dataVue[contexto.$attrs.entidade]["id"] = result.split('|')[1];
                     DesbloquearTelaSemLoader();
+
+                    let funcDestinatario = getURLParameter("funcDestinatario");
+                    if(funcDestinatario){
+                        let idMeuProjeto = result.split('|')[1];
+                        let nomeProjeto = (await WMExecutaAjax("ProjetoBO", "GetTituloProjetoPorId", { idProjeto: idMeuProjeto })).nome;
+                        let funcionarioNome = (await WMExecutaAjax("UsuarioBO", "GetUsuarioById", { ID: funcDestinatario })).nome;
+                        mandaNotificacaoFuncionario(idMeuProjeto, funcDestinatario, dataVue.UsuarioContexto.Nome, nomeProjeto, funcionarioNome);
+                    }
+                        
+                        
                     contexto.carregando = false;
                     contexto.concluiu = true;
                 } else {

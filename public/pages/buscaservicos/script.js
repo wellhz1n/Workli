@@ -174,7 +174,7 @@ $(document).ready(async () => {
     });
     app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
-
+            
             BloquearTela();
             let Dependencias = await WMExecutaAjax("ProjetoBO", "BuscaDependeciasModal", { id: propriedades.id });
             if (Dependencias.length > 0) {
@@ -184,31 +184,30 @@ $(document).ready(async () => {
                 propriedades.Fotos = lista.map(x => { return x.imagem });
                 propriedades.Fotos = [propriedades.FotoPrincipal, ...propriedades.Fotos];
             }
+
             propriedades.id_chat = JSON.parse(await WMExecutaAjax("ChatBO", "GetChatPorServico", { ID_SERVICO: propriedades.id }));
             let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: propriedades.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: propriedades.id_usuario });
             propriedades.msg = msg.map(x => {
                 x.tipo = TipoMensagem.MSG
                 return x;
             });
+
             DesbloquearTela();
             dataVue.modalVisivelController = true;
             dataVue.selecionadoController = propriedades;
-
-            if (dataVue.UsuarioContexto.NIVEL_USUARIO == 1)
-                dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x => { return dataVue.selecionadoController.id == x.id })[0].propostaFuncionario;
+            if (dataVue.UsuarioContexto.NIVEL_USUARIO == 1){
+                if(dataVue.Projetos.lista.filter(x => {return dataVue.selecionadoController.id == x.id}).length > 0) {
+                    dataVue.selecionadoController.propostaFuncionario = dataVue.Projetos.lista.filter(x => {return dataVue.selecionadoController.id == x.id })[0].propostaFuncionario;
+                }
+            }
 
             dataVue.Proposta.IdServico = dataVue.selecionadoController.id;
             dataVue.Proposta.IdFuncionario = dataVue.UsuarioContexto.id_funcionario;
             dataVue.Proposta.IdCliente = dataVue.selecionadoController.id_usuario;
 
             let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
-            /* Algumas atualizacoes do modal*/
-            setTimeout(() => {
-                if (($(".bodyDetalhes").first().height()) > 500) {
-                    $(".bodyChat").css("max-height", $(".bodyDetalhes").first().height());
-                }
 
-            }, 1);
+            /* Algumas atualizacoes do modal*/
             setInterval(async () => {
                 if (dataVue.modalVisivelController == true) {
                     let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
@@ -220,7 +219,7 @@ $(document).ready(async () => {
 
                 }
                 return;
-            }, 1000);
+            }, 500);
 
 
             setTimeout(() => {

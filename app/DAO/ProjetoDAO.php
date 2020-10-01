@@ -170,6 +170,7 @@ class ProjetoDAO
         foreach ($retorno->resultados as $key => $value) {
             $retorno->resultados[$key]["descricao"] = nl2br($retorno->resultados[$key]["descricao"]);
         }
+
         return [$retorno->resultados, $paginas->resultados[0]["paginas"]];
     }
 
@@ -202,7 +203,6 @@ class ProjetoDAO
         {$categoriaSql}", [$idUsuario])->resultados[0]["PAGINAS"];
         $p = $paginas == 1 ? 1 : $p;
         $p = (json_decode($p) - 1) * 6;
-
         $sql = "
         SELECT * FROM PROJETOS_VIEW 
         WHERE ID_USUARIO = ?
@@ -263,10 +263,23 @@ class ProjetoDAO
 
     public function BuscaProjetoPorIdBuscaServico($idUsuario)
     {
+        
+        $idFuncionario = BuscaSecaoValor(SecoesEnum::IDFUNCIONARIOCONTEXTO);
 
-        $sql = "
-        SELECT * FROM PROJETOS_VIEW 
-        WHERE id = ?";
+        $inc1 = "";
+        $inc2 = "";
+        if($idFuncionario != null) {
+            $inc1 = ", CASE WHEN pp.idFuncionario = 1
+            THEN 1
+            ELSE 0
+            END AS propostaFuncionario";
+            $inc2 = "LEFT JOIN proposta AS pp ON pp.idFuncionario = 1 AND pp.idServico = pv.id";
+        }
+        $sql = "SELECT pv.*
+        {$inc1}
+        FROM PROJETOS_VIEW AS pv
+        {$inc2}
+        WHERE pv.id = ?";
         $resultados = Sql($sql, [$idUsuario]);
 
         $resultados->resultados[0]["descricao"] = nl2br($resultados->resultados[0]["descricao"]);
