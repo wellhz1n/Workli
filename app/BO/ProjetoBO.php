@@ -300,6 +300,7 @@ try {
         if ($metodo == "MandaMensagemFunc") {
             if (isset($_POST['informacoes'])) {
                 $informacoes = $_POST['informacoes'];
+                
                 echo json_encode($ProjetoBO->MandaMensagemFunc($informacoes));
             } else {
                 throw new Exception("Informações necessárias.");
@@ -312,6 +313,15 @@ try {
                 echo json_encode($ProjetoBO->BuscaProjetoPorIdBuscaServico($id));
             } else {
                 throw new Exception("Informações necessárias.");
+            }
+        }
+
+        if ($metodo == "GetTituloProjetoPorId") {
+            if (isset($_POST['idProjeto'])) {
+                $id = $_POST['idProjeto'];
+                echo json_encode($ProjetoBO->GetTituloProjetoPorId($id));
+            } else {
+                throw new Exception("Id necessário");
             }
         }
     }

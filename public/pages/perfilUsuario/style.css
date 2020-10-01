@@ -851,6 +851,7 @@
     font-size: 17px;
     transition: 0.2s;
     padding: 5px 9%;
+    text-align: center;
 }
 
 .botaoContratar:focus {

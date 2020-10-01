@@ -855,3 +855,22 @@ function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]
     );
 }
+
+async function mandaNotificacaoFuncionario(idMeuProjeto, idFuncionario, nomeCliente, projetoTitulo, nomeFuncionario) {
+    var result = await WMExecutaAjax("ProjetoBO", "MandaMensagemFunc",
+    {
+        informacoes: {
+            idProjeto: idMeuProjeto,
+            idFuncionario: idFuncionario, 
+            nomeCliente: nomeCliente,
+            projetoTitulo: projetoTitulo
+        }
+    });
+    if(result) {
+        if(nomeFuncionario) {
+            MostraMensagem(`O funcionário <strong>${nomeFuncionario}</strong> irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
+        } else {
+            MostraMensagem(`O funcionário irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
+        }
+    }
+}

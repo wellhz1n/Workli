@@ -129,6 +129,7 @@ class UsuarioBO
     }
     public function GetUsuarioById($id)
     {
+        
         $saida =  $this->usuarioDAO->GetUsuarioCompletobyId($id)->resultados;
         $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
         echo json_encode($saida[0]);
@@ -268,7 +269,7 @@ class UsuarioBO
 
             $usuario['senha'] = md5($usuario['senha']);
             $usuario['nivel'] = isset($usuario['checkFuncionario']) ? 1 : 0;
-            $usuario['avaliacaoMedia'] = 4;
+            $usuario['avaliacaoMedia'] = 3;
             $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
 
             echo $Insert;

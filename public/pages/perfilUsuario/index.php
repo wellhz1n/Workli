@@ -513,7 +513,7 @@
     <template v-slot:body>
         <div class="contratarModalBody">
             <button class="botaoContratar botaoContratarModal mb-4" @click="() => {dataVue.abremodalAtribuirP()}"><i class="fas fa-arrow-up"></i> Atribuir Projeto Existente</button>
-            <button class="botaoContratar botaoContratarModal mb-4"><i class="fas fa-plus"></i> Criar Novo Projeto</button>
+            <a class="botaoContratar botaoContratarModal mb-4" :href="'?page=criarservico&funcDestinatario=' + dataVue.idGeral"><i class="fas fa-plus"></i> Criar Novo Projeto</a>
         </div>
     </template>
     <template v-slot:footer>

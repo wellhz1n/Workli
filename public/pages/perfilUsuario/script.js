@@ -58,6 +58,20 @@ $(document).ready(async () => {
     $("#Titulo").text("Editar Usuário");
 
 
+    
+    /*Modal de Contratar */
+    app.$set(dataVue, "modalVisivelContratar", false);
+
+    app.$set(dataVue, "abremodalContratar", async () => {
+        dataVue.modalVisivelContratar = true;
+    });
+
+    app.$set(dataVue, "callbackContratar", () => {
+        dataVue.modalVisivelContratar = false;
+    });
+
+
+
     if(document.getElementById("tagsCPWrapper")) {
         function scrollHorizontally(e) {
             e = window.event || e;
@@ -84,7 +98,7 @@ $(document).ready(async () => {
     );
 
 
-    await DesbloquearTela();
+    
 
     await retornaValorAvaliacao();
 
@@ -500,7 +514,8 @@ $(document).ready(async () => {
             valor: ""
         });
     });
-
+    
+    await DesbloquearTela();
 
 
     app.$set(dataVue, "adicionarFundos", async (valor) => {
@@ -556,17 +571,6 @@ $(document).ready(async () => {
         valor: ""
     });
 
-
-    /*Modal de Contratar */
-    app.$set(dataVue, "modalVisivelContratar", false);
-
-    app.$set(dataVue, "abremodalContratar", async () => {
-        dataVue.modalVisivelContratar = true;
-    });
-
-    app.$set(dataVue, "callbackContratar", () => {
-        dataVue.modalVisivelContratar = false;
-    });
 
 
     app.$set(dataVue, "meusProjetos", {});
@@ -664,17 +668,8 @@ async function mandaOsDadosAtribuirProjeto () {
     dataVue.callbackAtribuirP();
     dataVue.callbackContratar();
     let idGet = getURLParameter("id");
-    var result = await WMExecutaAjax("ProjetoBO", "MandaMensagemFunc",
-    {
-        informacoes: {
-            idProjeto: dataVue.idMeuProjeto,
-            idFuncionario: idGet, 
-            nomeCliente: dataVue.UsuarioContexto.Nome,
-            projetoTitulo: dataVue.tituloMeuProjeto
-        }
-    });
-    if(result) {
-        MostraMensagem(`O funcionário <strong>${dataVue.usuarioDados.nome}</strong> irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
-    }
+    
+    mandaNotificacaoFuncionario(dataVue.idMeuProjeto, idGet, dataVue.UsuarioContexto.Nome, dataVue.tituloMeuProjeto, dataVue.usuarioDados.nome);
+
 }
 
