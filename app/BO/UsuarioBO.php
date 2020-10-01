@@ -116,6 +116,9 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
         $userBO->BuscarProfissoes($query);
     }
 
+    if ($metodo == "GetFuncionarioByIdProjeto") {
+        $userBO->GetFuncionarioByIdProjeto($_POST["IDPROJETO"]);
+    }
 }
 class UsuarioBO
 {
@@ -446,7 +449,7 @@ class UsuarioBO
     }
 
 
-    public function BuscarUsuarios( $P = 1, $filtro)
+    public function BuscarUsuarios($P = 1, $filtro)
     {
         $dados = $this->usuarioDAO->BuscaUsuarios($P, $filtro);
         $dt = $dados[0];
@@ -465,9 +468,20 @@ class UsuarioBO
         $profissoes = [];
 
         foreach ($dados[0] as $key => $value) {
-            array_push($profissoes, $value["profissao"]); 
+            array_push($profissoes, $value["profissao"]);
         }
         echo json_encode($profissoes);
     }
 
+    public function GetFuncionarioByIdProjeto($idProjeto)
+    {
+        $dados = $this->usuarioDAO->GetFuncionarioPorIdProjeto($idProjeto);
+        if ($dados != null) {
+            foreach ($dados as $key => $value) {
+                if ($key == "imagem" && $value !=  "")
+                    $dados["imagem"] = ConvertBlobToBase64($value);
+            }
+        }
+        echo json_encode($dados);
+    }
 }

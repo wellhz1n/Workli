@@ -23,11 +23,11 @@ class UsuarioDAO
     }
     public function CadastraUsuario($usuario)
     {
-        $cpfExistente = Sql("SELECT cpf FROM usuarios WHERE cpf = ?" , [$usuario['cpf']]);
+        $cpfExistente = Sql("SELECT cpf FROM usuarios WHERE cpf = ?", [$usuario['cpf']]);
         $emailExistente = Sql("SELECT email FROM usuarios WHERE email = ?", [$usuario['email']]);
-        if($cpfExistente->resultados) {
+        if ($cpfExistente->resultados) {
             $resultado = "Este cpf já está cadastrado.";
-        } else if($emailExistente->resultados) {
+        } else if ($emailExistente->resultados) {
             $resultado = "Este email já está cadastrado.";
         } else {
             $resultado = Insert(
@@ -76,15 +76,15 @@ class UsuarioDAO
     public function EditaUsuario($usuarioDados)
     {
         $resultado = "";
-        
+
         /* Checa para ver se é um funcionario */
-        $funcionario = Sql("SELECT nivel_usuario FROM usuarios WHERE id = ?", [$usuarioDados["ID"]]); 
+        $funcionario = Sql("SELECT nivel_usuario FROM usuarios WHERE id = ?", [$usuarioDados["ID"]]);
 
         /*Checa para ver se existe a row na tabela de funcionarios*/
         $existe = Sql("SELECT EXISTS(SELECT * FROM funcionario WHERE id_usuario = ?)", [$usuarioDados["ID"]]);
 
-        if($funcionario->resultados[0]["nivel_usuario"]) {
-            if($existe->resultados) { /*Se a row ja existe na tabela de func*/
+        if ($funcionario->resultados[0]["nivel_usuario"]) {
+            if ($existe->resultados) { /*Se a row ja existe na tabela de func*/
                 $resultado = Update(
                     "UPDATE usuarios AS US
                     INNER JOIN funcionario AS FUNC
@@ -99,21 +99,23 @@ class UsuarioDAO
                 );
             } else { /*Se a row não existir na tabela de func (da update em usuarios e insert em funcionario)*/
                 $resultado = Insert(
-                "BEGIN;
+                    "BEGIN;
                 UPDATE usuarios AS US set US.nome = ?, US.descricao = ? WHERE US.id = ?;
                 INSERT INTO funcionario(profissao, tags, id_usuario) 
                 VALUES(?, ?, ?);
                 COMMIT;
                 ",
-                [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"], $usuarioDados["profissao"], $usuarioDados["tags"], $usuarioDados["ID"]]);
+                    [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"], $usuarioDados["profissao"], $usuarioDados["tags"], $usuarioDados["ID"]]
+                );
             }
         } else { /*Se o usuário for um cliente*/
             $resultado = Update(
                 "UPDATE usuarios AS US SET US.nome = ?, US.descricao = ? WHERE US.id = ?
                 ",
-                [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"]]);   
+                [$usuarioDados["nome"], $usuarioDados["descricao"], $usuarioDados["ID"]]
+            );
         }
-        
+
         return $resultado;
         // return $funcionario->resultados[0];
     }
@@ -198,11 +200,12 @@ class UsuarioDAO
         $retorno = Sql("SELECT COUNT(id) FROM usuarios");
         return $retorno->resultados[0];
     }
-   
-    public function SetDadoUsuario($id, $coluna, $dado, $tabela) {
-        
-        if($tabela == "funcionario") {
-            $coluna = "FUNC.".$coluna;
+
+    public function SetDadoUsuario($id, $coluna, $dado, $tabela)
+    {
+
+        if ($tabela == "funcionario") {
+            $coluna = "FUNC." . $coluna;
             $resultado = Update(
                 "UPDATE funcionario AS FUNC
                 INNER JOIN usuarios AS US
@@ -215,8 +218,8 @@ class UsuarioDAO
                     $id
                 ]
             );
-        } else if($tabela == "usuarios") {
-            $coluna = "US.".$coluna;
+        } else if ($tabela == "usuarios") {
+            $coluna = "US." . $coluna;
             $resultado = Update(
                 "UPDATE usuarios AS US
                 SET
@@ -228,11 +231,10 @@ class UsuarioDAO
                 ]
             );
         }
-        
     }
 
 
-    public function BuscaUsuarios( $pg = 1, $filtro)
+    public function BuscaUsuarios($pg = 1, $filtro)
     {
 
         $groupby = "ORDER BY nome";
@@ -240,10 +242,10 @@ class UsuarioDAO
         $exc = "WHERE id != " . BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO) . " AND nivel_usuario != 2";
 
         $tagsFiltroArray = explode(",", $filtro["tags"]);
-        if($filtro["tags"]) {
+        if ($filtro["tags"]) {
             $exc .= " AND ";
             foreach ($tagsFiltroArray as $key => $value) {
-                if($key != 0) {
+                if ($key != 0) {
                     $exc .= " OR ";
                 }
                 $exc .= "tags LIKE '%{$value}%'";
@@ -252,25 +254,24 @@ class UsuarioDAO
 
         $exc .= $filtro["avaliacao"] != 0 ? " AND avaliacao_media >= " . ($filtro["avaliacao"]) : "";
 
-        if($filtro["tipo_usuario"] == 1) {
+        if ($filtro["tipo_usuario"] == 1) {
             $exc .= " AND nivel_usuario = 0";
-        } else if($filtro["tipo_usuario"] == 2) {
+        } else if ($filtro["tipo_usuario"] == 2) {
             $exc .= " AND nivel_usuario = 1";
             $groupby = "ORDER BY avaliacao_media desc";
 
-            
+
             $profissao = $filtro["profissao"];
-            if($profissao) {
+            if ($profissao) {
                 $exc .= " AND profissao LIKE '%$profissao%'";
             }
-                
         }
 
         $queryBusca = $filtro["queryBusca"];
         $exc .= " AND nome LIKE '%$queryBusca%'";
 
-        
-        
+
+
         $paginas = Sql("
             SELECT CEIL(COUNT(id)/5) AS paginas FROM Usuarios_view
             {$exc}
@@ -280,7 +281,7 @@ class UsuarioDAO
             if (json_decode($paginas->resultados[0]['paginas']) == 1)
                 $pg = 1;
         }
-        
+
         $pg = (json_decode($pg) - 1) * 5;
 
         $retorno = Sql("
@@ -316,6 +317,17 @@ class UsuarioDAO
         return [$retorno->resultados];
     }
 
-
+    //GET USUARIO(FUNCIONARIO) POR ID PROJETO, ELE VAI OLHAR PARA A PROPOSTA A FIM DE BUSCAR O IDFUNCIONARIO
+    public function GetFuncionarioPorIdProjeto($idProjeto)
+    {
+        $sql = "SELECT U.id,U.nome,UM.imagem FROM SERVICO S
+        inner join PROPOSTA P on P.idServico = S.id
+        inner join funcionario F on F.id = P.idFuncionario
+        inner join usuarios U on U.id = F.id_usuario
+        left join imagem_usuario UM on UM.id_usuario = U.id
+        WHERE S.id = ?";
+        $result = Sql($sql, [$idProjeto]);
+        return count($result->resultados) > 0 ? $result->resultados[0] : null;
+    }
 }
 // $USR->example();

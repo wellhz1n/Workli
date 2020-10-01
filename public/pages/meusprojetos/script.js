@@ -5,6 +5,7 @@ $(document).ready(async () => {
     //#region DATAVUE
     app.$set(dataVue, "carregando", false);
     app.$set(dataVue, "AvaliacaoModalController", false);
+    app.$set(dataVue, "AvaliacaoController", { funcionarioEntidade: null, avaliacao: 0 });
     app.$set(dataVue, "ListaCarregando", true);
     app.$set(dataVue, "Lista", []);
     app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });
@@ -60,6 +61,10 @@ $(document).ready(async () => {
 
 
                 if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'A' }).length > 0) {
+
+
+
+                    dataVue.AvaliacaoController.funcionarioEntidade = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdProjeto", { IDPROJETO: Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })[0].P });
                     dataVue.AvaliacaoModalController = true;
                 }
             }
