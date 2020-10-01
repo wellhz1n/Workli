@@ -45,6 +45,7 @@ $(document).ready(async () => {
                     buscaProjeto.publicado = buscaProjeto.postado;
                     buscaProjeto.proposta = buscaProjeto.propostas;
 
+                    
                     //Limpar para o Objeto ficar igual ao do click do botão
                     buscaProjeto.nivel_profissional = undefined;
                     buscaProjeto.nivel_projeto = undefined;
@@ -61,9 +62,6 @@ $(document).ready(async () => {
 
 
                 if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'A' }).length > 0) {
-
-
-
                     dataVue.AvaliacaoController.funcionarioEntidade = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdProjeto", { IDPROJETO: Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })[0].P });
                     dataVue.AvaliacaoModalController = true;
                 }
