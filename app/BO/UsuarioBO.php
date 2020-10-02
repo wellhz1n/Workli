@@ -484,4 +484,7 @@ class UsuarioBO
         }
         echo json_encode($dados);
     }
+
+
+
 }

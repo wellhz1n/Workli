@@ -5,7 +5,7 @@ $(document).ready(async () => {
     //#region DATAVUE
     app.$set(dataVue, "carregando", false);
     app.$set(dataVue, "AvaliacaoModalController", false);
-    app.$set(dataVue, "AvaliacaoController", { funcionarioEntidade: null, avaliacao: 0 });
+    app.$set(dataVue, "AvaliacaoController", { funcionarioEntidade: null, avaliacao: 0, AVALIAR: Avaliar });
     app.$set(dataVue, "ListaCarregando", true);
     app.$set(dataVue, "Lista", []);
     app.$set(dataVue, "PageController", { paginas: 1, pagina_Atual: 1 });
@@ -45,7 +45,7 @@ $(document).ready(async () => {
                     buscaProjeto.publicado = buscaProjeto.postado;
                     buscaProjeto.proposta = buscaProjeto.propostas;
 
-                    
+
                     //Limpar para o Objeto ficar igual ao do click do botão
                     buscaProjeto.nivel_profissional = undefined;
                     buscaProjeto.nivel_projeto = undefined;
@@ -61,7 +61,7 @@ $(document).ready(async () => {
                     MostraMensagem(buscaProjeto.error, ToastType.ERROR, "Erro ao Abrir Projeto");
 
 
-                if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'A' }).length > 0) {
+                if (Paramns.filter(x => { return Object.entries(x)[0][0] == 'A' }).length > 0 && dataVue.selecionadoController.avaliou == 0) {
                     dataVue.AvaliacaoController.funcionarioEntidade = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdProjeto", { IDPROJETO: Paramns.filter(x => { return Object.entries(x)[0][0] == 'P' })[0].P });
                     dataVue.AvaliacaoModalController = true;
                 }
@@ -190,8 +190,7 @@ async function BuscaMeusProjetos() {
     }
     app.dataVue.ListaCarregando = false;
 };
-function BTClick(evento, Botao) {
-    debugger
+async function BTClick(evento, Botao) {
     if (Botao == "CHAT") {
         if (app.dataVue.selecionadoController.situacao == 0)
             evento.view.RedirecionarComParametros('chat', [{ chave: 'P', valor: app.dataVue.selecionadoController.id }]);
@@ -213,4 +212,40 @@ function BTClick(evento, Botao) {
             DesbloquearTela();
         });
     }
+    if (Botao == "AVALIACAO") {
+        BloquearTela("Buscando Dados....");
+        dataVue.AvaliacaoController.funcionarioEntidade = await WMExecutaAjax("UsuarioBO", "GetFuncionarioByIdProjeto", { IDPROJETO: app.dataVue.selecionadoController.id });
+        dataVue.AvaliacaoModalController = true;
+        DesbloquearTela();
+    }
+}
+async function Avaliar() {
+
+    BloquearTela();
+    try {
+
+        let saida = await WMExecutaAjax("PropostaBO", "AvaliaFuncionario", { IDFUNCIONARIO: dataVue.AvaliacaoController.funcionarioEntidade.id, IDSERVICO: dataVue.selecionadoController.id, AVALIACAO: dataVue.AvaliacaoController.avaliacao });
+        if (saida.error === undefined) {
+            dataVue.AvaliacaoModalController = false;
+            dataVue.Lista = dataVue.Lista.map(l => {
+                if (l.id == dataVue.selecionadoController.id) {
+                    l.avaliou = 1;
+                }
+                return l;
+            });
+            dataVue.AvaliacaoController.avaliacao = 0;
+            dataVue.selecionadoController.avaliou = 1;
+            dataVue.AvaliacaoController.funcionarioEntidade = null;
+            MostraMensagem("Funcionário Avaliado Com Sucesso", ToastType.SUCCESS, "Avaliação");
+        }
+
+    } catch (error) {
+        console.warn(`ERRO AO AVALIAR:${error}`);
+        MostraMensagem("Algo Deu Errado", ToastType.ERROR, "Avaliação");
+    }
+    finally {
+
+        DesbloquearTela();
+    }
+
 }

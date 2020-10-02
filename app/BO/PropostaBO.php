@@ -186,7 +186,7 @@ class PropostaBO extends BOGeneric
                     $this->GetUsuarioContexto(),
                     TipoNotificacaoEnum::SUCCESS
                 );
-                usleep(1);
+                sleep(1);
                 $_NotificacaoBO->NovaNotificacao(
                     "Avalie o Funcionario",
                     "Avalie o funcionário que realizou  o Projeto: <strong style='color: red;'>{$titulo}</strong>.",
@@ -289,6 +289,16 @@ class PropostaBO extends BOGeneric
         // return $resultado[0]["soma"];
     }
     #endregion
+
+    //AVALIACAO
+    public function AvaliaFuncionario($idFuncionario, $idServico, $avaliacao = 0)
+    {
+        $Ptotal = $this->PropostaDAO->GetTotalPropostasPorIDFuncionario($idFuncionario); // Total de Propostas
+        $AvaliacaoMedia = $this->PropostaDAO->GetMediaPorIdFuncionario($idFuncionario);
+        $novaMedia = $AvaliacaoMedia + ($avaliacao - $AvaliacaoMedia) / $Ptotal; // CONTA BOA ESSA
+        $this->PropostaDAO->SetAvaliacao($idFuncionario, $novaMedia, $idServico);
+        return true;
+    }
 }
 
 
@@ -345,6 +355,14 @@ try {
                 echo json_encode($proposta);
             } else {
                 throw new Exception("parâmetros [IDPROPOSTA,SITUACAO,TITULO,IDCLIENTE,IDSERVICO] estão em falta.");
+            }
+        }
+        if ($metodo == "AvaliaFuncionario") {
+            if (isset($_POST['IDFUNCIONARIO']) && isset($_POST['IDSERVICO']) && isset($_POST['AVALIACAO'])) {
+                $proposta = $PropostaBO->AvaliaFuncionario($_POST['IDFUNCIONARIO'], $_POST['IDSERVICO'], $_POST['AVALIACAO']);
+                echo json_encode($proposta);
+            } else {
+                throw new Exception("parâmetros [IDFUNCIONARIO,IDSERVICO,AVALICAO] estão em falta.");
             }
         }
     }

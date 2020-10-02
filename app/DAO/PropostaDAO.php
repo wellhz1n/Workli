@@ -112,10 +112,10 @@ class PropostaDAO
         ORDER BY P.DATA_CRIACAO DESC
         ";
         $result = Sql($sql, [$idFunciorario]);
-        
-       $arr =  array_filter($result->resultados, function($v, $k) {
+
+        $arr =  array_filter($result->resultados, function ($v, $k) {
             return  $v["SITUACAO"] == '1';
-        },ARRAY_FILTER_USE_BOTH);
+        }, ARRAY_FILTER_USE_BOTH);
         //PARADA QUE FAZ A PAGINAÇÃO 
         $paginas = count($result->resultados) > 0 ? ceil((count($result->resultados)) / 6) : 1;
         $paginas = $paginas == 0 ? 1 : $paginas;
@@ -126,7 +126,7 @@ class PropostaDAO
             if ($i >= $inicioArr && $i <= $fimArray)
                 array_push($novoArr, $result->resultados[$i]);
         }
-        return [$paginas, $novoArr,count($arr) > 0];
+        return [$paginas, $novoArr, count($arr) > 0];
     }
     public function RetornaValorPropostaMedia($idServico)
     {
@@ -137,10 +137,30 @@ class PropostaDAO
         $result = Sql($sql, [$idServico]);
         return $result->resultados;
     }
-    
+
     #endregion
-   function SetSituacaoPropostaPorId($id,$situacao){
-       return Update("update proposta set situacao = ? where id = ?",[$situacao,$id]);
-   }
+    function SetSituacaoPropostaPorId($id, $situacao)
+    {
+        return Update("update proposta set situacao = ? where id = ?", [$situacao, $id]);
+    }
     #endregion
+    #region Avaliacao
+    public function GetTotalPropostasPorIDFuncionario($idFuncionario)
+    {
+        $result = Sql("select count(id) as total from proposta where idFuncionario = ? and situacao = 4", [$idFuncionario]);
+        return count($result->resultados) > 0 ? json_decode($result->resultados[0]["total"]) : 0;
+    }
+    public function GetMediaPorIdFuncionario($idFuncionario)
+    {
+        $result = Sql("select avaliacao_media from funcionario where id = ? ", [$idFuncionario]);
+        return json_decode($result->resultados[0]["avaliacao_media"]);
+    }
+    public function SetAvaliacao($idFuncionario, $avaliacao, $idServico)
+    {
+        Update("update funcionario set avaliacao_media = ? where id = ?", [$avaliacao, $idFuncionario]);
+        Update("update servico set avaliou = ? where id = ?", [1, $idServico]);
+        return true;
+    }
+    #endregion
+
 }

@@ -135,7 +135,7 @@
                                 <div v-if="dataVue.selecionadoController.situacao != 3" class="d-contents" style="display:flex;flex-direction: column; width: 90%;justify-content: center;align-items: center;margin-top: 7px;">
 
                                     <a v-if="dataVue.selecionadoController.situacao  == 0 && dataVue.selecionadoController.proposta > 0 " @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-eye" aria-hidden="true"></i> Visualizar Propostas</a>
-                                    <a v-if="dataVue.selecionadoController.situacao  == 4 && dataVue.selecionadoController.avaliou == 0" @click="(event)=>{dataVue.AvaliacaoModalController = true}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
+                                    <a v-if="dataVue.selecionadoController.situacao  == 4 && dataVue.selecionadoController.avaliou == 0" @click="(event)=>{dataVue.BTClick(event,'AVALIACAO')}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-star" aria-hidden="true"></i> Avaliar Funcionário</a>
                                     <a v-if=" dataVue.selecionadoController.situacao  != 3 " @click="(event)=>{dataVue.BTClick(event,'CHAT')}" class="botaoAtalho mb-2" style="color: white !important;cursor: pointer !important;"><i class="fas fa-comment-dots" aria-hidden="true"></i> Abrir Chat</a>
                                     <a v-if="dataVue.selecionadoController.situacao == 0 && dataVue.selecionadoController.proposta == 0" @click="(event)=>{dataVue.BTClick(event,'CANCELA')}" style="color: white !important;cursor: pointer !important;" class="botaoAtalho mb-2"><i class="fas fa-times" aria-hidden="true"></i> Cancelar Projeto</a>
 
@@ -163,7 +163,14 @@
 </wm-modal>
 
 <!-- MODAL AVALIACAO -->
-<wm-modal-botoes-generico text_botao_salvar="Avaliar" :visivel="dataVue.AvaliacaoModalController" @fechar-modal="()=>{dataVue.AvaliacaoModalController = false}">
+<wm-modal-botoes-generico text_botao_salvar="Avaliar" :visivel="dataVue.AvaliacaoModalController" @fechar-modal="(resposta)=>{
+                                                                                                                if(!resposta){
+                                                                                                                    dataVue.AvaliacaoModalController = false;
+                                                                                                                     dataVue.AvaliacaoController.funcionarioEntidade = null; 
+                                                                                                                     dataVue.AvaliacaoController.avaliacao = 0;}
+                                                                                                                     else{
+                                                                                                                        dataVue.AvaliacaoController.AVALIAR(); 
+                                                                                                                     } }">
     <template v-slot:titulo>
         Avaliação do Projeto
     </template>
