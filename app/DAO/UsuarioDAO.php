@@ -320,7 +320,7 @@ class UsuarioDAO
     //GET USUARIO(FUNCIONARIO) POR ID PROJETO, ELE VAI OLHAR PARA A PROPOSTA A FIM DE BUSCAR O IDFUNCIONARIO
     public function GetFuncionarioPorIdProjeto($idProjeto)
     {
-        $sql = "SELECT U.id,U.nome,UM.imagem FROM SERVICO S
+        $sql = "SELECT F.id,U.nome,UM.imagem FROM SERVICO S
         inner join PROPOSTA P on P.idServico = S.id
         inner join funcionario F on F.id = P.idFuncionario
         inner join usuarios U on U.id = F.id_usuario

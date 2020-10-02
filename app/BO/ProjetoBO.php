@@ -164,7 +164,7 @@ class ProjetoBO extends BOGeneric
                 if ($saida["postado"] > 1 &&  $saida["postado"] != 0)
                     $saida["postado"] = "Há " . $saida["postado"] . " dias";
                 else
-                    $saida["postado"]["postado"] = "Há 1 dia";
+                    $saida["postado"] = "Há 1 dia";
             }
             return $saida;
         } else

@@ -266,7 +266,7 @@ a:hover {
     }
     50% {
         opacity: 0.9;
-        transform: scale(1.2, 1.2);
+        transform: scale(1.06, 1.06);
     }
     100% {
         opacity: 1;
