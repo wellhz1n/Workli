@@ -52,6 +52,9 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.descricaoProjetoItem {
+  word-break: break-all;
+}
 
 .aicon {
   cursor: pointer;

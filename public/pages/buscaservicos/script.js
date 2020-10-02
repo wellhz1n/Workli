@@ -90,14 +90,11 @@ $(document).ready(async () => {
         }
 
     };
-    //Guambiarra para simular um realtime
-    // setInterval(async() => {
-    //     console.log("ATUALIZANDO");
-    //     dataVue.Projetos = await await getProjetos(dataVue.FiltroProjeto.C,
-    //         dataVue.FiltroProjeto.Q,
-    //         dataVue.FiltroProjeto.P, false);
-    // }, 10000);
-    // Fim da guambiarra
+
+    var timerChatModal = null;
+
+
+
     app.$set(dataVue, "modalVisivelController", false);
     app.$set(dataVue, "modalVisivelController1", false);
     app.$set(dataVue, "selecionadoController", {});
@@ -172,6 +169,28 @@ $(document).ready(async () => {
         }
 
     });
+
+
+    app.$set(dataVue, "igualaTamanhoChat", async () => {
+        if($(".bodyDetalhes").height() > 500) {
+            let bodyDetalhesHeight = $(".bodyDetalhes").height();
+            $(".bodyChat").attr("style", `max-height: ${bodyDetalhesHeight}px !important;`);
+
+            let porcentagem = 78;
+            if(bodyDetalhesHeight > 800) {
+                porcentagem = 90;
+            } else if (bodyDetalhesHeight > 700) {
+                porcentagem = 86;
+            } else if(bodyDetalhesHeight > 600) {
+                porcentagem = 82;
+            }
+
+            let tamanhoBodyChatChat = bodyDetalhesHeight / 100 * porcentagem;
+            $("#bodyChatChat").attr("style", `height: ${tamanhoBodyChatChat}px !important;`);
+
+        }
+    });
+
     app.$set(dataVue, "abremodal", async (propriedades) => {
         try {
             
@@ -208,19 +227,21 @@ $(document).ready(async () => {
             let valesNaCarteira = parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
 
             /* Algumas atualizacoes do modal*/
-            setInterval(async () => {
+
+            timerChatModal = setInterval(async () => {
                 if (dataVue.modalVisivelController == true) {
                     let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
-                    dataVue.selecionadoController.msg = msg.map(x => {
-                        x.tipo = TipoMensagem.MSG
-                        return x;
-                    });
+                    if(dataVue.selecionadoController != null) {
+                        dataVue.selecionadoController.msg = msg.map(x => {
+                            x.tipo = TipoMensagem.MSG
+                            return x;
+                        });
+                    }
 
 
                 }
                 return;
             }, 500);
-
 
             setTimeout(() => {
                 /*JS DO SLIDER*/
@@ -445,6 +466,7 @@ $(document).ready(async () => {
             }, 10);
 
 
+
             
 
         } catch (error) {
@@ -456,6 +478,7 @@ $(document).ready(async () => {
 
     });
     app.$set(dataVue, "callback", () => {
+        clearInterval(timerChatModal);
         dataVue.modalVisivelController = false;
         dataVue.selecionadoController = null;
         dataVue.PropostaController.mandou = false;

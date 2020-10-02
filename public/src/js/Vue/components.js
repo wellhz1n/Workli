@@ -2096,7 +2096,7 @@ WmProjetoItem = Vue.component('wm-projeto-item', {
     </div>
     <div class="ItemContainerDesc">
         <div >
-            <p  v-html="this.mostrarmais ? datadescricao : datadescricao.substr(0,400)" class="font_Poopins m-0">
+            <p  v-html="this.mostrarmais ? datadescricao : datadescricao.substr(0,400)" class="font_Poopins m-0 descricaoProjetoItem">
             </p>
             <p class="m-0">
             <span v-show="datadescricao.length > 400" @click="mostrar" class="mostrarmais">{{ !this.mostrarmais ?'Mostrar mais':'Mostrar menos'}}</span>
@@ -2554,7 +2554,8 @@ WMCHAT = Vue.component('wm-chat', {
             primeiraVez: true,
             idusuariodestinatariodata: -1,
             dataHeigth: '',
-            dataExibeMandar: true
+            dataExibeMandar: true,
+            emitido: 0
         }
     },
     methods: {
@@ -2568,7 +2569,9 @@ WMCHAT = Vue.component('wm-chat', {
                 this.MensagemDigitada = null;
                 setTimeout(() => {
                     var container = this.$el.querySelector("#bodyChatChat");
-                    container.scrollTop = container.scrollHeight;
+                    if(container) {
+                        container.scrollTop = container.scrollHeight;
+                    }
 
                 }, 1);
                 this.$emit('novamensagem', mensagem);
@@ -2586,14 +2589,18 @@ WMCHAT = Vue.component('wm-chat', {
     },
     mounted() {
         var container = this.$el.querySelector("#bodyChatChat");
-        container.scrollTop = container.scrollHeight;
+        if(container) {
+            container.scrollTop = container.scrollHeight;
+        }
     },
     watch: {
         mensagens: {
             immediate: true,
             deep: true,
             handler(nv, ov) {
+                
                 if (nv != undefined || nv != null) {
+                    
                     this.carregando = this.primeiraVez
                     let visualizou = false;
                     nv.map((item, index) => {
@@ -2605,7 +2612,6 @@ WMCHAT = Vue.component('wm-chat', {
                                 visualizou = true;
                         }
                     });
-
                     if (ov == undefined || visualizou || ov.length != nv.length) {
 
                         this.dataMensagens = ChatSeparatorGenerator(Array.from(nv));
@@ -2614,7 +2620,9 @@ WMCHAT = Vue.component('wm-chat', {
                                 if (nv.length != ov.length) {
                                     if (!this.carregando) {
                                         var container = this.$el.querySelector("#bodyChatChat");
-                                        container.scrollTop = container.scrollHeight;
+                                        if(container) {
+                                            container.scrollTop = container.scrollHeight;
+                                        }
 
                                     }
                                 }
@@ -2622,6 +2630,11 @@ WMCHAT = Vue.component('wm-chat', {
                             return
 
                         }, 600);
+                    }
+                    
+                    if(this.emitido < 3) {
+                        this.emitido++;
+                        this.$emit("montado")
                     }
                 } else
                     this.dataMensagens = [];
@@ -2660,92 +2673,86 @@ WMCHAT = Vue.component('wm-chat', {
     },
     template: `
     <transition name="fade" mode="out-in">
-    <div :key="0" v-if="!this.carregando" style="width: 100%;" >
-    <transition name="fade" mode="out-in">
-    <div :key="0" id="bodyChatChat" :style="{height:dataHeigth}">
-    <transition-group name="fade" mode="out-in">
-    <div :key="item.msg+item.date" v-for="item in this.dataMensagens">
-    <div v-if="item.tipo == 'separador'" class="dataChatDiv"><span class="dataChatDivTexto">{{item.msg}}</span></div>
-    <div v-if="item.tipo == 'msg' && item.automatica != 1 && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
-        <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-        <div class="textoTF" >
-        <p class="m-0">{{item.msg}}</p>            
-        <div class="tempoTF">
-        <div class="TTICON">
-        <p class="m-0 ">{{item.time.slice(0,5)}}</p> 
-        <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
-        <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
-        </div>
-        </div>
+        <div :key="0" v-if="!this.carregando" style="width: 100%;" >
+            <transition name="fade" mode="out-in">
+                <div :key="0" id="bodyChatChat" :style="{height:dataHeigth}">
+                    <transition-group name="fade" mode="out-in">
+                        <div :key="item.msg+item.date" v-for="item in this.dataMensagens">
+                            <div v-if="item.tipo == 'separador'" class="dataChatDiv">
+                                <span class="dataChatDivTexto">{{item.msg}}</span>
+                            </div>
+                            <div v-if="item.tipo == 'msg' && item.automatica != 1 && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
+                                <wm-user-img :img="imagemUsuario" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+                                <div class="textoTF">
+                                    <p class="m-0">{{item.msg}}</p>            
+                                    <div class="tempoTF">
+                                        <div class="TTICON">
+                                            <p class="m-0 ">{{item.time.slice(0,5)}}</p> 
+                                            <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
+                                            <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="textoCliente" v-else-if="item.tipo == 'msg' && item.automatica != 1">
+                                <wm-user-img style="cursor:pointer;" @redireciona_usuario="RedirecionaPerfil"  :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+                                <div class="textoTC">
+                                    <p class="m-0">{{item.msg}}</p>            
+                                        <div class="tempoTC">
+                                            <div class="TTICON">
+                                                <p class="m-0">{{item.time.slice(0,5)}}</p> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else-if="item.tipo == 'msg' && item.automatica == '1' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
+                                    <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
+                                    <div class="textoTF" style="background-color:#ffa809;color:white" >
+                                        <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>               
+                                        <div class="tempoTF">
+                                            <div class="TTICON">
+                                                <p class="m-0"  style="color:white">{{item.time.slice(0,5)}}</p> 
+                                                <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
+                                                <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="textoCliente"  v-else-if="item.tipo == 'msg' && item.automatica == '1' ">
+                                    <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
+                                    <div class="textoTC" style="background-color:#ffa809;color:white">
+                                    <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>            
+                                    <div class="tempoTC">
+                                        <div class="TTICON">
+                                            <p class="m-0" style="color:white">{{item.time.slice(0,5)}}</p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </transition-group>
+                    <div id="ancora">
+                    </div>
+                </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+                <div v-if="this.dataExibeMandar" class="bodyChatEnviar">
+                    <div class="wrapperImagemBC">
+                        <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
+                    </div>
+                    <div class="wrapperInputBC">
+                        <input @keyup.enter="NovaMensagem" type="text" @input="inputMensagem($event.target.value)" :value="MensagemDigitada" class="inputBC" placeholder="Faça uma pergunta..."></input>
+                        <div @click="NovaMensagem" >
+                            <i class="far fa-paper-plane iconeSetaEnviar" style="cursor:pointer"></i>
+                        </div>
+                    </div>
+                </div>
+            </transition>
         </div>
     </div>
-
-    <div class="textoCliente" v-else-if="item.tipo == 'msg' && item.automatica != 1">
-        <wm-user-img style="cursor:pointer;" @redireciona_usuario="RedirecionaPerfil"  :img="imagemUsuarioProposta" class="imagemGeralBC" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-        <div class="textoTC">
-                <p class="m-0">{{item.msg}}</p>            
-            <div class="tempoTC">
-            <div class="TTICON">
-            <p class="m-0">{{item.time.slice(0,5)}}</p> 
-            </div>
-            </div>
-           
-        </div>
+    <div :key="1" v-else style="margin-top: 25%;">
+        <wm-loading></wm-loading>
     </div>
-
-    <div v-else-if="item.tipo == 'msg' && item.automatica == '1' && item.id_usuario_remetente == idUsusarioContexto " class="textoFuncionario">
-         <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
-        <div class="textoTF" style="background-color:#ffa809;color:white" >
-        <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>               
-        <div class="tempoTF">
-        <div class="TTICON">
-        <p class="m-0"  style="color:white">{{item.time.slice(0,5)}}</p> 
-        <span v-show="item.visualizado == 0 " class="ml-1" style="font-size: 10px;opacity: 0.6;"><i class="fas fa-check"></i></span>
-        <span v-show="item.visualizado == 1" class="ml-1" style="font-size: 10px;color:rgb(6 226 22);"><i class="fas fa-check-double"></i></span>
-        </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="textoCliente"  v-else-if="item.tipo == 'msg' && item.automatica == '1' ">
-    <img src="src/img/icons/BotIcon.png" class="BCImageIcon imagemGeralBC " />
-    <div class="textoTC" style="background-color:#ffa809;color:white">
-            <p class="m-0"><strong>MENSAGEM AUTOMÁTICA:</strong><br>{{item.msg}}</p>            
-        <div class="tempoTC">
-        <div class="TTICON">
-        <p class="m-0" style="color:white">{{item.time.slice(0,5)}}</p> 
-        </div>
-        </div>
-       
-    </div>
-    </div>
-</div>
-</transition-group>
-
-<div id="ancora">
-
-</div>
-</div>
-    </transition>
-<transition name="fade" mode="out-in">
-    <div v-if="this.dataExibeMandar" class="bodyChatEnviar">
-        <div class="wrapperImagemBC">
-            <wm-user-img :img="this.imagemUsuario" class_icone="BCNullIcon" class_imagem="BCImageIcon"></wm-user-img>
-        </div>
-        <div class="wrapperInputBC">
-            <input @keyup.enter="NovaMensagem" type="text" @input="inputMensagem($event.target.value)" :value="MensagemDigitada" class="inputBC" placeholder="Faça uma pergunta..."></input>
-           <div @click="NovaMensagem" >
-            <i class="far fa-paper-plane iconeSetaEnviar" style="cursor:pointer"></i>
-            </div>
-            </div>
-    </div>
-    </transition>
-
-</div>
-</div>
-<div :key="1" v-else style="margin-top: 25%;">
-    <wm-loading></wm-loading>
-</div>
 </transition>
     `
 });
