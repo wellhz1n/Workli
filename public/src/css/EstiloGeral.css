@@ -1221,6 +1221,9 @@ textarea::-webkit-scrollbar-thumb:hover {
     color: #252525;
     font-size: 15px;
 }
+.textoTC > p {
+    word-break: break-all;
+}
 
 .textoCliente {
     display: flex;
@@ -1254,6 +1257,9 @@ textarea::-webkit-scrollbar-thumb:hover {
     margin-top: 10px;
     color: #fff;
     font-size: 15px;
+}
+.textoTF > p {
+    word-break: break-all;
 }
 
 .imagemGeralBC svg {

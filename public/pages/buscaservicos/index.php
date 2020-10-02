@@ -117,7 +117,15 @@
                             <a onclick="window.open('?page=chat&id_chat=' + dataVue.selecionadoController.id_chat ,'_blank')" class="aicon" v-if="dataVue.selecionadoController.msg.length > 0 && dataVue.UsuarioContexto.NIVEL_USUARIO == 1" style="margin-left: auto;
                             cursor: pointer;"><i class="fas fa-external-link-alt"></i></a>
                         </div>
-                        <wm-chat heigth="360px" style="display: flex;flex-direction: column;flex: 1;" :userpropostaimage="dataVue.selecionadoController.imagem" :mensagens="dataVue.selecionadoController.msg" :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" v-on:novamensagem="M=> dataVue.NovaMensagem(M)"></wm-chat>
+                        <wm-chat 
+                            heigth="385px" 
+                            style="display: flex; flex-direction: column; flex: 1;" 
+                            :userpropostaimage="dataVue.selecionadoController.imagem" 
+                            :mensagens="dataVue.selecionadoController.msg" 
+                            :idusuariodestinatario="JSON.parse(dataVue.selecionadoController.id_usuario)" 
+                            v-on:novamensagem="M=> dataVue.NovaMensagem(M)"
+                            @montado="dataVue.igualaTamanhoChat"
+                        ></wm-chat>
                     </div>
                 </div>
                 <div class="d-flex" v-if="dataVue.UsuarioContexto.NIVEL_USUARIO == 1">
