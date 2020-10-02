@@ -15,7 +15,7 @@ class NotificacoesDAO
 
         $visto = $BuscaNovo ? "and visto = 0" : null;
         $SemProp = !$SemProposta ? " union  
-        select  distinct * from NProposta where id_usuario = {$idUsuario} " : null;
+        select  distinct * from NProposta where id_usuario = {$idUsuario} {$visto}" : null;
         $sql = " 
         with Ncomum as (
             select distinct
@@ -194,9 +194,11 @@ class NotificacoesDAO
     }
 
 
-    public function NumeroNotificacoesNaoVistas($idUsuario)
+    public function NumeroNotificacoesNaoVistas($idUsuario, $contaPropostas = true)
     {
-        return count($this->BuscaNotificacoes($idUsuario));
+        $contagem = $this->BuscaNotificacoes($idUsuario, true, !$contaPropostas);
+      
+        return count($contagem);
     }
     #endregion
 

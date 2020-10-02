@@ -3,6 +3,7 @@ $(document).ready(async () => {
 
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
+    await app.$set(dataVue, "NotificacaoNumeroTab", 0);
     await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
     //#endregion
     var Paramns = GetParam();
@@ -12,11 +13,13 @@ $(document).ready(async () => {
             app.dataVue.Tabs.Notificacao = false;
         }
     }
+    setTimeout(() => {
 
-    document.addEventListener("BuscaNotificacao", async () => {
-        await BuscaListaNotificacoes();
-        await BuscaPropostas();
-    });
+        document.addEventListener("BuscaNotificacao", async (a) => {
+            await BuscaListaNotificacoes(false);
+            await BuscaPropostas();
+        });
+    }, 8000);
 
 
 
@@ -24,13 +27,15 @@ $(document).ready(async () => {
     app.dataVue.TabNCarregando = false;
 
     DesbloquearTela();
-    
+
 
 });
 
 const GetTipoMensagem = () => {
     return {
         Info: false,
+        Avaliacoes: false,
+        PropostaRecebida: false,
         Chat: false,
         Avisos: false,
         Cancelados: false,
@@ -50,6 +55,10 @@ const GetTipoNotificacoesArray = (TipoMensagens = GetTipoMensagem()) => {
     var arr = [];
     if (TipoMensagens.Avisos)
         arr.push(TipoNotificacao.ALERT);
+    if (TipoMensagens.Avaliacoes)
+        arr.push(TipoNotificacao.AVALIAR_PROJETO)
+    if (TipoMensagens.PropostaRecebida)
+        arr.push(TipoNotificacao.PROPOSTA_RECEBIDA)
     if (TipoMensagens.Cancelados)
         arr.push(TipoNotificacao.ERROR);
     if (TipoMensagens.Chat)
@@ -74,8 +83,11 @@ const GetSituacaoArray = (SituacaoProposta = GetSituacaoProposta()) => {
         arr.push(Situacao.Aprovada);
     return arr;
 }
-const BuscaListaNotificacoes = async () => {
-    app.dataVue.TabNListCarregando = true;
+const BuscaListaNotificacoes = async (carregando = true) => {
+    if (carregando) {
+        app.dataVue.TabNListCarregando = true;
+    }
+    dataVue.NotificacaoNumeroTab = await WMExecutaAjax("NotificacoesBO", "GetNumeroNotificacoes", { CONTAPROPOSTA: false });
     var parans = GetTipoNotificacoesArray(app.dataVue.TabNCategorias);
     var result = await WMExecutaAjax("NotificacoesBO",
         "BuscaNotificacoesFormatadoComParametros", { PARAMETROS: parans, PAGINA: app.dataVue.TabNPageController.pagina_Atual })

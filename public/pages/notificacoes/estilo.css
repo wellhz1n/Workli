@@ -265,3 +265,25 @@
     margin: 0px !important;
   }
 }
+
+
+
+.fadefast-enter-active,
+.fadefast-leave-active {
+    transition: opacity .25s ease !important;
+}
+
+.fadefast-enter,
+.fadefast-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .2s ease !important;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
