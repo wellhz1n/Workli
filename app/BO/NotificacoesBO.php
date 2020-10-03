@@ -12,7 +12,8 @@ try {
         $metodo = $_POST['metodo'];
         $NotificacaoBO = new NotificacoesBO();
         if ($metodo == "GetNumeroNotificacoes") {
-            echo json_encode($NotificacaoBO->GetNumeroNotificacoes());
+
+            echo json_encode($NotificacaoBO->GetNumeroNotificacoes(isset($_POST["CONTAPROPOSTA"]) ? json_decode($_POST["CONTAPROPOSTA"]) : true));
         }
         if ($metodo == "BuscaNotificacoes") {
             echo json_encode($NotificacaoBO->BuscaNotificacoes());
@@ -39,10 +40,10 @@ class NotificacoesBO
         $this->Notificacao = new Notificacao();
         $this->NotificacoesDAO = new NotificacoesDAO();
     }
-    public function GetNumeroNotificacoes()
+    public function GetNumeroNotificacoes($contaproposta = true)
     {
         $idusuario = BuscaSecaoValor(SecoesEnum::IDUSUARIOCONTEXTO);
-        $valorBanco = $this->NotificacoesDAO->NumeroNotificacoesNaoVistas($idusuario);
+        $valorBanco = $this->NotificacoesDAO->NumeroNotificacoesNaoVistas($idusuario, $contaproposta);
         $valorSecao = BuscaSecaoValor(SecoesEnum::NUMNOTIFICACOES);
         if ($valorSecao != null &&  $valorSecao == $valorBanco) {
             return $valorSecao;
@@ -67,8 +68,10 @@ class NotificacoesBO
             $hora =   new DateTime($resultado[$key]['data_hora']);
 
             $resultado[$key]['hora'] = $hora->format('H:i');
-            if ($resultado[$key]['id'] != -1 && $resultado[$key]['visto'] == 0)
+            if ($resultado[$key]['id'] != -1 && $resultado[$key]['visto'] == 0) {
                 array_push($arrayVisualizar, $resultado[$key]['id']);
+                $resultado[$key]['visto'] = 1;
+            }
             // $hora = $hora->;
             if (date('Y-m-d') != $hora->format('Y-m-d')) {
                 $separador = new Notificacao();
@@ -91,8 +94,9 @@ class NotificacoesBO
             } else
                 array_push($novoArr, $resultado[$key]);
         }
-        
+
         $this->NotificacoesDAO->UpdateVistoVariasNotificacoes($arrayVisualizar);
+
         CriaSecao(SecoesEnum::NOTIFICACOES, json_encode($novoArr));
         return $novoArr;
     }
