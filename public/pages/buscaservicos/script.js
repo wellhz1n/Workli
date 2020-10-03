@@ -1,3 +1,5 @@
+$("#Titulo").text("Buscar Serviços | Conserta");
+
 let UltimoFiltro = { C: Array(), Q: "", P: 1 };
 let PaginaAntesDigitar = 1;
 $(document).ready(async () => {

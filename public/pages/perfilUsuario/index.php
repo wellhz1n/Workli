@@ -1,4 +1,4 @@
-    <script type="" src="pages/perfilUsuario/script.js"></script>
+<script type="" src="pages/perfilUsuario/script.js"></script>
 
 
 <!-- LINKS INTERNOS -->

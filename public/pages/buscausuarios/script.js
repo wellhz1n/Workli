@@ -1,4 +1,4 @@
-
+$("#Titulo").text("Buscar Usuários | Conserta");
 
 $(document).ready(async () => {
     app.$set(dataVue, "usuarioFiltro", { /* Se você precisar adicionar mais algum, os nomes tem que ser exatamente iguais aos do banco, Mateus do futuro. */

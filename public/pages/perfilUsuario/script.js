@@ -1,10 +1,10 @@
 
+$("#Titulo").text("Perfil");
 
 $(document).ready(async () => {
     
 
     await BloquearTela();
-    
     
 
     /*Id do usuário atual*/
@@ -50,15 +50,8 @@ $(document).ready(async () => {
         await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
     }, 1);
     
-    
-    
-
-    
-    
-    $("#Titulo").text("Editar Usuário");
 
 
-    
     /*Modal de Contratar */
     app.$set(dataVue, "modalVisivelContratar", false);
 
@@ -117,12 +110,15 @@ $(document).ready(async () => {
         await app.$set(dataVue, "StarSize", 30);
     }
 
+    $("#Titulo").text(usuario.nome + " | Conserta");
+
+
     /* ATIVADOR DO POPOVER */
     setTimeout(() => {
         $(function () {
             $('[data-toggle="popover"]').popover()
         })
-    }, 10);
+    }, 1);
     /*--------------------*/
 
     /*----------------- CÓDIGO PARA ABRIR e fechar MODAL --------------*/
@@ -189,7 +185,7 @@ $(document).ready(async () => {
             }, 1)
                 
         }
-    }, 10);
+    }, 1);
 
     app.$set(dataVue, "callbackEP", (salvar) => {
         

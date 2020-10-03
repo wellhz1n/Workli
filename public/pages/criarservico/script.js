@@ -1,6 +1,6 @@
+$("#Titulo").text("Criar Serviço | Conserta");
 window.onload = async() => {
     let p = Porcentagem;
-    $("#Titulo").text("Novo Serviço");
     app.$set(dataVue, 'Porcentagem', Porcentagem());
     app.$set(dataVue, "Projeto", { entidade: 'Projeto', nome: 'Teste', textarea: 'Text Area' });
     // let cores;

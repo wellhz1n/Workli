@@ -1,3 +1,4 @@
+$("#Titulo").text("Chat | Conserta");
 $(document).ready(async () => {
     //REDIRECIONAR PARA CLIENTE
     //RediredionarComParametros('chat',[{chave:'id_chat',valor:3},{chave:'id',valor:7}])

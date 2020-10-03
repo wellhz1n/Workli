@@ -587,8 +587,6 @@ function GetPageName() {
         p = 'home';
     else if (p == 'clienthome')
         p = 'home';
-    else if (p == 'funchome')
-        p = 'home';
     else if (p == 'proghome')
         p = 'home';
 

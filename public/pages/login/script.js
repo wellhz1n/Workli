@@ -161,7 +161,7 @@ function alternaLadoImagem() {
         $(".imagemPrincipalLogin").removeClass("imagemIntermediariaDiv")
         $(".usuarioForm").removeClass("usuarioDiv")
 
-        $("#Titulo").text("Login")
+        $("#Titulo").text("Login | Conserta")
 
     } else {
 
@@ -169,7 +169,7 @@ function alternaLadoImagem() {
         $(".funcionarioForm").addClass("funcionarioDiv")
         $(".imagemPrincipalLogin").addClass("imagemIntermediariaDiv")
 
-        $("#Titulo").text("Registrar")
+        $("#Titulo").text("Registrar | Conserta")
 
     }
 }

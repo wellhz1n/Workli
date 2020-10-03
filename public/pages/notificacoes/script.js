@@ -1,3 +1,4 @@
+$("#Titulo").text("Notificações e Propostas");
 $(document).ready(async () => {
     BloquearTela()
 

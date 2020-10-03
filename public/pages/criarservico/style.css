@@ -74,6 +74,10 @@
     background: #1a692b;
 }
 
+.descContainer p {
+    margin-bottom: 0 !important;
+    text-align: justify;
+}
 .radio-toolbar {
     margin: 10px;
     transition: all .2s ease-in-out;
