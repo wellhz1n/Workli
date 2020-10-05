@@ -18,12 +18,14 @@ function Login($email, $senha)
                         u.valor_carteira,
                         im.imagem,
                         func.plano,
+                        func.vales_patrocinios,
                         func.id as id_func
                   FROM usuarios AS u
                   LEFT JOIN imagem_usuario AS im ON im.id_usuario = u.id 
                   LEFT JOIN funcionario AS func ON func.id_usuario = u.id
                   WHERE 
                         u.email = ?",[$email]);
+    
     if (count($saida->resultados) > 0) {
         if ($saida->resultados[0]['senha'] == md5($senha) && $saida->resultados[0]['email'] == $email) {
             $saida->resultados[0]['senha'] = null;
@@ -37,6 +39,7 @@ function Login($email, $senha)
             CriaSecao(SecoesEnum::FOTO_USUARIO, ConvertBlobToBase64($saida->resultados[0]['imagem']));
             CriaSecao(SecoesEnum::IDFUNCIONARIOCONTEXTO, $saida->resultados[0]['id_func']);
             CriaSecao(SecoesEnum::PLANO, $saida->resultados[0]['plano']);
+            CriaSecao(SecoesEnum::VALES_PATROCINIOS, $saida->resultados[0]['vales_patrocinios']);
 
             return true;
         } else {

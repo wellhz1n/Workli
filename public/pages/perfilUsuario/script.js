@@ -89,8 +89,6 @@ $(document).ready(async () => {
         "valorNaCarteira", 
         isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
     );
-
-
     
 
     await retornaValorAvaliacao();
@@ -414,6 +412,7 @@ $(document).ready(async () => {
         planoNLet = !planoNLet? 0 : planoNLet;
 
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
+        
         let membro = "Membro Padrão";
         switch (planoNLet) {
             case 0:
