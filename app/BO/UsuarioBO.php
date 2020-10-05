@@ -273,7 +273,6 @@ class UsuarioBO
             $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
 
             echo $Insert;
-            // echo $usuario['nome'] . " ; " . $usuario['email'] . " ; " . $usuario['cpf'] . " ; " . $usuario['senha'] . " ; " . $usuario['nivel'];
         } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
