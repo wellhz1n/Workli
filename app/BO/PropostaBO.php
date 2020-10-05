@@ -138,7 +138,10 @@ class PropostaBO extends BOGeneric
                     $idcliente,
                     $this->GetUsuarioContexto(),
                     TipoNotificacaoEnum::
-                    DEFAULT
+                    DEFAULT,
+                    null,
+                    null,
+                    "page=meusprojetos;P={$idservico}"
                 );
                 $ChatBO = new ChatBO();
                 $MSG = new ChatMensagem();
@@ -184,7 +187,10 @@ class PropostaBO extends BOGeneric
                     "Seu Projeto: <strong style='color: yellow;'>{$titulo}</strong> foi Finalizado.",
                     $idcliente,
                     $this->GetUsuarioContexto(),
-                    TipoNotificacaoEnum::SUCCESS
+                    TipoNotificacaoEnum::SUCCESS,
+                    null,
+                    null,
+                    "page=meusprojetos;P={$idservico}"
                 );
                 sleep(1);
                 $_NotificacaoBO->NovaNotificacao(

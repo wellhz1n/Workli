@@ -148,7 +148,8 @@ class NotificacoesDAO
                     N.data_hora as data_hora,
                     N.visto as visto,
                     0 as patrocinado,
-                    0 as destacado
+                    0 as destacado,
+                    N.parametros as parametros
             from notificacoes N where N.id_usuario = ? 
             ),
             NMensagem as (
@@ -166,7 +167,8 @@ class NotificacoesDAO
                     CM.data_hora as data_hora,
                     CM.visualizado as visto,
                     0 as patrocinado,
-                    0 as destacado
+                    0 as destacado,
+                    null as parametros
             from  chat_mensagens CM
             inner join usuarios U on U.id = CM.id_usuario_remetente
             where CM.id_usuario_destinatario = ? and CM.visualizado = 0 and CM.automatica = 0
