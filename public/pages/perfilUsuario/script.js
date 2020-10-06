@@ -418,13 +418,11 @@ $(document).ready(async () => {
     app.$set(dataVue, "iconePlano", "src/img/icons/perfil/planoPadrao.svg");
     app.$set(dataVue, "situacaoBotao", [2, 0, 0, 0]);
     app.$set(dataVue, "retornaPlano", async () => {
-        let planoNLet = parseInt(await GetSessaoPHP("PLANO"));
-        planoNLet = !planoNLet? 0 : planoNLet;
-
+        let planoNLet = "src/img/icons/perfil/planoPadrao.svg";
         let vales = Number.parseFloat(await GetSessaoPHP("VALESPATROCINIOS"));
         
         let membro = "Membro Padrão";
-        switch (planoNLet) {
+        switch (planoN) {
             case 0:
                 planoNLet = "src/img/icons/perfil/planoPadrao.svg";
                 dataVue.situacaoBotao = [2, 0, 0, 0];
