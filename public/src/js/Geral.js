@@ -783,7 +783,8 @@ function ChatSeparatorGenerator(msgs = []) {
                 separadorText = "Ontem"
             else {
                 let mes = new Date(msgs[index].date + " " + msgs[index].time).getMonth() + 1;
-                separadorText = `${new Date(msgs[index].date + " " + msgs[index].time).getDate()}/${mes < 10 ? '0' + mes : mes}`
+                let dia = new Date(msgs[index].date + " " + msgs[index].time).getDate();
+                separadorText = `${dia > 10 ? dia : "0" + dia}/${mes < 10 ? '0' + mes : mes}`
             }
 
             msgModificada.push(SeparadorMensagemEntidade(index, separadorText, msgs[index].date));
@@ -797,7 +798,8 @@ function ChatSeparatorGenerator(msgs = []) {
 
 
 function GetDataAtual() {
-    return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1 < 10 ? '0' + (new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1) : new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1}-${new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
+    //METODO DO DEMONIO, NEM PENSE EM MEXER AQUI
+    return `${new Date(new Date().toString('YYY-MM-DD')).getFullYear()}-${new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1 < 10 ? '0' + (new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1) : new Date(new Date().toString('YYY-MM-DD')).getMonth() + 1}-${new Date(new Date().toString('YYY-MM-DD')).getDate() > 10 ? new Date(new Date().toString('YYY-MM-DD')).getDate() : "0" + new Date(new Date().toString('YYY-MM-DD')).getDate()}`;
 }
 
 
@@ -856,16 +858,16 @@ function getURLParameter(name) { /* Obtem a variavel do topo da tela*/
 
 async function mandaNotificacaoFuncionario(idMeuProjeto, idFuncionario, nomeCliente, projetoTitulo, nomeFuncionario) {
     var result = await WMExecutaAjax("ProjetoBO", "MandaMensagemFunc",
-    {
-        informacoes: {
-            idProjeto: idMeuProjeto,
-            idFuncionario: idFuncionario, 
-            nomeCliente: nomeCliente,
-            projetoTitulo: projetoTitulo
-        }
-    });
-    if(result) {
-        if(nomeFuncionario) {
+        {
+            informacoes: {
+                idProjeto: idMeuProjeto,
+                idFuncionario: idFuncionario,
+                nomeCliente: nomeCliente,
+                projetoTitulo: projetoTitulo
+            }
+        });
+    if (result) {
+        if (nomeFuncionario) {
             MostraMensagem(`O funcionário <strong>${nomeFuncionario}</strong> irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
         } else {
             MostraMensagem(`O funcionário irá analisá-lo e fazer uma proposta.`, ToastType.SUCCESS, "Projeto enviado!");
