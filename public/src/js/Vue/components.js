@@ -3360,15 +3360,12 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     methods: {
         Cancelar(vue) {
             this.$emit("cancelar", this.$data);
-            $('[data-toggle="tooltip"]').tooltip();
         },
         Aprovar(vue) {
             this.$emit("aprovar", this.$data);
-            $('[data-toggle="tooltip"]').tooltip();
         }
     },
     mounted() {
-        $('[data-toggle="tooltip"]').tooltip();
     },
     computed: {
         urlSituacao: {
@@ -3418,7 +3415,6 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
                     return false;
                 }
                 this.dataSituacao = this.dataSituacao == 1 ? 2 : 4;
-                $('[data-toggle="tooltip"]').tooltip();
                 this.$emit("muda_situacao", { idProposta: idProposta })
             }
         },
@@ -3447,8 +3443,8 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     justify-content: space-between;
     align-items: center;">
        <div class="d-flex" style="width: 100%;justify-content: space-between;"><span class="m-0 p-0 font_Poopins_SB" style="display: flex;color: #ffffff !important ;font-size: 16px;">R$:{{this.dataValor}}</span>
-       <span @click="this.AprovaSituacao" data-toggle="tooltip" title="Iniciar Serviço"  id="IconeEMAndamento" class="iconPCLick mx-2" v-show="dataSituacao == 1" ><i class="fas fa-tasks"></i></span>
-       <span  @click="this.AprovaSituacao" data-toggle="tooltip" title="Concluir Serviço"  id="IconeConcluir" class="iconPCLick mx-2" v-show="dataSituacao == 2" ><i class="fas fa-check-circle"></i></span>
+       <span @click="this.AprovaSituacao"  title="Iniciar Serviço"  id="IconeEMAndamento" class="iconPCLick mx-2" v-show="dataSituacao == 1" ><i class="fas fa-tasks"></i></span>
+       <span  @click="this.AprovaSituacao" title="Concluir Serviço"  id="IconeConcluir" class="iconPCLick mx-2" v-show="dataSituacao == 2" ><i class="fas fa-check-circle"></i></span>
        </div>
         <span class="d-flex"><i class="fas fa-calendar-alt mx-2"></i><p class="m-0">{{this.datadata}}</p></span>
         
