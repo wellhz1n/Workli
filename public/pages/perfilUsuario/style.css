@@ -112,6 +112,27 @@
     border-image-repeat: stretch;
     text-align: left; */
 }
+.iconePerfilLink {
+    font-size: 30px;
+}
+
+.linkIconeTexto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-left: 6%;
+}
+
+.wrapperCopiarLink {
+    display: flex;
+    flex: 1;
+    height: 60px;
+    margin-left: 3%;
+    cursor: pointer;
+    align-items: center;
+}
+
 @media only screen and (max-width: 1450px) {
     .cardsDPWrapper {
         width: 40%;

@@ -38,10 +38,17 @@
                         <i class="fas fa-plus"></i>
                     </div>
                 </div>
-                <div class="cardDP">
+                <div class="cardDP" v-if="!dataVue.editavel">
+                    <div class="wrapperCopiarLink" @click="dataVue.copiarLink(v)">
+                        <span class="iconePerfilLink"><i class="fas fa-link"></i></span>
+                        <div class="linkIconeTexto">Copiar link do perfil</div>
+                    </div>
+                </div>
+                <div class="cardDP" >
                     <span class="iconePerfil olho"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil">0</div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">{{dataVue.dadosDeCima[0]}}
+                        </div>
                         <div class="textoCardPerfil">Propostas enviadas</div>
                     </div>
                 </div>
@@ -50,14 +57,18 @@
                 <div class="cardDP">
                     <span class="iconePerfil martelo"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil">0</div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
+                            {{dataVue.dadosDeCima[1]}}
+                        </div>
                         <div class="textoCardPerfil">Propostas Aceitas</div>
                     </div>
                 </div>
                 <div class="cardDP">
                     <span class="iconePerfil carimbo"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil">0</div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
+                            {{dataVue.dadosDeCima[2]}}
+                        </div>
                         <div class="textoCardPerfil">Propostas Concluídas</div>
                     </div>
                 </div>
@@ -395,7 +406,7 @@
     :visivel="dataVue.modalVisivelCarteira" 
     :callback="dataVue.callbackCarteira"
     height="40%"
-    width="40%"
+    width="80%"
 >
     <template v-slot:header>
         <div class="tituloModalCarteira">

@@ -1,12 +1,11 @@
 
 $("#Titulo").text("Perfil");
+$(document).ready(() => {
+    BloquearTela("Carregando...", false);
+})
 
 $(document).ready(async () => {
     
-
-    await BloquearTela();
-    
-
     /*Id do usuário atual*/
     let usuarioId = await GetSessaoPHP("IDUSUARIOCONTEXTO");
     let nivelUsuarioAtual = await GetSessaoPHP("NIVELUSUARIO");
@@ -21,36 +20,51 @@ $(document).ready(async () => {
     let img = "";
     
     let planoN = "";
-    
+    await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
+
+
+    idGet = getURLParameter("id");
+    if(idGet == "null") {
+        window.location.href = `?page=perfilUsuario&id=${usuarioId}`;
+    } else if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
+        dataVue.editavel = false
+        dataVue.idGeral = idGet;
+        dataVue.nivelUsuario = await WMExecutaAjax("UsuarioBO", "GetNivelUsuarioById", {"idUsuario" : dataVue.idGeral});;
+        img = await WMExecutaAjax("UsuarioBO", "GetImagemUserById", {"idUsuario" : dataVue.idGeral});
+        planoN = parseInt(await WMExecutaAjax("UsuarioBO", "GetPlanoById", {"idUsuario" : dataVue.idGeral}));
+        
+    } 
+    else if (isNaN(parseInt(idGet)) && idGet != "null") {
+        window.location.href = "?page=404Perfil";
+    } else {
+        
+        dataVue.idGeral = usuarioId;
+        dataVue.nivelUsuario = nivelUsuarioAtual;
+
+        img = await GetSessaoPHP("FOTOUSUARIO");
+        planoN = parseInt(await GetSessaoPHP("PLANO"));
+        
+    }
     await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
     
-    setTimeout(async () => {
-        idGet = getURLParameter("id");
-        if(idGet == "null") {
-            window.location.href = `?page=perfilUsuario&id=${usuarioId}`;
-        } else if(idGet != usuarioId && idGet != "null" && !isNaN(parseInt(idGet))) {
-            dataVue.editavel = false
-            dataVue.idGeral = idGet;
-            dataVue.nivelUsuario = await WMExecutaAjax("UsuarioBO", "GetNivelUsuarioById", {"idUsuario" : dataVue.idGeral});;
-            img = await WMExecutaAjax("UsuarioBO", "GetImagemUserById", {"idUsuario" : dataVue.idGeral});
-            planoN = parseInt(await WMExecutaAjax("UsuarioBO", "GetPlanoById", {"idUsuario" : dataVue.idGeral}));
-            
-        } 
-        else if (isNaN(parseInt(idGet)) && idGet != "null") {
-            window.location.href = "?page=404Perfil";
-        } else {
-            
-            dataVue.idGeral = usuarioId;
-            dataVue.nivelUsuario = nivelUsuarioAtual;
 
-            img = await GetSessaoPHP("FOTOUSUARIO");
-            planoN = parseInt(await GetSessaoPHP("PLANO"));
-            
-        }
-        await app.$set(dataVue, "Usuario", { imagem: img == "" ? null : img, imgTemp: null });
-    }, 1);
     
+    /* Pega os dados do usuário do banco */    
+    let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": dataVue.idGeral });
 
+    /*STAR RATING*/
+    await app.$set(dataVue, "Rating", !parseFloat(usuario.avaliacao_media) ? 0 : parseFloat(usuario.avaliacao_media));
+    await app.$set(dataVue, "StarSize", 40);
+
+    if(innerWidth < 1620) {
+        await app.$set(dataVue, "StarSize", 32);
+    }
+    else if(innerWidth < 1300) {
+        await app.$set(dataVue, "StarSize", 30);
+    }
+
+    
+    await DesbloquearTela();
 
     /*Modal de Contratar */
     app.$set(dataVue, "modalVisivelContratar", false);
@@ -90,23 +104,16 @@ $(document).ready(async () => {
         isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",")  
     );
     
+    app.$set(dataVue, "dadosDeCima", ["0", "0", "0"])
+
+    await retornaDadosDeCima();
 
     await retornaValorAvaliacao();
 
 
-    /* Pega os dados do usuário do banco */    
-    let usuario = await WMExecutaAjax("UsuarioBO", "GetFuncionarioById", {"ID": dataVue.idGeral });
 
-    /*STAR RATING*/
-    await app.$set(dataVue, "Rating", !parseFloat(usuario.avaliacao_media) ? 0 : parseFloat(usuario.avaliacao_media));
-    await app.$set(dataVue, "StarSize", 40);
+    
 
-    if(innerWidth < 1620) {
-        await app.$set(dataVue, "StarSize", 32);
-    }
-    else if(innerWidth < 1300) {
-        await app.$set(dataVue, "StarSize", 30);
-    }
 
     $("#Titulo").text(usuario.nome + " | Conserta");
 
@@ -323,9 +330,12 @@ $(document).ready(async () => {
         }
     });
 
+    
 
-
-
+    app.$set(dataVue, "copiarLink", () => {
+        copyToClipboard(window.location.href);
+        toastr.success("O link do perfil foi copiado.", "Copiado!")
+    });
     /* Modal de Planos*/
     app.$set(dataVue, "modalVisivelPlanos", false);
 
@@ -510,7 +520,6 @@ $(document).ready(async () => {
         });
     });
     
-    await DesbloquearTela();
 
 
     app.$set(dataVue, "adicionarFundos", async (valor) => {
@@ -606,9 +615,12 @@ $(document).ready(async () => {
     app.$set(dataVue, "tituloModalConfirmacao", "Descartar alterações");
     app.$set(dataVue, "textoModalConfirmacao", "Você tem certeza que deseja descartar as alterações?");
 
+
 });
 
 
+$(window).load(async () => {
+});
 
 
 function retornaValorAvaliacao() {
@@ -668,3 +680,26 @@ async function mandaOsDadosAtribuirProjeto () {
 
 }
 
+async function retornaDadosDeCima () {
+    dataVue.valorNaCarteira = isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",");
+    let result = await WMExecutaAjax("UsuarioBO", "GetDadosDeCima", {id: dataVue.idGeral, tipo: dataVue.nivelUsuario});
+    if(dataVue.nivelUsuario == 0) {
+        dataVue.dadosDeCima[0] = result.p_publicados;
+        dataVue.dadosDeCima[1] = result.p_cancelados;
+        dataVue.dadosDeCima[2] = result.p_concluidos;
+    } else if(dataVue.nivelUsuario == 1) {
+        dataVue.dadosDeCima[0] = result.p_enviadas;
+        dataVue.dadosDeCima[1] = result.p_aceitas;
+        dataVue.dadosDeCima[2] = result.p_concluidas;
+    }
+
+}
+
+function copyToClipboard (str) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+};

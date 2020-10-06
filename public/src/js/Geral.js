@@ -569,7 +569,12 @@ function WMLimpaErrorClass(id) {
 
 }
 
-function BloquearTela(msg = "Carregando...") {
+function BloquearTela(msg = "Carregando...", transparent = true) {
+    if(!transparent) {
+        $("#loading").addClass("loadingBranco");
+    } else if($("#loading").hasClass("loadingBranco")) {
+        $("#loading").removeClass("loadingBranco");
+    }
     $('#loading div p').text(msg);
     $('#loading').prop('hidden', false);
 }
@@ -595,8 +600,8 @@ function GetPageName() {
 }
 
 
-function GetSessaoPHP(sessao, ConvertJSON = false) {
-    return new Promise(result => {
+async function GetSessaoPHP(sessao, ConvertJSON = false) {
+    return await new Promise(result => {
 
         let valor = WMExecutaAjax('SecoesBO', "GetSecoes", { 'sessao': sessao }, ConvertJSON).then(saida => {
             return saida;
