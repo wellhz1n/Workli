@@ -39,21 +39,23 @@ create table IF NOT EXISTS notificacoes(
 );
 ALTER TABLE notificacoes MODIFY COLUMN descricao TEXT DEFAULT NULL NULL;
 
+
+ALTER TABLE funcionario
+ADD COLUMN plano TINYINT DEFAULT 0;
+
 ALTER TABLE imagem_usuario
 CHANGE extensao_imagem imagem_banner longblob;
 
 
 ALTER TABLE usuarios
-ADD COLUMN descricao TEXT
-AFTER nome;
+ADD COLUMN descricao TEXT;
 
 
 
-ALTER TABLE funcionario avaliacao_media,
-ADD COLUMN tags TEXT DEFAULT ""
-AFTER avaliacao_media,
-ADD COLUMN profissao VARCHAR(50)
-AFTER avaliacao_media;
+ALTER TABLE funcionario 
+ADD COLUMN tags TEXT DEFAULT "";
+ALTER TABLE funcionario 
+ADD COLUMN profissao VARCHAR(50);
 
 ALTER TABLE funcionario
 DROP curriculo,
@@ -61,18 +63,12 @@ DROP numero_telefone;
 
 DROP TABLE servicos_funcionario;
 
-ALTER TABLE funcionario
-ADD COLUMN plano TINYINT DEFAULT 0
-AFTER tags;
-
 
 ALTER TABLE usuarios
-ADD COLUMN valor_carteira decimal(15,2) DEFAULT 0
-AFTER descricao;
+ADD COLUMN valor_carteira decimal(15,2) DEFAULT 0;
 
 ALTER TABLE funcionario
-ADD COLUMN vales_patrocinios INT DEFAULT 0
-AFTER tags;
+ADD COLUMN vales_patrocinios INT DEFAULT 0;
 -- Wellington.ramos em 08/09/2020 #22;
 create view Projetos_view as 
   select
