@@ -247,6 +247,10 @@ a:hover {
     transition: all ease-in-out .3s;
 }
 
+.loadingBranco {
+    background-color: white !important;
+}
+
 .licon {
     font-size: 50px;
 }

@@ -329,5 +329,30 @@ class UsuarioDAO
         $result = Sql($sql, [$idProjeto]);
         return count($result->resultados) > 0 ? $result->resultados[0] : null;
     }
+
+    public function GetDadosDeCima($id, $tipo)
+    {
+        $sql = "";
+        if($tipo == "1") {
+
+            $sql = "SELECT  COUNT(id) AS p_enviadas,
+                            (SELECT COUNT(id) FROM proposta WHERE situacao = 1 OR situacao = 2 OR situacao = 4) AS p_aceitas,
+                            (SELECT COUNT(id) FROM proposta WHERE situacao = 4)                                 AS p_concluidas
+                    FROM proposta
+                    WHERE idFuncionario = (SELECT id FROM funcionario WHERE id_usuario = ?)
+                ";
+
+        } else if($tipo == "0") {
+            $sql = "SELECT  count(id) AS p_publicados,
+                            (SELECT COUNT(id) FROM servico WHERE situacao = 3) AS p_cancelados,
+                            (SELECT COUNT(id) FROM servico WHERE situacao = 4) AS p_concluidos
+                    FROM servico
+                    WHERE id_usuario = ?";
+        }
+        
+        $result = Sql($sql, [$id]);
+        return count($result->resultados) > 0 ? $result->resultados[0] : null;
+    }
+
 }
 // $USR->example();

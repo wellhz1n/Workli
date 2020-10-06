@@ -119,6 +119,15 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "GetFuncionarioByIdProjeto") {
         $userBO->GetFuncionarioByIdProjeto($_POST["IDPROJETO"]);
     }
+    if ($metodo == "GetDadosDeCima") {
+        try {
+            $id = $_POST["id"];
+            $tipo = $_POST["tipo"];
+        } catch (\Throwable $th) {
+            echo "Falta dados para a execução.";
+        }
+        $userBO->GetDadosDeCima($id, $tipo);
+    }
 }
 class UsuarioBO
 {
@@ -484,6 +493,12 @@ class UsuarioBO
         echo json_encode($dados);
     }
 
+    public function GetDadosDeCima($id, $tipo)
+    {
+        $dados = $this->usuarioDAO->GetDadosDeCima($id, $tipo);
+        
+        echo json_encode($dados);
+    }
 
 
 }
