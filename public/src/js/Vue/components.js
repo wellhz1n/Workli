@@ -841,20 +841,16 @@ var WMUSERBANNER = Vue.component('wm-user-banner', {
         }
     },
     async beforeMount() {
-        await BloquearTela()
         await this.colocaBanner(true);
-        await DesbloquearTela();
     },
     methods: {
         async colocaBanner(bloqueia = false) {
-            if (bloqueia)
-                BloquearTela()
+
             let retorno = await WMExecutaAjax("UsuarioBO", "GetBannerById", { "idUsuario": this.id_usuario });
             if (retorno.imagem_banner) {
                 this.imgData = 'data:image/jpeg;base64,' + retorno.imagem_banner;
             }
-            if (bloqueia);
-            DesbloquearTela();
+
         },
 
         abrirModal(img) {
@@ -1590,14 +1586,14 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                     DesbloquearTelaSemLoader();
 
                     let funcDestinatario = getURLParameter("funcDestinatario");
-                    if(funcDestinatario){
+                    if (funcDestinatario) {
                         let idMeuProjeto = result.split('|')[1];
                         let nomeProjeto = (await WMExecutaAjax("ProjetoBO", "GetTituloProjetoPorId", { idProjeto: idMeuProjeto })).nome;
                         let funcionarioNome = (await WMExecutaAjax("UsuarioBO", "GetUsuarioById", { ID: funcDestinatario })).nome;
                         mandaNotificacaoFuncionario(idMeuProjeto, funcDestinatario, dataVue.UsuarioContexto.Nome, nomeProjeto, funcionarioNome);
                     }
-                        
-                        
+
+
                     contexto.carregando = false;
                     contexto.concluiu = true;
                 } else {
@@ -2151,8 +2147,8 @@ WmModal = Vue.component('wm-modal', {
         return {
             dataVisible: false,
             dataCallback: () => { },
-            dataHeight : '95%',
-            dataWidth:'80%'
+            dataHeight: '95%',
+            dataWidth: '80%'
         }
     },
     watch: {
@@ -2569,7 +2565,7 @@ WMCHAT = Vue.component('wm-chat', {
                 this.MensagemDigitada = null;
                 setTimeout(() => {
                     var container = this.$el.querySelector("#bodyChatChat");
-                    if(container) {
+                    if (container) {
                         container.scrollTop = container.scrollHeight;
                     }
 
@@ -2589,7 +2585,7 @@ WMCHAT = Vue.component('wm-chat', {
     },
     mounted() {
         var container = this.$el.querySelector("#bodyChatChat");
-        if(container) {
+        if (container) {
             container.scrollTop = container.scrollHeight;
         }
     },
@@ -2598,9 +2594,9 @@ WMCHAT = Vue.component('wm-chat', {
             immediate: true,
             deep: true,
             handler(nv, ov) {
-                
+
                 if (nv != undefined || nv != null) {
-                    
+
                     this.carregando = this.primeiraVez
                     let visualizou = false;
                     nv.map((item, index) => {
@@ -2620,7 +2616,7 @@ WMCHAT = Vue.component('wm-chat', {
                                 if (nv.length != ov.length) {
                                     if (!this.carregando) {
                                         var container = this.$el.querySelector("#bodyChatChat");
-                                        if(container) {
+                                        if (container) {
                                             container.scrollTop = container.scrollHeight;
                                         }
 
@@ -2631,8 +2627,8 @@ WMCHAT = Vue.component('wm-chat', {
 
                         }, 600);
                     }
-                    
-                    if(this.emitido < 3) {
+
+                    if (this.emitido < 3) {
                         this.emitido++;
                         this.$emit("montado")
                     }
@@ -3363,11 +3359,12 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
     },
     methods: {
         Cancelar(vue) {
-
             this.$emit("cancelar", this.$data);
+            $('[data-toggle="tooltip"]').tooltip();
         },
         Aprovar(vue) {
             this.$emit("aprovar", this.$data);
+            $('[data-toggle="tooltip"]').tooltip();
         }
     },
     mounted() {
@@ -3421,6 +3418,7 @@ var WM_PROPOSTAF = Vue.component('wm-proposta-funcionario', {
                     return false;
                 }
                 this.dataSituacao = this.dataSituacao == 1 ? 2 : 4;
+                $('[data-toggle="tooltip"]').tooltip();
                 this.$emit("muda_situacao", { idProposta: idProposta })
             }
         },
@@ -3741,7 +3739,7 @@ var WMMODALCONFIRMACAO = Vue.component('wm-modal-botoes-generico', {
             modalVisivel: false,
             dataTextBtCancelar: "Cancelar",
             dataTextBtSalvar: "Salvar",
-         
+
         }
     },
     watch: {
