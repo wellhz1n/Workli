@@ -679,17 +679,20 @@ async function mandaOsDadosAtribuirProjeto () {
 }
 
 async function retornaDadosDeCima () {
-    dataVue.valorNaCarteira = isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",");
-    let result = await WMExecutaAjax("UsuarioBO", "GetDadosDeCima", {id: dataVue.idGeral, tipo: dataVue.nivelUsuario});
-    if(dataVue.nivelUsuario == 0) {
-        dataVue.dadosDeCima[0] = result.p_publicados;
-        dataVue.dadosDeCima[1] = result.p_cancelados;
-        dataVue.dadosDeCima[2] = result.p_concluidos;
-    } else if(dataVue.nivelUsuario == 1) {
-        dataVue.dadosDeCima[0] = result.p_enviadas;
-        dataVue.dadosDeCima[1] = result.p_aceitas;
-        dataVue.dadosDeCima[2] = result.p_concluidas;
+    if(dataVue.nivelUsuario != 2) {
+        dataVue.valorNaCarteira = isNaN(parseFloat(await GetSessaoPHP("VALORCARTEIRA"))) ? "00,00" : parseFloat(await GetSessaoPHP("VALORCARTEIRA")).toFixed(2).replace(".", ",");
+        let result = await WMExecutaAjax("UsuarioBO", "GetDadosDeCima", {id: dataVue.idGeral, tipo: dataVue.nivelUsuario});
+        if(dataVue.nivelUsuario == 0) {
+            dataVue.dadosDeCima[0] = result.p_publicados;
+            dataVue.dadosDeCima[1] = result.p_cancelados;
+            dataVue.dadosDeCima[2] = result.p_concluidos;
+        } else if(dataVue.nivelUsuario == 1) {
+            dataVue.dadosDeCima[0] = result.p_enviadas;
+            dataVue.dadosDeCima[1] = result.p_aceitas;
+            dataVue.dadosDeCima[2] = result.p_concluidas;
+        }
     }
+    
 
 }
 

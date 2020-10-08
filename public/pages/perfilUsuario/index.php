@@ -3,7 +3,7 @@
 
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
-<div class="justify-content-center text-center m-0">
+<div class="justify-content-center text-center m-0" :class="dataVue.nivelUsuario == '2' ? 'col p-0': ''">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
             <span id="bemVindo"><div v-if="dataVue.editavel" class="d-contents">Bem vindo,</div><br/><span id="bVNome"></span></span>
@@ -19,7 +19,7 @@
 
    
         </div>
-        <div id="cardsDadosProposta">
+        <div id="cardsDadosProposta" v-if="dataVue.nivelUsuario != 2">
             <div class="cardsDPWrapper">
                 <div class="cardDP pt-0 px-0" v-if="dataVue.editavel">
                     <div id="wrapperCarteira">
@@ -120,13 +120,15 @@
                 <div class="cardQuadradoBody" id="atalhosWrapper">
                     
                     <a href="?page=buscaservicos" class="botaoAtalho mb-2"><i class="fas fa-search" aria-hidden="true"></i> Buscar Projetos</a>
+                    <a href="?page=buscausuarios" class="botaoAtalho mb-2"><i class="fas fa-search" aria-hidden="true"></i> Buscar Usuários</a>
                     <?php if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0) { ?>
                         <a href="?page=criarservico" class="botaoAtalho mb-2"><i class="fas fa-pencil-alt" aria-hidden="true"></i> Publicar um Projeto </a>
                         <a href="?page=meusprojetos" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Meus Projetos </a>
                     <?php } else if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 1) { ?>
                         <a @click="(event)=>{ event.view.window.RedirecionarComParametros('notificacoes',[{chave:'P',valor:true}])}" style="color: white !important; cursor: pointer !important;" class="botaoAtalho mb-2"><i class="fas fa-newspaper"></i> Minhas Propostas </a>
+                    <?php } else if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) != 2) { ?>
+                        <a href="?page=chat" class="botaoAtalho mb-2"><i class="far fa-comment-dots"></i> Chat</a>
                     <?php } ?>
-                    <a href="?page=chat" class="botaoAtalho mb-2"><i class="far fa-comment-dots"></i> Chat</a>
                 </div>
             </div>
         </div>
