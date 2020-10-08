@@ -204,9 +204,9 @@ a:hover {
 .header-table {
     color: #ffffffff;
     margin: 0 !important;
-    padding: 0 !important;
+    padding: 2px !important;
     width: 100%;
-    height: 10%;
+    /* height: 10%; */
     background: #343A40;
 }
 
