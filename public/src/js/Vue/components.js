@@ -205,11 +205,11 @@ var WMContainer = Vue.component('wm-container', {
     },
     template: `
     <div class="col-sm-12 col-md-12 container-box my-5 py-3"  v-if="opcoes.visivel" :id="id">
-    <div style="margin-bottom:-20px" class="row">
-      <div class="col-10">    
+    <div style="margin-bottom:-20px;justify-content:space-between" class="row">
+      <div class="mx-4">    
         <h5 class="p-1" id="title">{{opcoes.titulo}}</h5>
       </div>
-      <div style="position:relative;top:3vh" class="col-2">    
+      <div style="position:relative;top:2vh" class="mx-4">    
         <p style="font-size:10px ;color:red;" class="" id="title">Os Campos com * são obrigatórios</p>
       </div>    
     </div>
