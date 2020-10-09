@@ -1501,6 +1501,11 @@ textarea::-webkit-scrollbar-thumb:hover {
 .editimgbox svg {
   opacity: 1;
 }
+.wm-user-img-generic {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
 
 .editimgbox {
   background-color: black !important;
@@ -1511,6 +1516,8 @@ textarea::-webkit-scrollbar-thumb:hover {
   position: absolute;
   z-index: 3000;
   border-radius: 100%;
+  width: 13%;
+  height: 18%;
   min-width: 140px;
   min-height: 140px;
   margin: 0 !important;
@@ -2021,23 +2028,27 @@ table.dataTable.table-sm > thead > tr > th {
   border-color: #25993ede;
 }
 .btn-green:focus {
-    border-color: rgb(33, 136, 56);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(33, 136, 56, 0.6);
+  border-color: rgb(33, 136, 56);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(33, 136, 56, 0.6);
 }
 .btn-green:active {
-    border-color: rgb(33, 136, 56);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(33, 136, 56, 0.6);
+  border-color: rgb(33, 136, 56);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(33, 136, 56, 0.6);
 }
 div.dataTables_wrapper div.dataTables_filter input:focus {
-    border-color: rgb(33, 136, 56);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(33, 136, 56, 0.6);
-
+  border-color: rgb(33, 136, 56);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(33, 136, 56, 0.6);
 }
 .page-item.active .page-link:focus {
-    border-color: rgb(33, 136, 56);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(33, 136, 56, 0.6);
+  border-color: rgb(33, 136, 56);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(33, 136, 56, 0.6);
 }
-.form-control:focus{
-    border-color: rgb(33, 136, 56);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(33, 136, 56, 0.6);
+.form-control:focus {
+  border-color: rgb(33, 136, 56);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgb(33, 136, 56, 0.6);
 }

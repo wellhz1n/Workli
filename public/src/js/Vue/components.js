@@ -690,6 +690,10 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             type: Boolean,
             default: () => true
         },
+        carregando: {
+            type: Boolean,
+            default: false
+        },
         img: String,
         class_icone: String,
         class_imagem: String,
@@ -700,7 +704,8 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     data: function () {
         return {
             imgData: null,
-            imgCropadaData: ""
+            imgCropadaData: "",
+            carregandoData: false
         }
     },
     methods: {
@@ -750,8 +755,11 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     template: `
     <div @click="this.Redirecionar">
         <div v-show="this.imgData == null || this.imgData == '' " 
-            :class="this.editavel ? 'wmUserImageWrapper' : ''"
+            :class="this.editavel ? 'wmUserImageWrapper' : 'wm-user-img-generic'"
             @click="this.pegarImagem">
+            <div  v-if="this.carregandoData" class="spinner-border text-success" role="status" style="position:absolute">
+            <span class="sr-only">Loading...</span>
+        </div>
             <div class="editimgbox">   
                 <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
@@ -779,9 +787,12 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                     this.imgData != null &&
                     this.imgData != ''
                 "
-            :class="this.editavel ? 'wmUserImageWrapper' : ''"
+            :class="this.editavel ? 'wmUserImageWrapper' : 'wm-user-img-generic'"
             @click="this.pegarImagem"
         >
+        <div v-if="this.carregandoData" class="spinner-border text-success" role="status" style="position:absolute">
+            <span class="sr-only">Loading...</span>
+        </div>
             <div class="editimgbox">   
                 <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
@@ -809,6 +820,14 @@ var WMUSERIMG = Vue.component('wm-user-img', {
                 if (this.imgCropadaData) {
                     this.salvarImagem(this.imgCropadaData);
                 }
+
+            }
+        },
+        carregando: {
+            immediate: true,
+            handler(v) {
+                this.carregandoData = v;
+
 
             }
         }

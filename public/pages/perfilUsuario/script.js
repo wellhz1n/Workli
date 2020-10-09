@@ -1,11 +1,12 @@
 
 $("#Titulo").text("Perfil");
+BloquearTela("Carregando...", false);
 $(document).ready(() => {
     console.time("INICIO");
-    BloquearTela("Carregando...", false);
     app.$set(dataVue, "editavel", true);
+    app.$set(dataVue, "dadosDeCimaLoad", true);
     app.$set(dataVue, "nivelUsuario", 0);
-
+    app.$set(dataVue, "ipload", true);
     app.$set(dataVue, "idGeral", "usuarioId")
     app.$set(dataVue, "Usuario", { imagem: null, imgTemp: null });
     app.$set(dataVue, "copiarLink", () => {
@@ -72,6 +73,7 @@ $(document).ready(async () => {
         });
         WMExecutaAjax("UsuarioBO", "GetImagemUserById", { "idUsuario": dataVue.idGeral }).then(img => {
             dataVue.Usuario.imagem = img == "" ? null : img;
+            dataVue.ipload = false;
         });
 
     }
@@ -84,6 +86,7 @@ $(document).ready(async () => {
 
         GetSessaoPHP("FOTOUSUARIO").then(img => {
             dataVue.Usuario.imagem = img == "" ? null : img;
+            dataVue.ipload = false;
         });
         GetSessaoPHP("VALESPATROCINIOS").then(v => {
             vales = parseInt(v);
@@ -727,6 +730,7 @@ function retornaDadosDeCima() {
                 dataVue.dadosDeCima.card1 = result.p_aceitas;
                 dataVue.dadosDeCima.card2 = result.p_concluidas;
             }
+            dataVue.dadosDeCimaLoad = false;
         });
 
     }

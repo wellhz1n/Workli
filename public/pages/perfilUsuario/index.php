@@ -47,7 +47,12 @@
                 <div class="cardDP" >
                     <span class="iconePerfil olho"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">{{dataVue.dadosDeCima.card0}}
+                    <div v-if="dataVue.dadosDeCimaLoad" class="spinner-border text-success" role="status" style="height: 20px;width: 20px;">
+                        <span class="sr-only">Loading...</span>
+                     </div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima && !dataVue.dadosDeCimaLoad">
+                            
+                        {{dataVue.dadosDeCima.card0}}
                         </div>
                         <div class="textoCardPerfil">Propostas enviadas</div>
                     </div>
@@ -57,8 +62,12 @@
                 <div class="cardDP">
                     <span class="iconePerfil martelo"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
-                            {{dataVue.dadosDeCima.card1}}
+                    <div v-if="dataVue.dadosDeCimaLoad" class="spinner-border text-success" role="status" style="height: 20px;width: 20px;">
+                        <span class="sr-only">Loading...</span>
+                     </div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima && !dataVue.dadosDeCimaLoad">
+                            
+                        {{dataVue.dadosDeCima.card1}}
                         </div>
                         <div class="textoCardPerfil">Propostas Aceitas</div>
                     </div>
@@ -66,8 +75,12 @@
                 <div class="cardDP">
                     <span class="iconePerfil carimbo"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
-                            {{dataVue.dadosDeCima.card2}}
+                    <div v-if="dataVue.dadosDeCimaLoad" class="spinner-border text-success" role="status" style="height: 20px;width: 20px;">
+                        <span class="sr-only">Loading...</span>
+                     </div>
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima && !dataVue.dadosDeCimaLoad">
+                            
+                        {{dataVue.dadosDeCima.card2}}
                         </div>
                         <div class="textoCardPerfil">Propostas Concluídas</div>
                     </div>
@@ -82,13 +95,14 @@
                     :img="dataVue.Usuario.imagem" 
                     :width="'14.2vw'" 
                     :height="'14.2vw'" 
-                    :editavel="dataVue.editavel"
+                    :editavel="!dataVue.ipload"
                     @aberto-modal="v => dataVue.abremodal(v)" 
                     @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                     :imgcropada="dataVue.imagemCropadaUsuario"
                     @configuracoes-crop="conf => dataVue.salvaConfiguracoes(conf)"
                     class_icone="iconeUsuarioTamanho"
                     :id_usuario="dataVue.idGeral"
+                    :carregando ="dataVue.ipload"
                 />
             </div>
         </div>
