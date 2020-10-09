@@ -3,11 +3,11 @@
         <h5 class="p-2 mx-2" id="title">Tipo de Serviço</h5>
     </div>
     <div class=" float-right mt-1 ml-3 p-1 pr-4 ">
-    <button class="btn btn-primary mb-1" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>
-        <button class="btn btn-primary mb-1" id="btnEditar"><i class="fas fa-edit mr-1"></i>Editar</button>
-        <button class="btn btn-primary mb-1" id="btnVisualizar" ><i class="fas fa-eye mr-1"></i>Visualizar</button>   
+    <button class="btn btn-green mb-1" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>
+        <button class="btn btn-green mb-1" id="btnEditar"><i class="fas fa-edit mr-1"></i>Editar</button>
+        <button class="btn btn-green mb-1" id="btnVisualizar" ><i class="fas fa-eye mr-1"></i>Visualizar</button>   
         <button class="btn btn-danger mb-1" id="btnRemover" ><i class="fas fa-trash mr-1"></i>Remover</button>
-        <button class="btn btn-primary mb-1" id="btnSalvar" hidden><i class="fas fa-save mr-1"></i>Salvar</button>
+        <button class="btn btn-green mb-1" id="btnSalvar" hidden><i class="fas fa-save mr-1"></i>Salvar</button>
         <button class="btn btn-danger mb-1" id="btnCancelar" hidden><i class="fas fa-times mr-1"></i>Cancelar</button>
     </div>
     <!-- LISTA -->
