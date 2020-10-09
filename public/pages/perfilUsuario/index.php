@@ -6,7 +6,7 @@
 <div class="justify-content-center text-center m-0" :class="dataVue.nivelUsuario == '2' ? 'col p-0': ''">
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
-            <span id="bemVindo"><div v-if="dataVue.editavel" class="d-contents">Bem vindo,</div><br/><span id="bVNome"></span></span>
+            <span id="bemVindo"><div v-if="dataVue.editavel" class="d-contents">Bem vindo,</div><br/><span id="bVNome">{{dataVue.usuarioDados.nome}}</span></span>
             <wm-user-banner 
                 @aberto-modal="v => dataVue.abremodal(v)" 
                 @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
@@ -47,7 +47,7 @@
                 <div class="cardDP" >
                     <span class="iconePerfil olho"></span>
                     <div class="textPerfilWrapper">
-                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">{{dataVue.dadosDeCima[0]}}
+                        <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">{{dataVue.dadosDeCima.card0}}
                         </div>
                         <div class="textoCardPerfil">Propostas enviadas</div>
                     </div>
@@ -58,7 +58,7 @@
                     <span class="iconePerfil martelo"></span>
                     <div class="textPerfilWrapper">
                         <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
-                            {{dataVue.dadosDeCima[1]}}
+                            {{dataVue.dadosDeCima.card1}}
                         </div>
                         <div class="textoCardPerfil">Propostas Aceitas</div>
                     </div>
@@ -67,7 +67,7 @@
                     <span class="iconePerfil carimbo"></span>
                     <div class="textPerfilWrapper">
                         <div class="numeroCardPerfil" v-if="dataVue.dadosDeCima">
-                            {{dataVue.dadosDeCima[2]}}
+                            {{dataVue.dadosDeCima.card2}}
                         </div>
                         <div class="textoCardPerfil">Propostas Concluídas</div>
                     </div>
@@ -151,6 +151,7 @@
                 <div class="cardQuadradoBody">
                     <div class="nomeEProfCP">
                         <div id="nomeCP">
+                        {{dataVue.usuarioDados.nome}}
                         </div>
                         <div class="cemXcem profissaoWrapper" v-if="dataVue.nivelUsuario == '1' && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.profissao != undefined">
                             <span class="profCPBolinha">•</span>
