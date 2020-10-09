@@ -116,8 +116,8 @@ $(document).ready(async () => {
         $("#Titulo").text(dataVue.usuarioDados.nome + " | Conserta");
         app.$set(dataVue, "Rating", dataVue.usuarioDados.avaliacao_media);
         resetaOsDadosDoPerfilEdit();
-        retornaDadosDeCima();
         atualizaOsDadosDoPerfil();
+        retornaDadosDeCima();
         DesbloquearTela();
         console.timeEnd("INICIO");
     });
