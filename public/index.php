@@ -62,7 +62,7 @@ header('Content-Type: text/html; charset=utf-8');
     <script scr="https://cdnjs.com/libraries/Chart.js"></script>
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
-    <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script> <!-- css star rating -->
+    <script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script> <!-- css star rating -->
     <script src="https://unpkg.com/vue-advanced-cropper@0.16.7/dist/index.umd.js"></script> <!-- CROP IMAGE -->
     <script src="https://unpkg.com/@trevoreyre/autocomplete-vue@2.2.0/dist/autocomplete.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/dist/vue-slider-component.umd.min.js"></script>
@@ -113,7 +113,7 @@ header('Content-Type: text/html; charset=utf-8');
         components: {
             'vueSlider': window[ 'vue-slider-component' ],
             // 'select2': Select2,
-            // 'star-rating': VueStarRating.default,
+            // 'star-rating': VueStarRating.default 
             // 'tags-input':  VueTagsInput
             // 'wm-notify': WMNotify,
             // 'wm-loading': LoadingComponent,

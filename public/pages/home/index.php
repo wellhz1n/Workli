@@ -58,7 +58,7 @@ require "pages/home/itemPreferido/index.php";
         </div>
     </div>
     <div class="col-12" id="secaoVantagens">
-        <span id="textoVantagem" style="font-family: Poppins-Bold">Vantagens do Workli</span>
+        <span id="textoVantagem" style="font-family: Poppins-Bold">Vantagens do Conserta</span>
         <div class="wrapperVantagem wrapperVantagemCima">
             <?php
             echo itemVantagem("Procure por funcionários", "Encontre profissionais confiáveis e cheque seu perfil para ver sua avaliação e experiência em relação à trabalhos anteriores.", "procurar-portfolios");
