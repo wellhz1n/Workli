@@ -163,7 +163,7 @@ class UsuarioDAO
 
     public function GetFuncionarioDataEdit($id)
     {
-        $retorno = Sql("SELECT u.id, u.nome, u.descricao, func.profissao, func.tags FROM usuarios AS u
+        $retorno = Sql("SELECT u.id, u.nome, u.descricao, func.profissao, func.tags,func.avaliacao_media FROM usuarios AS u
                         LEFT JOIN funcionario AS func ON func.id_usuario = u.id
                         where u.id = ? ", [$id]);
         return $retorno;
