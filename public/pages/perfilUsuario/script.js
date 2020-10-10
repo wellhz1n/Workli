@@ -724,7 +724,7 @@ function retornaDadosDeCima() {
             if (dataVue.nivelUsuario == 0) {
                 dataVue.dadosDeCima.card0 = result.p_publicados;
                 dataVue.dadosDeCima.card1 = result.p_cancelados;
-                dataVue.dadosDeCimacard2 = result.p_concluidos;
+                dataVue.dadosDeCima.card2 = result.p_concluidos;
             } else if (dataVue.nivelUsuario == 1) {
                 dataVue.dadosDeCima.card0 = result.p_enviadas;
                 dataVue.dadosDeCima.card1 = result.p_aceitas;
