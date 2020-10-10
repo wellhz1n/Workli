@@ -348,10 +348,6 @@ class UsuarioBO
 
             $usuarioDados["nome"] = trim($usuarioDados["nome"]); //Tira os espaços do começo e fim
 
-            if ($usuarioDados["nome"] == "" || $usuarioDados["nome"] == null) {
-                // throw new Exception("O campo de \"Nome\" é obrigatório.");
-                // Verifica form já faz isso
-            }
             if (strlen($usuarioDados["nome"]) < 3) { //Checa o length.
                 throw new Exception("O \"Nome\" é muito pequeno.");
             }
@@ -361,19 +357,6 @@ class UsuarioBO
             $partes = array_map('trim', $partes);
             $usuarioDados["tags"] = implode(',', $partes);
 
-            /* ----------------------------------- CÓDIGO DE CALCULO DE AVALIAÇÃO MÉDIA, NÃO DELETAR --------------------------------------*/
-
-            // $numeroServicos = (Sql("SELECT sf.numeros_servicos FROM servicos_funcionario AS sf
-            //                         LEFT JOIN funcionario AS func ON func.id_usuario = $idUsuario  
-            //                         WHERE sf.id_funcionario = func.id"));
-            // $numeroServicos = isset($numeroServicos->resultados[0]) ? $numeroServicos->resultados[0]["numeros_servicos"] + 1 : 1;
-
-            // $valorCampo = BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA) + ($valorCampo - BuscaSecaoValor(SecoesEnum::AVALIACAO_MEDIA)) / $numeroServicos;
-            // $tabelaParaEditar = "servicos_funcionario";
-
-            // if ($nomeCampo == "avaliacaoMedia") {
-            //     $nomeCampo = "avaliacao_media";
-            // }
             $Insert = $this->usuarioDAO->EditaUsuario($usuarioDados);
 
             CriaSecao(SecoesEnum::NOME, $usuarioDados["nome"]);
@@ -499,6 +482,5 @@ class UsuarioBO
         
         echo json_encode($dados);
     }
-
 
 }

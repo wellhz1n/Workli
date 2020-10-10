@@ -83,7 +83,7 @@ class UsuarioDAO
         /*Checa para ver se existe a row na tabela de funcionarios*/
         $existe = Sql("SELECT EXISTS(SELECT * FROM funcionario WHERE id_usuario = ?)", [$usuarioDados["ID"]]);
 
-        if ($funcionario->resultados[0]["nivel_usuario"]) {
+        if ($funcionario->resultados[0]["nivel_usuario"] == 1) {
             if ($existe->resultados) { /*Se a row ja existe na tabela de func*/
                 $resultado = Update(
                     "UPDATE usuarios AS US

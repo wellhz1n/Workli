@@ -113,7 +113,7 @@ header('Content-Type: text/html; charset=utf-8');
         components: {
             'vueSlider': window[ 'vue-slider-component' ],
             // 'select2': Select2,
-            // 'star-rating': VueStarRating.default,
+            // 'star-rating': VueStarRating.default 
             // 'tags-input':  VueTagsInput
             // 'wm-notify': WMNotify,
             // 'wm-loading': LoadingComponent,
