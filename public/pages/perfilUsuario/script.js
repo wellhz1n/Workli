@@ -113,6 +113,7 @@ $(document).ready(async () => {
         dataVue.usuarioDados.tags = func.tags == null ? "" : func.tags;
         dataVue.usuarioDados.descricao = func.descricao;
         dataVue.usuarioDados.avaliacao_media = !parseFloat(func.avaliacao_media) ? 0 : parseFloat(func.avaliacao_media);
+        dataVue.usuarioDadosEdit.avaliacao_media = !parseFloat(func.avaliacao_media) ? 0 : parseFloat(func.avaliacao_media);
         $("#Titulo").text(dataVue.usuarioDados.nome + " | Conserta");
         app.$set(dataVue, "Rating", dataVue.usuarioDados.avaliacao_media);
         resetaOsDadosDoPerfilEdit();
@@ -467,7 +468,6 @@ $(document).ready(async () => {
 
             if (resultado) {
                 let resultadoVales = AtualizaUsuarioColuna(usuarioId, "vales_patrocinios", vales, "VALES_PATROCINIOS", "funcionario");
-                debugger
                 this.vales = vales;
                 switch (nivel) {
                     case 0:
