@@ -193,7 +193,7 @@ var WMContainer = Vue.component('wm-container', {
             camp.map(x => {
                 x.stringEntidade = `dataVue.${x.entidade}.${x.campo}`;
             });
-            debugger
+            
             this.dataCampos = camp;
         }
     },

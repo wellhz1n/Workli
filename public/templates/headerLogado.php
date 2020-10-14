@@ -52,17 +52,17 @@
         case "2":
         ?>
           <li class="nav-item tituloHeaderLogado">
-            <a class="nav-link" id='home' style="cursor: pointer;" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item tituloHeaderLogado">
-            <a class="nav-link" id='admpaineldecontrole' href="?page=admpaineldecontrole">Painel De Controle</a>
+            <a class="nav-link" id='perfilUsuario' style="cursor: pointer;" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item tituloHeaderLogado">
             <a class="nav-link" id='admcadastros' href="?page=admcadastros">Cadastros</a>
           </li>
 
-          <li class="nav-item  tituloHeaderLogado">
-            <a class="nav-link" href="#">Analise</a>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" id='buscaservicos' href="?page=buscaservicos">Buscar Projetos</a>
+          </li>
+          <li class="nav-item tituloHeaderLogado">
+            <a class="nav-link" id='buscausuarios' href="?page=buscausuarios">Buscar Usuários</a>
           </li>
         <?php
           break;
@@ -89,51 +89,56 @@
 
     </ul>
     <!-- NOTIFICAÇÔES -->
-    <ul class="navbar-nav">
-      <li :class="['nav-item','dropdown']" id="DropC">
-        <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <?php
-          $n = BuscaSecaoValor(SecoesEnum::NUMNOTIFICACOES);
-          if ($n != null && $n > 0) {
-          ?>
-            <span class="notifyredBall"><?php echo $n > 9 ? '9<sup>+</sup>' : $n ?></span>
-          <?php } else { ?>
-            <span class="notifyredBall" hidden></span> <?php } ?>
-          <i class="fas fa-bell" style="font-size: larger;"></i>
-        </a>
-        <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
-          <div style="height: 300px;" class=" linkCor">
-            <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
-              <h6>Notificações</h6>
-              <a @click="(a)=>{a.view.Rediredionar('notificacoes')}"><i class="fas fa-external-link-alt"></i></a>
-            </div>
-            <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
-            <div class="row" style="height: 250px;width: 100%;margin: 0px;">
-              <div class="col-12 notificacoesScrool">
-                <div v-if="dataVue.DropCarregando" style="height: 100%;display: flex;align-items: center;">
-                  <wm-loading />
-                </div>
-                <div v-else-if="dataVue.DropLista.length != 0">
-                  <div v-for="item in dataVue.DropLista">
-                    <div v-if="item.tipo == -1" class="dataChatDiv"><span class="dataChatDivTexto">{{item.titulo}}</span></div>
-                    <div style="cursor: pointer;" v-else @click="dataVue.ClickFuncao(this,item)">
-                      <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
+    <?php
+    if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) != 2) {
+
+    ?>
+      <ul class="navbar-nav">
+        <li :class="['nav-item','dropdown']" id="DropC">
+          <a class="nav-link " style="display: flex;align-items: center;" href="#" role="button" id="dropNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?php
+            $n = BuscaSecaoValor(SecoesEnum::NUMNOTIFICACOES);
+            if ($n != null && $n > 0) {
+            ?>
+              <span class="notifyredBall"><?php echo $n > 9 ? '9<sup>+</sup>' : $n ?></span>
+            <?php } else { ?>
+              <span class="notifyredBall" hidden></span> <?php } ?>
+            <i class="fas fa-bell" style="font-size: larger;"></i>
+          </a>
+          <div style="width: 28vw;min-width:350px; height: 300px;" class="dropdown-menu DropMenuCelular dropdown-menu-right dropdown-info" id="navbarDropdownNotify" aria-labelledby="dropNotificacoes">
+            <div style="height: 300px;" class=" linkCor">
+              <div class="col-12 " style="display: flex;width: 100%;justify-content: space-between;">
+                <h6>Notificações</h6>
+                <a @click="(a)=>{a.view.Rediredionar('notificacoes')}"><i class="fas fa-external-link-alt"></i></a>
+              </div>
+              <div class="dropdown-divider" style="margin-bottom: 0px;"></div>
+              <div class="row" style="height: 250px;width: 100%;margin: 0px;">
+                <div class="col-12 notificacoesScrool">
+                  <div v-if="dataVue.DropCarregando" style="height: 100%;display: flex;align-items: center;">
+                    <wm-loading />
+                  </div>
+                  <div v-else-if="dataVue.DropLista.length != 0">
+                    <div v-for="item in dataVue.DropLista">
+                      <div v-if="item.tipo == -1" class="dataChatDiv"><span class="dataChatDivTexto">{{item.titulo}}</span></div>
+                      <div style="cursor: pointer;" v-else @click="dataVue.ClickFuncao(this,item)">
+                        <wm-notify :tipo="JSON.parse(item.tipo)" :hora="item.hora" :titulo="item.titulo" :descricao="item.descricao" :subtitulo="{titulo:item.subtitulo,descricao:item.subdescricao}"></wm-notify>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div v-else style="height: 100%; width: 100%; display: flex;align-items: center;
+                  <div v-else style="height: 100%; width: 100%; display: flex;align-items: center;
                 justify-content: center;
                 font-size: 15px;">
-                  <wm-error tamanhoicon="100" style="margin-top: 0px !important;" mensagem="Nenhuma Notificação encontrada" />
-                </div>
+                    <wm-error tamanhoicon="100" style="margin-top: 0px !important;" mensagem="Nenhuma Notificação encontrada" />
+                  </div>
 
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
 
-    </ul>
+      </ul>
+    <?php } ?>
     <!-- Fim NOTIFICACOES-->
     <ul class="navbar-nav">
       <li class="nav-item dropdown">
@@ -233,7 +238,7 @@
   </div>
 </nav>
 <?php
-if (Logado()[1] == '2')
+if (Logado()[1] == '2' && load()[1] != ucwords(GeralPagesEnum::BUSCASERVICO))
   require('admSideBar.php');
 ?>
 <script type="application/javascript">

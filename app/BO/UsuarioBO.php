@@ -224,7 +224,7 @@ class UsuarioBO
         $nivelIconeArr = EnumParaArray(NivelUsuarioIcone::class);
         $resultado = array();
         foreach ($nivelArr as $key => $value) {
-            if ($key != "Funcionario") {
+            if ($key != "Programador") {
                 $cl = new stdClass;
                 $cl->id = $value;
                 $cl->nome = $key == "Adm" ? "Administrador" : $key;

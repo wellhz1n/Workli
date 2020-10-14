@@ -1,6 +1,6 @@
 <div class="col p-0 m-0">
     <div class="header-table">
-        <h5 class="p-2 mx-2" id="title">Usuario</h5>
+        <h5  class="p-2 TITULOADM" id="title">Usuario</h5>
     </div>
     <div class=" float-right mt-1 ml-3 p-1 pr-4 " style="z-index:200">
         <button class="btn btn-green" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>
