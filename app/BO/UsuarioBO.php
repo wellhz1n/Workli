@@ -309,7 +309,6 @@ class UsuarioBO
             $usuario['nivel'] = isset($usuario['checkFuncionario']) ? 1 : 0;
             $usuario['avaliacaoMedia'] = 3;
             
-            // echo $usuario["nivel"];
             $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
             $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
             $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);

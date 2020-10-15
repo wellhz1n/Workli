@@ -1521,16 +1521,6 @@ textarea::-webkit-scrollbar-thumb:hover {
   margin: 0 !important;
   display: none;
 }
-@media only screen and (max-height: 1000px) {
-  .editimgbox {
-    
-  }
-}
-
-@media only screen and (min-width: 1500px){
-  .editimgbox {  
-  }
-}
 
 .cameraIconPerfil {
   font-size: 50px !important;
@@ -1800,13 +1790,10 @@ textarea::-webkit-scrollbar-thumb:hover {
   }
 }
 
+
 @media only screen and (max-width: 1115px) {
   .nomeUsuarioCard {
     font-size: 17px;
-  }
-  .iconeUsuario {
-    width: 14px;
-    height: 14px;
   }
   .profissaoTexto {
     font-size: 14px;

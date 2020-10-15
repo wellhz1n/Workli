@@ -757,12 +757,14 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     },
     template: `
     <div @click="this.Redirecionar">
-        <div v-show="this.imgData == null || this.imgData == '' " 
+        <div 
+            v-show="this.imgData == null || this.imgData == '' " 
             :class="this.editavel ? 'wmUserImageWrapper' : 'wm-user-img-generic'"
-            @click="this.pegarImagem">
+            @click="this.pegarImagem"
+        >
             <div  v-if="this.carregandoData" class="spinner-border text-success" role="status" style="position:absolute">
-            <span class="sr-only">Loading...</span>
-        </div>
+                <span class="sr-only">Loading...</span>
+            </div>
             <div class="editimgbox" :style="{'height': this.height_edit, 'width': this.width_edit}">   
                 <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
