@@ -705,7 +705,10 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         return {
             imgData: null,
             imgCropadaData: "",
-            carregandoData: false
+            carregandoData: false,
+            height_edit: "240px",
+            width_edit: "240px"
+
         }
     },
     methods: {
@@ -754,13 +757,15 @@ var WMUSERIMG = Vue.component('wm-user-img', {
     },
     template: `
     <div @click="this.Redirecionar">
-        <div v-show="this.imgData == null || this.imgData == '' " 
+        <div 
+            v-show="this.imgData == null || this.imgData == '' " 
             :class="this.editavel ? 'wmUserImageWrapper' : 'wm-user-img-generic'"
-            @click="this.pegarImagem">
+            @click="this.pegarImagem"
+        >
             <div  v-if="this.carregandoData" class="spinner-border text-success" role="status" style="position:absolute">
-            <span class="sr-only">Loading...</span>
-        </div>
-            <div class="editimgbox">   
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="editimgbox" :style="{'height': this.height_edit, 'width': this.width_edit}">   
                 <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
             <div>
@@ -793,7 +798,7 @@ var WMUSERIMG = Vue.component('wm-user-img', {
         <div v-if="this.carregandoData" class="spinner-border text-success" role="status" style="position:absolute">
             <span class="sr-only">Loading...</span>
         </div>
-            <div class="editimgbox">   
+            <div class="editimgbox" :style="{'height': this.height_edit, 'width': this.width_edit}">   
                 <i class="fas fa-camera cameraIconPerfil" aria-hidden></i>
             </div>
             <img style="border-radius: 100%;"
@@ -828,6 +833,23 @@ var WMUSERIMG = Vue.component('wm-user-img', {
             handler(v) {
                 this.carregandoData = v;
 
+
+            }
+        },
+        height: {
+            immediate: true,
+            handler(v) {
+                let heightNumero = parseInt(v.replace(/[a-z]+/, "")) / 100 * 70;
+                let heightSufixo = v.replace(/\d+(.\d+)/, "");
+                this.height_edit = heightNumero + heightSufixo;
+            }
+        },
+        width: {
+            immediate: true,
+            handler(v) {
+                let widthNumero = parseInt(v.replace(/[a-z]+/, "")) / 100 * 70;
+                let widthSufixo = v.replace(/\d+(.\d+)/, "");
+                this.width_edit = widthNumero + widthSufixo;
 
             }
         }
@@ -1605,7 +1627,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                     DesbloquearTelaSemLoader();
 
                     let funcDestinatario = getURLParameter("funcDestinatario");
-                    if (funcDestinatario) {
+                    if (funcDestinatario && funcDestinatario !== "null") {
                         let idMeuProjeto = result.split('|')[1];
                         let nomeProjeto = (await WMExecutaAjax("ProjetoBO", "GetTituloProjetoPorId", { idProjeto: idMeuProjeto })).nome;
                         let funcionarioNome = (await WMExecutaAjax("UsuarioBO", "GetUsuarioById", { ID: funcDestinatario })).nome;

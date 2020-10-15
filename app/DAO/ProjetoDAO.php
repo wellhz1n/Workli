@@ -205,8 +205,8 @@ class ProjetoDAO
         $p = (json_decode($p) - 1) * 6;
         $sql = "
         SELECT * FROM PROJETOS_VIEW 
-        WHERE ID_USUARIO = ?
-        AND NOME LIKE'%{$q}%'
+         WHERE ID_USUARIO = ?
+           AND NOME LIKE'%{$q}%'
         {$situacaoSql}
         {$categoriaSql}
         LIMIT 6
@@ -255,7 +255,13 @@ class ProjetoDAO
         $excIds = "AND id NOT IN(${idProjetos})";
 
         $sql = "
-        SELECT id, nome, valor, nivel_projeto, postado FROM PROJETOS_VIEW 
+        SELECT 
+            id,
+            nome, 
+            valor, 
+            nivel_projeto, 
+            postado 
+        FROM PROJETOS_VIEW 
         WHERE ID_USUARIO = ? AND situacao = 0 $excIds";
         $resultados = Sql($sql, [$idUsuario]);
         return $resultados->resultados;

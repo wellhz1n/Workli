@@ -1516,27 +1516,10 @@ textarea::-webkit-scrollbar-thumb:hover {
   position: absolute;
   z-index: 3000;
   border-radius: 100%;
-  width: 14.3%;
-    height: 28%;
   min-width: 140px;
   min-height: 140px;
   margin: 0 !important;
   display: none;
-}
-@media only screen and (max-height: 1000px) {
-.editimgbox {
-  width: 14.3%;
-    height: 19.6%;
-  
-}
-}
-
-@media only screen and (min-width: 1500px){
-.editimgbox {
-  width: 14.3%;
-        height: 28% !important;
-  
-}
 }
 
 .cameraIconPerfil {
@@ -1807,13 +1790,10 @@ textarea::-webkit-scrollbar-thumb:hover {
   }
 }
 
+
 @media only screen and (max-width: 1115px) {
   .nomeUsuarioCard {
     font-size: 17px;
-  }
-  .iconeUsuario {
-    width: 14px;
-    height: 14px;
   }
   .profissaoTexto {
     font-size: 14px;
