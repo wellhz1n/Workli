@@ -49,7 +49,6 @@
 
                             <a href="#" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30 " onclick="Rediredionar('login&position=registro')">
                                 Registrar
-                                <i class="fa fa-long-arrow-right m-l-5"></i>
                             </a>
                         </div>
 
@@ -124,7 +123,6 @@
 
                             <a href="#" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30 " onclick="Rediredionar('login')">
                                 Logar
-                                <i class="fa fa-long-arrow-right m-l-5"></i>
                             </a>
                         </div>
                         

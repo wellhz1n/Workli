@@ -152,6 +152,27 @@ $(document).ready(async () => {
             dataVue.PropostaController.carregando = false;
             dataVue.PropostaController.mandou = true;
 
+            dataVue.selecionadoController.id_chat = JSON.parse(await WMExecutaAjax("ChatBO", "GetChatPorServico", { ID_SERVICO: dataVue.selecionadoController.id }));
+            let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
+            dataVue.selecionadoController.msg = msg.map(x => {
+                x.tipo = TipoMensagem.MSG
+                return x;
+            });
+
+            timerChatModal = setInterval(async () => {
+                if (dataVue.modalVisivelController == true) {
+                    let msg = await WMExecutaAjax("ChatBO", "GetMensagensProjeto", { ID_CHAT: dataVue.selecionadoController.id_chat, ID_USUARIO1: usrContexto, ID_USUARIO2: dataVue.selecionadoController.id_usuario });
+                    if(dataVue.selecionadoController != null) {
+                        dataVue.selecionadoController.msg = msg.map(x => {
+                            x.tipo = TipoMensagem.MSG
+                            return x;
+                        });
+                    }
+
+
+                }
+                return;
+            }, 500);
 
             /* Desativa os inputs após clicar no botão*/
 

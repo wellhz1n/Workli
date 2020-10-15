@@ -168,7 +168,7 @@ class ProjetoDAO
 
         ");
         foreach ($retorno->resultados as $key => $value) {
-            $retorno->resultados[$key]["descricao"] = nl2br($retorno->resultados[$key]["descricao"]);
+            $retorno->resultados[$key]["descricao"] = stripcslashes(nl2br($retorno->resultados[$key]["descricao"]));
         }
 
         return [$retorno->resultados, $paginas->resultados[0]["paginas"]];
@@ -213,7 +213,7 @@ class ProjetoDAO
         OFFSET {$p}";
         $resultados = Sql($sql, [$idUsuario]);
         foreach ($resultados->resultados as $key => $value) {
-            $resultados->resultados[$key]["descricao"] = nl2br($resultados->resultados[$key]["descricao"]);
+            $resultados->resultados[$key]["descricao"] = stripcslashes(nl2br($resultados->resultados[$key]["descricao"]));
         }
         return [$resultados->resultados, $paginas];
     }
