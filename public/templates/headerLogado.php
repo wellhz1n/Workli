@@ -178,6 +178,7 @@
                   <a style="font-size: 14px; cursor: pointer; width: fit-content;" class="dropdown-item" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id + '&edit=1'">
                     Minhas competências
                   </a>
+                  <a style="font-size: 14px" class="dropdown-item " href="?page=chat"><i class="far fa-comments"></i> Chat</a>
                 <?php } ?>
               </div>
             </div>
@@ -189,7 +190,7 @@
                 <h6 class=" ">Contratar</h6>
                 <div class="row">
                   <div class="col-5 m-0  mr-3 p-0">
-                    <a style="font-size: 14px" class="dropdown-item " href="">Procurar Profissional</a>
+                    <a style="font-size: 14px" class="dropdown-item " href="?page=buscausuarios">Procurar Profissional</a>
                   </div>
                   <div class="col-5 m-0  mr-3 p-0" style=" margin-left: 20px !important;">
                     <a style="font-size: 14px" class="dropdown-item " href="?page=chat"><i class="far fa-comments"></i> Chat</a>
@@ -205,20 +206,6 @@
             <?php
             }
             ?>
-            <div class="dropdown-divider"></div>
-            <div class="col-12">
-              <h6 class=" ">Ajuda</h6>
-              <div class="row">
-                <div class="col-5 m-0 mr-3 p-0">
-                  <a style="font-size: 14px" class="dropdown-item " href="">Contato</a>
-                  <a style="font-size: 14px" class="dropdown-item " href="">Como funciona</a>
-                </div>
-                <div class="col-5 mx-3">
-                  <a style="font-size: 14px" class="dropdown-item " href="">Guia</a>
-
-                </div>
-              </div>
-            </div>
             <div class="dropdown-divider"></div>
             <div class="col-12 ">
               <div class="row  ">
