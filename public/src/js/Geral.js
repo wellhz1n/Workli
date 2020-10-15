@@ -715,8 +715,7 @@ async function onSignIn(googleUser) {
 
                 var nivel = $('.checkFuncionario').is(':checked') ? 1 : 0;
                 var cpf = $('#cpfModal').cleanVal();
-                var Resultado = await WMExecutaAjax('UsuarioBO', "RegistraUsuarioGoogle", { Usuario: { nome, email, cpf, nivel, imagem: img } });
-                
+                var Resultado = await WMExecutaAjax('UsuarioBO', "RegistraUsuarioGoogle", { Usuario: { nome, email, cpf, checkFuncionario: nivel, imagem: img } });
                 if (Resultado) {
                     $("#modalCriarContaGoogle").modal('hide');
                     Logar(email, '');

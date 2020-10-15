@@ -309,12 +309,12 @@ class UsuarioBO
             $usuario['nivel'] = isset($usuario['checkFuncionario']) ? 1 : 0;
             $usuario['avaliacaoMedia'] = 3;
             
-            echo $usuario["nivel"];
-            // $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
-            // $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
-            // $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);
+            // echo $usuario["nivel"];
+            $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
+            $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
+            $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);
 
-            // echo $Insert;
+            echo $Insert;
         } catch (Throwable $th) {
             $msg = new stdClass();
             $msg->error = $th->getMessage();
