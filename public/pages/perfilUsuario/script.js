@@ -70,6 +70,7 @@ $(document).ready(async () => {
         });
         WMExecutaAjax("UsuarioBO", "GetPlanoById", { "idUsuario": dataVue.idGeral }).then(p => {
             planoN = parseInt(p);
+            dataVue.iconePlano = dataVue.retornaPlano();
         });
         WMExecutaAjax("UsuarioBO", "GetImagemUserById", { "idUsuario": dataVue.idGeral }).then(img => {
             dataVue.Usuario.imagem = img == "" ? null : img;
