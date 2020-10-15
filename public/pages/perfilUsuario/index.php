@@ -3,7 +3,7 @@
 
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/perfilUsuario/style.css">
-<div class="justify-content-center text-center m-0" :class="dataVue.nivelUsuario == '2' ? 'col p-0': ''">
+<div class="justify-content-center text-center col p-0 m-0" >
     <div class="row imagemBackgroundPerfilWrapper">
         <div id="imageBackgroundPerfil">
             <span id="bemVindo"><div v-if="dataVue.editavel" class="d-contents">Bem vindo,</div><br/><span id="bVNome">{{dataVue.usuarioDados.nome}}</span></span>
@@ -54,7 +54,7 @@
                             
                         {{dataVue.dadosDeCima.card0}}
                         </div>
-                        <div class="textoCardPerfil">Propostas enviadas</div>
+                        <div class="textoCardPerfil">{{ dataVue.nivelUsuario == 0?'Projetos Criados':'Propostas enviadas'}}</div>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                             
                         {{dataVue.dadosDeCima.card1}}
                         </div>
-                        <div class="textoCardPerfil">Propostas Aceitas</div>
+                        <div class="textoCardPerfil">{{ dataVue.nivelUsuario == 0?'Projetos Cancelados':'Propostas Aceitas'}}</div>
                     </div>
                 </div>
                 <div class="cardDP">
@@ -82,7 +82,7 @@
                             
                         {{dataVue.dadosDeCima.card2}}
                         </div>
-                        <div class="textoCardPerfil">Propostas Concluídas</div>
+                        <div class="textoCardPerfil">{{ dataVue.nivelUsuario == 0?'Projetos Concluídas':'Propostas Concluídas'}}</div>
                     </div>
                 </div>
             </div>

@@ -193,7 +193,7 @@ var WMContainer = Vue.component('wm-container', {
             camp.map(x => {
                 x.stringEntidade = `dataVue.${x.entidade}.${x.campo}`;
             });
-            debugger
+            
             this.dataCampos = camp;
         }
     },
@@ -1797,7 +1797,7 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
                         <h4 class="" style="color:#218838;font-weight: bold; font-family: Poppins-Medium">Seu Projeto foi criado com Sucesso!!!</h4>
                         <div class="mb-4" style="width: 60% ;margin-left: 19%;background: #218838aa;height: 2px"></div>
                         <button @click="$root.Redirect('home')" class="botaoGenerico">Pagina Inicial</button>
-                    <button  class="botaoGenerico">Ver Projeto</button>
+                    <button  class="botaoGenerico" @click="()=>{this.$root.RedirectComParan('meusprojetos',[{chave:'P',valor:this.projeto.id}])}">Ver Projeto</button>
                     </div>
                 </div>
         </div>

@@ -11,27 +11,6 @@
 <div class="row" id="body-row">
     <div id="sidebar-container" class="sidebar-collapsed d-none d-md-block">
         <ul class="list-group" id="menu">
-            <a href="#submenu1" data-toggle="collapse" id="admpaineldecontrole" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-start align-items-center">
-                    <span class="fas fa-tachometer-alt fa-fw mr-3"></span>
-                    <span class="menu-collapsed" style="font-size: 14px">Painel de Controle</span>
-                    <span class="fas fa-angle-down ml-auto"></span>
-                </div>
-            </a>
-            <div id='submenu1' class="collapse sidebar-submenu">
-                <a href="#" class="list-group-item list-group-item-action bg-secondary text-white">
-                    <span class="fas fa-columns mr-3"></span>
-                    <span class="menu-collapsed">Painel</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action  bg-secondary text-white">
-                    <span class="fas  fa-chart-pie mr-3"></span>
-                    <span class="menu-collapsed">Grafícos</span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action  bg-secondary text-white">
-                    <span class="fas fa-cubes fa-file-invoice-dollar mr-3"></span>
-                    <span class="menu-collapsed">Relatórios</span>
-                </a>
-            </div>
             <a href="#submenu2" id="admcadastros" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span class="fas fa-file-invoice fa-fw mr-3"></span>
@@ -46,12 +25,31 @@
                 </a>
                 <a href="?page=admusuario" id="admusuario" class="list-group-item list-group-item-action  bg-secondary text-white">
                     <span class="fas fa-users fa-fw mr-3"></span>
-                    <span class="menu-collapsed">Usuario</span>
+                    <span class="menu-collapsed">Usuário</span>
                 </a>
+            </div>
+      
+            <a href="#submenu4" data-toggle="collapse" id="" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="fa fa-question fa-search mr-3"></span>
+                    <span class="menu-collapsed" style="font-size: 14px">Buscas</span>
+                    <span class="fas fa-angle-down ml-auto"></span>
+                </div>
+            </a>
+            <div id='submenu4' class="collapse sidebar-submenu">
+                <a href="?page=buscaservicos" id="buscaservicos" class="list-group-item list-group-item-action  bg-secondary text-white">
+                    <span class="fas fa-cubes fa-fw mr-3"></span>
+                    <span class="menu-collapsed">Buscar Projeto</span>
+                </a>
+                <a href="?page=buscausuarios" id="buscausuarios" class="list-group-item list-group-item-action  bg-secondary text-white">
+                    <span class="fas fa-users fa-fw mr-3"></span>
+                    <span class="menu-collapsed">Buscar Usuários</span>
+                </a>
+
             </div>
 
 
-            <a href="#submenu3" data-toggle="collapse" id="" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+            <a href="#submenu3" id="perfilUsuario" data-toggle="collapse" id="" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span class="fa fa-question fa-cog mr-3"></span>
                     <span class="menu-collapsed" style="font-size: 14px">Configurações</span>
@@ -65,7 +63,7 @@
                 </a>
 
             </div>
-            <a  data-toggle="sidebar-colapse" style="cursor: pointer!important;" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
+            <a data-toggle="sidebar-colapse" style="cursor: pointer!important;" class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
                 <div class="d-flex w-100 justify-content-start align-items-center">
                     <span id="collapse-icon" class="fa  fa-2x mr-3 "></span>
                     <span id="collapse-text" class="menu-collapsed" style="font-size: 14px">Fechar</span>
@@ -93,15 +91,15 @@
             if (sessionStorage.getItem('FECHAMENULATERAL') && !MenuLateralColapsado)
                 $('[data-toggle="sidebar-colapse"]').click();
             $('[data-toggle="sidebar-colapse"]').click(function(e) {
-                if(e.view != undefined){
+                if (e.view != undefined) {
 
                     SidebarCollapse();
                     SetMenuAtivo();
                 }
-                
+
             });
         }
-        
+
 
         SetMenuAtivo();
 

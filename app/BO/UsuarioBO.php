@@ -141,7 +141,7 @@ class UsuarioBO
     }
     public function GetUsuarioById($id)
     {
-        
+
         $saida =  $this->usuarioDAO->GetUsuarioCompletobyId($id)->resultados;
         $saida[0]["imagem"] = ConvertBlobToBase64($saida[0]["imagem"]);
         echo json_encode($saida[0]);
@@ -227,11 +227,13 @@ class UsuarioBO
         $nivelIconeArr = EnumParaArray(NivelUsuarioIcone::class);
         $resultado = array();
         foreach ($nivelArr as $key => $value) {
-            $cl = new stdClass;
-            $cl->id = $value;
-            $cl->nome = $key == "Adm" ? "Administrador" : $key;
-            $cl->icone = $nivelIconeArr[$key];
-            array_push($resultado, $cl);
+            if ($key != "Programador") {
+                $cl = new stdClass;
+                $cl->id = $value;
+                $cl->nome = $key == "Adm" ? "Administrador" : $key;
+                $cl->icone = $nivelIconeArr[$key];
+                array_push($resultado, $cl);
+            }
         }
         echo json_encode($resultado);
     }
@@ -494,8 +496,7 @@ class UsuarioBO
     public function GetDadosDeCima($id, $tipo)
     {
         $dados = $this->usuarioDAO->GetDadosDeCima($id, $tipo);
-        
+
         echo json_encode($dados);
     }
-
 }
