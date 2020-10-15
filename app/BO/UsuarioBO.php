@@ -23,10 +23,13 @@ if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
     if ($metodo == "CadastraUsuario") {
         $_usr = json_decode($_POST['Usuario'], true);
         $userBO->CadastraUsuario($_usr);
+
     }
     if ($metodo == "RegistraUsuarioGoogle") {
+        
         $_usr = $_POST['Usuario'];
         $userBO->RegistraUsuarioGoogle($_usr);
+
     }
     if ($metodo == "VerificaEmailExiste") {
         $em = $_POST['EMAIL'];
@@ -288,6 +291,36 @@ class UsuarioBO
             echo json_encode($msg->error);
         }
     }
+
+    public function RegistraUsuarioGoogle($usuario)
+    {
+        try {
+            if (strlen($usuario["cpf"]) < 11)
+                throw new Exception("Cpf Invalido");
+
+
+            $usuario['senha'] = md5('');
+
+            $usuario["cpf"] = str_replace(".", "", $usuario["cpf"]);
+            $usuario["cpf"] = str_replace("-", "", $usuario["cpf"]);
+
+            $usuario['nivel'] = isset($usuario['checkFuncionario']) ? 1 : 0;
+            $usuario['avaliacaoMedia'] = 3;
+            
+            echo $usuario["nivel"];
+            // $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
+            // $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
+            // $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);
+
+            // echo $Insert;
+        } catch (Throwable $th) {
+            $msg = new stdClass();
+            $msg->error = $th->getMessage();
+            echo json_encode($msg->error);
+        }
+    }
+
+
     public function RegistraUsuarioAdm($usuario)
     {
         try {
@@ -309,25 +342,7 @@ class UsuarioBO
             echo json_encode($msg->error);
         }
     }
-    public function RegistraUsuarioGoogle($usuario)
-    {
-        try {
-            if (strlen($usuario["cpf"]) < 11)
-                throw new Exception("Cpf Invalido");
-
-
-            $usuario['senha'] = md5('');
-            $Insert = $this->usuarioDAO->CadastraUsuario($usuario);
-            $id = $this->usuarioDAO->GetUsuarioIdPorEmail($usuario['email']);
-            $Insert = $this->usuarioDAO->SalvarOuAtualizarImagem(ConvertBase64ToBlob($usuario['imagem']), $id);
-
-            echo $Insert;
-        } catch (Throwable $th) {
-            $msg = new stdClass();
-            $msg->error = $th->getMessage();
-            echo json_encode($msg->error);
-        }
-    }
+    
     public function DeleteUsuario($id)
     {
         try {

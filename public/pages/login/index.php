@@ -1,8 +1,5 @@
 <title>Login</title>
 
-
-
-
 <!-- LINKS INTERNOS -->
 <link rel="stylesheet" href="pages/login/style.css">
 
@@ -19,7 +16,6 @@
                             Login
                         </span>
 
-                        
                         <div class="g-signin2 my-2 botaoGoogle" data-theme="light"  data-onsuccess="onSignIn"></div>
                         <div class="envolveOu">
                             <div class="barrinhaOu"></div>

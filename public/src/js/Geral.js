@@ -679,6 +679,7 @@ function applyMask(value, mask, masked = true) {
 async function onSignIn(googleUser) {
     try {
 
+        
         BloquearTela();
         var profile = googleUser.getBasicProfile();
         var nome = profile.getName();
@@ -715,6 +716,7 @@ async function onSignIn(googleUser) {
                 var nivel = $('.checkFuncionario').is(':checked') ? 1 : 0;
                 var cpf = $('#cpfModal').cleanVal();
                 var Resultado = await WMExecutaAjax('UsuarioBO', "RegistraUsuarioGoogle", { Usuario: { nome, email, cpf, nivel, imagem: img } });
+                
                 if (Resultado) {
                     $("#modalCriarContaGoogle").modal('hide');
                     Logar(email, '');
