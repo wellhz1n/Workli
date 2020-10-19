@@ -95,7 +95,7 @@
                     :img="dataVue.Usuario.imagem" 
                     :width="'14.2vw'" 
                     :height="'14.2vw'" 
-                    :editavel="!dataVue.ipload"
+                    :editavel="dataVue.editavel"
                     @aberto-modal="v => dataVue.abremodal(v)" 
                     @recebe-imagem="imgData => dataVue.mudaImagemToCrop(imgData)" 
                     :imgcropada="dataVue.imagemCropadaUsuario"
