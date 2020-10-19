@@ -27,8 +27,8 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="stylesheet" type="text/css" href="src/js/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="src/css/starRating/star-rating.min.css" />
     <link href="src/js/Vue/componentesExternos/vue-tags/dist/vue-tags-input.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-vue/dist/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/theme/default.css">
+    <link rel="stylesheet" href="src/css/cssImportados/autocomplete.css" />
+    <link rel="stylesheet" href="src/css/cssImportados/vueslider.css">
     <!-- Importações internas -->
     <link rel="stylesheet" href="src/css/EstiloGeral.css">
     <link rel="stylesheet" href="templates/css/template.css">
@@ -59,13 +59,14 @@ header('Content-Type: text/html; charset=utf-8');
     <script src="src/js/daterangepicker/moment.min.js"></script>
     <script src="src/js/daterangepicker/daterangepicker.js"></script>
     <script src="src/js/countdowntime/countdowntime.js"></script>
-    <script scr="https://cdnjs.com/libraries/Chart.js"></script>
     <script src="src/js/jquery-ui/jquery-ui.js"></script>
 
-    <script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script> <!-- css star rating -->
-    <script src="https://unpkg.com/vue-advanced-cropper@0.16.7/dist/index.umd.js"></script> <!-- CROP IMAGE -->
-    <script src="https://unpkg.com/@trevoreyre/autocomplete-vue@2.2.0/dist/autocomplete.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@latest/dist/vue-slider-component.umd.min.js"></script>
+    <script src="src/js/jsImportados/VueStarRating.umd.min.js"></script> <!-- css star rating -->
+    <script src="src/js/jsImportados/VueAdvancedCropper.umd.js"></script> <!-- CROP IMAGE -->
+    <script src="src/js/jsImportados/Autocomplete.min.js"></script>
+    <script src="src/js/jsImportados/VueSliderComponent.umd.min.js"></script>
+    
+    
     <!-- Importações de fonte -->
     <!-- EXTERNAS -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> <!-- Google Sans -->
@@ -183,19 +184,8 @@ header('Content-Type: text/html; charset=utf-8');
             'dataVue': function(val) {}
 
         },
-        // computed: {
-        //     'url_perfil': {
-        //         get(perfilUrl) {
-        //            return GetSessaoPHP("IDUSUARIOCONTEXTO").then((e) => { return "?page=perfilUsuario&id=" + e;});
-                   
-        //         }
-        //     }
-        // }
         
     });
-
-
-
 
 
     // console.clear();
