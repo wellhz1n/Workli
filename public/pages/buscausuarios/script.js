@@ -54,7 +54,7 @@ $(document).ready(async () => {
         }
     })
 
-    app.$set(dataVue, "imagemUsuario", await GetSessaoPHP("FOTOUSUARIO"));
+    app.$set(dataVue, "imagemUsuario", GetSessaoPHP("FOTOUSUARIO").then((v) => {return v;}));
 
     setTimeout(() => {
         $($("#filtroWrapper .form-control input")[0]).on("focus", ()=>{
@@ -70,41 +70,24 @@ $(document).ready(async () => {
 
     app.$set(dataVue, "usuarios", {lista: {}, pagina: 1});
     app.$set(dataVue, "paginaAtual", 1)
-    dataVue.usuarios = await getUsuarios(
-            dataVue.paginaAtual,
-            dataVue.usuarioFiltro
-    );
+    // dataVue.usuarios = await getUsuarios(
+    //         dataVue.paginaAtual,
+    //         dataVue.usuarioFiltro
+    // );
     
     app.$watch("dataVue.paginaAtual", async function (a, o) {
         if (a != o)
             dataVue.usuarios = await getUsuarios(a, dataVue.usuarioFiltro);
     });
     
-    // if(document.getElementsByClassName("tagsCUWrapper")) {
-    //     function scrollHorizontally(e) {
-    //         e = window.event || e;
-    //         var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-    //         document.getElementsByClassName("tagsCUWrapper").scrollLeft -= (delta*20); // Multiplied by 40
-    //         e.preventDefault();
-    //     }
-    //     if (document.getElementsByClassName("tagsCUWrapper").addEventListener) {
-    //         // IE9, Chrome, Safari, Opera
-    //         document.getElementsByClassName("tagsCUWrapper").addEventListener("mousewheel", scrollHorizontally, false);
-    //         // Firefox
-    //         document.getElementsByClassName("tagsCUWrapper").addEventListener("DOMMouseScroll", scrollHorizontally, false);
-    //     } else {
-    //         // IE 6/7/8
-    //         document.getElementsByClassName("tagsCUWrapper").attachEvent("onmousewheel", scrollHorizontally);
-    //     }
-    // }
-
+    
 
     async function getUsuarios(P = 1, filtro = {}) {
+        let nivel_usuario_contexto = await GetSessaoPHP("NIVELUSUARIO");
+
         dataVue.Carregando = true;
         let result = await WMExecutaAjax("UsuarioBO", "BuscarUsuarios", {P, filtro });
         dataVue.Carregando = false;
-
-        let nivel_usuario_contexto = await GetSessaoPHP("NIVELUSUARIO");
 
         result.lista.forEach(element => {
             element.nivel_usuario_contexto = nivel_usuario_contexto;
@@ -125,6 +108,7 @@ $(document).ready(async () => {
     
     app.$watch("dataVue.usuarioFiltro", async function (filtro) {
         
+        
         if(filtro["tipo_usuario"] == dataVue.valorVelhoTipoUsuario) {
             if(filtro["avaliacao"] > 0 || filtro["profissao"]) {
                 filtro["tipo_usuario"] = 2;
@@ -137,8 +121,8 @@ $(document).ready(async () => {
         }
 
         dataVue.trocarPagina(1);
+        
         dataVue.usuarios = await getUsuarios(dataVue.paginaAtual, filtro);
-
         dataVue.valorVelhoTipoUsuario = filtro["tipo_usuario"];
     }, {
         deep: true

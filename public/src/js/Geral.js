@@ -880,3 +880,4 @@ async function mandaNotificacaoFuncionario(idMeuProjeto, idFuncionario, nomeClie
         }
     }
 }
+
