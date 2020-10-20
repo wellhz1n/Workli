@@ -3629,13 +3629,13 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                 this.$nextTick(() => {
                     if(this.dados_usuario_data.tags) {
 
-                        function scrollHorizontally(e) {
+                        const scrollHorizontally = (e) => {
                             e = window.event || e;
                             var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-                            document.getElementsByClassName("tagsCUWrapper").scrollLeft -= (delta*20); // Multiplied by 40
+                            document.getElementById("tagsId" + this.dados_usuario_data.id).scrollLeft -= (delta*20); // Multiplied by 40
                             e.preventDefault();
                         }
-                        
+
                         if (document.getElementById('tagsId' + this.dados_usuario_data.id).addEventListener) {
                             // IE9, Chrome, Safari, Opera
                             document.getElementById('tagsId' + this.dados_usuario_data.id).addEventListener("mousewheel", scrollHorizontally, false);
@@ -3645,7 +3645,17 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                             // IE 6/7/8
                             document.getElementById('tagsId' + this.dados_usuario_data.id).attachEvent("onmousewheel", scrollHorizontally);
                         }
+
                     }
+
+
+
+
+
+
+
+
+                    
                 })
             }
         },

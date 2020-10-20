@@ -218,7 +218,7 @@ $(document).ready(async () => {
         function scrollHorizontally(e) {
             e = window.event || e;
             var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            document.getElementsByClassName("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
+            document.getElementById("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
             e.preventDefault();
         }
 
