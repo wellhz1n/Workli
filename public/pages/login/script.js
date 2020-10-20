@@ -136,7 +136,6 @@ $(document).ready(() => {
 $(document).ready(async () => {
     $("#BTN_Register").on('click', async () => {
         let form = SerialiazaGrupoForm($("#formRegistrar")); /* Manda os dados para logar */
-        // debugger
         _User = {};
         form[0].map(x => {
             _User[x.name] = x.value

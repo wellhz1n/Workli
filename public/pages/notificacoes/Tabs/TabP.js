@@ -48,7 +48,7 @@ $(document).ready(async () => {
                 await BloquearTela();
 
                 $AProvou = await WMExecutaAjax("PropostaBO", "APROVARPROPOSTA", { IDPROPOSTA: dataVue.idPropostaSelecionada });
-                debugger
+
                 if ($AProvou != true && $AProvou.split('|').length > 1) {
                     MostraMensagem($AProvou.split('|')[1], ToastType.INFO, "Saldo Insuficiente");
                 }
