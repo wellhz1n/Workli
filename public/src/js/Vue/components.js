@@ -1792,16 +1792,39 @@ WM_NovoProjeto = Vue.component('wm-projeto', {
            </div>
         </div>
     </div>
-    <div  v-else >
-            <div class="row">
-                <div  style="height: 500px" class="col-12 d-flex  justify-content-center align-items-center">
-                    <div class="col-12 text-center ">
-                        <h4 class="" style="color:#218838;font-weight: bold; font-family: Poppins-Medium">Seu Projeto foi criado com Sucesso!!!</h4>
-                        <div class="mb-4" style="width: 60% ;margin-left: 19%;background: #218838aa;height: 2px"></div>
-                        <button @click="$root.Redirect('home')" class="botaoGenerico">Pagina Inicial</button>
-                    <button  class="botaoGenerico" @click="()=>{this.$root.RedirectComParan('meusprojetos',[{chave:'P',valor:this.projeto.id}])}">Ver Projeto</button>
-                    </div>
+    <div class="d-contents" v-else >
+        <div style="height: 100%;" class="col-12 wrapperProjetoCriado">
+            <img src="src/img/svg/projetoFeito.svg" class="imagemFinalCriarProjeto"/>
+            <div class="wrapperProjetoCriadoTexto ">
+                <div>
+                    <h4 
+                        style="
+                            color:#218838;font-weight: bold; 
+                            font-family: Poppins-Medium; 
+                            font-size: 28px;
+                        "
+                    >
+                        Seu projeto foi criado com sucesso!
+                    </h4>
+                    <div class="mb-4" style="width: 70%; margin: 0 auto; background: #218838dd; height: 3px;"></div>
                 </div>
+                <div class="d-flex">
+                    <button 
+                        style="white-space: nowrap;"  
+                        class="botaoProjetoCriado mr-5" 
+                        @click="$root.Redirect('home')"
+                    >
+                        <i class="fas fa-home"></i> Página Inicial
+                    </button>
+                    <button 
+                        style="white-space: nowrap;" 
+                        class="botaoProjetoCriado" 
+                        @click="()=>{this.$root.RedirectComParan('meusprojetos',[{chave:'P',valor:this.projeto.id}])}"
+                    >
+                        <i class="fas fa-eye"></i> Ver Projeto
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     </div>
