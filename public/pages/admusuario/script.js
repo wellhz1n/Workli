@@ -19,8 +19,8 @@ $('#btnSalvar').on('click',async function(){
     BloquearTela();
    let result = await WMExecutaAjax("UsuarioBO","RegistraUsuarioAdm",{Usuario:dataVue.UsuarioEntidade});
    if(result != true){
-    DesbloquearTela(); 
-    debugger
+    DesbloquearTela();
+    
         toastr.info(result,'Ops');
         return false
     }

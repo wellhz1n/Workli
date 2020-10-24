@@ -2794,61 +2794,6 @@ WMCHAT = Vue.component('wm-chat', {
     `
 });
 
-WMChart = Vue.component('wm-chart', {
-
-    template: `
-    <div class="col-6">
-    <canvas id="myChart" width="100%"></canvas>
-    </div>
-    `,
-    mounted() {
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            display: false
-                        },
-                        gridLines: {
-                            display: false,
-                            drawBorder: false
-                        },
-
-                    }]
-                }
-            }
-        });
-    }
-});
 WMNotify = Vue.component('wm-notify', {
     props: {
         tipo: {
@@ -3637,7 +3582,6 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
     props: {
         dados_usuario: {}
     },
-
     watch: {
         dados_usuario: {
             immediate: true,
@@ -3682,6 +3626,37 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                         this.dados_usuario_data[elemento] = parseFloat(this.dados_usuario_data[elemento]);
                     }
                 }
+                this.$nextTick(() => {
+                    if(this.dados_usuario_data.tags) {
+
+                        const scrollHorizontally = (e) => {
+                            e = window.event || e;
+                            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+                            document.getElementById("tagsId" + this.dados_usuario_data.id).scrollLeft -= (delta*20); // Multiplied by 40
+                            e.preventDefault();
+                        }
+
+                        if (document.getElementById('tagsId' + this.dados_usuario_data.id).addEventListener) {
+                            // IE9, Chrome, Safari, Opera
+                            document.getElementById('tagsId' + this.dados_usuario_data.id).addEventListener("mousewheel", scrollHorizontally, false);
+                            // Firefox
+                            document.getElementById('tagsId' + this.dados_usuario_data.id).addEventListener("DOMMouseScroll", scrollHorizontally, false);
+                        } else {
+                            // IE 6/7/8
+                            document.getElementById('tagsId' + this.dados_usuario_data.id).attachEvent("onmousewheel", scrollHorizontally);
+                        }
+
+                    }
+
+
+
+
+
+
+
+
+                    
+                })
             }
         },
     },
@@ -3689,10 +3664,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
         return {
             tags_aparecer: false,
             dados_usuario_data: {}
-
         }
-    },
-    methods: {
     },
     template: `
         <a class="cardQuadrado cardUsuario row" :href="'?page=perfilUsuario&id=' + this.dados_usuario_data.id">
@@ -3739,7 +3711,7 @@ var WMCARDUSUARIO = Vue.component('wm-card-usuario', {
                 <div class="parteInferiorCU">
                     <div class="descricaoUsuario" v-html="this.dados_usuario_data.descricao">
                     </div>
-                    <div class="tagsCUWrapper" v-if="this.tags_aparecer"  v-html="this.dados_usuario_data.tags">
+                    <div class="tagsCUWrapper" :id="'tagsId'+ this.dados_usuario_data.id" v-if="this.tags_aparecer"  v-html="this.dados_usuario_data.tags">
                         
                     </div>
                 </div>
