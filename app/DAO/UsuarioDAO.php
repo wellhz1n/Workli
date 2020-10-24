@@ -335,17 +335,19 @@ class UsuarioDAO
         $sql = "";
         if($tipo == "1") {
 
+                $idFuncionario = Sql("SELECT id FROM funcionario WHERE id_usuario = ?",[$id])->resultados[0]["id"];
+
             $sql = "SELECT  COUNT(id) AS p_enviadas,
-                            (SELECT COUNT(id) FROM proposta WHERE situacao = 1 OR situacao = 2 OR situacao = 4) AS p_aceitas,
-                            (SELECT COUNT(id) FROM proposta WHERE situacao = 4)                                 AS p_concluidas
+                            (SELECT COUNT(id) FROM proposta WHERE idFuncionario = $idFuncionario  and situacao = 1 OR situacao = 2 OR situacao = 4) AS p_aceitas,
+                            (SELECT COUNT(id) FROM proposta WHERE idFuncionario = $idFuncionario  and situacao = 4)                                 AS p_concluidas
                     FROM proposta
                     WHERE idFuncionario = (SELECT id FROM funcionario WHERE id_usuario = ?)
                 ";
 
         } else if($tipo == "0") {
             $sql = "SELECT  count(id) AS p_publicados,
-                            (SELECT COUNT(id) FROM servico WHERE situacao = 3) AS p_cancelados,
-                            (SELECT COUNT(id) FROM servico WHERE situacao = 4) AS p_concluidos
+                            (SELECT COUNT(id) FROM servico WHERE situacao = 3 and  id_usuario = $id) AS p_cancelados,
+                            (SELECT COUNT(id) FROM servico WHERE situacao = 4 and  id_usuario = $id) AS p_concluidos
                     FROM servico
                     WHERE id_usuario = ?";
         }
