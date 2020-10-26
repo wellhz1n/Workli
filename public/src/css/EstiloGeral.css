@@ -705,6 +705,58 @@ textarea::-webkit-scrollbar-thumb:hover {
     0 0 8px rgb(33, 136, 56, 0.6);
 }
 
+
+/* --------- CRIAR PROJETO - WM-PROJETO ---------------*/
+
+.imagemFinalCriarProjeto {
+  max-height: 400px;
+}
+
+.wrapperProjetoCriado {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+
+.wrapperProjetoCriadoTexto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  height: 100%;
+
+}
+
+.botaoProjetoCriado {
+  height: 100%;
+  width: 70%;
+  border-radius: 10px;
+  border: none;
+  background-color: #3ab83a;
+  font-family: Poppins-Bold;
+  color: white;
+  word-spacing: 5px;
+  letter-spacing: 1px;
+  font-size: 21px;
+  transition: 0.2s;
+  padding: 10px 20px;
+}
+
+.botaoProjetoCriado:focus {
+  outline: none;
+  border: 3px solid #319731;
+}
+
+.botaoProjetoCriado:hover {
+  background-color: #50c550;
+}
+
+
+/* -------- FIM CRIAR PROJETO - WM-PROJETO --------------*/
+
+
 /* TRANSICOES DO VUE */
 
 .fade-enter-active,
