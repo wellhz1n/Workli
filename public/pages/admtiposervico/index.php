@@ -1,6 +1,6 @@
 <div class="col p-0 m-0">
 <div class="header-table">
-        <h5 class="p-2 TITULOADM" id="title">Tipo de Serviço</h5>
+        <h5 class="p-2 TITULOADM" id="title">Categoria de Projeto</h5>
     </div>
     <div class=" float-right mt-1 ml-3 p-1 pr-4 ">
     <button class="btn btn-green mb-1" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>

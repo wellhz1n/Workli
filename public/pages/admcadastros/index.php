@@ -5,12 +5,12 @@
             <div class="text-center box-prod-menu " id="menu-tipoServico">
                 <!-- <img src="src/img/icons/cadastros/categoria_produto.png" class=" prod-box" alt="Alternate Text" /> -->
                 <span class="fas fa-cubes  " style="font-size: 75px"></span>
-                <p class="text-center">Tipo Serviço</p>
+                <p class="text-center">Categoria de Projeto</p>
             </div>
             <div class=" text-center box-prod-menu " id="menu-usuario">
                 <!-- <img src="src/img/icons/cadastros/categoria_produto.png" class=" prod-box" alt="Alternate Text" /> -->
                 <span class="fas fa-users  " style="font-size: 75px"></span>
-                <p class="text-center">Usuario</p>
+                <p class="text-center">Usuário</p>
             </div>
         </div>
 

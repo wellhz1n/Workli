@@ -32,7 +32,7 @@ $(document).ready(async() => {
         $('#btnVisualizar').attr('hidden', 'hidden');
         $('#btnSalvar').removeAttr('hidden');
         $('#btnCancelar').removeAttr('hidden');
-        dataVue.gridTipoServico.titulo = "Novo Tipo de Serviço";
+        dataVue.gridTipoServico.titulo = "Nova Categoria de Projeto";
         dataVue.gridTipoServico.visivel = true;
     });
 
@@ -43,7 +43,7 @@ $(document).ready(async() => {
         if (Row) {
             await WMExecutaAjax("TipoServicoBO", "RemoverTipoServico", { ID: Row.id }).then(result => {
                 if (result != "OK") {
-                    toastr.warning("Tipo de Serviço com dependências.", "Falha ao Remover");
+                    toastr.warning("Categoria de Projeto com dependências.", "Falha ao Remover");
                     console.error(`ERRO::${result}`);
                 } else {
                     tabela.ajax.reload();
@@ -93,7 +93,7 @@ $(document).ready(async() => {
             $('#btnEditar').attr('hidden', 'hidden');
             $('#btnSalvar').removeAttr('hidden');
             $('#btnCancelar').removeAttr('hidden');
-            dataVue.gridTipoServico.titulo = "Editar Tipo de Serviço";
+            dataVue.gridTipoServico.titulo = "Editar Categoria de Projeto";
             dataVue.gridTipoServico.visivel = true;
         } else {
             toastr.info('Selecione um campo para editar', 'Ops')
@@ -118,7 +118,7 @@ $(document).ready(async() => {
             $('#btnRemover').attr('hidden', 'hidden');
             $('#btnEditar').attr('hidden', 'hidden');
             $('#btnCancelar').removeAttr('hidden');
-            dataVue.gridTipoServico.titulo = "Visualizar Tipo de Serviço";
+            dataVue.gridTipoServico.titulo = "Visualizar Categoria de Projeto";
             dataVue.gridTipoServico.visivel = true;
         } else {
             toastr.info('Selecione um campo para Visualizar', 'Ops')
@@ -242,7 +242,7 @@ $(document).ready(async() => {
 
         var grid = GridEntidade();
         grid.entidade = "tipoServicoEntidade";
-        grid.titulo = "Tipo Servico";
+        grid.titulo = "Categoria de Projeto";
         grid.visivel = false;
         return grid;
     };

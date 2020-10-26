@@ -1,6 +1,6 @@
 <div class="col p-0 m-0">
     <div class="header-table">
-        <h5  class="p-2 TITULOADM" id="title">Usuario</h5>
+        <h5  class="p-2 TITULOADM" id="title">Usuário</h5>
     </div>
     <div class=" float-right mt-1 ml-3 p-1 pr-4 " style="z-index:200">
         <button class="btn btn-green" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>
@@ -27,7 +27,7 @@
                         Email
                     </th>
                     <th class="th-sm " style="width: 16%" scope="col" name="NivelIcone">
-                        Nivel de Usuario
+                        Nivel de Usuário
                     </th>
                 </tr>
             </thead>

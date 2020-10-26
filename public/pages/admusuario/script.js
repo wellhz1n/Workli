@@ -36,7 +36,7 @@ $('#btnSalvar').on('click',async function(){
         dataVue.gridUsuario.visivel = false;
         dataVue.UsuarioEntidade = usuarioEntidade();
         DesbloquearTela(); 
-        toastr.success("Usuario Salvo com Sucesso.",'Sucesso');
+        toastr.success("Usuário Salvo com Sucesso.",'Sucesso');
         return true;
     }
 });
@@ -74,12 +74,12 @@ $('#btnRemover').on('click',async ()=>{
         let resultado = await WMExecutaAjax("UsuarioBO","DeleteUsuario",{ID:Row.id});
         if(resultado != true){
                 console.warn(`ERROR---:${resultado}`);
-                toastr.info("Impossivel Remover Usuario",'Ops');
+                toastr.info("Impossivel Remover Usuário",'Ops');
                 return false
             }
             else{
                 tabela.ajax.reload();
-                toastr.success("Usuario removido com sucesso.",'Sucesso');
+                toastr.success("Usuário removido com sucesso.",'Sucesso');
                 return true;
             }
     }
@@ -134,7 +134,7 @@ $('#btnRemover').on('click',async ()=>{
         $('#btnVisualizar').prop('hidden','hidden');
         $('#btnRemover').prop('hidden','hidden');
         $('#btnCancelar').removeAttr('hidden');
-        dataVue.gridUsuario.titulo = "Visualizar Usuario";
+        dataVue.gridUsuario.titulo = "Visualizar Usuário";
         dataVue.gridUsuario.visivel = true;
         }  
         else
@@ -223,7 +223,7 @@ let GridInicializer = () =>{
     
   var grid =  GridEntidade();
     grid.entidade = "UsuarioEntidade";
-    grid.titulo = "Usuario";
+    grid.titulo = "Usuário";
     grid.visivel = false;
     return grid;
 };
