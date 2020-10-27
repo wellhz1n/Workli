@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="cardQuadradoBody" id="atalhosWrapper">
+                <div class="cardQuadradoBody a" id="atalhosWrapper">
                     
                     <a href="?page=buscaservicos" class="botaoAtalho mb-2"><i class="fas fa-search" aria-hidden="true"></i> Buscar Projetos</a>
                     <a href="?page=buscausuarios" class="botaoAtalho mb-2"><i class="fas fa-search" aria-hidden="true"></i> Buscar Usuários</a>
