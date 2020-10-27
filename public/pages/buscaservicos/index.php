@@ -1,6 +1,9 @@
 <div class="col-12 p-0 m-0">
     <div class="row p-0 m-0">
         <div style="height: 100vh" class="col-2 m-0 p-0 ">
+        <?php
+        // AQUI VAI UMA GUAMBIARRA POR PREGUIÇA MSM
+        if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0){ ?>
             <div class="categories_box h-25 d-flex flex-column justify-content-center align-items-center ">
                 <h5 class="m-0" style="font-family: Poppins-Bold;">Crie Seu Projeto</h5>
                 <p class="p-3 m-0" style="font-size: 14px; font-family: Poppins-Regular">Deseja contratar alguem para resolver seu Problema?</p>
@@ -8,10 +11,11 @@
                     <button style="font-size: 14px" onclick='window.location.href = location.origin + location.pathname + "?page=criarservico"' class=" btn btn-success text-white" href="">Criar Projeto</button>
                 </div>
             </div>
+        <?php } ?>
             <div class="categories_box d-flex flex-column  justify-content-start  align-items-center ">
                 <h5 class="m-0 py-2" style="font-family: Poppins-Bold;">Categorias</h5>
                 <template>
-                    <a @click="dataVue.Categorias.Click(item.id)" :style="[{cursor:'pointer'},item.checado?{'font-weight':'bold'}:'',{color:item.checado?'#000':'#6c757d'},item.checado?{'text-shadow': '0px 0px 10px rgba(74,74,74,0.91)'}:null]" v-for="item in dataVue.Categorias.categoria">{{item.nome}}</a>
+                    <a @click="dataVue.Categorias.Click(item.id)" :style="[{cursor:'pointer'},item.checado?{'font-weight':'bold'}:'',{color:item.checado?'rgb(31,169,52)':'#6c757d'},item.checado?{'text-shadow': '0px 0px 20px rgb(26, 105, 43)'}:null]" v-for="item in dataVue.Categorias.categoria">{{item.nome}}</a>
                 </template>
             </div>
         </div>
