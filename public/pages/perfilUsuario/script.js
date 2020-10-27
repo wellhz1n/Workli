@@ -213,25 +213,7 @@ $(document).ready(async () => {
 
 
 
-    if (document.getElementById("tagsCPWrapper")) {
-
-        function scrollHorizontally(e) {
-            e = window.event || e;
-            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            document.getElementById("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
-            e.preventDefault();
-        }
-
-        if (document.getElementById('tagsCPWrapper').addEventListener) {
-            // IE9, Chrome, Safari, Opera
-            document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
-            // Firefox
-            document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
-        } else {
-            // IE 6/7/8
-            document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
-        }
-    }
+    
     //MODAL
 
 
@@ -653,6 +635,24 @@ $(document).ready(async () => {
     app.$set(dataVue, "tituloModalConfirmacao", "Descartar alterações");
     app.$set(dataVue, "textoModalConfirmacao", "Você tem certeza que deseja descartar as alterações?");
 
+    if (document.getElementById("tagsCPWrapper")) {
+        function scrollHorizontally(e) {
+            e = window.event || e;
+            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+            document.getElementById("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
+            e.preventDefault();
+        }
+
+        if (document.getElementById('tagsCPWrapper').addEventListener) {
+            // IE9, Chrome, Safari, Opera
+            document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
+            // Firefox
+            document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+        } else {
+            // IE 6/7/8
+            document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+        }
+    }
 
 });
 
