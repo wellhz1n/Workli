@@ -174,7 +174,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-contents" v-if="dataVue.nivelUsuario == '1'  && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.tags != undefined"></div>
+                    <div class="d-contents" v-if="dataVue.nivelUsuario == '1'  && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.tags != undefined">
                         <div id="tagsCPWrapper">
                         </div>
                     </div>
