@@ -1,11 +1,15 @@
 $("#Titulo").text("Notificações e Propostas");
-$(document).ready(async () => {
+$("document").ready(()=>{
+
     BloquearTela()
+
+})
+$(document).ready(async () => {
 
     //#region Vuedata
     dataVue.UsuarioContexto.NIVEL_USUARIO = await GetSessaoPHP(SESSOESPHP.NIVEL_USUARIO);
-    await app.$set(dataVue, "NotificacaoNumeroTab", 0);
-    await app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
+     app.$set(dataVue, "NotificacaoNumeroTab", 0);
+     app.$set(dataVue, 'Tabs', { Notificacao: true, Propostas: false });
     //#endregion
     var Paramns = GetParam();
     if (Paramns.length > 0) {
