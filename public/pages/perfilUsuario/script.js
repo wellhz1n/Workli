@@ -213,33 +213,42 @@ $(document).ready(async () => {
 
 
 
-    if (document.getElementById("tagsCPWrapper")) {
-
-        function scrollHorizontally(e) {
-            e = window.event || e;
-            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-            document.getElementById("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
-            e.preventDefault();
+    app.$watch("dataVue.usuarioDados.tags", () => {
+        if (document.getElementById("tagsCPWrapper")) {
+            let tagsParaColocar = dataVue.usuarioDados.tags.split(",");
+            let tagsParaColocar2 = "";
+            tagsParaColocar.forEach(tag => {
+                if (tag == "") {
+    
+                } else {
+                    tagsParaColocar2 += `<div class='tagCP'>${tag}</div>`;
+                }
+    
+            });
+    
+            document.getElementById("tagsCPWrapper").innerHTML = tagsParaColocar2;
         }
-
-        if (document.getElementById('tagsCPWrapper').addEventListener) {
-            // IE9, Chrome, Safari, Opera
-            document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
-            // Firefox
-            document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
-        } else {
-            // IE 6/7/8
-            document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+        
+        if (document.getElementById("tagsCPWrapper")) {
+            function scrollHorizontally(e) {
+                e = window.event || e;
+                var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+                document.getElementById("tagsCPWrapper").scrollLeft -= (delta*20); // Multiplied by 40
+                e.preventDefault();
+            }
+    
+            if (document.getElementById('tagsCPWrapper').addEventListener) {
+                // IE9, Chrome, Safari, Opera
+                document.getElementById('tagsCPWrapper').addEventListener("mousewheel", scrollHorizontally, false);
+                // Firefox
+                document.getElementById('tagsCPWrapper').addEventListener("DOMMouseScroll", scrollHorizontally, false);
+            } else {
+                // IE 6/7/8
+                document.getElementById('tagsCPWrapper').attachEvent("onmousewheel", scrollHorizontally);
+            }
         }
-    }
+    });   
     //MODAL
-
-
-
-
-
-
-
 
 
     /* ATIVADOR DO POPOVER */
@@ -676,20 +685,6 @@ function atualizaOsDadosDoPerfil() {
         // $("#profCP").text(dataVue.usuarioDados.profissao)
     }
 
-    if (document.getElementById("tagsCPWrapper")) {
-        let tagsParaColocar = dataVue.usuarioDados.tags.split(",");
-        let tagsParaColocar2 = "";
-        tagsParaColocar.forEach(tag => {
-            if (tag == "") {
-
-            } else {
-                tagsParaColocar2 += `<div class='tagCP'>${tag}</div>`;
-            }
-
-        });
-
-        document.getElementById("tagsCPWrapper").innerHTML = tagsParaColocar2;
-    }
     if (dataVue.usuarioDados.descricao) {
         document.getElementById("descricaoPerfil").innerHTML = dataVue.usuarioDados.descricao.replace(/(?:\r\n|\r|\n)/g, '<br>');
     }
