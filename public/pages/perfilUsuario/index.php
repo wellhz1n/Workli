@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-contents" v-if="dataVue.nivelUsuario == '1'  && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.tags != undefined"></div>
+                        <div class="d-contents" v-if="dataVue.nivelUsuario == '1'  && dataVue.usuarioDados != undefined && dataVue.usuarioDados.profissao != '' && dataVue.usuarioDados.tags != undefined">
                         <div id="tagsCPWrapper">
                         </div>
                     </div>
@@ -154,6 +154,7 @@
                     </div>
                 </div>
                 </div>
+            </div>
                 <div v-if="dataVue.nivelUsuario == 1" class="d-contents">
                     <div class="col-3 p-0 paddingCardInterno">
                         <div class="cardQuadrado cemXcem max-heighto" id="statusCard">
@@ -185,7 +186,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
             <?php if (BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0) { ?>
                 <div v-if="dataVue.nivelUsuario == 1 && !dataVue.editavel" class="d-contents">
