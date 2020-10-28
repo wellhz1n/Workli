@@ -87,7 +87,7 @@
   height: 440px;
   max-width: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: cover;
   position: absolute;
 }
 
