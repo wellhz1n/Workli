@@ -252,7 +252,7 @@ class ProjetoDAO
 
         }
         $idProjetos = implode(", ", $idProjetos);
-        $excIds = "AND id NOT IN(${idProjetos})";
+        $excIds = $idProjetos !== "" ?"AND id NOT IN(${idProjetos})": "";
 
         $sql = "
         SELECT 
