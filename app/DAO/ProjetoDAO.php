@@ -238,7 +238,9 @@ class ProjetoDAO
             $incNotificacao = "AND id_usuario = ${idDestinatario}";
         }
         $parametrosNotificacao = Sql("SELECT parametros FROM notificacoes WHERE tipo = 6 AND id_usuario_criacao = ${idUsuario} ${incNotificacao}");
-
+        $verificaProposta  = Sql("SELECT IDSERVICO FROM PROPOSTA
+                                INNER JOIN FUNCIONARIO F on F.ID = idFuncionario
+                                WHERE IDCLIENTE = ? AND F.ID_USUARIO = ? AND SITUACAO in (3,0) ",[$idUsuario,$idDestinatario])->resultados;
         $idProjetos = [];
         for ($i=0; $i < count($parametrosNotificacao->resultados); $i++) { 
 
@@ -251,6 +253,11 @@ class ProjetoDAO
             }
 
         }
+
+        foreach ($verificaProposta as $key => $value) {
+            array_push($idProjetos, $value["IDSERVICO"]);
+        }
+
         $idProjetos = implode(", ", $idProjetos);
         $excIds = $idProjetos !== "" ?"AND id NOT IN(${idProjetos})": "";
 
