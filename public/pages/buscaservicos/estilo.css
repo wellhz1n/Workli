@@ -81,6 +81,58 @@
   box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
   background: #fff;
 }
+
+/*#region Busca e Paginação -----------------------------*/
+#buscaProjetosWrapper {
+  padding: 50px 4.4% 0 1.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.buscaProjetos {
+  padding: 8px 12px 8px !important;
+  background: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  margin-right: 3%;
+  flex: 1;
+  min-width: 30%;
+}
+
+.iconSearch {
+  margin: 0 2.5% 0 1.5%;
+}
+
+#inputBuscaProjeto {
+  width: 90%;
+  border: 0;
+
+}
+
+#inputBuscaProjeto:focus {
+  outline: none;
+  border: 0;
+}
+
+.paginacaoProjetos {
+  width: fit-content;
+}
+
+.paginacaoProjetos .paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.paginacaoProjetos ul {
+  margin-bottom: 0;
+}
+/*#endregion -----------------------------*/
+
 /*------------------------- HEADER MODAL -----------------------------*/
 
 .imgHeaderModal {

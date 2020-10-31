@@ -1,6 +1,6 @@
 <div class="col-12 p-0 m-0">
-    <div class="row p-0 m-0">
-        <div style="height: 100vh" class="col-2 m-0 p-0 ">
+    <div class="row p-0 mx-5">
+        <div class="col-2 m-0 p-0" style="height: 100vh; margin-top: 40px !important;">
         <?php
         // AQUI VAI UMA GUAMBIARRA POR PREGUIÇA MSM
         if(BuscaSecaoValor(SecoesEnum::NIVEL_USUARIO) == 0){ ?>
@@ -20,14 +20,52 @@
             </div>
         </div>
         <div style="height: fit-content;margin-bottom: 2%;" class="col-10  ">
-            <div class="row justify-content-center ">
+
+
+
+            <!-- <div class="row justify-content-center ">
                 <div class="p-3 col-9">
-                    <input placeholder="Pequise um Projeto" type="text" class="form-control" @input="dataVue.FiltroProjeto.Q = $event.target.value;" />
+                    <input 
+                        placeholder="Pequise um Projeto" 
+                        type="text" 
+                        class="form-control" 
+                        @input="dataVue.FiltroProjeto.Q = $event.target.value;" 
+                    />
                 </div>
             </div>
             <div class="col-6 my-0">
                 <wm-paginacao :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" v-on:changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" />
+            </div> -->
+
+
+            <div id="buscaProjetosWrapper">
+                <div class="buscaProjetos">
+                    <div class="iconSearch">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <input 
+                        id="inputBuscaProjeto" 
+                        type="text" 
+                        placeholder="Pequise um Projeto" 
+                        @input="dataVue.FiltroProjeto.Q = $event.target.value" 
+                    />
+                </div>
+                <div class="paginacaoProjetos">
+                    <wm-paginacao 
+                        :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" 
+                        :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" 
+                        @changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" 
+                    />
+                </div>
             </div>
+
+
+
+
+
+
+
+
             <div class="col-12 mx-2 justify-content-center">
                 <wm-loading v-if="dataVue.Carregando" style="margin-top: 15%;"></wm-loading>
                 <div v-else>
