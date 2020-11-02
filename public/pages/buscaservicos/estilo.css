@@ -80,6 +80,8 @@
   border-radius: 14px;
   box-shadow: 3px 1px 6px grey, 2px 3px 5px grey;
   background: #fff;
+  padding: 2%;
+  font-size: 11pt;
 }
 /*------------------------- HEADER MODAL -----------------------------*/
 
