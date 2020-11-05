@@ -325,7 +325,7 @@ class UsuarioDAO
         inner join funcionario F on F.id = P.idFuncionario
         inner join usuarios U on U.id = F.id_usuario
         left join imagem_usuario UM on UM.id_usuario = U.id
-        WHERE S.id = ?";
+        WHERE S.id = ? AND P.SITUACAO = 4 ";
         $result = Sql($sql, [$idProjeto]);
         return count($result->resultados) > 0 ? $result->resultados[0] : null;
     }
