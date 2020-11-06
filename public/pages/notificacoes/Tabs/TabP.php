@@ -122,11 +122,19 @@
                             <div :key="2" v-else-if="dataVue.PropostaFuncionario !== undefined &&  dataVue.PropostaFuncionario.length > 0">
                                 <wm-proposta-funcionario  class="list-item" v-for="item in dataVue.PropostaFuncionario" :key="JSON.parse(item.ID)"  @redireciona_usuario="RedirecionaPerfil(item.IDCLIENTE)"  :titulo="item.TITULO" :descricao="item.DESCRICAO" :nome="item.CLIENTE" :idcliente="item.IDCLIENTE" @muda_situacao="({idProposta})=>{
                                     if(dataVue.PropostaFuncionario.length == 1 && dataVue.PropostaFuncionario.filter(a=>{return a.ID == idProposta}).length == 1){
-                                        dataVue.PropostaFuncionario =[];
+                                        dataVue.PropostaFuncionario = dataVue.PropostaFuncionario.map(a=>{
+                                                    if( a.ID == idProposta)
+                                                        a.SITUACAO = a.SITUACAO == 1?2:4;
+                                                return a});
                                          dataVue.TabPFuncionarioPossuiAprovada = false 
                                         }
-                                        else
-                                            dataVue.PropostaFuncionario = dataVue.PropostaFuncionario.filter(a=>{return a.ID != idProposta});
+                                        else{
+                                            dataVue.PropostaFuncionario = dataVue.PropostaFuncionario.map(a=>{
+                                                    if( a.ID == idProposta)
+                                                        a.SITUACAO = a.SITUACAO == 1?2:4;
+                                                return a});
+                                         dataVue.TabPFuncionarioPossuiAprovada = dataVue.PropostaFuncionario.filter(a=>{return a.SITUACAO == 1}).length > 0; 
+                                            }
                                 }" :idservico="item.IDSERVICO" :imagem_cliente="item.IMAGEM" :situacao="item.SITUACAO" :categoria="item.CATEGORIA" :valor="item.VALOR" :data="item.DATAPROPOSTA"></wm-proposta-funcionario>
                             </div>
                             <div :key="3" style="width: 75%;" v-else-if=" dataVue.PropostaFuncionario.length == 0 && !dataVue.PropostaFuncionarioCarregando">
