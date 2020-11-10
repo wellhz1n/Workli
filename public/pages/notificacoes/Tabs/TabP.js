@@ -36,6 +36,7 @@ $(document).ready(async () => {
         await app.$set(dataVue, "ProjetoSeletor", ProjetoSeletor());
 
         //#endregion
+
         //#region VueData
         app.$set(dataVue, "TabPFiltro", { Projeto: null });
         app.$set(dataVue, "PropostasCarregando", true);

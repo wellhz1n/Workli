@@ -12,7 +12,7 @@
                 </div>
             </div>
         <?php } ?>
-            <div class="categories_box d-flex flex-column  justify-content-start  align-items-center ">
+            <div class="categories_box d-flex flex-column  justify-content-start  align-items-center " :style="[{'margin-top':dataVue.UsuarioContexto.NIVEL_USUARIO != 0?'20%':'10px',height:dataVue.Categorias.categoria != undefined?dataVue.Categorias.categoria.length*2.91 +'% !important':'60%'}]">
                 <h5 class="m-0 py-2" style="font-family: Poppins-Bold;">Categorias</h5>
                 <template>
                     <a @click="dataVue.Categorias.Click(item.id)" :style="[{cursor:'pointer'},item.checado?{'font-weight':'bold'}:'',{color:item.checado?'rgb(31,169,52)':'#6c757d'},item.checado?{'text-shadow': '0px 0px 20px rgb(26, 105, 43)'}:null]" v-for="item in dataVue.Categorias.categoria">{{item.nome}}</a>

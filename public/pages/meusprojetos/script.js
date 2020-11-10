@@ -196,8 +196,7 @@ async function BuscaMeusProjetos() {
 };
 async function BTClick(evento, Botao) {
     if (Botao == "CHAT") {
-        if (app.dataVue.selecionadoController.situacao == 0)
-            evento.view.RedirecionarComParametros('chat', [{ chave: 'P', valor: app.dataVue.selecionadoController.id }]);
+            app.RedirectComParan('chat', [{ chave: 'P', valor: app.dataVue.selecionadoController.id }],true);
     }
     if (Botao == "CANCELA") {
         BloquearTela();

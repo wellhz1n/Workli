@@ -4,7 +4,7 @@ require("../../bootstrap.php");
 class TipoServicoDAO{
     public function GetTipoServicos()
     {
-        $resultado = Sql("select id,nome,descricao,Ativo,imagem FROM tipo_servico");
+        $resultado = Sql("select id,nome,descricao,Ativo,imagem FROM tipo_servico order by nome asc");
         foreach ($resultado->resultados as $key => $value) {
             $resultado->resultados[$key]['descricao'] = stripslashes($resultado->resultados[$key]['descricao']);
         }
