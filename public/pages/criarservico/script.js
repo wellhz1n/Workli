@@ -1,4 +1,4 @@
-$("#Titulo").text("Criar Serviço | Conserta");
+$("#Titulo").text("Criar Projeto | Conserta");
 window.onload = async() => {
     let p = Porcentagem;
     app.$set(dataVue, 'Porcentagem', Porcentagem());
