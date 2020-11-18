@@ -39,7 +39,7 @@
             <a class="nav-link" style="cursor: pointer;" id="home" :href="'?page=perfilUsuario&id=' + dataVue.UsuarioContexto.id">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item tituloHeaderLogado">
-            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Serviços</a>
+            <a class="nav-link" id="tiposervicolist" href="?page=buscaservicos">Buscar Projetos</a>
           </li>
           <li class="nav-item tituloHeaderLogado">
             <a class="nav-link" href="?page=buscausuarios">Buscar Usuários</a>

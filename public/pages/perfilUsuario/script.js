@@ -486,13 +486,13 @@ $(document).ready(async () => {
                         toastr.info("Seus planos foram cancelados.", 'Assinado!');
                         break;
                     case 1:
-                        toastr.info("R$ 25,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Plus!');
+                        toastr.info("R$ 25,00 foram subtraídos de sua carteira.", 'Você agora é um Membro Plus!');
                         break;
                     case 2:
-                        toastr.info("R$ 50,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Prime!');
+                        toastr.info("R$ 50,00 foram subtraídos de sua carteira.", 'Você agora é um Membro Prime!');
                         break;
                     case 3:
-                        toastr.info("R$ 80,00 foram deduzidos de sua carteira.", 'Você agora é um Membro Master!');
+                        toastr.info("R$ 80,00 foram subtraídos de sua carteira.", 'Você agora é um Membro Master!');
                         break;
                     default:
                         toastr.info("Upgrade na conta concedido.", 'Assinado!');
