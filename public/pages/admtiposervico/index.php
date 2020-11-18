@@ -23,9 +23,6 @@
                     <th class="th-sm " style="width: 75%" name="nomeFormated" width="20%">
                         Nome
                     </th>
-                    <!-- <th class="th-sm" name="descricao" width="70%">
-                        Descrição
-                    </th> -->
                     <th class="th-sm text-center" style="width: 15%" name="AtivoIcone" width="10%">
                         Ativo
                     </th>
