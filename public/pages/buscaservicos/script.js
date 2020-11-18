@@ -1,4 +1,4 @@
-$("#Titulo").text("Buscar Serviços | Conserta");
+$("#Titulo").text("Buscar Projetos | Conserta");
 
 let UltimoFiltro = { C: Array(), Q: "", P: 1 };
 let PaginaAntesDigitar = 1;
