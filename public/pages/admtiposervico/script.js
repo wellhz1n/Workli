@@ -1,3 +1,5 @@
+$("#Titulo").text("Tipos de Projetos | Conserta");
+
 var Row = null;
 var TpS = {};
 
