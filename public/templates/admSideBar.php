@@ -21,7 +21,7 @@
             <div id='submenu2' class="collapse sidebar-submenu">
                 <a href="?page=admtiposervico" id="admtiposervico" class="list-group-item list-group-item-action  bg-secondary text-white">
                     <span class="fas fa-cubes fa-fw mr-3"></span>
-                    <span class="menu-collapsed">Tipo Serviço</span>
+                    <span class="menu-collapsed">Tipos de Projetos</span>
                 </a>
                 <a href="?page=admusuario" id="admusuario" class="list-group-item list-group-item-action  bg-secondary text-white">
                     <span class="fas fa-users fa-fw mr-3"></span>

@@ -5,7 +5,7 @@
             <div class="text-center box-prod-menu " id="menu-tipoServico">
                 <!-- <img src="src/img/icons/cadastros/categoria_produto.png" class=" prod-box" alt="Alternate Text" /> -->
                 <span class="fas fa-cubes  " style="font-size: 75px"></span>
-                <p class="text-center">Categoria de Projeto</p>
+                <p class="text-center">Tipos de Projetos</p>
             </div>
             <div class=" text-center box-prod-menu " id="menu-usuario">
                 <!-- <img src="src/img/icons/cadastros/categoria_produto.png" class=" prod-box" alt="Alternate Text" /> -->

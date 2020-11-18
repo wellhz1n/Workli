@@ -1,3 +1,4 @@
+$("#Titulo").text("Cadastros | Conserta");
 $(document).on("click", "#menu-tipoServico", () => {
 
     // MudaUrl(null, "ProdutoCadastrar");
