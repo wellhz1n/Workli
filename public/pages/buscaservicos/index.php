@@ -19,25 +19,7 @@
                 </template>
             </div>
         </div>
-        <div style="height: fit-content;margin-bottom: 2%;" class="col-10  ">
-
-
-
-            <!-- <div class="row justify-content-center ">
-                <div class="p-3 col-9">
-                    <input 
-                        placeholder="Pequise um Projeto" 
-                        type="text" 
-                        class="form-control" 
-                        @input="dataVue.FiltroProjeto.Q = $event.target.value;" 
-                    />
-                </div>
-            </div>
-            <div class="col-6 my-0">
-                <wm-paginacao :totaldepaginas="JSON.parse(dataVue.Projetos.pagina)" :paginaatual="JSON.parse(dataVue.FiltroProjeto.P)" v-on:changepagina="(a)=>{dataVue.FiltroProjeto.P = a;}" />
-            </div> -->
-
-
+        <div style="height: fit-content;margin-bottom: 2%;" class="col-10">
             <div id="buscaProjetosWrapper">
                 <div class="buscaProjetos">
                     <div class="iconSearch">

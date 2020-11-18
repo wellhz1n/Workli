@@ -1,6 +1,6 @@
 <div class="col p-0 m-0">
 <div class="header-table">
-        <h5 class="p-2 TITULOADM" id="title">Categoria de Projeto</h5>
+        <h5 class="p-2 TITULOADM" id="title">Tipos de Projetos</h5>
     </div>
     <div class=" float-right mt-1 ml-3 p-1 pr-4 ">
     <button class="btn btn-green mb-1" id="btnNovo"><i class="fas fa-plus mr-1"></i>Novo</button>
@@ -23,9 +23,6 @@
                     <th class="th-sm " style="width: 75%" name="nomeFormated" width="20%">
                         Nome
                     </th>
-                    <!-- <th class="th-sm" name="descricao" width="70%">
-                        Descrição
-                    </th> -->
                     <th class="th-sm text-center" style="width: 15%" name="AtivoIcone" width="10%">
                         Ativo
                     </th>

@@ -1,3 +1,4 @@
+$("#Titulo").text("Usuários | Conserta");
 $(document).ready(async () => {
     let Row = null;
     let tabela;
@@ -48,7 +49,7 @@ $('#btnNovo').on('click',function(){
     $('#btnRemover').prop('hidden','hidden');
     $('#btnSalvar').removeAttr('hidden');
     $('#btnCancelar').removeAttr('hidden');
-    dataVue.gridUsuario.titulo = "Novo Usuario";
+    dataVue.gridUsuario.titulo = "Novo Usuário";
     dataVue.gridUsuario.visivel = true;
 });
 $('#btnCancelar').on('click',function(){
