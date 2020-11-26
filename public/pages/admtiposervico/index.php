@@ -14,7 +14,7 @@
 
 
     <div id="Listagem" class=" col-12 my-5 py-3 pr-4">
-        <table id="dtTipoServico" class="table table-striped  table-bordered table-sm" cellspacing="0" width="100%">
+        <table id="dtTipoServico" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
             <thead>
                 <tr>
                 <th class="th-sm" style="width: 15%;" name="imagem" width="20%">
