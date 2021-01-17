@@ -1,3 +1,7 @@
+# Projeto de Consclusão de Curso 2020
+Este projeto é uma copia de um repositorio privado, este projeto é um compilado de todos os conhecimentos adquiridos durante o curso tecnico de Informática na instituição Centro Estadual Pedro Boareto Neto.
+
+
 # Documentação Dos Componentes do VUE
    * [Como Declarar](#Como-Declarar)
 ## _Componentes_
