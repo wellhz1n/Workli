@@ -19,7 +19,7 @@
 
 ## Sobre o Projeto
 
-[![Pagina Inicial][img/prints/Trabalho de Conclusão de Curso - Conserta Serviços_31.jpg]]
+![Pagina Inicial](img/prints/Trabalho de Conclusão de Curso - Conserta Serviços_31.jpg)
  
  O Conserta Serviços Terceirizados é uma solução inovadora que permite a
 troca de serviços peer-to-peer entre funcionários e clientes cadastrados no sistema
