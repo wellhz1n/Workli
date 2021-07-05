@@ -13,6 +13,7 @@
 
   <p align="center">
     Este projeto é uma copia de um repositorio privado, este projeto é um compilado de todos os conhecimentos adquiridos durante o curso tecnico de Informática na instituição Centro Estadual Pedro Boareto Neto.
+  
     <br />
   </p>
 </p>
@@ -85,6 +86,10 @@ Essa tela é dividida em dois tipos, o contratente e o contratado, ela possui a 
  
 ### Conclusão
 Esse sistema nos ajudou a consolidar nossos conhecimentos obtidos durante esses 4 anos e nos proporcionou ainda mais aprendizado com novas tecnologias e padrões de projeto.
+
+### Desenvolvedores
+ - https://github.com/Nidilap
+ - https://github.com/wellhz1n
 
 [contributors-shield]:https://img.shields.io/github/contributors/wellhz1n/Workli?style=for-the-badge
 [contributors-url]: https://github.com/wellhz1n/Workli/graphs/contributors
